@@ -19,6 +19,6 @@ definePageMeta({
 
 <style lang="scss" scoped>
 h1 {
-  color: color('danger');
+  color: color('danger', light, 3);
 }
 </style>

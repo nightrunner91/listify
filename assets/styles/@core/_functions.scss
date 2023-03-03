@@ -122,34 +122,37 @@
   ///   color: rgba(255, 255, 255, 0.45);
   ///   fill: #aaaaaa;
 
-  $targetMap: $theme-colors;
+  // $targetMap: $theme-colors;
 
-  @if map-has-key($grays, $name) {
-    $targetMap: $grays;
-  }
+  // @if map-has-key($grays, $name) {
+  //   $targetMap: $grays;
+  // }
 
-  $targetColor: map-get($targetMap, $name);
-  $modifiedColor: $targetColor;
+  // $targetColor: map-get($targetMap, $name);
+  
+  $modifiedColor: #000000;
 
   @if $style {
     $level: map-get($levels, $level);
 
     @if $style == 'light' {
-      $modifiedColor: mix(white, $targetColor, $level);
+      $modifiedColor: mix(white, var(--color-#{$name}), $level);
     } @else if $style == 'dark' {
-      $modifiedColor: mix(black, $targetColor, $level);
+      $modifiedColor: mix(black, var(--color-#{$name}), $level);
     } @else if $style == 'sat' {
-      $modifiedColor: scale-color($targetColor, $saturation: $level);
+      $modifiedColor: scale-color(var(--color-#{$name}), $saturation: $level);
     } @else if $style == 'desat' {
-      $modifiedColor: scale-color($targetColor, $saturation: -$level);
+      $modifiedColor: scale-color(var(--color-#{$name}), $saturation: -$level);
     }
   }
 
-  @if $opacity {
-    $opacityLevel: (map-get($opacities, $opacity) / 100);
+  // @if $opacity {
+  //   $opacityLevel: (map-get($opacities, $opacity) / 100);
 
-    $modifiedColor: rgba($modifiedColor, $opacityLevel);
-  }
+  //   $modifiedColor: rgba($modifiedColor, $opacityLevel);
+  // }
+
+  // @return $modifiedColor
 
   @return $modifiedColor
 };
