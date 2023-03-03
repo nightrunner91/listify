@@ -17,9 +17,10 @@ definePageMeta({
   </NuxtLink>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import '@/assets/styles/@core/globals.scss';
+
 h1 {
   color: color('primary');
-  padding: spacer(5);
 }
 </style>

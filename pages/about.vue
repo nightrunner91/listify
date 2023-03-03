@@ -9,10 +9,18 @@ definePageMeta({
 </script>
 
 <template>
-  <h2>This is about page</h2>
+  <h1>This is about page</h1>
   <p>My name is still {{ name }} btw.</p>
   <hr>
   <NuxtLink to="/">
     Back to Homepage
   </NuxtLink>
 </template>
+
+<style lang="scss" scoped>
+@import '@/assets/styles/@core/globals.scss';
+
+h1 {
+  color: color('danger');
+}
+</style>

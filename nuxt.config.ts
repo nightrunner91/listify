@@ -7,6 +7,6 @@ export default defineNuxtConfig({
     port: 1146,
   },
   css: [
-    '@/assets/styles/nightvue.scss',
+    '@/assets/styles/nightvue.scss'
   ],
 })
