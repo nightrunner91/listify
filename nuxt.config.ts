@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
-    baseURL: '/listify/'
+    baseURL: '/listify/',
   },
   devServer: {
     port: 1146,
@@ -15,4 +15,7 @@ export default defineNuxtConfig({
       }
     }
   },
+  css: [
+    '@/assets/styles/nightvue.scss',
+  ],
 })
