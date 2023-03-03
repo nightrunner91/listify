@@ -15,7 +15,4 @@ export default defineNuxtConfig({
       }
     }
   },
-  css: [
-    '@/assets/styles/nightvue.scss',
-  ],
 })
