@@ -2,5 +2,8 @@
 export default defineNuxtConfig({
   app: {
     baseURL: '/listify/'
+  },
+  devServer: {
+    port: 1146,
   }
 })
