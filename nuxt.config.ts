@@ -6,10 +6,4 @@ export default defineNuxtConfig({
   devServer: {
     port: 1146,
   },
-  webpack: {
-    extractCSS: true,
-  },
-  css: [
-    '@/assets/styles/nightvue.scss'
-  ],
 })
