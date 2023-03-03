@@ -2,11 +2,15 @@
 import { ref } from 'vue'
 
 const name = ref('Nikita')
+
+definePageMeta({
+  layout: 'default',
+})
 </script>
 
 <template>
   <h1>This is index page</h1>
-  <p>My name is {{ name }}</p>
+  <p>My name is {{ name }}.</p>
   <hr>
   <NuxtLink to="/about">
     About page
