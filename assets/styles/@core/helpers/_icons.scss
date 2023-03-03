@@ -1,0 +1,43 @@
+/// This code generates icon size classnames based on $icon-sizes list
+/// This classnames supports $breakpoints
+/// 
+/// @author nightrunner91
+/// 
+/// @link https://github.com/nightrunner91/nightvue/#icons
+/// 
+/// @output
+///   .icon-size-18 {
+///     width: 18px !important;
+///     max-width: 18px !important;
+///     min-width: 18px !important;
+///     height: 18px !important;
+///     max-height: 18px !important;
+///     min-height: 18px !important;
+///   }
+///
+///   @media screen and (min-width: 768px) {
+///     .icon-size-sm-24 {
+///       width: 24px !important;
+///       max-width: 24px !important;
+///       min-width: 24px !important;
+///       height: 24px !important;
+///       max-height: 24px !important;
+///       min-height: 24px !important;
+///     }
+///   }
+
+@mixin make-icons($breakpoint:null) {
+  @each $size, $value in $icon-sizes {
+    .icon-size#{$breakpoint}-#{$size} {
+      @include icon-size($value)
+    }
+  }
+}
+
+@include make-icons();
+
+@each $breakpoint, $size in $breakpoints {
+  @media screen and (min-width: #{$size}) {
+    @include make-icons('-' + $breakpoint)
+  }
+};

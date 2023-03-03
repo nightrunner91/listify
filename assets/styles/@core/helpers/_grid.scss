@@ -1,0 +1,31 @@
+/// This code generates classnames for container, rows and cols
+/// NightVue grid system is quite similar to Bootstrap 5.x
+/// Nonetheless we are using entirely different approach to build mixins and functions
+/// See mixins.scss and variables.scss files for more details
+/// 
+/// @link https://github.com/nightrunner91/nightvue/#grid
+/// @link https://getbootstrap.com/docs/5.0/layout/grid/
+
+.container { @include container() }
+.row       { @include row() }
+.col       { @include col() }
+
+@mixin make-grid($breakpoint:null) {
+  $i: 0;
+  @while $i <= $num-cols {
+    @if ($i > 0) {
+      .col#{$breakpoint}-#{$i}    { @include col-width($i) }
+      .order#{$breakpoint}-#{$i}  { order: $i }
+    }
+    .offset#{$breakpoint}-#{$i} { margin-left: percent($i, $num-cols) }
+    $i: $i + 1;
+  }
+}
+
+@include make-grid();
+
+@each $breakpoint, $size in $breakpoints {
+  @media screen and (min-width: #{$size}) {
+    @include make-grid('-' + $breakpoint)
+  }
+};

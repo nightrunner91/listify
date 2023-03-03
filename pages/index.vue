@@ -12,3 +12,10 @@ const name = ref('Nikita')
     About page
   </NuxtLink>
 </template>
+
+<style lang="scss">
+h1 {
+  color: color('primary');
+  padding: spacer(5);
+}
+</style>
