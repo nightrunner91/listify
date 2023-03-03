@@ -6,13 +6,7 @@ export default defineNuxtConfig({
   devServer: {
     port: 1146,
   },
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@use "@/assets/styles/nightvue.scss" as *;'
-        }
-      }
-    }
-  }
+  css: [
+    '@/assets/styles/nightvue.scss',
+  ],
 })
