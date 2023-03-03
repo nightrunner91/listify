@@ -18,8 +18,6 @@ definePageMeta({
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/@core/globals.scss';
-
 h1 {
   color: color('primary');
 }
