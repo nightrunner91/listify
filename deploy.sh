@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # abort on errors
-# set -e
+set -e
 
 # build
 npm run build
@@ -15,4 +15,4 @@ git commit -m 'deploy'
 
 git push -f git@github.com:nightrunner91/listify.git master:gh-pages
 
-# cd -
+cd -
