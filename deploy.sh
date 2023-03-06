@@ -15,4 +15,4 @@ git commit -m 'deploy'
 
 git push -f git@github.com:nightrunner91/listify.git master:gh-pages
 
-cd -
+# cd -
