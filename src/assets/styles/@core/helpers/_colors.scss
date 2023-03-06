@@ -1,0 +1,80 @@
+/// This code generates classnames from $grays and $theme-colors maps
+/// Each color will have unique classname with background-color, color and fill
+/// For each color in $theme-colors map will be generated classnames with patterns:
+/// * ${property}-${color} for 'basic' colors
+/// * ${property}-${color}-${style}-${level} for brightened, darkened, saturated and desaturated color variations
+/// 
+/// @author nightrunner91
+/// 
+/// @link https://github.com/nightrunner91/nightvue#colors
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/background-color
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/color
+/// @link https://developer.mozilla.org/ru/docs/Web/SVG/Tutorial/Fills_and_Strokes#using_css
+/// 
+/// @output
+///   .bg-gray-5 { background-color: #959595 }
+///   .bg-primary { background-color: #682CAB }
+///   .clr-secondary-light-2 { color: #42a6f5 }
+///   .fill-secondary-dark-4 { fill: #1971b6 }
+///   .clr-primary-sat-3 { color: #6823b4 }
+///   .clr-primary-desat-4 { color: #693c9b }
+
+/// Generate classnames from $grays map
+@each $name, $code in $grays {
+  .bg-#{$name} { background-color: $code !important }
+  .clr-#{$name} { color: $code !important }
+  .fill-#{$name} { fill: $code !important }
+
+  /// Apply rgba variants of $grays
+  /// It refers to $opacities map
+  /// @link https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgba
+  @each $opacity, $level in $opacities {
+    .bg-#{$name}-opacity-#{$opacity} { background-color: color($name, $opacity: $opacity); }
+    .clr-#{$name}-opacity-#{$opacity} { color: color($name, $opacity: $opacity); }
+    .fill-#{$name}-opacity-#{$opacity} { fill: color($name, $opacity: $opacity); }
+  }
+}
+
+/// Generate classnames from $theme-colors map
+@each $name, $code in $theme-colors {
+  .bg-#{$name} { background-color: $code !important }
+  .clr-#{$name} { color: $code !important }
+  .fill-#{$name} { fill: $code !important }
+
+  /// Adjust colors mix and scale levels based on $levels map to generate new color variations
+  /// NightVue uses modern approach to do that
+  /// We don't use lighten(), darken(), saturate() and desaturate() functions
+  /// Instead we make new colors using mix() and scale() functions
+  /// @link https://github.com/nightrunner91/nightvue/#colors
+  /// @link https://sass-lang.com/documentation/modules/color#lighten
+  /// @link https://sass-lang.com/documentation/modules/color#darken
+  /// @link https://sass-lang.com/documentation/modules/color#saturate
+  /// @link https://sass-lang.com/documentation/modules/color#desaturate
+  /// @link https://sass-lang.com/documentation/modules/color#mix
+  /// @link https://sass-lang.com/documentation/modules/color#scale
+  @each $level, $value in $levels {
+    .bg-#{$name}-light-#{$level} { background-color: color($name, 'light', $level) !important }
+    .bg-#{$name}-dark-#{$level} { background-color: color($name, 'dark', $level) !important }
+    .bg-#{$name}-sat-#{$level} { background-color: color($name, 'sat', $level) !important }
+    .bg-#{$name}-desat-#{$level} { background-color: color($name, 'desat', $level) !important  }
+    
+    .clr-#{$name}-light-#{$level} { color: color($name, 'light', $level) !important }
+    .clr-#{$name}-dark-#{$level} { color: color($name, 'dark', $level) !important }
+    .clr-#{$name}-sat-#{$level} { color: color($name, 'sat', $level) !important }
+    .clr-#{$name}-desat-#{$level} { color: color($name, 'desat', $level) !important  }
+    
+    .fill-#{$name}-light-#{$level} { fill: color($name, 'light', $level) !important }
+    .fill-#{$name}-dark-#{$level} { fill: color($name, 'dark', $level) !important }
+    .fill-#{$name}-sat-#{$level} { fill: color($name, 'sat', $level) !important }
+    .fill-#{$name}-desat-#{$level} { fill: color($name, 'desat', $level) !important  }
+  }
+
+  /// Apply rgba variants of $theme-colors
+  /// It refers to $opacities map
+  /// @link https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgba
+  @each $opacity, $level in $opacities {
+    .bg-#{$name}-opacity-#{$opacity} { background-color: color($name, $opacity: $opacity); }
+    .clr-#{$name}-opacity-#{$opacity} { color: color($name, $opacity: $opacity); }
+    .fill-#{$name}-opacity-#{$opacity} { fill: color($name, $opacity: $opacity); }
+  }
+}

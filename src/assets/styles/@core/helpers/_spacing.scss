@@ -1,0 +1,82 @@
+/// This code generates classnames with predefined values from $spacers map
+/// Each classname supports $breakpoints
+/// 
+/// @author nightrunner91
+/// 
+/// @link https://github.com/nightrunner91/nightvue/#spacing
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/padding
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/margin
+///
+/// @output
+///   .m-auto { margin: auto }
+///   .mx-auto { margin-left: auto; margin-right-auto; }
+///
+///   .m-2 { margin: 2rem }
+///   .mb-50 { margin-bottom: .5rem }
+///
+///   .pt-0 { padding-top: 0 }
+///   .pr-3 { padding-right: 3rem }
+/// 
+///   .top-2 { top: 2rem }
+///   .right-3 { right: 3rem }
+///   .bottom-3 { bottom: 3rem }
+///   .left-50 { left: .5rem }
+///
+///   @media screen and (min-width: 768px) {
+///     .ml-sm-1 {
+///        margin-left: 1rem
+///      }
+///   }
+/// 
+///   @media screen and (min-width: 768px) {
+///     .right-sm-4 {
+///        right: 4rem
+///      }
+///   }
+
+@mixin make-spacers($breakpoint: null) {
+  @each $name, $indent in $spacers {
+    @if $name != 'auto' {
+      .p#{$breakpoint}-#{$name} { padding: $indent !important }
+      .pt#{$breakpoint}-#{$name} { padding-top: $indent !important }
+      .pl#{$breakpoint}-#{$name} { padding-left: $indent !important }
+      .pb#{$breakpoint}-#{$name} { padding-bottom: $indent !important }
+      .pr#{$breakpoint}-#{$name} { padding-right: $indent !important }
+      .px#{$breakpoint}-#{$name} {
+        padding-left: $indent !important;
+        padding-right: $indent !important
+      }
+      .py#{$breakpoint}-#{$name} {
+        padding-top: $indent !important;
+        padding-bottom: $indent !important
+      }
+    }
+
+    .m#{$breakpoint}-#{$name} { margin: $indent !important }
+    .mt#{$breakpoint}-#{$name} { margin-top: $indent !important }
+    .ml#{$breakpoint}-#{$name} { margin-left: $indent !important }
+    .mb#{$breakpoint}-#{$name} { margin-bottom: $indent !important }
+    .mr#{$breakpoint}-#{$name} { margin-right: $indent !important }
+    .mx#{$breakpoint}-#{$name} {
+      margin-left: $indent !important;
+      margin-right: $indent !important
+    }
+    .my#{$breakpoint}-#{$name} {
+      margin-top: $indent !important;
+      margin-bottom: $indent !important
+    }
+
+    .top#{$breakpoint}-#{$name} { top: $indent !important }
+    .right#{$breakpoint}-#{$name} { right: $indent !important }
+    .bottom#{$breakpoint}-#{$name} { bottom: $indent !important }
+    .left#{$breakpoint}-#{$name} { left: $indent !important }
+  }
+}
+
+@include make-spacers();
+
+@each $breakpoint, $size in $breakpoints {
+  @media screen and (min-width: #{$size}) {
+    @include make-spacers('-' + $breakpoint)
+  }
+}

@@ -1,0 +1,179 @@
+// ================== //
+// ====== FONTS ===== //
+// ================== //
+
+/// Include your fonts here, at the very beginning of CSS document
+/// NightVue uses mixin @font-face to import font-families (see mixins.scss file)
+/// Make sure to store your fonts in 'src/assets/fonts' folder
+/// Each font must be saved in a folder with the same name as font itself
+/// See how we stored and imported Onest font from 'src/assets/fonts/Onest' folder
+
+@include font-face('Onest', 'OnestRegular', 400, normal, 'recent');
+@include font-face('Onest', 'OnestMedium', 500, normal, 'recent');
+@include font-face('Onest', 'OnestBold', 700, normal, 'recent');
+@include font-face('Onest', 'OnestBlack', 900, normal, 'recent');
+
+
+// ======================== //
+// ====== BODY STYLES ===== //
+// ======================== //
+
+body {
+  overflow-x: hidden;
+  overflow-y: visible;
+  font-family: map-get($font-families, base), sans-serif;
+  font-weight: map-get($font-weights, 400);
+  font-size: $base-fz;
+  line-height: $base-lh;
+  background-color: color('white');
+  color: color('gray-9');
+
+  &.body--locked { overflow-y: hidden }
+}
+
+
+// ================================ //
+// ====== HEADINGS & DISPLAYS ===== //
+// ================================ //
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  display: block;
+  margin-top: map-get($headings-margins, top);
+  margin-bottom: map-get($headings-margins, bottom);
+  font-family: map-get($font-families, headings), sans-serif;
+  font-weight: $headings-fw;
+  line-height: $headings-lh;
+  color: color('gray-9');
+}
+
+@each $heading, $size in $headings-fz {
+  #{$heading},
+  .#{$heading} {
+    font-size: $size;
+  }
+}
+
+@each $display, $size in $displays-fz {
+  .#{$display} {
+    font-size: $size;
+    font-family: map-get($font-families, displays), sans-serif;
+    font-weight: $displays-fw;
+    line-height: $displays-lh;
+  }
+}
+
+
+// ============================= //
+// ====== BASE TEXT STYLES ===== //
+// ============================= //
+
+p,
+ul,
+ol,
+pre,
+table,
+blockquote {
+  display: block;
+  margin-top: 0;
+  margin-bottom: $base-mg;
+  padding: 0;
+  font-size: $base-fz;
+  line-height: $base-lh;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+strong, .strong {
+  font-weight: 700
+}
+
+em, .em {
+  font-style: italic
+}
+
+small, .small {
+  @include small();
+}
+
+.tagline {
+  @include tagline();
+}
+
+mark, .mark {
+  background-color: rgba(black, 0.75);
+}
+
+ul,
+ol {
+  &.list-unstyled {
+    list-style-type: none !important;
+  }
+}
+
+code, kbd, samp, pre {
+  @include small();
+  
+  margin-bottom: $base-mg;
+  padding: spacer(25, 50);
+  border-radius: radius('base');
+  background-color: color('gray-1');
+  white-space: nowrap;
+  color: color('green');
+}
+
+hr {
+  box-sizing: border-box;
+  width: 100%;
+  height: 0;
+  margin-top: $base-mg;
+  margin-bottom: $base-mg;
+  border: none;
+  border-bottom: 1px solid rgba(black, .15);
+}
+
+
+// =========================== //
+// ====== TEXT SELECTION ===== //
+// =========================== //
+
+/// This code will define styles of text selection across all website
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/::selection
+///
+/// @example
+///   @include selection('black', 'white');
+
+@mixin selection($background, $color) {
+  ::-moz-selection {
+    background-color: color($background);
+    color: color($color);
+  }
+  
+  ::selection {
+    background-color: color($background);
+    color: color($color);
+  }
+}
+
+@include selection('black', 'white');
+
+
+// =========================== //
+// ====== TRUNCATED TEXT ===== //
+// =========================== //
+
+.text-truncate {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-dotted {
+  &:after {
+    content: '…'
+  }
+}
