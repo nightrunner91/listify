@@ -25,8 +25,8 @@ body {
   font-weight: map-get($font-weights, 400);
   font-size: $base-fz;
   line-height: $base-lh;
-  background-color: color('white');
-  color: color('gray-9');
+  background-color: var(--clr-background);
+  color: var(--clr-text);
 
   &.body--locked { overflow-y: hidden }
 }
@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, h6,
   font-family: map-get($font-families, headings), sans-serif;
   font-weight: $headings-fw;
   line-height: $headings-lh;
-  color: color('gray-9');
+  color: var(--clr-heading);
 }
 
 @each $heading, $size in $headings-fz {
@@ -120,9 +120,9 @@ code, kbd, samp, pre {
   margin-bottom: $base-mg;
   padding: spacer(25, 50);
   border-radius: radius('base');
-  background-color: color('gray-1');
+  background-color: var(--clr-embeded);
   white-space: nowrap;
-  color: color('success');
+  color: var(--clr-text);
 }
 
 hr {
@@ -158,7 +158,7 @@ hr {
   }
 }
 
-@include selection('black', 'white');
+// @include selection('black', 'white');
 
 
 // =========================== //

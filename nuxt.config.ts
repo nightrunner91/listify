@@ -2,6 +2,14 @@
 export default defineNuxtConfig({
   app: {
     baseURL: '/listify/',
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&family=Nunito+Sans:wght@400;500&display=swap',
+        },
+      ],
+    },
   },
   devServer: {
     port: 1146,
@@ -15,4 +23,7 @@ export default defineNuxtConfig({
       }
     }
   },
+  modules: [
+    '@pinia/nuxt',
+  ],
 })

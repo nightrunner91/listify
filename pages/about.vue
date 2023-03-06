@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const name = ref('Nikita')
+const name = ref('Nikita Sem')
 
 definePageMeta({
   layout: 'default',
@@ -18,7 +18,5 @@ definePageMeta({
 </template>
 
 <style lang="scss" scoped>
-h1 {
-  color: color('danger', light, 3);
-}
+
 </style>

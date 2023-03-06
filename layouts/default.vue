@@ -13,5 +13,7 @@
     <footer>
       <!-- Footer content goes here -->
     </footer>
+
+    <ly-theme-switcher />
   </div>
 </template>

@@ -81,7 +81,7 @@ $spacers: (
   auto: auto
 );
 
-$base-mg: map-get($spacers, 1); // Universal margin used for <p>, <ul> etc.
+$base-mg: map-get($spacers, 4); // Universal margin used for <p>, <ul> etc.
 
 
 // ================== //
@@ -179,18 +179,18 @@ $letter-spacings: (
 );
 
 $headings-fz: (
-  h1: 4.5rem,
-  h2: 2.5rem,
-  h3: 1.75rem,
-  h4: 1.25rem,
-  h5: 1rem,
-  h6: 0.875rem,
+  h1: 4.209rem,
+  h2: 3.157rem,
+  h3: 2.369rem,
+  h4: 1.777rem,
+  h5: 1.333rem,
+  h6: 1rem,
 );
 $headings-lh: map-get($line-heights, 25);
 $headings-fw: map-get($font-weights, 500);
 $headings-margins: (
-  top: map-get($spacers, 1),
-  bottom: map-get($spacers, 50),
+  top: map-get($spacers, 2),
+  bottom: map-get($spacers, 4),
 );
 
 $displays-fz: (
@@ -203,7 +203,7 @@ $displays-lh: map-get($line-heights, 25);
 $displays-fw: map-get($font-weights, 500);
 $displays-margins: (
   top: map-get($spacers, 1),
-  bottom: map-get($spacers, 50),
+  bottom: map-get($spacers, 2),
 );
 
 $base-fz:      16px; // CRUCIAL VALUE! A lot of things depends on it. Be aware.
@@ -223,61 +223,20 @@ $tagline-fw:   map-get($font-weights, 500);
 // ===== Colors ===== //
 // ================== //
 
-
-$color-white:      #ffffff;
-$color-gray-1:     #eaeaea;
-$color-gray-2:     #d5d5d5;
-$color-gray-3:     #bfbfbf;
-$color-gray-4:     #aaaaaa;
-$color-gray-5:     #959595;
-$color-gray-6:     #cccccc;
-$color-gray-7:     #6a6a6a;
-$color-gray-8:     #555555;
-$color-gray-9:     #404040;
-$color-gray-10:    #2b2b2b;
-$color-black:      #000000;
-
-$color-primary:    #682CAB;
-$color-secondary:  #2196F3;
-$color-success:    #47b05b;
-$color-info:       #009688;
-$color-warning:    #FFEE58;
-$color-danger:     #F44336;
-
-:root {
-  --color-primary:     #{$color-primary};
-  --color-secondary:   #{$color-secondary};
-  --color-success:     #{$color-success};
-  --color-info:        #{$color-info};
-  --color-warning:     #{$color-warning};
-  --color-danger:      #{$color-danger};
-  
-  --color-white:       #{$color-white};
-  --color-gray-1:      #{$color-gray-1};
-  --color-gray-2:      #{$color-gray-2};
-  --color-gray-3:      #{$color-gray-3};
-  --color-gray-4:      #{$color-gray-4};
-  --color-gray-5:      #{$color-gray-5};
-  --color-gray-6:      #{$color-gray-6};
-  --color-gray-7:      #{$color-gray-7};
-  --color-gray-8:      #{$color-gray-8};
-  --color-gray-9:      #{$color-gray-9};
-  --color-gray-10:     #{$color-gray-10};
-  --color-black:       #{$color-black};
-
-  --color-background:  #{$color-gray-1};
-  --color-headings:    #{$color-black};
-  --color-text:        #{$color-gray-10};
+:root,
+[data-theme="light"] {
+  --clr-background:      #F0F0F0;
+  --clr-embeded:         #cccccc;
+  --clr-heading:         #010113;
+  --clr-text:            #060618;
 }
 
-// Levels of mix() and scale()
-$levels: (
-  1: 10%,
-  2: 20%,
-  3: 30%,
-  4: 40%,
-  5: 50%,
-);
+[data-theme="dark"] {
+  --clr-background:      #0B1015;
+  --clr-embeded:         #1E252F;
+  --clr-heading:         #EFEFF1;
+  --clr-text:            #AFB3B7;
+}
 
 // ===================== //
 // ===== Gradients ===== //
