@@ -6,13 +6,11 @@ const themeStore = useThemeStore()
 </script>
 
 <template>
-  <div class="position-fixed top-4 right-4">
-    <n-button
-      circle
-      @click="themeStore.toggleTheme">
-      <template #icon>
-        <n-icon :component="PhSun" />
-      </template>
-    </n-button>
-  </div>
+  <n-button
+    circle
+    @click="themeStore.toggleTheme">
+    <template #icon>
+      <n-icon :component="PhSun" />
+    </template>
+  </n-button>
 </template>

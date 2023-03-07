@@ -1,32 +1,25 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { darkTheme, type GlobalTheme } from 'naive-ui'
 
 export const useThemeStore = defineStore('theme', () => {
-  const currentTheme = ref<string>('light')
+  /* ========================= */
+  /* ===== Website Theme ===== */
+  /* ========================= */
+
+  const currentTheme = ref<GlobalTheme | null>(null)
 
   function toggleTheme() {
-    currentTheme.value = currentTheme.value == 'dark' ? 'light' : 'dark'
-    document.documentElement.setAttribute('data-theme', currentTheme.value)
+    currentTheme.value = currentTheme.value ? null : darkTheme
   }
 
-  function setTheme(theme: 'light' | 'dark') {
-    currentTheme.value = theme
-    document.documentElement.setAttribute('data-theme', currentTheme.value)
-  }
-
-  function setUserPreferableTheme() {
-    const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)')
-    if (darkThemeMq.matches) {
-      setTheme('dark')
-    } else {
-      setTheme('light')
-    }
+  function restoreTheme() {
+    // currentTheme.value = storedTheme == 'light' || !storedTheme ? null : darkTheme
   }
 
   return {
     currentTheme,
     toggleTheme,
-    setTheme,
-    setUserPreferableTheme,
+    restoreTheme,
   }
 })
