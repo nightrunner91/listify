@@ -14,5 +14,4 @@ git add -A
 git commit -m 'deploy'
 
 git push -f git@github.com:nightrunner91/listify.git main:gh-pages
-
 cd -
