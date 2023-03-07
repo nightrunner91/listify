@@ -50,6 +50,7 @@
         padding-top: $indent !important;
         padding-bottom: $indent !important
       }
+      .gap#{$breakpoint}-#{$name} { gap: $indent !important }
     }
 
     .m#{$breakpoint}-#{$name} { margin: $indent !important }

@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-  <RouterView />
+  <LyThemeSwitcher />
+  <div class="container">
+    <RouterView />
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      |
+      <RouterLink to="/about">About</RouterLink>
+    </nav>
+  </div>
 </template>

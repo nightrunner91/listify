@@ -7,6 +7,13 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   base: '/listify/',
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@use "@/assets/styles/@core/globals.scss" as *;'
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
