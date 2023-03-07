@@ -6,7 +6,7 @@ import {
   NDialogProvider,
 } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme'
-import themeOverrides from '@/theme'
+import themeOverrides from '@/theme.config'
 
 const themeStore = useThemeStore()
 </script>
