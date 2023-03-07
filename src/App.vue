@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { NLayout } from 'naive-ui'
+import {
+  NLayout,
+  NLayoutHeader,
+  NLayoutContent,
+  NLayoutFooter,
+  NGrid,
+  NGridItem,
+} from 'naive-ui'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import AppProvider from './AppProvider.vue'
 </script>
@@ -8,14 +15,28 @@ import AppProvider from './AppProvider.vue'
 <template>
   <app-provider>
     <n-layout>
-      <div class="container">
-        <router-view />
+      <n-layout-header>
         <nav>
           <RouterLink to="/">Home</RouterLink>
           |
           <RouterLink to="/about">About</RouterLink>
         </nav>
-      </div>
+      </n-layout-header>
+      <n-layout-content>
+        <n-grid
+          :x-gap="12"
+          :y-gap="8"
+          :cols="4">
+          <n-grid-item
+            :span="2"
+            :offset="1">
+            <router-view />
+          </n-grid-item>
+        </n-grid>
+      </n-layout-content>
+      <n-layout-footer>
+        Footer
+      </n-layout-footer>
       <ly-theme-switcher />
     </n-layout>
   </app-provider>
