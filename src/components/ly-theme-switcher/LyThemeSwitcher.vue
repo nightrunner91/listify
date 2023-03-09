@@ -7,9 +7,11 @@ const themeStore = useThemeStore()
 
 <template>
   <n-button
+    secondary
     circle
+    size="large"
     @click="themeStore.toggleTheme"
-    class="position-fixed top-6 right-6">
+    class="position-fixed top-6 right-6 z-plus-12">
     <template #icon>
       <n-icon :component="themeStore.currentTheme ? PhSun : PhMoon" />
     </template>
