@@ -1,4 +1,14 @@
 const themeOverrides = {
+  common: {
+    fontFamily: 'Onest',
+    fontSize: '16px',
+    fontSizeMini: '12px',
+    fontSizeTiny: '11px',
+    fontSizeSmall: '14px',
+    fontSizeMedium: '16px',
+    fontSizeLarge: '18px',
+    fontSizeHuge: '20px',
+  },
   Typography: {
     headerFontSize1: '4.5rem',
     headerFontSize2: '2.5rem',

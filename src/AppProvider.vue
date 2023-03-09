@@ -4,6 +4,7 @@ import {
   NMessageProvider,
   NLoadingBarProvider,
   NDialogProvider,
+  NGlobalStyle,
 } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme'
 import themeOverrides from '@/theme.config'
@@ -22,5 +23,6 @@ const themeStore = useThemeStore()
         </n-dialog-provider>
       </n-message-provider>
     </n-loading-bar-provider>
+    <n-global-style />
   </n-config-provider>
 </template>

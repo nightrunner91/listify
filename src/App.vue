@@ -1,42 +1,40 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { onBeforeMount } from 'vue'
+import { RouterView } from 'vue-router'
 import {
   NLayout,
-  NLayoutHeader,
   NLayoutContent,
-  NLayoutFooter,
   NGrid,
   NGridItem,
 } from 'naive-ui'
+import { useThemeStore } from '@/stores/theme'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import AppProvider from './AppProvider.vue'
+
+const themeStore = useThemeStore()
+
+onBeforeMount(() => {
+  themeStore.restoreTheme()
+})
 </script>
 
 <template>
   <app-provider>
-    <n-layout>
-      <n-layout-header>
-        <nav>
-          <RouterLink to="/">Home</RouterLink>
-          |
-          <RouterLink to="/about">About</RouterLink>
-        </nav>
-      </n-layout-header>
-      <n-layout-content>
+    <n-layout class="min-vh-100">
+      <n-layout-content class="px-4">
         <n-grid
+          item-responsive
+          responsive="screen"
           :x-gap="12"
           :y-gap="8"
-          :cols="4">
+          :cols="6">
           <n-grid-item
-            :span="2"
-            :offset="1">
+            span="6 l:4"
+            offset="0 l:1">
             <router-view />
           </n-grid-item>
         </n-grid>
       </n-layout-content>
-      <n-layout-footer>
-        Footer
-      </n-layout-footer>
       <ly-theme-switcher />
     </n-layout>
   </app-provider>

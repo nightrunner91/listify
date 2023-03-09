@@ -1,14 +1,23 @@
+/** essentials */
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
 import App from './App.vue'
-import router from './router'
-
-import './assets/styles/nightvue.scss'
-
 const app = createApp(App)
 
-app.use(createPinia())
-app.use(router)
+/** plugins */
+import { createPinia } from 'pinia'
+import router from './router'
+import Vue3Storage from 'vue3-storage'
 
+/** fonts and stylesheets */
+import '@/assets/styles/nightvue.scss'
+
+/** plugins */
+const pinia = createPinia()
+app
+  .use(pinia)
+  .use(router)
+  .use(Vue3Storage, { namespace: 'ly_' })
+
+
+/** mount app */
 app.mount('#app')

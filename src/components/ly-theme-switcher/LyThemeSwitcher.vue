@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhSun } from 'phosphor-vue'
+import { PhSun, PhMoon } from 'phosphor-vue'
 import { useThemeStore } from '@/stores/theme'
 import { NButton, NIcon } from 'naive-ui'
 const themeStore = useThemeStore()
@@ -8,9 +8,10 @@ const themeStore = useThemeStore()
 <template>
   <n-button
     circle
-    @click="themeStore.toggleTheme">
+    @click="themeStore.toggleTheme"
+    class="position-fixed top-6 right-6">
     <template #icon>
-      <n-icon :component="PhSun" />
+      <n-icon :component="themeStore.currentTheme ? PhSun : PhMoon" />
     </template>
   </n-button>
 </template>
