@@ -20,7 +20,7 @@ export const themeOverrides = {
   }
 }
 
-export const breakPoints = {
+export const breakpoints = {
   xs:  0,
   s:   640,
   m:   1024,

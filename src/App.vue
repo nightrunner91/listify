@@ -15,14 +15,14 @@ import {
   PhList as OpenIcon,
   PhCaretLeft as CloseIcon,
 } from 'phosphor-vue'
-import { breakPoints } from '@/theme.config'
+import { breakpoints } from '@/theme.config'
 
 import { useThemeStore } from '@/stores/theme'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import AppProvider from './AppProvider.vue'
 import LyMenu from '@/components/ly-menu/LyMenu.vue'
 
-console.log(breakPoints)
+console.log(breakpoints)
 
 const themeStore = useThemeStore()
 
