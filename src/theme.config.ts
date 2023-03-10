@@ -1,4 +1,4 @@
-const themeOverrides = {
+export const themeOverrides = {
   common: {
     fontFamily: 'Onest',
     fontSize: '16px',
@@ -20,4 +20,11 @@ const themeOverrides = {
   }
 }
 
-export default themeOverrides
+export const breakPoints = {
+  xs:  0,
+  s:   640,
+  m:   1024,
+  l:   1280,
+  xl:  1536,
+  xxl: 1920
+}

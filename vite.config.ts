@@ -7,6 +7,10 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   base: '/listify/',
+  server: {
+    host: '192.168.88.224',
+    port: 4096,
+  },
   css: {
     preprocessorOptions: {
       scss: {

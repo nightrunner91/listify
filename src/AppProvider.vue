@@ -7,7 +7,7 @@ import {
   NGlobalStyle,
 } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme'
-import themeOverrides from '@/theme.config'
+import { themeOverrides, breakPoints } from '@/theme.config'
 
 const themeStore = useThemeStore()
 </script>
@@ -15,7 +15,8 @@ const themeStore = useThemeStore()
 <template>
   <n-config-provider
     :theme="themeStore.currentTheme"
-    :theme-overrides="themeOverrides">
+    :theme-overrides="themeOverrides"
+    :breakpoints="breakPoints">
     <n-loading-bar-provider>
       <n-message-provider>
         <n-dialog-provider>
