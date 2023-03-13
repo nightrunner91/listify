@@ -6,5 +6,5 @@ const route = useRoute()
 </script>
 
 <template>
-  <n-h1>{{ route.name }}</n-h1>
+  <n-h1>{{ route.meta.title }}</n-h1>
 </template>
