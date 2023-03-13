@@ -7,7 +7,7 @@ import {
   NGlobalStyle,
 } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme'
-import { themeOverrides, breakpoints } from '@/theme.config'
+import { darkThemeOverrides, lightThemeOverrides, breakpoints } from '@/theme.config'
 
 const themeStore = useThemeStore()
 </script>
@@ -15,7 +15,7 @@ const themeStore = useThemeStore()
 <template>
   <n-config-provider
     :theme="themeStore.currentTheme"
-    :theme-overrides="themeOverrides"
+    :theme-overrides="themeStore.currentTheme ? darkThemeOverrides : lightThemeOverrides"
     :breakpoints="breakpoints">
     <n-loading-bar-provider>
       <n-message-provider>

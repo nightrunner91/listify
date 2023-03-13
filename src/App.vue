@@ -37,6 +37,7 @@ onBeforeMount(() => {
   <app-provider>
     <n-layout position="absolute">
       <n-layout-header
+        embedded
         style="height: 56px;"
         class="px-3"
         bordered>
@@ -67,14 +68,17 @@ onBeforeMount(() => {
           collapse-mode="width"
           position="absolute"
           :collapsed-width="gridStore.screenLargerThen('s') ? 64 : 0"
-          :width="320"
+          :width="300"
           :collapsed="collapsed"
           @collapse="collapsed = true"
           @expand="collapsed = false"
           class="min-vh-100 py-6 top-0 left-0">
           <ly-menu :collapsed="collapsed" />
         </n-layout-sider>
-        <n-layout-content class="pl-2 pl-s-18">
+        <n-layout-content
+          @click="collapsed = true"
+          :class="{ 'opacity-5' : !collapsed }"
+          class="pl-2 pl-s-18">
           <n-grid
             item-responsive
             responsive="screen"

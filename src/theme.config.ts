@@ -1,7 +1,7 @@
 /// https://www.naiveui.com/en-US/dark/docs/customize-theme
 /// https://www.naiveui.com/en-US/dark/components/config-provider
 
-export const themeOverrides = {
+const globalOverrides = {
   common: {
     fontFamily: 'Onest',
     fontSize: '16px',
@@ -20,7 +20,22 @@ export const themeOverrides = {
     headerFontSize5: '1rem',
     headerFontSize6: '0.875rem',
     pFontSize: '16px',
-  }
+  },
+}
+
+export const lightThemeOverrides = {
+  ...globalOverrides,
+  Layout: {
+    headerColor: 'rgb(250, 250, 252)',
+    siderColor: 'rgb(250, 250, 252)',
+  },
+}
+
+export const darkThemeOverrides = {
+  ...globalOverrides,
+  Layout: {
+    
+  },
 }
 
 export const breakpoints = {
