@@ -15,21 +15,21 @@ import {
   PhList as OpenIcon,
   PhCaretLeft as CloseIcon,
 } from 'phosphor-vue'
-import { breakpoints } from '@/theme.config'
 
 import { useThemeStore } from '@/stores/theme'
+import { useGridStore } from '@/stores/grid'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import AppProvider from './AppProvider.vue'
 import LyMenu from '@/components/ly-menu/LyMenu.vue'
 
-console.log(breakpoints)
-
 const themeStore = useThemeStore()
+const gridStore = useGridStore()
 
 const collapsed = ref(true)
 
 onBeforeMount(() => {
   themeStore.restoreTheme()
+  gridStore.watchWindowSizes()
 })
 </script>
 
@@ -86,6 +86,17 @@ onBeforeMount(() => {
               span="6 l:4"
               offset="0 l:1">
               <router-view />
+            </n-grid-item>
+          </n-grid>
+          <n-grid
+            item-responsive
+            responsive="screen"
+            :x-gap="12"
+            :y-gap="8"
+            :cols="6"
+            class="py-2 py-lg-10 pr-2">
+            <n-grid-item span="6 xs:5 s:4 m:3 l:2 xl:1 xxl:6">
+              {{ gridStore.currentBreakpoint }}
             </n-grid-item>
           </n-grid>
         </n-layout-content>

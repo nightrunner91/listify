@@ -1,3 +1,6 @@
+/// https://www.naiveui.com/en-US/dark/docs/customize-theme
+/// https://www.naiveui.com/en-US/dark/components/config-provider
+
 export const themeOverrides = {
   common: {
     fontFamily: 'Onest',
@@ -21,10 +24,10 @@ export const themeOverrides = {
 }
 
 export const breakpoints = {
-  xs:  0,
-  s:   640,
-  m:   1024,
-  l:   1280,
-  xl:  1536,
+  xs: 0,
+  s: 640,
+  m: 1024,
+  l: 1280,
+  xl: 1536,
   xxl: 1920
 }
