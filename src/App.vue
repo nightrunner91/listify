@@ -88,17 +88,6 @@ onBeforeMount(() => {
               <router-view />
             </n-grid-item>
           </n-grid>
-          <n-grid
-            item-responsive
-            responsive="screen"
-            :x-gap="12"
-            :y-gap="8"
-            :cols="6"
-            class="py-2 py-lg-10 pr-2">
-            <n-grid-item span="6 xs:5 s:4 m:3 l:2 xl:1 xxl:6">
-              {{ gridStore.currentBreakpoint }}
-            </n-grid-item>
-          </n-grid>
         </n-layout-content>
       </n-layout>
     </n-layout>
