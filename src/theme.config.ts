@@ -13,7 +13,7 @@ const globalOverrides = {
     fontSizeHuge: '20px',
   },
   Typography: {
-    headerFontSize1: '4.5rem',
+    headerFontSize1: '3rem',
     headerFontSize2: '2.5rem',
     headerFontSize3: '1.75rem',
     headerFontSize4: '1.25rem',

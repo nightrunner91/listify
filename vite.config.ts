@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [vue()],
   base: '/listify/',
   server: {
-    host: '192.168.88.224',
+    // host: '192.168.88.224',
     port: 4096,
   },
   css: {
