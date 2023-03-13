@@ -21,6 +21,9 @@ const globalOverrides = {
     headerFontSize6: '0.875rem',
     pFontSize: '16px',
   },
+  Menu: {
+    borderRadius: '6px',
+  }
 }
 
 export const lightThemeOverrides = {
@@ -29,12 +32,15 @@ export const lightThemeOverrides = {
     headerColor: 'rgb(250, 250, 252)',
     siderColor: 'rgb(250, 250, 252)',
   },
+  Badge: {
+    color: 'rgb(255, 89, 122)',
+  },
 }
 
 export const darkThemeOverrides = {
   ...globalOverrides,
-  Layout: {
-    
+  Badge: {
+    color: 'rgb(54, 54, 61)',
   },
 }
 

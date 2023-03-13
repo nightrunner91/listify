@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue'
+import { onBeforeMount } from 'vue'
 import { RouterView } from 'vue-router'
 import {
   NLayout,
@@ -18,14 +18,14 @@ import {
 
 import { useThemeStore } from '@/stores/theme'
 import { useGridStore } from '@/stores/grid'
+import { useMenuStore } from '@/stores/menu'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import AppProvider from './AppProvider.vue'
 import LyMenu from '@/components/ly-menu/LyMenu.vue'
 
 const themeStore = useThemeStore()
 const gridStore = useGridStore()
-
-const collapsed = ref(true)
+const menuStore = useMenuStore()
 
 onBeforeMount(() => {
   themeStore.restoreTheme()
@@ -49,10 +49,10 @@ onBeforeMount(() => {
             quaternary
             circle
             size="large"
-            @click="collapsed = !collapsed"
+            @click="menuStore.toggleMenu"
             class="">
             <template #icon>
-              <open-icon v-if="collapsed" weight="bold" />
+              <open-icon v-if="menuStore.collapsed" weight="bold" />
               <close-icon v-else weight="bold" />
             </template>
           </n-button>
@@ -69,15 +69,15 @@ onBeforeMount(() => {
           position="absolute"
           :collapsed-width="gridStore.screenLargerThen('s') ? 64 : 0"
           :width="300"
-          :collapsed="collapsed"
-          @collapse="collapsed = true"
-          @expand="collapsed = false"
+          :collapsed="menuStore.collapsed"
+          @collapse="menuStore.closeMenu"
+          @expand="menuStore.openMenu"
           class="min-vh-100 py-6 top-0 left-0">
-          <ly-menu :collapsed="collapsed" />
+          <ly-menu />
         </n-layout-sider>
         <n-layout-content
-          @click="collapsed = true"
-          :class="{ 'opacity-5' : !collapsed }"
+          @click="menuStore.closeMenu"
+          :class="{ 'opacity-5' : !menuStore.collapsed }"
           class="pl-2 pl-s-18">
           <n-grid
             item-responsive

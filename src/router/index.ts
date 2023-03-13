@@ -1,22 +1,62 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import ListFavourites from '@/views/ListFavourites.vue'
+import ListUniversal from '@/views/ListUniversal.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'Home',
+      redirect: '/favourites',
+      children: [
+        {
+          path: '/favourites',
+          name: 'Favourites',
+          component: ListFavourites,
+          meta: {
+            tag: 'favourites',
+            title: 'My Favourites'
+          }
+        },
+        {
+          path: '/games',
+          name: 'Games',
+          component: ListUniversal,
+          meta: {
+            tag: 'games',
+            title: 'My Games'
+          }
+        },
+        {
+          path: '/tvshows',
+          name: 'TVShows',
+          component: ListUniversal,
+          meta: {
+            tag: 'tvshows',
+            title: 'My TV Shows'
+          }
+        },
+        {
+          path: '/films',
+          name: 'Films',
+          component: ListUniversal,
+          meta: {
+            tag: 'films',
+            title: 'My Films'
+          }
+        },
+        {
+          path: '/books',
+          name: 'Books',
+          component: ListUniversal,
+          meta: {
+            tag: 'books',
+            title: 'My Books'
+          }
+        },
+      ]
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
   ]
 })
 
