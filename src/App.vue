@@ -66,7 +66,7 @@ onBeforeMount(() => {
           bordered
           collapse-mode="width"
           position="absolute"
-          :collapsed-width="62"
+          :collapsed-width="gridStore.screenLargerThen('s') ? 62 : 0"
           :width="320"
           :collapsed="collapsed"
           @collapse="collapsed = true"
@@ -74,14 +74,14 @@ onBeforeMount(() => {
           class="min-vh-100 py-6 top-0 left-0">
           <ly-menu :collapsed="collapsed" />
         </n-layout-sider>
-        <n-layout-content class="pl-18">
+        <n-layout-content class="pl-2 pl-s-18">
           <n-grid
             item-responsive
             responsive="screen"
             :x-gap="12"
             :y-gap="8"
             :cols="6"
-            class="py-2 py-lg-10 pr-2">
+            class="py-2 py-l-10 pr-2">
             <n-grid-item
               span="6 l:4"
               offset="0 l:1">

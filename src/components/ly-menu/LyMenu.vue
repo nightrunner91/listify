@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { h, ref, type Component } from 'vue'
-import { NMenu, NIcon } from 'naive-ui'
-import type { MenuOption } from 'naive-ui'
+import { NMenu, NIcon, type MenuOption } from 'naive-ui'
 import {
   PhGameController as GamesIcon,
   PhTelevision as TvShowsIcon,
   PhFilmSlate as FilmsIcon,
   PhBookOpen as BooksIcon,
 } from 'phosphor-vue'
+import { useGridStore } from '@/stores/grid'
+
+const gridStore = useGridStore()
 
 const activeKey = ref<string | null>(null)
 
@@ -45,7 +47,7 @@ defineProps(['collapsed'])
   <n-menu
     v-model:value="activeKey"
     :collapsed="collapsed"
-    :collapsed-width="62"
+    :collapsed-width="gridStore.screenLargerThen('s') ? 62 : 0"
     :collapsed-icon-size="20"
     :icon-size="24"
     :options="menuOptions" />
