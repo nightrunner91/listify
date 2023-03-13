@@ -7,8 +7,6 @@ const themeStorage = useStorage('th_')
 
 export const useThemeStore = defineStore('theme', () => {
   const currentTheme = ref<GlobalTheme | null>(null)
-  const prefersDark = ref<Boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches)
-  const storedTheme = ref<string | undefined>(themeStorage.getStorageSync('savedTheme'))
 
   function toggleTheme(): void {
     currentTheme.value = currentTheme.value ? null : darkTheme
@@ -19,17 +17,22 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   function restoreTheme(): void {
-    if (prefersDark.value) {
+    const savedTheme = themeStorage.getStorageSync('savedTheme')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  
+    if (savedTheme === 'dark') {
+      currentTheme.value = darkTheme
+    } else if (savedTheme === 'light') {
+      currentTheme.value = null
+    } else if (prefersDark) {
       currentTheme.value = darkTheme
     } else {
-      currentTheme.value = storedTheme.value == 'light' || !storedTheme.value ? null : darkTheme
+      currentTheme.value = null
     }
   }
 
   return {
     currentTheme,
-    prefersDark,
-    storedTheme,
     toggleTheme,
     restoreTheme,
   }
