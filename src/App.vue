@@ -66,7 +66,7 @@ onBeforeMount(() => {
           bordered
           collapse-mode="width"
           position="absolute"
-          :collapsed-width="gridStore.screenLargerThen('s') ? 62 : 0"
+          :collapsed-width="gridStore.screenLargerThen('s') ? 64 : 0"
           :width="320"
           :collapsed="collapsed"
           @collapse="collapsed = true"

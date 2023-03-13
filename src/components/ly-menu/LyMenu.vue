@@ -47,7 +47,7 @@ defineProps(['collapsed'])
   <n-menu
     v-model:value="activeKey"
     :collapsed="collapsed"
-    :collapsed-width="gridStore.screenLargerThen('s') ? 62 : 0"
+    :collapsed-width="gridStore.screenLargerThen('s') ? 64 : 0"
     :collapsed-icon-size="20"
     :icon-size="24"
     :options="menuOptions" />
