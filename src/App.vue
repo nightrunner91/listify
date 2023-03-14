@@ -19,6 +19,8 @@ import {
 import { useThemeStore } from '@/stores/theme'
 import { useGridStore } from '@/stores/grid'
 import { useMenuStore } from '@/stores/menu'
+import LyImport from '@/components/ly-import/LyImport.vue'
+import LyExport from '@/components/ly-export/LyExport.vue'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import AppProvider from './AppProvider.vue'
 import LyMenu from '@/components/ly-menu/LyMenu.vue'
@@ -43,7 +45,7 @@ onBeforeMount(() => {
         class="px-3"
         bordered>
         <n-space
-          justify="space-between"
+          :wrap-item="false"
           align="center"
           class="w-100 h-100">
           <n-button
@@ -51,12 +53,14 @@ onBeforeMount(() => {
             circle
             size="large"
             @click="menuStore.toggleMenu"
-            class="">
+            class="mr-auto">
             <template #icon>
               <open-icon v-if="menuStore.collapsed" weight="bold" />
               <close-icon v-else weight="bold" />
             </template>
           </n-button>
+          <ly-import />
+          <ly-export />
           <ly-theme-switcher />
         </n-space>
       </n-layout-header>
@@ -99,3 +103,18 @@ onBeforeMount(() => {
     </n-layout>
   </app-provider>
 </template>
+
+<style lang="scss">
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s ease-out;
+}
+
+.slide-enter-from {
+  transform: translateX(100%);
+}
+
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+</style>

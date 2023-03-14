@@ -29,7 +29,7 @@ const globalOverrides = {
 export const lightThemeOverrides = {
   ...globalOverrides,
   Categories: <CategoriesColors> {
-    favouritesColor: '#008080',
+    favouritesColor: '#3CBCBC',
     gamesColor: '#ff7b72',
     tvshowsColor: '#2080F0',
     filmsColor: '#F0A020',
@@ -50,8 +50,8 @@ export const darkThemeOverrides = {
     favouritesColor: '#008080',
     gamesColor: '#ff7b72',
     tvshowsColor: '#79c0ff',
-    filmsColor: '#ffa657',
-    booksColor: '#3fb950',
+    filmsColor: '#FFB87A',
+    booksColor: '#5CB969',
   },
   Badge: {
     color: 'rgb(54, 54, 61)',

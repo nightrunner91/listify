@@ -8,22 +8,29 @@ import { darkThemeOverrides, lightThemeOverrides } from '@/theme.config'
 const route = useRoute()
 const themeStore = useThemeStore()
 
-const barColor = computed(() => {
+const categoryColor = computed(() => {
   if (themeStore.currentTheme) {
     return darkThemeOverrides.Categories[`${route.meta.tag}Color`]
   } else {
     return lightThemeOverrides.Categories[`${route.meta.tag}Color`]
   }
 })
+
+const barColor = ref<string>('#000')
 const barWidth = ref<string>('0%')
 const barSpeed: number = 250
 
 watch(route, () => {
-  barWidth.value = '0%'
+  barWidth.value = '3px'
   setTimeout(() => {
     barWidth.value = '72px'
-  }, barSpeed * 2)
+    barColor.value = categoryColor.value
+  }, barSpeed * 1.5)
 }, { flush: 'pre', immediate: true, deep: true })
+
+watch(themeStore, () => {
+  barColor.value = categoryColor.value
+})
 </script>
 
 <template>
@@ -37,7 +44,7 @@ watch(route, () => {
           height: '3px',
           borderRadius: '3px',
           transitionDuration: barSpeed + 'ms',
-          transitionTimingFunction: 'cubic-bezier(0.0, 0.0, 0.2, 1)',
+          transitionTimingFunction: 'cubic-bezier(0.0, 0, 0.2, 1)',
         }" />
     </n-text>
   </n-h1>
