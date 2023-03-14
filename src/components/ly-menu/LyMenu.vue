@@ -101,10 +101,6 @@ const menuOptions: MenuOption[] = [
     icon: renderIcon(NewIcon)
   },
 ]
-
-function handleMenuChange() {
-  setTimeout(() => { menuStore.closeMenu() }, 100)
-}
 </script>
 
 <template>
@@ -115,7 +111,7 @@ function handleMenuChange() {
     :collapsed-icon-size="24"
     :icon-size="24"
     :options="menuOptions"
-    @update:value="handleMenuChange" />
+    @update:value="menuStore.closeMenu" />
 </template>
 
 <style lang="scss">

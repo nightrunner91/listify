@@ -13,3 +13,11 @@ interface GridBreakpoints {
   xl: number,
   xxl: number
 }
+
+interface CategoriesColors {
+  [k: string]: string,
+  gamesColor: string,
+  tvshowsColor: string,
+  filmsColor: string,
+  booksColor: string,
+}

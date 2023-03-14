@@ -22,6 +22,7 @@ import { useMenuStore } from '@/stores/menu'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import AppProvider from './AppProvider.vue'
 import LyMenu from '@/components/ly-menu/LyMenu.vue'
+import LyTitle from '@/components/ly-title/LyTitle.vue'
 
 const themeStore = useThemeStore()
 const gridStore = useGridStore()
@@ -89,6 +90,7 @@ onBeforeMount(() => {
             <n-grid-item
               span="6 l:4"
               offset="0 l:1">
+              <ly-title />
               <router-view />
             </n-grid-item>
           </n-grid>

@@ -23,11 +23,18 @@ const globalOverrides = {
   },
   Menu: {
     borderRadius: '6px',
-  }
+  },
 }
 
 export const lightThemeOverrides = {
   ...globalOverrides,
+  Categories: <CategoriesColors> {
+    favouritesColor: '#008080',
+    gamesColor: '#ff7b72',
+    tvshowsColor: '#2080F0',
+    filmsColor: '#F0A020',
+    booksColor: '#18A058',
+  },
   Layout: {
     headerColor: 'rgb(250, 250, 252)',
     siderColor: 'rgb(250, 250, 252)',
@@ -39,6 +46,13 @@ export const lightThemeOverrides = {
 
 export const darkThemeOverrides = {
   ...globalOverrides,
+  Categories: <CategoriesColors> {
+    favouritesColor: '#008080',
+    gamesColor: '#ff7b72',
+    tvshowsColor: '#79c0ff',
+    filmsColor: '#ffa657',
+    booksColor: '#3fb950',
+  },
   Badge: {
     color: 'rgb(54, 54, 61)',
   },
