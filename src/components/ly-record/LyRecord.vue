@@ -3,12 +3,9 @@ import {
   NListItem,
   NSpace,
   NInput,
-  NDropdown,
 } from 'naive-ui'
-import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records'
 
-const route = useRoute()
 const recordsStore = useRecordsStore()
 </script>
 
@@ -18,13 +15,7 @@ const recordsStore = useRecordsStore()
       <n-input
         v-model:value="recordsStore.record.title"
         type="text"
-        :placeholder="''" />
-      <n-dropdown
-        trigger="hover"
-        :options="options"
-        @select="handleSelect">
-        <n-button>Hover!</n-button>
-      </n-dropdown>
+        placeholder="" />
     </n-space>
   </n-list-item>
 </template>
