@@ -48,7 +48,7 @@ const menuStore = useMenuStore()
 
   &--dimmed {
     &::before {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(136, 115, 128, 0.1);
     }
   }
 }

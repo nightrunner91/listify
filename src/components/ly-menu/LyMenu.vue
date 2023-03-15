@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { h, ref, type Component } from 'vue'
+import { h, ref, watch, type Component } from 'vue'
 import { NMenu, NIcon, NBadge, type MenuOption } from 'naive-ui'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 import {
   PhHeart as FavouritesIcon,
   PhGameController as GamesIcon,
@@ -15,8 +15,9 @@ import { useMenuStore } from '@/stores/menu'
 
 const gridStore = useGridStore()
 const menuStore = useMenuStore()
+const route = useRoute()
 
-const activeKey = ref<string | null>(null)
+const activeKey = ref<any>(null)
 
 function renderExtra (total: number) {
   return () => h(NBadge, {
@@ -101,6 +102,10 @@ const menuOptions: MenuOption[] = [
     icon: renderIcon(NewIcon)
   },
 ]
+
+watch(route, () => {
+  activeKey.value = route.meta.tag
+}, { flush: 'pre', immediate: true, deep: true })
 </script>
 
 <template>
