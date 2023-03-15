@@ -14,6 +14,16 @@ export const useThemeStore = defineStore('theme', () => {
       key: 'savedTheme',
       data: currentTheme.value ? 'dark' : 'light',
     })
+    applyBodyClassname()
+  }
+
+  function applyBodyClassname() {
+    const body = document.querySelector('body')
+    if (currentTheme.value) {
+      body?.classList.add('dark')
+    } else {
+      body?.classList.remove('dark')
+    }
   }
 
   function restoreTheme(): void {
@@ -29,6 +39,8 @@ export const useThemeStore = defineStore('theme', () => {
     } else {
       currentTheme.value = null
     }
+
+    applyBodyClassname()
   }
 
   return {

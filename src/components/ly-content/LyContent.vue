@@ -14,8 +14,8 @@ const menuStore = useMenuStore()
 <template>
   <n-layout-content
     @click="menuStore.closeMenu"
-    :class="{ 'opacity-5' : !menuStore.collapsed }"
-    class="pl-2 pl-s-18">
+    :class="{ 'ly-content--dimmed' : !menuStore.collapsed }"
+    class="pl-2 pl-s-18 ly-content">
     <n-grid
       item-responsive
       responsive="screen"
@@ -32,3 +32,34 @@ const menuStore = useMenuStore()
     </n-grid>
   </n-layout-content>
 </template>
+
+<style lang="scss" scoped>
+.ly-content {
+  &::before {
+    @include pseudoelem();
+
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    transition: transition(background-color);
+  }
+
+  &--dimmed {
+    &::before {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+body.dark {
+  .ly-content {
+    &--dimmed {
+      &::before {
+        background-color: rgba(0, 0, 0, 0.74);
+      }
+    }
+  }
+}
+</style>
