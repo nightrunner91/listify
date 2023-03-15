@@ -16,7 +16,7 @@ const router = createRouter({
           component: ListFavourites,
           meta: {
             tag: 'favourites',
-            title: 'Favourites'
+            title: 'Favourites',
           }
         },
         {
@@ -25,7 +25,8 @@ const router = createRouter({
           component: ListUniversal,
           meta: {
             tag: 'games',
-            title: 'Games'
+            title: 'Games',
+            thing: 'Game',
           }
         },
         {
@@ -34,7 +35,8 @@ const router = createRouter({
           component: ListUniversal,
           meta: {
             tag: 'tvshows',
-            title: 'TV Shows'
+            title: 'TV Shows',
+            thing: 'TV Show'
           }
         },
         {
@@ -43,7 +45,8 @@ const router = createRouter({
           component: ListUniversal,
           meta: {
             tag: 'films',
-            title: 'Films'
+            title: 'Films',
+            thing: 'Film',
           }
         },
         {
@@ -52,7 +55,8 @@ const router = createRouter({
           component: ListUniversal,
           meta: {
             tag: 'books',
-            title: 'Books'
+            title: 'Books',
+            thing: 'Book',
           }
         },
       ]

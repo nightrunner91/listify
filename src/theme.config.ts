@@ -24,6 +24,11 @@ const globalOverrides = {
   Menu: {
     borderRadius: '6px',
   },
+  Button: {
+    borderRadiusSmall: '4px',
+    borderRadiusMedium: '5px',
+    borderRadiusLarge: '6px',
+  },
 }
 
 export const lightThemeOverrides = {

@@ -21,3 +21,17 @@ interface CategoriesColors {
   filmsColor: string,
   booksColor: string,
 }
+
+interface LyRecord {
+  [k: string]: any,
+  id: number | undefined,
+  title: string,
+  score: number,
+  liked: boolean,
+  label: string,
+}
+
+interface LyRecords<T> {
+  [k: string]: Array<T>,
+  games: Array<T>,
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { h, ref, watch, type Component } from 'vue'
-import { NMenu, NIcon, NBadge, type MenuOption } from 'naive-ui'
+import { h, ref, watch } from 'vue'
+import { NMenu, NBadge, type MenuOption } from 'naive-ui'
 import { RouterLink, useRoute } from 'vue-router'
 import {
   PhHeart as FavouritesIcon,
@@ -12,6 +12,7 @@ import {
 } from 'phosphor-vue'
 import { useGridStore } from '@/stores/grid'
 import { useMenuStore } from '@/stores/menu'
+import { renderIcon } from '@/utils/render-icon'
 
 const gridStore = useGridStore()
 const menuStore = useMenuStore()
@@ -26,10 +27,6 @@ function renderExtra (total: number) {
     max: 1000,
     showZero: true,
   })
-}
-
-function renderIcon (icon: Component) {
-  return () => h(NIcon, null, { default: () => h(icon) })
 }
 
 const menuOptions: MenuOption[] = [
@@ -99,7 +96,8 @@ const menuOptions: MenuOption[] = [
   {
     label: 'Create a New List',
     key: 'create-new',
-    icon: renderIcon(NewIcon)
+    icon: renderIcon(NewIcon),
+    disabled: true,
   },
 ]
 
