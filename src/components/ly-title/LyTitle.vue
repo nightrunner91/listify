@@ -15,9 +15,8 @@ const categoryColor = computed(() => {
     return lightThemeOverrides.Categories[`${route.meta.tag}Color`]
   }
 })
-
-const barColor = ref<string>('#000')
-const barWidth = ref<string>('0%')
+const barColor = ref<string>('transparent')
+const barWidth = ref<string>('3px')
 const barSpeed: number = 250
 
 watch(route, () => {
@@ -35,7 +34,7 @@ watch(themeStore, () => {
 
 <template>
   <n-h1>
-    <n-text style="display: inline-block;">
+    <n-text>
       {{ route.meta.title }}
       <div
         :style="{
