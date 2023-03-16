@@ -6,7 +6,7 @@ import {
   NGridItem,
 } from 'naive-ui'
 import LyTitle from '@/components/ly-title/LyTitle.vue'
-import { useMenuStore } from '@/stores/menu'
+import { useMenuStore } from '@/stores/menu.store'
 
 const menuStore = useMenuStore()
 </script>

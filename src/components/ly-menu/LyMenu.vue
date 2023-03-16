@@ -10,8 +10,8 @@ import {
   PhBookOpen as BooksIcon,
   PhPlus as NewIcon,
 } from 'phosphor-vue'
-import { useGridStore } from '@/stores/grid'
-import { useMenuStore } from '@/stores/menu'
+import { useGridStore } from '@/stores/grid.store'
+import { useMenuStore } from '@/stores/menu.store'
 import { renderIcon } from '@/utils/render-icon'
 
 const gridStore = useGridStore()

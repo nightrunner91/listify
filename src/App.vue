@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue'
 import { NLayout } from 'naive-ui'
-import { useThemeStore } from '@/stores/theme'
-import { useGridStore } from '@/stores/grid'
+import { useThemeStore } from '@/stores/theme.store'
+import { useGridStore } from '@/stores/grid.store'
 import AppProvider from './AppProvider.vue'
 import LyHeader from '@/components/ly-header/LyHeader.vue'
 import LySider from '@/components/ly-sider/LySider.vue'

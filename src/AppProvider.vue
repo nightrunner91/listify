@@ -6,8 +6,12 @@ import {
   NDialogProvider,
   NGlobalStyle,
 } from 'naive-ui'
-import { useThemeStore } from '@/stores/theme'
-import { darkThemeOverrides, lightThemeOverrides, breakpoints } from '@/theme.config'
+import {
+  darkThemeOverrides,
+  lightThemeOverrides,
+  breakpoints
+} from '@/theme.config'
+import { useThemeStore } from '@/stores/theme.store'
 
 const themeStore = useThemeStore()
 </script>

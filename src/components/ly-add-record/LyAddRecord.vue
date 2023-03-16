@@ -4,7 +4,7 @@ import {
   PhPlus as PlusIcon,
 } from 'phosphor-vue'
 import { useRoute } from 'vue-router'
-import { useRecordsStore } from '@/stores/records'
+import { useRecordsStore } from '@/stores/records.store'
 import { renderIcon } from '@/utils/render-icon'
 
 const route = useRoute()

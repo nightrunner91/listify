@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NLayoutSider } from 'naive-ui'
-import { useMenuStore } from '@/stores/menu'
-import { useGridStore } from '@/stores/grid'
+import { useMenuStore } from '@/stores/menu.store'
+import { useGridStore } from '@/stores/grid.store'
 import LyMenu from '@/components/ly-menu/LyMenu.vue'
 
 const menuStore = useMenuStore()

@@ -8,7 +8,7 @@ import {
   PhList as OpenIcon,
   PhCaretLeft as CloseIcon,
 } from 'phosphor-vue'
-import { useMenuStore } from '@/stores/menu'
+import { useMenuStore } from '@/stores/menu.store'
 
 import LyImport from '@/components/ly-import/LyImport.vue'
 import LyExport from '@/components/ly-export/LyExport.vue'

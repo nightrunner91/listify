@@ -11,7 +11,7 @@ import {
   NRate,
 } from 'naive-ui'
 import { useRoute } from 'vue-router'
-import { useRecordsStore } from '@/stores/records'
+import { useRecordsStore } from '@/stores/records.store'
 import { 
   PhHeart as LikeIcon,
 } from 'phosphor-vue'

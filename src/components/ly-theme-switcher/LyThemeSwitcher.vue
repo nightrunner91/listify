@@ -3,7 +3,7 @@ import {
   PhSun as LightIcon,
   PhMoon as DarkIcon,
 } from 'phosphor-vue'
-import { useThemeStore } from '@/stores/theme'
+import { useThemeStore } from '@/stores/theme.store'
 import { NButton, NIcon } from 'naive-ui'
 const themeStore = useThemeStore()
 </script>

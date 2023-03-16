@@ -2,7 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { NH1, NText } from 'naive-ui'
-import { useThemeStore } from '@/stores/theme'
+import { useThemeStore } from '@/stores/theme.store'
 import { darkThemeOverrides, lightThemeOverrides } from '@/theme.config'
 
 const route = useRoute()
