@@ -41,5 +41,5 @@ interface LyLabels<T> {
 }
 
 interface LyLabel {
-  [k: string]: string,
+  [k: string]: string | Component,
 }

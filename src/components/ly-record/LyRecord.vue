@@ -6,6 +6,7 @@ import {
   NInput,
   NDropdown,
   NButton,
+  NIcon,
   NText,
   NRate,
 } from 'naive-ui'
@@ -59,6 +60,7 @@ const record = computed(() => {
 
       <n-rate
         v-model:value="record.score"
+        clearable
         size="small"
         class="ml-8" />
 
@@ -72,6 +74,11 @@ const record = computed(() => {
           quaternary
           size="small"
           class="ml-auto">
+          <template #icon>
+            <n-icon
+              depth="2"
+              :component="recordsStore.getLabelIcon(tag, record.label)" />
+          </template>
           {{ recordsStore.getLabelName(tag, record.label) }}
         </n-button>
       </n-dropdown>
