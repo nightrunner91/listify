@@ -18,7 +18,7 @@ const gridStore = useGridStore()
     :collapsed="menuStore.collapsed"
     @collapse="menuStore.closeMenu"
     @expand="menuStore.openMenu"
-    class="min-vh-100 py-6 top-0 left-0">
+    class="min-vh-100 py-6 top-0 left-0 z-plus-2">
     <ly-menu />
   </n-layout-sider>
 </template>

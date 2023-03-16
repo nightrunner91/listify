@@ -48,7 +48,8 @@ const menuStore = useMenuStore()
 
   &--dimmed {
     &::before {
-      background-color: rgba(136, 115, 128, 0.1);
+      z-index: 1;
+      background-color: rgba(136, 115, 128, 0.21);
     }
   }
 }
@@ -57,7 +58,8 @@ body.dark {
   .ly-content {
     &--dimmed {
       &::before {
-        background-color: rgba(0, 0, 0, 0.74);
+        z-index: 1;
+        background-color: rgba(4, 11, 6, 0.74);
       }
     }
   }

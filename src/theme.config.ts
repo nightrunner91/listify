@@ -63,7 +63,7 @@ export const darkThemeOverrides = {
     booksColor: '#5CB969',
   },
   Badge: {
-    color: 'rgb(54, 54, 61)',
+    color: 'rgb(215, 69, 98)',
   },
 }
 
