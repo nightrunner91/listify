@@ -13,10 +13,14 @@ const route = useRoute()
   <n-space
     vertical
     size="large">
-    <n-list hoverable>
+    <n-list
+      hoverable
+      :show-divider="false">
       <ly-record
-        v-for="record in recordsStore.records[route.meta.tag as string]"
-        :key="record.id" />
+        v-for="(record, index) in recordsStore.records[route.meta.tag as string]"
+        :key="record.id"
+        :id="record.id"
+        :index="index" />
     </n-list>
     <ly-add-record />
   </n-space>

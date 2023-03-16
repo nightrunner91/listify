@@ -35,3 +35,11 @@ interface LyRecords<T> {
   [k: string]: Array<T>,
   games: Array<T>,
 }
+
+interface LyLabels<T> {
+  [k: string]: Array<T>,
+}
+
+interface LyLabel {
+  [k: string]: string,
+}

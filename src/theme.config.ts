@@ -29,6 +29,10 @@ const globalOverrides = {
     borderRadiusMedium: '5px',
     borderRadiusLarge: '6px',
   },
+  Input: {
+    border: 'none',
+    color: 'transparent',
+  },
 }
 
 export const lightThemeOverrides = {
