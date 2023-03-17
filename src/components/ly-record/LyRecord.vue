@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import {
   NListItem,
   NSpace,
@@ -9,6 +9,7 @@ import {
   NIcon,
   NText,
   NRate,
+  NCheckbox,
 } from 'naive-ui'
 import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
@@ -18,9 +19,9 @@ import {
 
 const recordsStore = useRecordsStore()
 const route = useRoute()
-
 const props = defineProps(['id', 'index'])
 const tag = route.meta.tag as string
+const showCheckbox = ref<boolean>(false)
 
 const record = computed(() => {
   return recordsStore.getRecord(props.id, tag)
@@ -28,14 +29,31 @@ const record = computed(() => {
 </script>
 
 <template>
-  <n-list-item>
+  <n-list-item
+    @mouseover="showCheckbox = true"
+    @mouseleave="showCheckbox = false">
     <n-space
       :wrap-item="false"
       align="center">
 
-      <n-text depth="3">
-        {{ index + 1 }}
-      </n-text>
+      <n-space
+        :wrap-item="false"
+        align="center"
+        justify="center"
+        :size="0"
+        style="width: 20px;">
+        <n-checkbox
+          v-show="showCheckbox || record.selected"
+          v-model:checked="record.selected" />
+
+        <n-text
+          v-show="!showCheckbox && !record.selected"
+          align="center"
+          style="width: 20px; font-size: 12px;"
+          depth="3">
+          {{ index + 1 }}
+        </n-text>
+      </n-space>
 
       <n-input
         v-model:value="record.title"
