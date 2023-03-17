@@ -24,6 +24,9 @@ const globalOverrides = {
   Menu: {
     borderRadius: '6px',
   },
+  List: {
+    borderRadius: '6px',
+  },
   Button: {
     borderRadiusSmall: '4px',
     borderRadiusMedium: '5px',

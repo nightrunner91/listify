@@ -13,7 +13,7 @@ const recordsStore = useRecordsStore()
 
 <template>
   <n-button
-    size="small"
+    secondary
     :render-icon="renderIcon(PlusIcon)"
     @click="recordsStore.addRecord(recordsStore.record, route.meta.tag as string)">
     Add New {{ route.meta.thing }}

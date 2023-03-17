@@ -18,9 +18,10 @@ const categoryColor = computed(() => {
 const barColor = ref<string>('transparent')
 const barWidth = ref<string>('3px')
 const barSpeed: number = 250
+const barSize: string = '3px'
 
 watch(route, () => {
-  barWidth.value = '3px'
+  barWidth.value = barSize
   setTimeout(() => {
     barWidth.value = '72px'
     barColor.value = categoryColor.value
@@ -40,8 +41,8 @@ watch(themeStore, () => {
         :style="{
           backgroundColor: barColor,
           width: barWidth,
-          height: '3px',
-          borderRadius: '3px',
+          height: barSize,
+          borderRadius: barSize,
           transitionDuration: barSpeed + 'ms',
           transitionTimingFunction: 'cubic-bezier(0.0, 0, 0.2, 1)',
         }" />

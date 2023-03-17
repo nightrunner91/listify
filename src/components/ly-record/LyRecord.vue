@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { h, ref, computed } from 'vue'
 import {
   NListItem,
   NSpace,
@@ -26,6 +26,10 @@ const showCheckbox = ref<boolean>(false)
 const record = computed(() => {
   return recordsStore.getRecord(props.id, tag)
 })
+
+const renderDropdownIcon = (option: any) => {
+  return h(option.icon, { size: 16 })
+}
 </script>
 
 <template>
@@ -87,6 +91,7 @@ const record = computed(() => {
         trigger="click"
         placement="bottom-end"
         :options="recordsStore.labels[tag]"
+        :render-icon="renderDropdownIcon"
         @select="key => record.label = key">
         <n-button
           quaternary

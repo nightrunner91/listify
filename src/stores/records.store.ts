@@ -1,6 +1,5 @@
-import { ref, type Component } from 'vue'
+import { ref, shallowRef, type Component } from 'vue'
 import { defineStore } from 'pinia'
-import { renderIcon } from '@/utils/render-icon'
 import {
   PhPlay as InProgressIcon,
   PhHourglass as OnHoldIcon,
@@ -54,38 +53,18 @@ export const useRecordsStore = defineStore('records', () => {
     label: '',
   })
 
-  const labels: LyLabels<LyLabel> = {
+  const labels = shallowRef<LyLabels<LyLabel>>({
     games: [
-      {
-        key: 'playing_now',
-        label: 'Playing Now',
-        icon: renderIcon(InProgressIcon),
-      },
-      {
-        key: 'on_hold',
-        label: 'On Hold',
-        icon: renderIcon(OnHoldIcon),
-      },
-      {
-        key: 'plan_to_play',
-        label: 'Plan to Play',
-        icon: renderIcon(PlanIcon),
-      },
-      {
-        key: 'completed',
-        label: 'Completed',
-        icon: renderIcon(CompletedIcon),
-      },
-      {
-        key: 'dropped',
-        label: 'Dropped',
-        icon: renderIcon(DroppedIcon),
-      },
+      { key: 'playing_now', label: 'Playing Now', icon: InProgressIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
+      { key: 'plan_to_play', label: 'Plan to Play', icon: PlanIcon },
+      { key: 'completed', label: 'Completed', icon: CompletedIcon },
+      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
     ]
-  }
+  })
 
   function getLabel(list: string, key: string): LyLabel {
-    return labels[list].filter((i: LyLabel) => {
+    return labels.value[list].filter((i: LyLabel) => {
       return i.key === key
     })[0]
   }
@@ -112,7 +91,7 @@ export const useRecordsStore = defineStore('records', () => {
 
   function addRecord(item: LyRecord, list: string): void {
     if (!checkRecordExist(item, list)) {
-      records.value[list].push(item)
+      // records.value[list].push(item)
     }
   }
 

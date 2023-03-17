@@ -15,6 +15,7 @@ const menuStore = useMenuStore()
   <n-layout-content
     @click="menuStore.closeMenu"
     :class="{ 'ly-content--dimmed' : !menuStore.collapsed }"
+    :native-scrollbar="false"
     class="pl-2 pl-s-18 ly-content">
     <n-grid
       item-responsive
@@ -44,6 +45,7 @@ const menuStore = useMenuStore()
     height: 100%;
     background-color: transparent;
     transition: transition(background-color);
+    z-index: -1;
   }
 
   &--dimmed {
