@@ -8,29 +8,27 @@ import { darkThemeOverrides, lightThemeOverrides } from '@/theme.config'
 const route = useRoute()
 const themeStore = useThemeStore()
 
-const categoryColor = computed(() => {
-  if (themeStore.currentTheme) {
-    return darkThemeOverrides.Categories[`${route.meta.tag}Color`]
-  } else {
-    return lightThemeOverrides.Categories[`${route.meta.tag}Color`]
-  }
-})
-const barColor = ref<string>('transparent')
-const barWidth = ref<string>('3px')
-const barSpeed: number = 250
-const barSize: string = '3px'
+const categoryColor = computed(() => (
+  themeStore.currentTheme
+    ? darkThemeOverrides.Categories[`${route.meta.tag}Color`]
+    : lightThemeOverrides.Categories[`${route.meta.tag}Color`]
+))
 
-watch(route, () => {
-  barWidth.value = barSize
-  setTimeout(() => {
+const barColor = ref('transparent')
+const barWidth = ref('3px')
+const barSize = '3px'
+const barSpeed = 250
+
+watch(
+  [route, themeStore.currentTheme],
+  async () => {
+    barWidth.value = barSize
+    await new Promise((resolve) => setTimeout(resolve, barSpeed * 1.5))
     barWidth.value = '72px'
     barColor.value = categoryColor.value
-  }, barSpeed * 1.5)
-}, { flush: 'pre', immediate: true, deep: true })
-
-watch(themeStore, () => {
-  barColor.value = categoryColor.value
-})
+  },
+  { immediate: true, deep: true }
+)
 </script>
 
 <template>
