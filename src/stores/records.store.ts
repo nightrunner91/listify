@@ -60,8 +60,16 @@ export const useRecordsStore = defineStore('records', () => {
       { key: 'plan_to_play', label: 'Plan to Play', icon: PlanIcon },
       { key: 'completed', label: 'Completed', icon: CompletedIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ]
+    ],
+    tvshows: [],
+    films: [],
+    anime: [],
   })
+
+  const recordsLength = (category: string) => {
+    const target = records.value[category]
+    return target ? target.length : 0
+  }
 
   function getLabel(list: string, key: string): LyLabel {
     return labels.value[list].filter((i: LyLabel) => {
@@ -99,6 +107,7 @@ export const useRecordsStore = defineStore('records', () => {
     records,
     record,
     labels,
+    recordsLength,
     getLabel,
     getLabelName,
     getLabelIcon,
