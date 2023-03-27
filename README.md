@@ -1,6 +1,6 @@
 ## Listify
 
-This is an application for keeping track of lists of Games, TV Shows, Films and Books of the user. It works with the browser's localStorage with the ability to export and import data in JSON format. Listify is an evolution of a previous project called [Nightlist](https://github.com/nightrunner91/nightlist), made on Vue 2. The new version uses modern technologies - [Vue 3](https://vuejs.org/guide/introduction.html) (with Composition API and [Typescript](https://www.typescriptlang.org/)), [Vite](https://vitejs.dev/) and an updated interface aimed at improving the UX. I used modern Vue 3 component library [Naive UI](https://www.naiveui.com/en-US/) which has established itself as one of the best at the moment.
+This is an application designed to help users keep track of their favorite Games, TV Shows, Films, and Books. The app uses the browser's localStorage to store data and provides the ability to export and import data in JSON format. Listify is an upgraded version of a previous project called [Nightlist](https://github.com/nightrunner91/nightlist), which was built using Vue 2. The new version uses modern technologies such as [Vue 3](https://vuejs.org/guide/introduction.html) (with Composition API and [Typescript](https://www.typescriptlang.org/)), Vite, and an updated interface aimed at enhancing the user experience. For the UI design, I utilized the modern Vue 3 component library [Naive UI](https://www.naiveui.com/en-US/), which is currently regarded as one of the best libraries available.
 
 ## Recommended IDE Setup
 
