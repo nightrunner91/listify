@@ -16,14 +16,14 @@ const menuStore = useMenuStore()
     @click="menuStore.closeMenu"
     :class="{ 'ly-content--dimmed' : !menuStore.collapsed }"
     :native-scrollbar="false"
-    class="pl-2 pl-s-18 ly-content">
+    class="pl-4 pl-s-18 ly-content">
     <n-grid
       item-responsive
       responsive="screen"
       :x-gap="12"
       :y-gap="8"
       :cols="6"
-      class="py-2 py-l-10 pr-2">
+      class="pt-2 pt-l-10 pr-4 pb-4">
       <n-grid-item
         span="6 l:4"
         offset="0 l:1">

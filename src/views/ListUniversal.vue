@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref, watch, nextTick, computed } from 'vue'
 import { NSpace, NList, NSpin, NEmpty, NText } from 'naive-ui'
+import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useRoute } from 'vue-router'
 import LyRecord from '@/components/ly-record/LyRecord.vue'
 import LyAddRecord from '@/components/ly-add-record/LyAddRecord.vue'
 import LyImport from '@/components/ly-import/LyImport.vue'
 
+const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
 const isLoading = ref<boolean>(true)
@@ -53,7 +55,12 @@ watch(
             description="Looks like your list is empty."
             class="p-10">
             <template #extra>
-              <n-space size="large" class="mt-6" :wrap-item="false" align="center">
+              <n-space
+                :size="gridStore.screenLargerThen('s') ? 'large' : 'medium'"
+                class="mt-6"
+                :wrap-item="false"
+                :vertical="!gridStore.screenLargerThen('s')"
+                align="center">
                 <ly-add-record />
                 <n-text align="center" depth="3" style="font-size: 14px;">or</n-text>
                 <ly-import variant="full" />
@@ -65,7 +72,7 @@ watch(
         <template v-else>
           <n-list
             hoverable
-            :show-divider="false"
+            :show-divider="!gridStore.screenLargerThen('s')"
             class="mb-4">
             <ly-record
               v-for="(record, index) in records as LyRecord"
