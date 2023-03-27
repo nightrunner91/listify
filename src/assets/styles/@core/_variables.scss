@@ -14,24 +14,24 @@ $breakpoints: (
 
 // Queries between breakpoints
 $xs-sm: "screen and (min-width: #{map-get($breakpoints, 'xs')}) and (max-width: #{map-get($breakpoints, 's') - 1px})" !default;
-$sm-md: "screen and (min-width: #{map-get($breakpoints, 's')}) and (max-width: #{map-get($breakpoints, 'm') - 1px})" !default;
-$md-lg: "screen and (min-width: #{map-get($breakpoints, 'm')}) and (max-width: #{map-get($breakpoints, 'l') - 1px})" !default;
-$lg-xl: "screen and (min-width: #{map-get($breakpoints, 'l')}) and (max-width: #{map-get($breakpoints, 'xl') - 1px})" !default;
-$lg-xl: "screen and (min-width: #{map-get($breakpoints, 'xl')}) and (max-width: #{map-get($breakpoints, 'xxl') - 1px})" !default;
+$s-m: "screen and (min-width: #{map-get($breakpoints, 's')}) and (max-width: #{map-get($breakpoints, 'm') - 1px})" !default;
+$m-l: "screen and (min-width: #{map-get($breakpoints, 'm')}) and (max-width: #{map-get($breakpoints, 'l') - 1px})" !default;
+$l-x: "screen and (min-width: #{map-get($breakpoints, 'l')}) and (max-width: #{map-get($breakpoints, 'xl') - 1px})" !default;
+$xl-xxl: "screen and (min-width: #{map-get($breakpoints, 'xl')}) and (max-width: #{map-get($breakpoints, 'xxl') - 1px})" !default;
 
 // Queries based on min-width
 $xs-up: "screen and (min-width: #{map-get($breakpoints, 'xs')})" !default;
-$sm-up: "screen and (min-width: #{map-get($breakpoints, 's')})" !default;
-$md-up: "screen and (min-width: #{map-get($breakpoints, 'm')})" !default;
-$lg-up: "screen and (min-width: #{map-get($breakpoints, 'l')})" !default;
+$s-up: "screen and (min-width: #{map-get($breakpoints, 's')})" !default;
+$m-up: "screen and (min-width: #{map-get($breakpoints, 'm')})" !default;
+$l-up: "screen and (min-width: #{map-get($breakpoints, 'l')})" !default;
 $xl-up: "screen and (min-width: #{map-get($breakpoints, 'xl')})" !default;
 $xxl-up: "screen and (min-width: #{map-get($breakpoints, 'xxl')})" !default;
 
 // Queries based on max-width
 $xs-dw: "screen and (max-width: #{map-get($breakpoints, 'xs') - 1px})" !default;
-$sm-dw: "screen and (max-width: #{map-get($breakpoints, 's') - 1px})" !default;
-$md-dw: "screen and (max-width: #{map-get($breakpoints, 'm') - 1px})" !default;
-$lg-dw: "screen and (max-width: #{map-get($breakpoints, 'l') - 1px})" !default;
+$s-dw: "screen and (max-width: #{map-get($breakpoints, 's') - 1px})" !default;
+$m-dw: "screen and (max-width: #{map-get($breakpoints, 'm') - 1px})" !default;
+$l-dw: "screen and (max-width: #{map-get($breakpoints, 'l') - 1px})" !default;
 $xl-dw: "screen and (max-width: #{map-get($breakpoints, 'xl') - 1px})" !default;
 $xxl-dw: "screen and (max-width: #{map-get($breakpoints, 'xxl') - 1px})" !default;
 

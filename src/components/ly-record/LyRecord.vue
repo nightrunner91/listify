@@ -66,8 +66,7 @@ const renderDropdownIcon = (option: any) => {
             v-show="!showCheckbox && !record.selected"
             align="center"
             style="width: 16px; font-size: 12px; line-height: 1"
-            depth="3"
-            strong>
+            depth="3">
             {{ index + 1 }}
           </n-text>
         </n-space>
@@ -135,5 +134,9 @@ const renderDropdownIcon = (option: any) => {
 <style lang="scss">
 .n-list {
   background-color: transparent;
+}
+
+.n-input .n-input__input-el {
+  font-weight: 500;
 }
 </style>

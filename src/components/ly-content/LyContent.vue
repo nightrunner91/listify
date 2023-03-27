@@ -23,7 +23,7 @@ const menuStore = useMenuStore()
       :x-gap="12"
       :y-gap="8"
       :cols="6"
-      class="pt-2 pt-l-10 pr-4 pb-4">
+      class="pt-2 pt-l-10 pr-4 pb-4 pb-s-10">
       <n-grid-item
         span="6 l:4"
         offset="0 l:1">
