@@ -1,16 +1,21 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import {
   NLayoutContent,
   NGrid,
   NGridItem,
+  type LayoutInst,
 } from 'naive-ui'
 import LyTitle from '@/components/ly-title/LyTitle.vue'
+import LyScroller from '@/components/ly-scroller/LyScroller.vue'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
 
 const menuStore = useMenuStore()
 const gridStore = useGridStore()
+
+const contentRef = ref<LayoutInst | null>(null)
 
 function updateScroll(event: Event) {
   gridStore.scrollPosition = (event.target as Element).scrollTop
@@ -19,6 +24,8 @@ function updateScroll(event: Event) {
 
 <template>
   <n-layout-content
+    ref="contentRef"
+    has-sider
     @click="menuStore.closeMenu"
     :class="{ 'ly-content--dimmed' : !menuStore.collapsed }"
     :native-scrollbar="false"
@@ -39,6 +46,9 @@ function updateScroll(event: Event) {
         <router-view />
       </n-grid-item>
     </n-grid>
+    <ly-scroller
+      @scrollTop="contentRef?.scrollTo({ top: 0, behavior: 'smooth' })"
+      @scrollBottom="contentRef?.scrollTo({ top: 999999, behavior: 'smooth' })" />
   </n-layout-content>
 </template>
 

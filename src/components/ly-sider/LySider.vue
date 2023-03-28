@@ -3,7 +3,6 @@ import { NLayoutSider } from 'naive-ui'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
 import LyMenu from '@/components/ly-menu/LyMenu.vue'
-import LyScroller from '@/components/ly-scroller/LyScroller.vue'
 
 const menuStore = useMenuStore()
 const gridStore = useGridStore()
@@ -23,5 +22,4 @@ const gridStore = useGridStore()
     class="py-6 top-0 left-0 z-plus-2">
     <ly-menu />
   </n-layout-sider>
-  <ly-scroller />
 </template>
