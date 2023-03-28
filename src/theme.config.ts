@@ -62,12 +62,15 @@ export const lightThemeOverrides = {
 export const darkThemeOverrides = {
   ...globalOverrides,
   Categories: <CategoriesColors> {
-    favouritesColor: '#D091F6',
-    gamesColor: '#ff7b72',
-    tvshowsColor: '#79c0ff',
-    filmsColor: '#FFB87A',
+    favouritesColor: '#42D4D4',
+    gamesColor: '#FF7B72',
+    tvshowsColor: '#79E2FF',
+    filmsColor: '#FFB672',
+    animeColor: '#D87D7D',
+    mangaColor: '#9A79FF',
     booksColor: '#5CB969',
-    aboutColor: '#42D4D4',
+    musicColor: '#CDD87D',
+    aboutColor: '#8CA092',
   },
   Layout: {
     siderColorInverted: 'rgb(28, 28, 32)',

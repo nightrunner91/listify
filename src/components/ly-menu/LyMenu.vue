@@ -159,7 +159,7 @@ watch(route, () => {
     :collapsed="menuStore.collapsed"
     :collapsed-width="gridStore.screenLargerThen('s') ? 64 : 0"
     :collapsed-icon-size="24"
-    :icon-size="24"
+    :icon-size="28"
     :options="menuOptions"
     @update:value="menuStore.closeMenu" />
 </template>
