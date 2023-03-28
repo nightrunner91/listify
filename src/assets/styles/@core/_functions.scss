@@ -38,6 +38,29 @@
   }
 };
 
+@function strip-unit($number) {
+  /// Remove the unit of a length
+  /// 
+  /// @author Kitty Giraudel
+  /// 
+  /// @link https://css-tricks.com/snippets/sass/strip-unit-function/
+  /// 
+  /// @param $number: { Number }, [number to remove unit from]
+  /// 
+  /// @example
+  ///   $length: 42px;
+  ///   $value: strip-unit($length);
+  /// 
+  /// @output
+  ///   $value: 42;
+
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
 @function opacity($level) {
   /// Function returns specified opacity value from $opacities map
   ///

@@ -16,6 +16,7 @@ const menuStore = useMenuStore()
     @click="menuStore.closeMenu"
     :class="{ 'ly-content--dimmed' : !menuStore.collapsed }"
     :native-scrollbar="false"
+    :scrollbar-props="{ trigger: 'none' }"
     class="pl-4 pl-s-18 ly-content">
     <n-grid
       item-responsive

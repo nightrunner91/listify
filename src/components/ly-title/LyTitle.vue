@@ -4,17 +4,11 @@ import { useRoute } from 'vue-router'
 import { NH1, NText, NBadge } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'
 import { useRecordsStore } from '@/stores/records.store'
-import { darkThemeOverrides, lightThemeOverrides } from '@/theme.config'
 
 const route = useRoute()
 const themeStore = useThemeStore()
 const recordsStore = useRecordsStore()
 
-const categoryColor = computed(() => (
-  themeStore.currentTheme
-    ? darkThemeOverrides.Categories[`${route.meta.tag}Color`]
-    : lightThemeOverrides.Categories[`${route.meta.tag}Color`]
-))
 const recordsLength = computed(() => recordsStore.recordsLength(route.meta.tag as string))
 
 const barColor = ref('transparent')
@@ -23,12 +17,12 @@ const barSize = '3px'
 const barSpeed = 250
 
 watch(
-  [route, themeStore.currentTheme],
+  [route, themeStore],
   async () => {
     barWidth.value = barSize
     await new Promise((resolve) => setTimeout(resolve, barSpeed * 1.5))
     barWidth.value = '70px'
-    barColor.value = categoryColor.value
+    barColor.value = themeStore.categoryColor(route.meta.tag as string)
   },
   { immediate: true, deep: true }
 )

@@ -50,6 +50,8 @@ export const lightThemeOverrides = {
   Layout: {
     headerColor: 'rgb(250, 250, 252)',
     siderColor: 'rgb(250, 250, 252)',
+    siderColorInverted: 'rgb(252, 252, 254)',
+    siderBorderColorInverted: 'rgb(239, 239, 245)',
   },
   Badge: {
     color: 'rgb(255, 89, 122)',
@@ -59,11 +61,14 @@ export const lightThemeOverrides = {
 export const darkThemeOverrides = {
   ...globalOverrides,
   Categories: <CategoriesColors> {
-    favouritesColor: '#008080',
+    favouritesColor: '#42D4D4',
     gamesColor: '#ff7b72',
     tvshowsColor: '#79c0ff',
     filmsColor: '#FFB87A',
     booksColor: '#5CB969',
+  },
+  Layout: {
+    siderColorInverted: 'rgb(28, 28, 32)',
   },
   Badge: {
     color: 'rgb(215, 69, 98)',

@@ -3,6 +3,7 @@ import { NLayoutSider } from 'naive-ui'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
 import LyMenu from '@/components/ly-menu/LyMenu.vue'
+import LyScroller from '@/components/ly-scroller/LyScroller.vue'
 
 const menuStore = useMenuStore()
 const gridStore = useGridStore()
@@ -15,10 +16,12 @@ const gridStore = useGridStore()
     position="absolute"
     :collapsed-width="gridStore.screenLargerThen('s') ? 64 : 0"
     :width="300"
+    :show-trigger="gridStore.screenLargerThen('s')"
     :collapsed="menuStore.collapsed"
     @collapse="menuStore.closeMenu"
     @expand="menuStore.openMenu"
-    class="min-vh-100 py-6 top-0 left-0 z-plus-2">
+    class="py-6 top-0 left-0 z-plus-2">
     <ly-menu />
   </n-layout-sider>
+  <ly-scroller />
 </template>

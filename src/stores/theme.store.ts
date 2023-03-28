@@ -2,11 +2,18 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme, type GlobalTheme } from 'naive-ui'
 import { useStorage } from 'vue3-storage'
+import { darkThemeOverrides, lightThemeOverrides } from '@/theme.config'
 
 const themeStorage = useStorage('th_')
 
 export const useThemeStore = defineStore('theme', () => {
   const currentTheme = ref<GlobalTheme | null>(null)
+
+  const categoryColor = (tag: string) => (
+    currentTheme.value
+      ? darkThemeOverrides.Categories[`${tag}Color`]
+      : lightThemeOverrides.Categories[`${tag}Color`]
+  )
 
   function toggleTheme(): void {
     currentTheme.value = currentTheme.value ? null : darkTheme
@@ -45,6 +52,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   return {
     currentTheme,
+    categoryColor,
     toggleTheme,
     restoreTheme,
   }
