@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import ListFavourites from '@/views/ListFavourites.vue'
 import ListUniversal from '@/views/ListUniversal.vue'
+import AboutPage from '@/views/AboutPage.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,26 @@ const router = createRouter({
           }
         },
         {
+          path: '/anime',
+          name: 'Anime',
+          component: ListUniversal,
+          meta: {
+            tag: 'anime',
+            title: 'Anime',
+            thing: 'Anime'
+          }
+        },
+        {
+          path: '/manga',
+          name: 'Manga',
+          component: ListUniversal,
+          meta: {
+            tag: 'manga',
+            title: 'Manga',
+            thing: 'Manga'
+          }
+        },
+        {
           path: '/films',
           name: 'Films',
           component: ListUniversal,
@@ -57,6 +78,25 @@ const router = createRouter({
             tag: 'books',
             title: 'Books',
             thing: 'Book',
+          }
+        },
+        {
+          path: '/music',
+          name: 'Music',
+          component: ListUniversal,
+          meta: {
+            tag: 'music',
+            title: 'Music',
+            thing: 'Artist',
+          }
+        },
+        {
+          path: '/about',
+          name: 'About',
+          component: AboutPage,
+          meta: {
+            tag: 'about',
+            title: 'Welcome to Listify!',
           }
         },
       ]

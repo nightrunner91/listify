@@ -6,9 +6,13 @@ import {
   PhHeart as FavouritesIcon,
   PhGameController as GamesIcon,
   PhTelevision as TvShowsIcon,
-  PhFilmSlate as FilmsIcon,
-  PhBookOpen as BooksIcon,
+  PhSparkle as AnimeIcon,
+  PhFilmStrip as FilmsIcon,
+  PhNotebook as MangaIcon,
+  PhBooks as BooksIcon,
+  PhMusicNotes as MusicIcon,
   PhPlus as NewIcon,
+  PhQuestion as AboutIcon,
 } from 'phosphor-vue'
 import { useGridStore } from '@/stores/grid.store'
 import { useMenuStore } from '@/stores/menu.store'
@@ -82,6 +86,28 @@ const menuOptions: MenuOption[] = [
     label: () =>
       h(
         RouterLink,
+        { to: { name: 'Anime' } },
+        { default: () => 'Anime' }
+      ),
+    key: 'anime',
+    extra: renderExtra(13),
+    icon: renderIcon(AnimeIcon)
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        { to: { name: 'Manga' } },
+        { default: () => 'Manga' }
+      ),
+    key: 'manga',
+    extra: renderExtra(85),
+    icon: renderIcon(MangaIcon)
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
         { to: { name: 'Books' } },
         { default: () => 'Books' }
       ),
@@ -90,14 +116,35 @@ const menuOptions: MenuOption[] = [
     icon: renderIcon(BooksIcon)
   },
   {
-    key: 'divider-2',
-    type: 'divider',
+    label: () =>
+      h(
+        RouterLink,
+        { to: { name: 'Music' } },
+        { default: () => 'Music' }
+      ),
+    key: 'music',
+    extra: renderExtra(64),
+    icon: renderIcon(MusicIcon)
   },
   {
     label: 'Create a New List',
     key: 'create-new',
     icon: renderIcon(NewIcon),
     disabled: true,
+  },
+  {
+    key: 'divider-2',
+    type: 'divider',
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        { to: { name: 'About' } },
+        { default: () => 'About Listify' }
+      ),
+    key: 'about-listify',
+    icon: renderIcon(AboutIcon),
   },
 ]
 
