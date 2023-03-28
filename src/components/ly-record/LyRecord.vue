@@ -39,20 +39,20 @@ const renderDropdownIcon = (option: any) => {
     @mouseover="showCheckbox = true"
     @mouseleave="showCheckbox = false"
     class="px-4 px-sm-5"
-    :style="gridStore.screenLargerThen('s') ? '' : 'border-radius: 0;'">
+    :style="gridStore.screenLargerThen('m') ? '' : 'border-radius: 0;'">
     <n-space
       :wrap-item="false"
       align="center"
-      :wrap="!gridStore.screenLargerThen('s')"
-      :size="gridStore.screenLargerThen('s') ? 'medium' : 'small'"
-      class="py-2 py-s-0">
+      :wrap="!gridStore.screenLargerThen('m')"
+      :size="gridStore.screenLargerThen('m') ? 'medium' : 'small'"
+      class="py-2 py-m-0">
 
       <n-space
         :wrap-item="false"
         :wrap="false"
         align="center"
         size="small"
-        class="w-100 w-s-50">
+        class="w-100 w-m-50">
         <n-space
           :wrap-item="false"
           align="center"
@@ -76,7 +76,7 @@ const renderDropdownIcon = (option: any) => {
           type="text"
           size="small"
           placeholder=""
-          class="w-100 w-s-75" />
+          class="w-100 w-m-75" />
       </n-space>
 
       <n-space
@@ -84,7 +84,7 @@ const renderDropdownIcon = (option: any) => {
         align="center"
         justify="center"
         size="small"
-        class="w-100 w-s-50">
+        class="w-100 w-m-50">
         <n-rate
           v-model:value="record.score"
           clearable
@@ -96,7 +96,7 @@ const renderDropdownIcon = (option: any) => {
           circle
           type="error"
           size="small"
-          class="ml-4 ml-s-10"
+          class="ml-4 ml-m-10"
           @click="record.liked = !record.liked">
           <template #icon>
             <like-icon

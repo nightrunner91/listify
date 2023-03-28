@@ -56,10 +56,10 @@ watch(
             class="p-10">
             <template #extra>
               <n-space
-                :size="gridStore.screenLargerThen('s') ? 'large' : 'medium'"
+                :size="gridStore.screenLargerThen('m') ? 'large' : 'medium'"
                 class="mt-6"
                 :wrap-item="false"
-                :vertical="!gridStore.screenLargerThen('s')"
+                :vertical="!gridStore.screenLargerThen('m')"
                 align="center">
                 <ly-add-record />
                 <n-text align="center" depth="3" style="font-size: 14px;">or</n-text>
@@ -72,7 +72,7 @@ watch(
         <template v-else>
           <n-list
             hoverable
-            :show-divider="!gridStore.screenLargerThen('s')"
+            :show-divider="!gridStore.screenLargerThen('m')"
             class="mb-4">
             <ly-record
               v-for="(record, index) in records as LyRecord"

@@ -55,6 +55,14 @@ export const useGridStore = defineStore('grid', () => {
   })
 
 
+  const scrollPosition = ref<number>(0)
+
+
+  const showScroller = computed(() => {
+    return scrollPosition.value >= windowSizes.value.height / 2
+  })
+
+
   /**
    * @function screenLargerThen
    * @description Helps to detect if window reached specific breakpoint
@@ -93,6 +101,8 @@ export const useGridStore = defineStore('grid', () => {
     windowSizes,
     gridBreakpoints,
     currentBreakpoint,
+    scrollPosition,
+    showScroller,
     watchWindowSizes,
     screenLargerThen,
   }

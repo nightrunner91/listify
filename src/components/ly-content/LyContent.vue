@@ -7,8 +7,14 @@ import {
 } from 'naive-ui'
 import LyTitle from '@/components/ly-title/LyTitle.vue'
 import { useMenuStore } from '@/stores/menu.store'
+import { useGridStore } from '@/stores/grid.store'
 
 const menuStore = useMenuStore()
+const gridStore = useGridStore()
+
+function updateScroll(event: Event) {
+  gridStore.scrollPosition = (event.target as Element).scrollTop
+}
 </script>
 
 <template>
@@ -17,6 +23,7 @@ const menuStore = useMenuStore()
     :class="{ 'ly-content--dimmed' : !menuStore.collapsed }"
     :native-scrollbar="false"
     :scrollbar-props="{ trigger: 'none' }"
+    @scroll="updateScroll($event)"
     class="pl-4 pl-s-18 ly-content">
     <n-grid
       item-responsive
@@ -26,8 +33,8 @@ const menuStore = useMenuStore()
       :cols="6"
       class="pt-2 pt-l-10 pr-4 pb-4 pb-s-10">
       <n-grid-item
-        span="6 l:4"
-        offset="0 l:1">
+        span="6 s:4 l:4"
+        offset="0 s:1 l:1">
         <ly-title />
         <router-view />
       </n-grid-item>
