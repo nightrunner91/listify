@@ -8,7 +8,6 @@ import {
   NList,
   NListItem,
   NIcon,
-  NButton,
   NSpace,
 } from 'naive-ui'
 import {
@@ -17,6 +16,7 @@ import {
   PhFileTs as TypescriptIcon,
   PhLayout as NaiveIcon,
   PhTextAa as FontIcon,
+  PhPhosphorLogo as PhosphorIcon,
 } from 'phosphor-vue'
 </script>
 
@@ -35,16 +35,6 @@ import {
           <n-space :wrap-item="false" align="center" size="small">
             <n-icon size="24" :component="VueIcon" />
             <n-text strong>Vue 3</n-text>
-            <n-button
-              text
-              tag="a"
-              href="https://v3.ru.vuejs.org/"
-              target="_blank"
-              type="primary">
-              <template #icon>
-                <n-icon size="16" :component="LinkIcon" />
-              </template>
-            </n-button>
           </n-space>
         </n-list-item>
         <n-list-item>
@@ -62,7 +52,13 @@ import {
         <n-list-item>
           <n-space :wrap-item="false" align="center" size="small">
             <n-icon size="24" :component="FontIcon" />
-            <n-text strong>Onest</n-text>
+            <n-text strong>Onest Font</n-text>
+          </n-space>
+        </n-list-item>
+        <n-list-item>
+          <n-space :wrap-item="false" align="center" size="small">
+            <n-icon size="24" :component="PhosphorIcon" />
+            <n-text strong>Phosphor Icons</n-text>
           </n-space>
         </n-list-item>
       </n-list>
