@@ -77,13 +77,17 @@ export const useRecordsStore = defineStore('records', () => {
     })[0]
   }
 
-  function addRecord(list: string): void {
-    records.value[list].push({
-      id: getRandomInt(),
-      title: '',
-      score: 0,
-      liked: false,
-      label: '',
+  function addRecord(list: string): Promise<LyRecord> {
+    return new Promise((resolve) => {
+      const record:LyRecord = {
+        id: getRandomInt(),
+        title: '',
+        score: 0,
+        liked: false,
+        label: '',
+      }
+      records.value[list].push(record)
+      resolve(record)
     })
   }
 

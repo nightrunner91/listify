@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { nextTick } from 'vue'
 import { NButton } from 'naive-ui'
 import { 
   PhPlus as PlusIcon,
@@ -9,13 +10,25 @@ import { renderIcon } from '@/utils/render-icon'
 
 const route = useRoute()
 const recordsStore = useRecordsStore()
+
+async function handleNewRecord() {
+  recordsStore
+    .addRecord(route.meta.tag as string)
+    .then(record => { focusInput(record) })
+}
+
+/* eslint-disable-next-line no-undef */
+async function focusInput(record: LyRecord) {
+  await nextTick()
+  document.querySelector<HTMLInputElement>(`#input-${record.id} input`)?.focus()
+}
 </script>
 
 <template>
   <n-button
     secondary
     :render-icon="renderIcon(PlusIcon)"
-    @click="recordsStore.addRecord(route.meta.tag as string)">
+    @click="handleNewRecord">
     Add New {{ route.meta.thing }}
   </n-button>
 </template>

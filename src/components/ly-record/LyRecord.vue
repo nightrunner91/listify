@@ -72,6 +72,7 @@ const renderDropdownIcon = (option: any) => {
         </n-space>
 
         <n-input
+          :id="`input-${record.id}`"
           v-model:value="record.title"
           type="text"
           :size="gridStore.screenLargerThen('m') ? 'medium' : 'small'"
