@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import ListFavourites from '@/views/ListFavourites.vue'
-import ListUniversal from '@/views/ListUniversal.vue'
+import RecordsPage from '@/views/RecordsPage.vue'
 import AboutPage from '@/views/AboutPage.vue'
 
 const router = createRouter({
@@ -9,21 +8,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      redirect: '/favourites',
+      redirect: '/about',
       children: [
-        {
-          path: '/favourites',
-          name: 'Favourites',
-          component: ListFavourites,
-          meta: {
-            tag: 'favourites',
-            title: 'Favourites',
-          }
-        },
         {
           path: '/games',
           name: 'Games',
-          component: ListUniversal,
+          component: RecordsPage,
           meta: {
             tag: 'games',
             title: 'Games',
@@ -33,7 +23,7 @@ const router = createRouter({
         {
           path: '/tvshows',
           name: 'TVShows',
-          component: ListUniversal,
+          component: RecordsPage,
           meta: {
             tag: 'tvshows',
             title: 'TV Shows',
@@ -41,9 +31,19 @@ const router = createRouter({
           }
         },
         {
+          path: '/films',
+          name: 'Films',
+          component: RecordsPage,
+          meta: {
+            tag: 'films',
+            title: 'Films',
+            thing: 'Film',
+          }
+        },
+        {
           path: '/anime',
           name: 'Anime',
-          component: ListUniversal,
+          component: RecordsPage,
           meta: {
             tag: 'anime',
             title: 'Anime',
@@ -53,7 +53,7 @@ const router = createRouter({
         {
           path: '/manga',
           name: 'Manga',
-          component: ListUniversal,
+          component: RecordsPage,
           meta: {
             tag: 'manga',
             title: 'Manga',
@@ -61,19 +61,9 @@ const router = createRouter({
           }
         },
         {
-          path: '/films',
-          name: 'Films',
-          component: ListUniversal,
-          meta: {
-            tag: 'films',
-            title: 'Films',
-            thing: 'Film',
-          }
-        },
-        {
           path: '/books',
           name: 'Books',
-          component: ListUniversal,
+          component: RecordsPage,
           meta: {
             tag: 'books',
             title: 'Books',
@@ -83,7 +73,7 @@ const router = createRouter({
         {
           path: '/music',
           name: 'Music',
-          component: ListUniversal,
+          component: RecordsPage,
           meta: {
             tag: 'music',
             title: 'Music',

@@ -3,7 +3,6 @@ import { h, ref, watch } from 'vue'
 import { NMenu, NBadge, type MenuOption } from 'naive-ui'
 import { RouterLink, useRoute } from 'vue-router'
 import {
-  PhHeart as FavouritesIcon,
   PhGameController as GamesIcon,
   PhTelevision as TvShowsIcon,
   PhSparkle as AnimeIcon,
@@ -34,21 +33,6 @@ function renderExtra (total: number) {
 }
 
 const menuOptions: MenuOption[] = [
-  {
-    label: () =>
-      h(
-        RouterLink,
-        { to: { name: 'Favourites' } },
-        { default: () => 'Favourites' }
-      ),
-    key: 'favourites',
-    extra: renderExtra(1299),
-    icon: renderIcon(FavouritesIcon)
-  },
-  {
-    key: 'divider-1',
-    type: 'divider',
-  },
   {
     label: () =>
       h(
@@ -143,7 +127,7 @@ const menuOptions: MenuOption[] = [
         { to: { name: 'About' } },
         { default: () => 'About Listify' }
       ),
-    key: 'about-listify',
+    key: 'about',
     icon: renderIcon(AboutIcon),
   },
 ]

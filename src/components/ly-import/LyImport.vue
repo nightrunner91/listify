@@ -2,7 +2,7 @@
 import { 
   PhDownloadSimple as ImportIcon,
 } from 'phosphor-vue'
-import { NButton, NIcon } from 'naive-ui'
+import { NButton, NIcon, NTooltip } from 'naive-ui'
 import { renderIcon } from '@/utils/render-icon'
 defineProps(['variant'])
 </script>
@@ -15,13 +15,19 @@ defineProps(['variant'])
     Import Collection
   </n-button>
 
-  <n-button
+  <n-tooltip
     v-else
-    quaternary
-    circle
-    size="large">
-    <template #icon>
-      <n-icon :component="ImportIcon" />
+    trigger="hover">
+    <template #trigger>
+      <n-button
+        quaternary
+        circle
+        size="large">
+        <template #icon>
+          <n-icon :component="ImportIcon" />
+        </template>
+      </n-button>
     </template>
-  </n-button>
+    Import Collection
+  </n-tooltip>
 </template>

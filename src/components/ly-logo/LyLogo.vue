@@ -24,7 +24,7 @@ const themeStore = useThemeStore()
     v-if="gridStore.screenLargerThen('s')"
     class="m-0 mr-auto pl-2 no-select ly-logo">
     <router-link
-      :to="{ name: 'Home' }"
+      :to="{ name: 'About' }"
       style="text-decoration: none;">
       <n-text :style="{color: themeStore.categoryColor(route.meta.tag as string)}">Li</n-text>
       <n-text

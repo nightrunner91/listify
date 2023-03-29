@@ -14,7 +14,7 @@ const themeStore = useThemeStore()
     circle
     size="large"
     @click="themeStore.toggleTheme"
-    class="">
+    class="ml-2">
     <template #icon>
       <n-icon :component="themeStore.currentTheme ? LightIcon : DarkIcon" />
     </template>
