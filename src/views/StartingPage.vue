@@ -51,7 +51,7 @@ const usedStuff = ref([
     class="pt-6">
     <n-grid-item span="6 m:5 l:4">
 
-      <n-p>Listify is designed to make it easy for you to keep track of your favorite entertainment choices, whether it's games, films, anime, books, or anything else. Listify lets you manage all your preferences in one place. The app uses the browser's <n-a href="https://developer.mozilla.org/ru/docs/Web/API/Window/localStorage" target="_blank">localStorage</n-a> to store data and provides the ability to export and import data in JSON format.</n-p>
+      <n-p>Listify is designed to track your favorite entertainment choices, whether it's games, films, anime, books, or anything else. It supports JSON import/export and can be accessed from any device via a browser's <n-a href="https://developer.mozilla.org/ru/docs/Web/API/Window/localStorage" target="_blank">localStorage</n-a>.</n-p>
       <n-p>The project is open-source and still in the development stage. If you have any suggestions or notice any bugs, please contact me via Telegram <n-a href="https://t.me/nightrunner91" target="_blank">@nightrunner91</n-a> or <n-a href="https://github.com/nightrunner91/listify/issues" target="_blank">open an issue</n-a> on Github. Thank you for choosing Listify.</n-p>
 
       <n-h4>Used stuff:</n-h4>
