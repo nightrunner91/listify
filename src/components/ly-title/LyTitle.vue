@@ -33,7 +33,7 @@ watch(
     <n-text>
       {{ route.meta.title }}
       <n-badge
-        v-if="route.meta.tag !== 'about'"
+        v-if="route.meta.tag !== 'start'"
         :value="recordsLength"
         :show-zero="true" />
       <div

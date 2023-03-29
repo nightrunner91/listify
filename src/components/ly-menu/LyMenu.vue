@@ -11,7 +11,7 @@ import {
   PhBooks as BooksIcon,
   PhMusicNotes as MusicIcon,
   PhPlus as NewIcon,
-  PhQuestion as AboutIcon,
+  PhHouse as StartIcon,
 } from 'phosphor-vue'
 import { useGridStore } from '@/stores/grid.store'
 import { useMenuStore } from '@/stores/menu.store'
@@ -33,6 +33,20 @@ function renderExtra (total: number) {
 }
 
 const menuOptions: MenuOption[] = [
+  {
+    label: () =>
+      h(
+        RouterLink,
+        { to: { name: 'Start' } },
+        { default: () => 'Home' }
+      ),
+    key: 'start',
+    icon: renderIcon(StartIcon),
+  },
+  {
+    key: 'divider-2',
+    type: 'divider',
+  },
   {
     label: () =>
       h(
@@ -115,20 +129,6 @@ const menuOptions: MenuOption[] = [
     key: 'create-new',
     icon: renderIcon(NewIcon),
     disabled: true,
-  },
-  {
-    key: 'divider-2',
-    type: 'divider',
-  },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        { to: { name: 'About' } },
-        { default: () => 'About Listify' }
-      ),
-    key: 'about',
-    icon: renderIcon(AboutIcon),
   },
 ]
 

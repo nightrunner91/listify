@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import RecordsPage from '@/views/RecordsPage.vue'
-import AboutPage from '@/views/AboutPage.vue'
+import StartingPage from '@/views/StartingPage.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -8,8 +8,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      redirect: '/about',
+      redirect: '/start',
       children: [
+        {
+          path: '/start',
+          name: 'Start',
+          component: StartingPage,
+          meta: {
+            tag: 'start',
+            title: 'Welcome to Listify!',
+          }
+        },
         {
           path: '/games',
           name: 'Games',
@@ -78,15 +87,6 @@ const router = createRouter({
             tag: 'music',
             title: 'Music',
             thing: 'Artist',
-          }
-        },
-        {
-          path: '/about',
-          name: 'About',
-          component: AboutPage,
-          meta: {
-            tag: 'about',
-            title: 'Welcome to Listify!',
           }
         },
       ]
