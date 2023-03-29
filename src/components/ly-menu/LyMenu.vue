@@ -125,6 +125,10 @@ const menuOptions: MenuOption[] = [
     icon: renderIcon(MusicIcon)
   },
   {
+    key: 'divider-2',
+    type: 'divider',
+  },
+  {
     label: 'Create a New List',
     key: 'create-new',
     icon: renderIcon(NewIcon),

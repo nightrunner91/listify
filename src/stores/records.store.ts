@@ -1,5 +1,6 @@
 import { ref, shallowRef, type Component } from 'vue'
 import { defineStore } from 'pinia'
+import { getRandomInt } from '@/utils/random-number'
 import {
   PhPlay as InProgressIcon,
   PhHourglass as OnHoldIcon,
@@ -29,7 +30,7 @@ export const useRecordsStore = defineStore('records', () => {
 
   const labels = shallowRef<LyLabels<LyLabel>>({
     games: [
-      { key: 'playing_now', label: 'Playing Now', icon: InProgressIcon },
+      { key: 'playing_now', label: 'Playing Now', icon: InProgressIcon, default: true },
       { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'plan_to_play', label: 'Plan to Play', icon: PlanIcon },
       { key: 'completed', label: 'Completed', icon: CompletedIcon },
@@ -38,17 +39,22 @@ export const useRecordsStore = defineStore('records', () => {
     tvshows: [],
     films: [],
     anime: [],
+    manga: [],
+    books: [],
+    music: [],
   })
 
-  const recordsLength = (category: string) => {
-    const target = records.value[category]
-    return target ? target.length : 0
+  const recordsLength = (list: string) => {
+    const targetList = records.value[list]
+    return targetList ? targetList.length : 0
   }
 
   function getLabel(list: string, key: string): LyLabel {
-    return labels.value[list].filter((i: LyLabel) => {
-      return i.key === key
-    })[0]
+    const targetList = labels.value[list]
+    const targetItem = targetList.filter((i: LyLabel) => {return i.key === key })[0]
+    const defaultItem = targetList.filter((i: LyLabel) => { return i.default })[0]
+
+    return targetItem ? targetItem : defaultItem
   }
 
   function getLabelName(list: string, key: string): string {
@@ -71,10 +77,14 @@ export const useRecordsStore = defineStore('records', () => {
     })[0]
   }
 
-  function addRecord(item: LyRecord, list: string): void {
-    if (!checkRecordExist(item, list)) {
-      // records.value[list].push(item)
-    }
+  function addRecord(list: string): void {
+    records.value[list].push({
+      id: getRandomInt(),
+      title: '',
+      score: 0,
+      liked: false,
+      label: '',
+    })
   }
 
   return {
@@ -85,6 +95,7 @@ export const useRecordsStore = defineStore('records', () => {
     getLabel,
     getLabelName,
     getLabelIcon,
+    checkRecordExist,
     getRecord,
     addRecord,
   }

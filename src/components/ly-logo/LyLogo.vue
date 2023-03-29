@@ -22,7 +22,8 @@ const themeStore = useThemeStore()
 <template>
   <n-h3
     v-if="gridStore.screenLargerThen('s')"
-    class="m-0 mr-auto pl-2 no-select ly-logo">
+    class="m-0 mr-auto pl-2 no-select ly-logo"
+    @click="menuStore.closeMenu">
     <router-link
       :to="{ name: 'Start' }"
       style="text-decoration: none;">

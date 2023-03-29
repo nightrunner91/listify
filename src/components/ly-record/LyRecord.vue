@@ -74,8 +74,8 @@ const renderDropdownIcon = (option: any) => {
         <n-input
           v-model:value="record.title"
           type="text"
-          size="small"
-          placeholder=""
+          :size="gridStore.screenLargerThen('m') ? 'medium' : 'small'"
+          placeholder="Name of record"
           class="w-100 w-m-75" />
       </n-space>
 

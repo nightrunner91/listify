@@ -94,4 +94,13 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.title && to.meta.tag !== 'start') {
+    document.title = `${to.meta.title} - Listify`
+  } else {
+    document.title = 'Listify'
+  }
+  next()
+})
+
 export default router
