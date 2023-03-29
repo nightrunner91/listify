@@ -42,10 +42,13 @@ export const lightThemeOverrides = {
   ...globalOverrides,
   Categories: <CategoriesColors> {
     favouritesColor: '#3CBCBC',
-    gamesColor: '#ff7b72',
-    tvshowsColor: '#2080F0',
+    gamesColor: '#DB574E',
+    tvshowsColor: '#20B5F0',
     filmsColor: '#F0A020',
-    booksColor: '#18A058',
+    animeColor: '#F02085',
+    mangaColor: '#9574F7',
+    booksColor: '#13E344',
+    musicColor: '#CDD87D',
     aboutColor: '#3CBCBC',
   },
   Layout: {

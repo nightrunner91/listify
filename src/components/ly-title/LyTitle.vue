@@ -32,7 +32,9 @@ watch(
   <n-h1>
     <n-text>
       {{ route.meta.title }}
-      <n-badge :value="recordsLength" />
+      <n-badge
+        :value="recordsLength"
+        :show-zero="true" />
       <div
         :style="{
           backgroundColor: barColor,
