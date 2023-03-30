@@ -33,4 +33,23 @@ function getRandomInt(min:number = 1000000, max:number = 10000000): number {
   return Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal
 }
 
-export { getRandomArbitrary, getRandomInt }
+/**
+ * @function generateUniqueId
+ * @returns
+ * This function generates a unique ID by concatenating the current timestamp with a
+ * random string, hashing the resulting string using the SHA-256 algorithm, and returning
+ * the hexadecimal representation of the hash. This method should ensure that each ID is unique, 
+ * even if multiple entries are created at the same time. Note that this implementation requires 
+ * the use of the crypto.subtle API, which is only available in secure contexts (e.g., HTTPS).
+ * @example
+ *   generateUniqueId().then(id => { console.log(id) })
+ */
+async function generateUniqueId() {
+  const timestamp = Date.now().toString()
+  const random = Math.random().toString()
+  const uniqueString = timestamp + random
+  const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(uniqueString))
+  return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('')
+}
+
+export { getRandomArbitrary, getRandomInt, generateUniqueId }

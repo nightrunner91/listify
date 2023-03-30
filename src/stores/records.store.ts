@@ -1,6 +1,6 @@
 import { ref, shallowRef, type Component } from 'vue'
 import { defineStore } from 'pinia'
-import { getRandomInt } from '@/utils/random-number'
+import { generateUniqueId } from '@/utils/random-number'
 import {
   PhPlay as InProgressIcon,
   PhHourglass as OnHoldIcon,
@@ -79,15 +79,18 @@ export const useRecordsStore = defineStore('records', () => {
 
   function addRecord(list: string): Promise<LyRecord> {
     return new Promise((resolve) => {
-      const record:LyRecord = {
-        id: getRandomInt(),
-        title: '',
-        score: 0,
-        liked: false,
-        label: '',
-      }
-      records.value[list].push(record)
-      resolve(record)
+      let newRecord: LyRecord
+      generateUniqueId().then(hash => {
+        newRecord = {
+          id: hash,
+          title: '',
+          score: 0,
+          liked: false,
+          label: '',
+        }
+        records.value[list].push(newRecord)
+        resolve(newRecord)
+      })
     })
   }
 
