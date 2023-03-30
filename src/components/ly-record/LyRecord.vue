@@ -34,7 +34,7 @@ const renderDropdownIcon = (option: any) => {
 
 watch(record, () => {
   lyStorage.setStorage({
-    key: record.value.id,
+    key: `rec_${record.value.id}`,
     data: record.value
   })
 }, { immediate: true, deep: true })

@@ -10,6 +10,8 @@ import {
   PhProhibit as DroppedIcon,
 } from 'phosphor-vue'
 
+const RECORDS_KEY = 'rec_'
+
 export const useRecordsStore = defineStore('records', () => {
   const records = ref<LyRecords<LyRecord>>({
     games: [],
@@ -19,15 +21,6 @@ export const useRecordsStore = defineStore('records', () => {
     manga: [],
     books: [],
     music: [],
-  })
-
-  const record = ref<LyRecord>({
-    id: undefined,
-    title: '',
-    category: '',
-    score: 0,
-    liked: false,
-    label: '',
   })
 
   const labels = shallowRef<LyLabels<LyLabel>>({
@@ -56,11 +49,8 @@ export const useRecordsStore = defineStore('records', () => {
   }
 
   function getLabel(list: string, key: string): LyLabel {
-    const targetList = labels.value[list]
-    const targetItem = targetList.filter((i: LyLabel) => {return i.key === key })[0]
-    const defaultItem = targetList.filter((i: LyLabel) => { return i.default })[0]
-
-    return targetItem ? targetItem : defaultItem
+    const targetItem = labels.value[list].filter((i: LyLabel) => {return i.key === key })[0]
+    return targetItem ? targetItem : getDefaultLabel(list)
   }
 
   function getLabelName(list: string, key: string): string {
@@ -83,10 +73,9 @@ export const useRecordsStore = defineStore('records', () => {
     })[0]
   }
 
-  async function addRecord(list: string): Promise<LyRecord> {
+  async function addRecord(list: string, { saveLocal }: AddRecordOptions): Promise<LyRecord> {
     try {
       const id = await generateUniqueId()
-  
       const record: LyRecord = {
         id,
         category: list,
@@ -95,16 +84,14 @@ export const useRecordsStore = defineStore('records', () => {
         liked: false,
         label: getDefaultLabel(list).key,
       }
-  
       records.value[list].push(record)
   
-      try {
-        await lyStorage.setStorage({
-          key: id,
-          data: record,
-        })
-      } catch (err: any) {
-        console.log(err.errMsg)
+      if (saveLocal) {
+        try {
+          await lyStorage.setStorage({ key: `${RECORDS_KEY}${id}`, data: record })
+        } catch (err: any) {
+          console.error(err.errMsg)
+        }
       }
   
       return record
@@ -114,9 +101,23 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+  function restoreRecords(): void {
+    const recKeys: string[] = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const key: string | null = localStorage.key(i)
+      if (key && key.includes(RECORDS_KEY)) {
+        recKeys.push(key)
+      }
+    }
+    for (let i = 0; i < recKeys.length; i++) {
+      const key: string = recKeys[i]
+      const value: LyRecord = JSON.parse(localStorage.getItem(key) as string).value
+      records.value[value.category].push(value)
+    }
+  }
+
   return {
     records,
-    record,
     labels,
     recordsLength,
     getLabel,
@@ -125,5 +126,6 @@ export const useRecordsStore = defineStore('records', () => {
     checkRecordExist,
     getRecord,
     addRecord,
+    restoreRecords,
   }
 })

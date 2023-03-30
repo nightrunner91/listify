@@ -44,3 +44,7 @@ interface LyLabels<T> {
 interface LyLabel {
   [k: string]: string | Component,
 }
+
+interface AddRecordOptions {
+  saveLocal: boolean
+}
