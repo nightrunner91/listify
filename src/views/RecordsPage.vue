@@ -22,9 +22,9 @@ watch(
   route,
   async () => {
     isLoading.value = true
+    records.value = recordsStore.records[route.meta.tag as string] ?? []
     await nextTick()
     await new Promise((resolve) => setTimeout(resolve, 600))
-    records.value = recordsStore.records[route.meta.tag as string] ?? []
     isLoading.value = false
   },
   { flush: 'pre', immediate: true, deep: true }

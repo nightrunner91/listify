@@ -39,52 +39,52 @@ export const useRecordsStore = defineStore('records', () => {
     music: [],
   })
 
-  const recordsLength = (list: string) => {
-    const targetList = records.value[list]
+  const recordsLength = (listType: string) => {
+    const targetList = records.value[listType]
     return targetList ? targetList.length : 0
   }
 
-  function getDefaultLabel(list: string): LyLabel {
-    return labels.value[list].filter((i: LyLabel) => { return i.default })[0]
+  function getDefaultLabel(listType: string): LyLabel {
+    return labels.value[listType].find((i: LyLabel) => i.default) || labels.value[listType][0]
+  }  
+
+  function getLabel(listType: string, key: string): LyLabel {
+    const targetItem = labels.value[listType].filter((i: LyLabel) => {return i.key === key })[0]
+    return targetItem ? targetItem : getDefaultLabel(listType)
   }
 
-  function getLabel(list: string, key: string): LyLabel {
-    const targetItem = labels.value[list].filter((i: LyLabel) => {return i.key === key })[0]
-    return targetItem ? targetItem : getDefaultLabel(list)
+  function getLabelName(listType: string, key: string): string {
+    return getLabel(listType, key).label
   }
 
-  function getLabelName(list: string, key: string): string {
-    return getLabel(list, key).label
+  function getLabelIcon(listType: string, key: string): Component {
+    return getLabel(listType, key).icon
   }
 
-  function getLabelIcon(list: string, key: string): Component {
-    return getLabel(list, key).icon
+  function checkRecordExist(item: LyRecord, listType: string): boolean {
+    return records.value[listType].some((i: LyRecord) => i.id === item.id)
+  }  
+
+  function getRecord(id: number, listType: string): LyRecord {
+    const record = records.value[listType].find((i: LyRecord) => i.id === id)
+    if (!record) {
+      throw new Error(`Record not found with ID ${id} in listType ${listType}`)
+    }
+    return record as LyRecord
   }
 
-  function checkRecordExist(item: LyRecord, list: string): boolean {
-    return records.value[list].some((i: object) => {
-      return (i as LyRecord).id === item.id
-    })
-  }
-
-  function getRecord(id: number, list: string): LyRecord {
-    return records.value[list].filter((i: object) => {
-      return (i as LyRecord).id === id
-    })[0]
-  }
-
-  async function addRecord(list: string, { saveLocal }: AddRecordOptions): Promise<LyRecord> {
+  async function addRecord(listType: string, { saveLocal }: AddRecordOptions): Promise<LyRecord> {
     try {
       const id = await generateUniqueId()
       const record: LyRecord = {
         id,
-        category: list,
+        category: listType,
         title: '',
         score: 0,
         liked: false,
-        label: getDefaultLabel(list).key,
+        label: getDefaultLabel(listType).key,
       }
-      records.value[list].push(record)
+      records.value[listType].push(record)
   
       if (saveLocal) {
         try {
