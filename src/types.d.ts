@@ -25,6 +25,7 @@ interface CategoriesColors {
 interface LyRecord {
   [k: string]: any,
   id: any,
+  category: string,
   title: string,
   score: number,
   liked: boolean,

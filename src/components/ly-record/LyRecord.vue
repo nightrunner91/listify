@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { h, ref, computed } from 'vue'
+import { h, ref, computed, watch } from 'vue'
 import {
   NListItem,
   NSpace,
@@ -14,9 +14,8 @@ import {
 import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
-import { 
-  PhHeart as LikeIcon,
-} from 'phosphor-vue'
+import { PhHeart as LikeIcon } from 'phosphor-vue'
+import { lyStorage } from '@/main'
 
 const recordsStore = useRecordsStore()
 const gridStore = useGridStore()
@@ -32,6 +31,13 @@ const record = computed(() => {
 const renderDropdownIcon = (option: any) => {
   return h(option.icon, { size: 16 })
 }
+
+watch(record, () => {
+  lyStorage.setStorage({
+    key: record.value.id,
+    data: record.value
+  })
+}, { immediate: true, deep: true })
 </script>
 
 <template>

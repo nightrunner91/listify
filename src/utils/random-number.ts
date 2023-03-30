@@ -42,14 +42,16 @@ function getRandomInt(min:number = 1000000, max:number = 10000000): number {
  * even if multiple entries are created at the same time. Note that this implementation requires 
  * the use of the crypto.subtle API, which is only available in secure contexts (e.g., HTTPS).
  * @example
- *   generateUniqueId().then(id => { console.log(id) })
+ * generateUniqueId().then(id => { console.log(id) })
+ * or
+ * const id = await generateUniqueId()
  */
 async function generateUniqueId() {
   const timestamp = Date.now().toString()
   const random = Math.random().toString()
   const uniqueString = timestamp + random
   const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(uniqueString))
-  return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('')
+  return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('').substring(0, 12)
 }
 
 export { getRandomArbitrary, getRandomInt, generateUniqueId }

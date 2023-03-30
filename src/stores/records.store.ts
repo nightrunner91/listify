@@ -1,6 +1,7 @@
 import { ref, shallowRef, type Component } from 'vue'
 import { defineStore } from 'pinia'
 import { generateUniqueId } from '@/utils/random-number'
+import { lyStorage } from '@/main'
 import {
   PhPlay as InProgressIcon,
   PhHourglass as OnHoldIcon,
@@ -23,6 +24,7 @@ export const useRecordsStore = defineStore('records', () => {
   const record = ref<LyRecord>({
     id: undefined,
     title: '',
+    category: '',
     score: 0,
     liked: false,
     label: '',
@@ -47,6 +49,10 @@ export const useRecordsStore = defineStore('records', () => {
   const recordsLength = (list: string) => {
     const targetList = records.value[list]
     return targetList ? targetList.length : 0
+  }
+
+  function getDefaultLabel(list: string): LyLabel {
+    return labels.value[list].filter((i: LyLabel) => { return i.default })[0]
   }
 
   function getLabel(list: string, key: string): LyLabel {
@@ -77,21 +83,35 @@ export const useRecordsStore = defineStore('records', () => {
     })[0]
   }
 
-  function addRecord(list: string): Promise<LyRecord> {
-    return new Promise((resolve) => {
-      let newRecord: LyRecord
-      generateUniqueId().then(hash => {
-        newRecord = {
-          id: hash,
-          title: '',
-          score: 0,
-          liked: false,
-          label: '',
-        }
-        records.value[list].push(newRecord)
-        resolve(newRecord)
-      })
-    })
+  async function addRecord(list: string): Promise<LyRecord> {
+    try {
+      const id = await generateUniqueId()
+  
+      const record: LyRecord = {
+        id,
+        category: list,
+        title: '',
+        score: 0,
+        liked: false,
+        label: getDefaultLabel(list).key,
+      }
+  
+      records.value[list].push(record)
+  
+      try {
+        await lyStorage.setStorage({
+          key: id,
+          data: record,
+        })
+      } catch (err: any) {
+        console.log(err.errMsg)
+      }
+  
+      return record
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
   }
 
   return {
