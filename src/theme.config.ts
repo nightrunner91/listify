@@ -62,6 +62,9 @@ export const lightThemeOverrides = {
   Badge: {
     color: 'rgb(255, 89, 122)',
   },
+  Drawer: {
+    headerBorderBottom: 'rgb(239, 239, 245)',
+  },
 }
 
 export const darkThemeOverrides = {
