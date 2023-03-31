@@ -36,6 +36,9 @@ const globalOverrides = {
     border: 'none',
     color: 'transparent',
   },
+  Drawer: {
+    boxShadow: 'none',
+  }
 }
 
 export const lightThemeOverrides = {
@@ -78,6 +81,9 @@ export const darkThemeOverrides = {
   },
   Badge: {
     color: 'rgb(215, 69, 98)',
+  },
+  Drawer: {
+    headerBorderBottom: 'rgba(255, 255, 255, 0.09)',
   },
 }
 

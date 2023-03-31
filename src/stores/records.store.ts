@@ -1,4 +1,4 @@
-import { ref, shallowRef, type Component } from 'vue'
+import { ref, shallowRef, computed, type ComputedRef, type Component } from 'vue'
 import { defineStore } from 'pinia'
 import { generateUniqueId } from '@/utils/random-number'
 import { lyStorage } from '@/main'
@@ -37,6 +37,13 @@ export const useRecordsStore = defineStore('records', () => {
     manga: [],
     books: [],
     music: [],
+  })
+
+  const someRecordSelected: ComputedRef<boolean> = computed(() => {
+    return Object.values(records.value).some(
+      (recordsArray: LyRecord[]) =>
+        recordsArray.some((record: LyRecord) => record.selected)
+    )
   })
 
   const recordsLength = (listType: string) => {
@@ -119,6 +126,7 @@ export const useRecordsStore = defineStore('records', () => {
   return {
     records,
     labels,
+    someRecordSelected,
     recordsLength,
     getLabel,
     getLabelName,

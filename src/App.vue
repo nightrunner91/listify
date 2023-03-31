@@ -8,6 +8,7 @@ import AppProvider from './AppProvider.vue'
 import LyHeader from '@/components/ly-header/LyHeader.vue'
 import LySider from '@/components/ly-sider/LySider.vue'
 import LyContent from '@/components/ly-content/LyContent.vue'
+import LyControls from '@/components/ly-controls/LyControls.vue'
 
 const themeStore = useThemeStore()
 const gridStore = useGridStore()
@@ -30,6 +31,7 @@ onBeforeMount(() => {
         style="top: 56px;">
         <ly-sider />
         <ly-content />
+        <ly-controls />
       </n-layout>
     </n-layout>
   </app-provider>
