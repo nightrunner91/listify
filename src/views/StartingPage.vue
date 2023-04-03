@@ -53,7 +53,7 @@ const usedStuff = ref([
     <n-grid-item span="6 m:5 l:4">
 
       <n-p>Listify is designed to track your favorite entertainment choices, whether it's games, films, anime, books, or anything else.</n-p>
-      <n-p>It uses your browser's <n-a href="https://developer.mozilla.org/ru/docs/Web/API/Window/localStorage" target="_blank">localStorage</n-a> to store your data, so make sure that your device supports this feature. Since browser memory isn't a very reliable form of storage at long terms, Listify provides import and export of your data in <n-a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a> format. I recommend exporting your collection from time to time to avoid losing it suddenly.</n-p>
+      <n-p>It uses your browser's <n-a href="https://developer.mozilla.org/ru/docs/Web/API/Window/localStorage" target="_blank">localStorage</n-a> to store data, so make sure that your device supports it. Since browser memory isn't a very reliable form of storage, Listify provides import and export of your collection in <n-a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a> format. I recommend exporting your collection from time to time to avoid losing it suddenly.</n-p>
       <n-p>Listify is an open-source project that's still in development. If you have any suggestions or encounter any bugs, please feel free to contact me via Telegram <n-a href="https://t.me/nightrunner91" target="_blank">@nightrunner91</n-a> or <n-a href="https://github.com/nightrunner91/listify/issues" target="_blank">open an issue</n-a> on Github. Thank you for choosing Listify!</n-p>
 
       <n-h4>Used stuff:</n-h4>
