@@ -48,7 +48,7 @@ function updateScroll(event: Event) {
     </n-grid>
     <ly-scroller
       @scrollTop="contentRef?.scrollTo({ top: 0, behavior: 'smooth' })"
-      @scrollBottom="contentRef?.scrollTo({ top: 9999999, behavior: 'smooth' })" />
+      @scrollBottom="contentRef?.scrollTo({ top: 999999999, behavior: 'smooth' })" />
   </n-layout-content>
 </template>
 

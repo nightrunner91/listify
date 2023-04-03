@@ -51,18 +51,18 @@ export const useRecordsStore = defineStore('records', () => {
 
   function selectAll(listType: string): LyRecord[] {
     const list = records.value[listType]
-    list.forEach((record) => {
+    list?.forEach((record) => {
       record.selected = true
     })
-    return list.filter((record) => record.selected)
+    return list?.filter((record) => record.selected)
   }
   
   function deselectAll(listType: string): LyRecord[] {
     const list = records.value[listType]
-    list.forEach((record) => {
+    list?.forEach((record) => {
       record.selected = false
     })
-    return list.filter((record) => !record.selected)
+    return list?.filter((record) => !record.selected)
   }
 
   function checkRecordExist(item: LyRecord, listType: string): boolean {

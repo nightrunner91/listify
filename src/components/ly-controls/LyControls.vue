@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import {
   NDrawer,
   NGrid,
@@ -20,6 +21,10 @@ function handleSelection(): void {
     recordsStore.selectAll(route.meta.tag as string)
   }
 }
+
+watch(route, () => {
+  recordsStore.deselectAll(route.meta.tag as string)
+}, { immediate: true, deep: true })
 </script>
 
 <template>
