@@ -15,10 +15,12 @@ import {
 } from 'phosphor-vue'
 import { useGridStore } from '@/stores/grid.store'
 import { useMenuStore } from '@/stores/menu.store'
+import { useRecordsStore } from '@/stores/records.store'
 import { renderIcon } from '@/utils/render-icon'
 
 const gridStore = useGridStore()
 const menuStore = useMenuStore()
+const recordsStore = useRecordsStore()
 const route = useRoute()
 
 const activeKey = ref<any>(null)
@@ -55,7 +57,7 @@ const menuOptions: MenuOption[] = [
         { default: () => 'Games' }
       ),
     key: 'games',
-    extra: renderExtra(95),
+    extra: renderExtra(recordsStore.recordsLength('games').value),
     icon: renderIcon(GamesIcon)
   },
   {
@@ -66,7 +68,7 @@ const menuOptions: MenuOption[] = [
         { default: () => 'TV Shows' }
       ),
     key: 'tvshows',
-    extra: renderExtra(25),
+    extra: renderExtra(recordsStore.recordsLength('tvshows').value),
     icon: renderIcon(TvShowsIcon)
   },
   {
@@ -77,7 +79,7 @@ const menuOptions: MenuOption[] = [
         { default: () => 'Films' }
       ),
     key: 'films',
-    extra: renderExtra(586),
+    extra: renderExtra(recordsStore.recordsLength('films').value),
     icon: renderIcon(FilmsIcon)
   },
   {
@@ -88,7 +90,7 @@ const menuOptions: MenuOption[] = [
         { default: () => 'Anime' }
       ),
     key: 'anime',
-    extra: renderExtra(13),
+    extra: renderExtra(recordsStore.recordsLength('anime').value),
     icon: renderIcon(AnimeIcon)
   },
   {
@@ -99,7 +101,7 @@ const menuOptions: MenuOption[] = [
         { default: () => 'Manga' }
       ),
     key: 'manga',
-    extra: renderExtra(85),
+    extra: renderExtra(recordsStore.recordsLength('manga').value),
     icon: renderIcon(MangaIcon)
   },
   {
@@ -110,7 +112,7 @@ const menuOptions: MenuOption[] = [
         { default: () => 'Books' }
       ),
     key: 'books',
-    extra: renderExtra(37),
+    extra: renderExtra(recordsStore.recordsLength('books').value),
     icon: renderIcon(BooksIcon)
   },
   {
@@ -121,7 +123,7 @@ const menuOptions: MenuOption[] = [
         { default: () => 'Music' }
       ),
     key: 'music',
-    extra: renderExtra(64),
+    extra: renderExtra(recordsStore.recordsLength('music').value),
     icon: renderIcon(MusicIcon)
   },
   {
@@ -139,6 +141,8 @@ const menuOptions: MenuOption[] = [
 watch(route, () => {
   activeKey.value = route.meta.tag
 }, { flush: 'pre', immediate: true, deep: true })
+
+
 </script>
 
 <template>
@@ -146,8 +150,6 @@ watch(route, () => {
     v-model:value="activeKey"
     :collapsed="menuStore.collapsed"
     :collapsed-width="gridStore.screenLargerThen('s') ? 64 : 0"
-    :collapsed-icon-size="24"
-    :icon-size="28"
     :options="menuOptions"
     @update:value="menuStore.closeMenu" />
 </template>

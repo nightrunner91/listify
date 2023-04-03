@@ -76,7 +76,7 @@ watch(route, () => {
                 Select All
               </n-text>
             </n-button>
-            <n-popconfirm @positive-click="recordsStore.deleteRecords(route.meta.tag as string)">
+            <n-popconfirm @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag as string)">
               <template #trigger>
                 <n-button
                   type="error"

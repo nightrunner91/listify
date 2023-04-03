@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { NH1, NText, NBadge } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'
@@ -8,8 +8,6 @@ import { useRecordsStore } from '@/stores/records.store'
 const route = useRoute()
 const themeStore = useThemeStore()
 const recordsStore = useRecordsStore()
-
-const recordsLength = computed(() => recordsStore.recordsLength(route.meta.tag as string))
 
 const barColor = ref('transparent')
 const barWidth = ref('3px')
@@ -34,7 +32,7 @@ watch(
       {{ route.meta.title }}
       <n-badge
         v-if="route.meta.tag !== 'start'"
-        :value="recordsLength"
+        :value="recordsStore.recordsLength(route.meta.tag as string).value"
         :show-zero="true" />
       <div
         :style="{
