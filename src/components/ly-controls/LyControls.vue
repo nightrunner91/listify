@@ -92,8 +92,7 @@ watch(route, () => {
                 class="mx-1">
                 {{ recordsStore.selectedRecordsLength(route.meta.tag as string) }}
               </n-text>
-              <n-text v-if="recordsPlural">records?</n-text>
-              <n-text v-else>record?</n-text>
+              <n-text>record<n-text v-if="recordsPlural">s</n-text>?</n-text>
             </n-popconfirm>
           </n-space>
         </n-grid-item>
