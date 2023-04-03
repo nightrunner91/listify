@@ -47,6 +47,20 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
+  const selectedRecords = (listType: string): ComputedRef<LyRecord[]> => {
+    return computed(() => {
+      const { [listType]: list = [] } = records.value
+      return list?.filter((record: LyRecord) => record.selected)
+    })
+  }
+
+  const selectedRecordsLength = (listType: string): ComputedRef<number> => {
+    return computed(() => {
+      const { [listType]: list = [] } = records.value
+      return list?.filter((record: LyRecord) => record.selected).length || 0
+    })
+  }
+
   function selectAllRecords(listType: string): LyRecord[] {
     const { [listType]: list = [] } = records.value
     return list?.filter((record) => record.selected = true)
@@ -63,9 +77,6 @@ export const useRecordsStore = defineStore('records', () => {
 
   function getRecord(id: number, listType: string): LyRecord {
     const record = records.value[listType].find((i: LyRecord) => i.id === id)
-    if (!record) {
-      throw new Error(`Record not found with ID ${id} in listType ${listType}`)
-    }
     return record as LyRecord
   }
 
@@ -109,7 +120,30 @@ export const useRecordsStore = defineStore('records', () => {
     for (let i = 0; i < recKeys.length; i++) {
       const key: string = recKeys[i]
       const value: LyRecord = JSON.parse(localStorage.getItem(key) as string).value
+      console.log(value)
       records.value[value.category].push(value)
+    }
+  }
+
+  async function deleteRecords(listType: string): Promise<LyRecord[]> {
+    const selected = selectedRecords(listType).value
+    try {
+      for (let i = 0; i < selected.length; i++) {
+        const index = records.value[listType].findIndex(record => record.id === selected[i].id)
+        records.value[listType].splice(index, 1)
+        try {
+          await lyStorage.removeStorage({
+            namespace: 'ly_',
+            key: `${RECORDS_KEY}${selected[i].id}`
+          })
+        } catch (err: any) {
+          console.error(err.errMsg)
+        }
+      }
+      return selected
+    } catch (err) {
+      console.error(err)
+      throw err
     }
   }
 
@@ -156,12 +190,15 @@ export const useRecordsStore = defineStore('records', () => {
     recordsLength,
     someRecordsSelected,
     allRecordsSelected,
+    selectedRecords,
+    selectedRecordsLength,
     selectAllRecords,
     deselectAllRecords,
     checkRecordExist,
     getRecord,
     addRecord,
     restoreRecords,
+    deleteRecords,
 
     labels,
     getDefaultLabel,

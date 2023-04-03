@@ -38,7 +38,11 @@ const globalOverrides = {
   },
   Drawer: {
     boxShadow: 'none',
-  }
+  },
+  Popconfirm: {
+    fontSize: '14px',
+    iconSize: '18px',
+  },
 }
 
 export const lightThemeOverrides = {

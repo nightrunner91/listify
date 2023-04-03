@@ -25,7 +25,7 @@ const tag = route.meta.tag as string
 const showCheckbox = ref<boolean>(false)
 
 const record = computed(() => {
-  return recordsStore.getRecord(props.id, tag)
+  return recordsStore.getRecord(props.id, tag) || {}
 })
 
 const renderDropdownIcon = (option: any) => {
@@ -33,12 +33,14 @@ const renderDropdownIcon = (option: any) => {
 }
 
 watch(record, () => {
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  const { selected, ...recordWithoutSelected } = record.value
-  lyStorage.setStorage({
-    key: `rec_${record.value.id}`,
-    data: recordWithoutSelected
-  })
+  if (record.value.id) {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    const { selected, ...recordWithoutSelected } = record.value
+    lyStorage.setStorage({
+      key: `rec_${record.value.id}`,
+      data: recordWithoutSelected
+    })
+  }
 }, { immediate: true, deep: true })
 </script>
 
