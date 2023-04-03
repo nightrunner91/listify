@@ -16,14 +16,14 @@ const route = useRoute()
 
 function handleSelection(): void {
   if (recordsStore.allRecordsSelected(route.meta.tag as string).value) {
-    recordsStore.deselectAll(route.meta.tag as string)
+    recordsStore.deselectAllRecords(route.meta.tag as string)
   } else {
-    recordsStore.selectAll(route.meta.tag as string)
+    recordsStore.selectAllRecords(route.meta.tag as string)
   }
 }
 
 watch(route, () => {
-  recordsStore.deselectAll(route.meta.tag as string)
+  recordsStore.deselectAllRecords(route.meta.tag as string)
 }, { immediate: true, deep: true })
 </script>
 

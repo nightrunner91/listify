@@ -49,7 +49,7 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
-  function selectAll(listType: string): LyRecord[] {
+  function selectAllRecords(listType: string): LyRecord[] {
     const list = records.value[listType]
     list?.forEach((record) => {
       record.selected = true
@@ -57,7 +57,7 @@ export const useRecordsStore = defineStore('records', () => {
     return list?.filter((record) => record.selected)
   }
   
-  function deselectAll(listType: string): LyRecord[] {
+  function deselectAllRecords(listType: string): LyRecord[] {
     const list = records.value[listType]
     list?.forEach((record) => {
       record.selected = false
@@ -161,18 +161,20 @@ export const useRecordsStore = defineStore('records', () => {
 
   return {
     records,
-    labels,
+    recordsLength,
     someRecordsSelected,
     allRecordsSelected,
-    recordsLength,
-    getLabel,
-    getLabelName,
-    getLabelIcon,
+    selectAllRecords,
+    deselectAllRecords,
     checkRecordExist,
     getRecord,
     addRecord,
     restoreRecords,
-    selectAll,
-    deselectAll,
+
+    labels,
+    getDefaultLabel,
+    getLabel,
+    getLabelName,
+    getLabelIcon,
   }
 })
