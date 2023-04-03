@@ -13,6 +13,11 @@ import {
 const RECORDS_KEY = 'rec_'
 
 export const useRecordsStore = defineStore('records', () => {
+
+  /* ========================= */
+  /* ======== Records ======== */
+  /* ========================= */
+
   const records = ref<LyRecords<LyRecord>>({
     games: [],
     tvshows: [],
@@ -23,54 +28,46 @@ export const useRecordsStore = defineStore('records', () => {
     music: [],
   })
 
-  const labels = shallowRef<LyLabels<LyLabel>>({
-    games: [
-      { key: 'playing_now', label: 'Playing Now', icon: InProgressIcon, default: true },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
-      { key: 'plan_to_play', label: 'Plan to Play', icon: PlanIcon },
-      { key: 'completed', label: 'Completed', icon: CompletedIcon },
-      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ],
-    tvshows: [],
-    films: [],
-    anime: [],
-    manga: [],
-    books: [],
-    music: [],
-  })
-
-  const someRecordSelected: ComputedRef<boolean> = computed(() => {
-    return Object.values(records.value).some(
-      (recordsArray: LyRecord[]) =>
-        recordsArray.some((record: LyRecord) => record.selected)
-    )
-  })
-
   const recordsLength = (listType: string) => {
     const targetList = records.value[listType]
     return targetList ? targetList.length : 0
   }
 
-  function getDefaultLabel(listType: string): LyLabel {
-    return labels.value[listType].find((i: LyLabel) => i.default) || labels.value[listType][0]
-  }  
-
-  function getLabel(listType: string, key: string): LyLabel {
-    const targetItem = labels.value[listType].filter((i: LyLabel) => {return i.key === key })[0]
-    return targetItem ? targetItem : getDefaultLabel(listType)
+  const someRecordsSelected = (listType: string): ComputedRef<boolean> => {
+    return computed(() => {
+      return records.value[listType]?.some(
+        (record: LyRecord) => record.selected
+      )
+    })
   }
 
-  function getLabelName(listType: string, key: string): string {
-    return getLabel(listType, key).label
+  const allRecordsSelected = (listType: string): ComputedRef<boolean> => {
+    return computed(() => {
+      return records.value[listType]?.every(
+        (record: LyRecord) => record.selected
+      )
+    })
   }
 
-  function getLabelIcon(listType: string, key: string): Component {
-    return getLabel(listType, key).icon
+  function selectAll(listType: string): LyRecord[] {
+    const list = records.value[listType]
+    list.forEach((record) => {
+      record.selected = true
+    })
+    return list.filter((record) => record.selected)
+  }
+  
+  function deselectAll(listType: string): LyRecord[] {
+    const list = records.value[listType]
+    list.forEach((record) => {
+      record.selected = false
+    })
+    return list.filter((record) => !record.selected)
   }
 
   function checkRecordExist(item: LyRecord, listType: string): boolean {
     return records.value[listType].some((i: LyRecord) => i.id === item.id)
-  }  
+  }
 
   function getRecord(id: number, listType: string): LyRecord {
     const record = records.value[listType].find((i: LyRecord) => i.id === id)
@@ -90,6 +87,7 @@ export const useRecordsStore = defineStore('records', () => {
         score: 0,
         liked: false,
         label: getDefaultLabel(listType).key,
+        selected: false,
       }
       records.value[listType].push(record)
   
@@ -123,10 +121,49 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+  /* ======================== */
+  /* ======== Labels ======== */
+  /* ======================== */
+
+  const labels = shallowRef<LyLabels<LyLabel>>({
+    games: [
+      { key: 'playing_now', label: 'Playing Now', icon: InProgressIcon, default: true },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
+      { key: 'plan_to_play', label: 'Plan to Play', icon: PlanIcon },
+      { key: 'completed', label: 'Completed', icon: CompletedIcon },
+      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+    ],
+    tvshows: [],
+    films: [],
+    anime: [],
+    manga: [],
+    books: [],
+    music: [],
+  })
+
+  function getDefaultLabel(listType: string): LyLabel {
+    return labels.value[listType].find((i: LyLabel) => i.default) || labels.value[listType][0]
+  }  
+
+  function getLabel(listType: string, key: string): LyLabel {
+    const targetItem = labels.value[listType].filter((i: LyLabel) => {return i.key === key })[0]
+    return targetItem ? targetItem : getDefaultLabel(listType)
+  }
+
+  function getLabelName(listType: string, key: string): string {
+    return getLabel(listType, key).label
+  }
+
+  function getLabelIcon(listType: string, key: string): Component {
+    return getLabel(listType, key).icon
+  }
+  
+
   return {
     records,
     labels,
-    someRecordSelected,
+    someRecordsSelected,
+    allRecordsSelected,
     recordsLength,
     getLabel,
     getLabelName,
@@ -135,5 +172,7 @@ export const useRecordsStore = defineStore('records', () => {
     getRecord,
     addRecord,
     restoreRecords,
+    selectAll,
+    deselectAll,
   }
 })

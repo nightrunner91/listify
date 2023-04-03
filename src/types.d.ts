@@ -30,6 +30,7 @@ interface LyRecord {
   score: number,
   liked: boolean,
   label: string,
+  selected: boolean,
 }
 
 interface LyRecords<T> {
