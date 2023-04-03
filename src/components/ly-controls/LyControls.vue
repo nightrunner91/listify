@@ -88,7 +88,6 @@ watch(route, () => {
               <n-text>You sure want to delete</n-text>
               <n-text
                 strong
-                type="error"
                 class="mx-1">
                 {{ recordsStore.selectedRecordsLength(route.meta.tag as string) }}
               </n-text>

@@ -99,7 +99,8 @@ watch(record, () => {
         <n-rate
           v-model:value="record.score"
           clearable
-          size="small" />
+          size="small"
+          class="mr-0 mr-s-4 mr-m-7" />
           
         <n-button
           quaternary
@@ -107,7 +108,7 @@ watch(record, () => {
           circle
           type="error"
           size="small"
-          class="ml-4 ml-m-10"
+          class="ml-4 ml-s-6 ml-m-10"
           @click="record.liked = !record.liked">
           <template #icon>
             <like-icon
