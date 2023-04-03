@@ -35,34 +35,26 @@ export const useRecordsStore = defineStore('records', () => {
 
   const someRecordsSelected = (listType: string): ComputedRef<boolean> => {
     return computed(() => {
-      return records.value[listType]?.some(
-        (record: LyRecord) => record.selected
-      )
+      const { [listType]: list = [] } = records.value
+      return list?.some((record: LyRecord) => record.selected)
     })
   }
-
+  
   const allRecordsSelected = (listType: string): ComputedRef<boolean> => {
     return computed(() => {
-      return records.value[listType]?.every(
-        (record: LyRecord) => record.selected
-      )
+      const { [listType]: list = [] } = records.value
+      return list?.every((record: LyRecord) => record.selected)
     })
   }
 
   function selectAllRecords(listType: string): LyRecord[] {
-    const list = records.value[listType]
-    list?.forEach((record) => {
-      record.selected = true
-    })
-    return list?.filter((record) => record.selected)
+    const { [listType]: list = [] } = records.value
+    return list?.filter((record) => record.selected = true)
   }
   
   function deselectAllRecords(listType: string): LyRecord[] {
-    const list = records.value[listType]
-    list?.forEach((record) => {
-      record.selected = false
-    })
-    return list?.filter((record) => !record.selected)
+    const { [listType]: list = [] } = records.value
+    return list?.filter((record) => record.selected = false)
   }
 
   function checkRecordExist(item: LyRecord, listType: string): boolean {
