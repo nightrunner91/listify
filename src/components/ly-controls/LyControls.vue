@@ -12,7 +12,7 @@ import {
 import { 
   PhTrashSimple as DeleteIcon,
   PhCheckSquare as SelectAllIcon,
-  PhXSquare as DeselectAllIcon
+  PhSquare as DeselectAllIcon
 } from 'phosphor-vue'
 import { renderIcon } from '@/utils/render-icon'
 import { useRecordsStore } from '@/stores/records.store'
@@ -62,6 +62,7 @@ watch(route, () => {
             align="center"
             :wrap-item="false">
             <n-button
+              secondary
               size="small"
               class="mr-auto"
               :render-icon="

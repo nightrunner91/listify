@@ -86,7 +86,7 @@ const router = createRouter({
           meta: {
             tag: 'music',
             title: 'Music',
-            thing: 'Artist',
+            thing: 'Music',
           }
         },
       ]
