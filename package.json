@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "jsesc": "^3.0.2",
+    "moment": "^2.29.4",
     "phosphor-vue": "^4.4.1",
     "pinia": "^2.0.32",
     "sass": "^1.32.8",

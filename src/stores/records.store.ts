@@ -10,6 +10,7 @@ import {
   PhProhibit as DroppedIcon,
 } from 'phosphor-vue'
 import jsesc from 'jsesc'
+import moment from 'moment'
 
 const RECORDS_KEY = 'rec_'
 
@@ -230,7 +231,7 @@ export const useRecordsStore = defineStore('records', () => {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'data.json'
+    a.download = `listify-collection-${moment().format('DD-MM-YYYY')}.json`
     document.body.appendChild(a)
     a.click()
 
@@ -238,7 +239,7 @@ export const useRecordsStore = defineStore('records', () => {
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
   }
-  
+
 
   return {
     records,
