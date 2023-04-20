@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import {
-  PhUploadSimple as ExportIcon,
-} from 'phosphor-vue'
+import { PhUploadSimple as ExportIcon } from 'phosphor-vue'
 import {
   NButton,
   NIcon,
@@ -20,6 +18,7 @@ import { useRecordsStore } from '@/stores/records.store'
 
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
+
 const showModal = ref<boolean>(false)
 </script>
 
@@ -42,11 +41,11 @@ const showModal = ref<boolean>(false)
   <n-modal
     v-model:show="showModal"
     preset="card"
-    :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     title="Select Categories"
-    size="huge"
     transform-origin="center"
-    to="body">
+    to="body"
+    :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
+    :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
     <n-checkbox-group v-model:value="recordsStore.selectedCategories">
       <n-grid
         item-responsive
