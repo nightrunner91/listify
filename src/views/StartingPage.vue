@@ -10,6 +10,7 @@ import {
   NListItem,
   NIcon,
   NSpace,
+  NText,
 } from 'naive-ui'
 import {
   PhFileVue as VueIcon,
