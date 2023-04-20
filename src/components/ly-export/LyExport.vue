@@ -1,8 +1,24 @@
 <script lang="ts" setup>
-import { 
+import { ref } from 'vue'
+import {
   PhUploadSimple as ExportIcon,
 } from 'phosphor-vue'
-import { NButton, NIcon, NTooltip } from 'naive-ui'
+import {
+  NButton,
+  NIcon,
+  NTooltip,
+  NModal,
+  NSpace,
+  NCheckboxGroup,
+  NCheckbox,
+} from 'naive-ui'
+import { useRecordsStore } from '@/stores/records.store'
+
+const recordsStore = useRecordsStore()
+const showModal = ref<boolean>(false)
+const selectedCategories = ref([
+  'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music'
+])
 </script>
 
 <template>
@@ -12,7 +28,7 @@ import { NButton, NIcon, NTooltip } from 'naive-ui'
         quaternary
         circle
         size="large"
-        class="">
+        @click="showModal = true">
         <template #icon>
           <n-icon :component="ExportIcon" />
         </template>
@@ -20,4 +36,33 @@ import { NButton, NIcon, NTooltip } from 'naive-ui'
     </template>
     Export Collection
   </n-tooltip>
+
+  <n-modal
+    v-model:show="showModal"
+    preset="card"
+    :style="{ width: '340px' }"
+    title="Select Categories"
+    transform-origin="center"
+    to="body">
+    <n-checkbox-group v-model:value="selectedCategories">
+      <n-space
+        vertical
+        size="small">
+        <n-checkbox value="games" label="Games" />
+        <n-checkbox value="tvshows" label="TV Shows" />
+        <n-checkbox value="films" label="Films" />
+        <n-checkbox value="anime" label="Anime" />
+        <n-checkbox value="manga" label="Manga" />
+        <n-checkbox value="books" label="Books" />
+        <n-checkbox value="music" label="Music" />
+      </n-space>
+    </n-checkbox-group>
+    <template #footer>
+      <n-button
+        block
+        @click="recordsStore.exportCollection">
+        Export Collection
+      </n-button>
+    </template>
+  </n-modal>
 </template>

@@ -133,7 +133,6 @@ export const useRecordsStore = defineStore('records', () => {
     for (let i = 0; i < recKeys.length; i++) {
       const key: string = recKeys[i]
       const value: LyRecord = JSON.parse(localStorage.getItem(key) as string).value
-      console.log(value)
       records.value[value.category].push(value)
     }
   }
@@ -196,6 +195,13 @@ export const useRecordsStore = defineStore('records', () => {
   function getLabelIcon(listType: string, key: string): Component {
     return getLabel(listType, key).icon
   }
+
+
+  /* =========================== */
+  /* ===== Export & Import ===== */
+  /* =========================== */
+
+  function exportCollection() { }
   
 
   return {
@@ -219,5 +225,7 @@ export const useRecordsStore = defineStore('records', () => {
     getLabel,
     getLabelName,
     getLabelIcon,
+
+    exportCollection,
   }
 })
