@@ -11,7 +11,6 @@ import {
   NCheckboxGroup,
   NCheckbox,
   NP,
-  NA,
 } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -46,7 +45,9 @@ const showModal = ref<boolean>(false)
     to="body"
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
-    <n-checkbox-group v-model:value="recordsStore.selectedCategories">
+    <n-checkbox-group
+      v-model:value="recordsStore.selectedCategories"
+      class="mb-6">
       <n-grid
         item-responsive
         responsive="screen"
@@ -79,7 +80,7 @@ const showModal = ref<boolean>(false)
     <n-p
       depth="3"
       style="font-size: 14px;">
-      Since browser memory isn't a very reliable form of storage, Listify provides import and export of your collection in <n-a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a> format. We recommend exporting your collection from time to time to avoid losing it suddenly.
+      Listify relies on browser memory which makes it an unreliable form of storage. To prevent sudden data loss, it's recommended to export your collection from time to time.
     </n-p>
     <template #footer>
       <n-button
