@@ -9,6 +9,7 @@ import {
   PhChecks as CompletedIcon,
   PhProhibit as DroppedIcon,
 } from 'phosphor-vue'
+import jsesc from 'jsesc'
 
 const RECORDS_KEY = 'rec_'
 
@@ -159,6 +160,7 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+
   /* ======================== */
   /* ======== Labels ======== */
   /* ======================== */
@@ -201,7 +203,41 @@ export const useRecordsStore = defineStore('records', () => {
   /* ===== Export & Import ===== */
   /* =========================== */
 
-  function exportCollection() { }
+  const selectedCategories = ref([
+    'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music'
+  ])
+
+  function exportCollection(): void {
+    // Filter records based on selected categories
+    const filteredRecords = Object.entries(records.value)
+      .reduce((acc, [category, records]) => {
+        if (selectedCategories.value.includes(category)) {
+          // Remove 'selected' property from each record
+          /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+          acc[category] = records.map(({selected, ...rest}) => rest as LyRecord)
+        }
+        return acc
+      }, {} as Record<string, LyRecord[]>)
+
+    /**
+     * Sanitize resulting object with jsesc
+     * @see {@link https://github.com/mathiasbynens/jsesc}
+     */ 
+    const json = jsesc(filteredRecords, { json: true })
+
+    // Create link and attach blob to it
+    const blob = new Blob([json], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'data.json'
+    document.body.appendChild(a)
+    a.click()
+
+    // Remove link after
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
   
 
   return {
@@ -226,6 +262,7 @@ export const useRecordsStore = defineStore('records', () => {
     getLabelName,
     getLabelIcon,
 
+    selectedCategories,
     exportCollection,
   }
 })

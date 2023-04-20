@@ -16,9 +16,6 @@ import { useRecordsStore } from '@/stores/records.store'
 
 const recordsStore = useRecordsStore()
 const showModal = ref<boolean>(false)
-const selectedCategories = ref([
-  'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music'
-])
 </script>
 
 <template>
@@ -40,11 +37,11 @@ const selectedCategories = ref([
   <n-modal
     v-model:show="showModal"
     preset="card"
-    :style="{ width: '340px' }"
+    :style="{ width: '320px' }"
     title="Select Categories"
     transform-origin="center"
     to="body">
-    <n-checkbox-group v-model:value="selectedCategories">
+    <n-checkbox-group v-model:value="recordsStore.selectedCategories">
       <n-space
         vertical
         size="small">
