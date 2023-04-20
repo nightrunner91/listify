@@ -70,7 +70,7 @@ const usedStuff = ref([
             <n-icon
               size="24"
               :component="item.icon" />
-            <n-text strong>{{ item.title }}</n-text>
+            <n-text>{{ item.title }}</n-text>
           </n-space>
         </n-list-item>
       </n-list>
