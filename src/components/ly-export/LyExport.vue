@@ -42,8 +42,9 @@ const showModal = ref<boolean>(false)
   <n-modal
     v-model:show="showModal"
     preset="card"
-    :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '480px' }"
+    :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     title="Select Categories"
+    size="huge"
     transform-origin="center"
     to="body">
     <n-checkbox-group v-model:value="recordsStore.selectedCategories">
