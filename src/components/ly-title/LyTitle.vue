@@ -33,7 +33,8 @@ watch(
       <n-badge
         v-if="route.meta.tag !== 'start'"
         :value="recordsStore.recordsLength(route.meta.tag as string).value"
-        :show-zero="true" />
+        :show-zero="true"
+        class="z-0" />
       <div
         :style="{
           backgroundColor: barColor,

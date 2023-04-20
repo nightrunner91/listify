@@ -95,11 +95,10 @@ export const useRecordsStore = defineStore('records', () => {
     return record as LyRecord
   }
 
-  async function addRecord(listType: string, { saveLocal }: AddRecordOptions): Promise<LyRecord> {
+  async function addRecord({ record, listType, saveLocal }: AddRecordOptions): Promise<LyRecord> {
     try {
-      const id = await generateUniqueId()
-      const record: LyRecord = {
-        id,
+      const income = record || {
+        id: await generateUniqueId(),
         category: listType,
         title: '',
         score: 0,
@@ -107,17 +106,23 @@ export const useRecordsStore = defineStore('records', () => {
         label: getDefaultLabel(listType).key,
         selected: false,
       }
-      records.value[listType].push(record)
+      
+      if (checkRecordExist(income as LyRecord, listType)) {
+        const index = records.value[listType].findIndex((i: LyRecord) => i.id === income.id)
+        records.value[listType].splice(index, 1, income)
+      } else {
+        records.value[listType].push(income)
+      }
   
       if (saveLocal) {
         try {
-          await lyStorage.setStorage({ key: `${RECORDS_KEY}${id}`, data: record })
+          await lyStorage.setStorage({ key: `${RECORDS_KEY}${income.id}`, data: income })
         } catch (err: any) {
           console.error(err.errMsg)
         }
       }
   
-      return record
+      return income as LyRecord
     } catch (err) {
       console.error(err)
       throw err

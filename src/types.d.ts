@@ -36,6 +36,12 @@ interface LyRecord {
 interface LyRecords<T> {
   [k: string]: Array<T>,
   games: Array<T>,
+  tvshows: Array<T>,
+  films: Array<T>,
+  anime: Array<T>,
+  manga: Array<T>,
+  books: Array<T>,
+  music: Array<T>,
 }
 
 interface LyLabels<T> {
@@ -47,5 +53,7 @@ interface LyLabel {
 }
 
 interface AddRecordOptions {
-  saveLocal: boolean
+  record?: LyRecord,
+  listType: string,
+  saveLocal: boolean,
 }

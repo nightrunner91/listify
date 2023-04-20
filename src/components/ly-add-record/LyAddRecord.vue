@@ -13,7 +13,10 @@ const recordsStore = useRecordsStore()
 
 async function handleNewRecord() {
   recordsStore
-    .addRecord(route.meta.tag as string, { saveLocal: true })
+    .addRecord({
+      listType: route.meta.tag as string,
+      saveLocal: true,
+    })
     .then(record => { focusInput(record) })
 }
 
