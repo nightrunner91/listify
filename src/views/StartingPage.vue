@@ -11,6 +11,7 @@ import {
   NIcon,
   NSpace,
   NText,
+  NDivider
 } from 'naive-ui'
 import {
   PhFileVue as VueIcon,
@@ -58,6 +59,8 @@ const usedStuff = ref([
       <n-p>Listify is an open-source project that's still in development. If you have any suggestions or encounter any bugs, please feel free to contact via <n-a href="https://t.me/nightrunner91" target="_blank">Telegram</n-a> or <n-a href="https://github.com/nightrunner91/listify/issues" target="_blank">open an issue</n-a> on Github.</n-p>
 
       <n-p>Thank you for using Listify!</n-p>
+
+      <n-divider />
 
       <n-h4>Used stuff:</n-h4>
       <n-list :show-divider="false">

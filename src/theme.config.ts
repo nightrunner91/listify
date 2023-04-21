@@ -21,6 +21,16 @@ const globalOverrides = {
     headerFontSize6: '0.875rem',
     pFontSize: '18px',
   },
+  Alert: {
+    padding: '10px 14px',
+    borderRadius: '6px',
+  },
+  Card: {
+    borderRadius: '6px',
+  },
+  Upload: {
+    borderRadius: '6px',
+  },
   Menu: {
     borderRadius: '6px',
   },
