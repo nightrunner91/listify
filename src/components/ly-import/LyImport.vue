@@ -60,7 +60,12 @@ defineProps(['variant'])
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
 
-    <n-upload directory-dnd>
+    <n-upload
+      directory-dnd
+      accept=".json"
+      :max="1"
+      :show-file-list="false"
+      @change="recordsStore.importCollection">
       <n-upload-dragger>
         <div style="margin-bottom: 12px">
           <n-icon
