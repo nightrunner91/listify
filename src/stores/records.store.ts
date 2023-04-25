@@ -231,7 +231,7 @@ export const useRecordsStore = defineStore('records', () => {
      */ 
     const json = jsesc(filteredRecords, { json: true })
 
-    // Create link and attach blob to it
+    // Create link, attach blob to it and progrmically click on it
     const blob = new Blob([json], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -240,7 +240,7 @@ export const useRecordsStore = defineStore('records', () => {
     document.body.appendChild(a)
     a.click()
 
-    // Remove link after
+    // Remove generated link after
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
   }

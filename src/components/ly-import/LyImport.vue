@@ -12,15 +12,32 @@ import {
   NUpload,
   NUploadDragger,
   NP,
+  type UploadFileInfo,
 } from 'naive-ui'
 import { renderIcon } from '@/utils/render-icon'
 import { useGridStore } from '@/stores/grid.store'
-import { useRecordsStore } from '@/stores/records.store'
+// import { useRecordsStore } from '@/stores/records.store'
 
 const gridStore = useGridStore()
-const recordsStore = useRecordsStore()
+// const recordsStore = useRecordsStore()
 
 const showModal = ref<boolean>(false)
+
+async function beforeUpload (data: {
+  file: UploadFileInfo
+  fileList: UploadFileInfo[]
+}) {
+  const reader = new FileReader()
+
+  reader.onload = () => {
+    const fileContents = reader.result as string
+    const jsonObject = JSON.parse(fileContents)
+
+    console.log(jsonObject)
+  }
+
+  reader.readAsText(data.file.file as Blob)
+}
 
 defineProps(['variant'])
 </script>
@@ -61,11 +78,13 @@ defineProps(['variant'])
     :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
 
     <n-upload
+      id="import-collection"
       directory-dnd
       accept=".json"
       :max="1"
       :show-file-list="false"
-      @change="recordsStore.importCollection">
+      :default-upload="true"
+      @before-upload="beforeUpload">
       <n-upload-dragger>
         <div style="margin-bottom: 12px">
           <n-icon
