@@ -1,4 +1,5 @@
 import { ref, shallowRef, computed, type ComputedRef, type Component } from 'vue'
+import type { UploadFileInfo } from 'naive-ui'
 import { defineStore } from 'pinia'
 import { generateUniqueId } from '@/utils/random-number'
 import { lyStorage } from '@/main'
@@ -95,7 +96,11 @@ export const useRecordsStore = defineStore('records', () => {
     return record as LyRecord
   }
 
-  async function addRecord({ record, listType, saveLocal }: AddRecordOptions): Promise<LyRecord> {
+  async function addRecord({
+    record,
+    listType,
+    saveLocal
+  }: AddRecordOptions): Promise<LyRecord> {
     try {
       const income = record || {
         id: await generateUniqueId(),
@@ -148,18 +153,39 @@ export const useRecordsStore = defineStore('records', () => {
     const selected = selectedRecords(listType).value
     try {
       for (let n = 0; n < selected.length; n++) {
-        const i = records.value[listType].findIndex(record => record.id === selected[n].id)
-        records.value[listType].splice(i, 1)
-        try {
-          await lyStorage.removeStorage({
-            namespace: 'ly_',
-            key: `${RECORDS_KEY}${selected[n].id}`
-          })
-        } catch (err: any) {
-          console.error(err.errMsg)
-        }
+        // Remove from localStorage
+        lyStorage.removeStorage({
+          namespace: 'ly_',
+          key: `${RECORDS_KEY}${selected[n].id}`
+        })
+        // Remove from Pinia
+        const index = records.value[listType].findIndex(record => record.id === selected[n].id)
+        records.value[listType].splice(index, 1)
       }
       return selected
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+
+  async function deleteAllRecords(): Promise<boolean> {
+    try {
+      // Remove from localStorage
+      Object.keys(records.value).forEach(key => {
+        for (let i = 0; i < records.value[key].length; i++) {
+          lyStorage.removeStorage({
+            namespace: 'ly_',
+            key: `${RECORDS_KEY}${records.value[key][i].id}`
+          })
+        }
+      })
+      // Remove from Pinia
+      Object.keys(records.value).forEach(key => {
+        records.value[key] = []
+      })
+      
+      return true
     } catch (err) {
       console.error(err)
       throw err
@@ -213,6 +239,8 @@ export const useRecordsStore = defineStore('records', () => {
     'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music'
   ])
 
+  const processingImport = ref<boolean>(false)
+
   function exportCollection(): void {
     // Filter records based on selected categories
     const filteredRecords = Object.entries(records.value)
@@ -245,6 +273,33 @@ export const useRecordsStore = defineStore('records', () => {
     URL.revokeObjectURL(url)
   }
 
+  async function importCollection(data: { file: UploadFileInfo }) {
+    processingImport.value = true
+
+    await deleteAllRecords()
+
+    const reader = new FileReader()
+  
+    reader.onload = () => {
+      const fileContents = reader.result as string
+      const jsonObject = JSON.parse(fileContents)
+  
+      Object.keys(jsonObject).forEach(key => {
+        for (let i = 0; i < jsonObject[key].length; i++) {
+          addRecord({
+            record: jsonObject[key][i],
+            listType: key,
+            saveLocal: true
+          })
+        }
+      })
+
+      processingImport.value = false
+    }
+  
+    reader.readAsText(data.file.file as Blob)
+  }
+
 
   return {
     records,
@@ -261,6 +316,7 @@ export const useRecordsStore = defineStore('records', () => {
     addRecord,
     restoreRecords,
     deleteSelectedRecords,
+    deleteAllRecords,
 
     labels,
     getDefaultLabel,
@@ -269,6 +325,8 @@ export const useRecordsStore = defineStore('records', () => {
     getLabelIcon,
 
     selectedCategories,
+    processingImport,
     exportCollection,
+    importCollection,
   }
 })
