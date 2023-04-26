@@ -87,7 +87,7 @@ watch(record, () => {
           type="text"
           :size="gridStore.screenLargerThen('m') ? 'medium' : 'small'"
           placeholder="Name of record"
-          class="w-100 w-m-75" />
+          class="w-100 w-m-75 record-input" />
       </n-space>
 
       <n-space
@@ -148,7 +148,15 @@ watch(record, () => {
   background-color: transparent;
 }
 
-.n-input .n-input__input-el {
-  font-weight: 500;
+.record-input {
+  background-color: transparent !important;
+
+  .n-input__border {
+    border: none !important;
+  }
+
+  .n-input__input-el {
+    font-weight: 500;
+  }
 }
 </style>

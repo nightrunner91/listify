@@ -141,8 +141,6 @@ const menuOptions: MenuOption[] = [
 watch(route, () => {
   activeKey.value = route.meta.tag
 }, { flush: 'pre', immediate: true, deep: true })
-
-
 </script>
 
 <template>

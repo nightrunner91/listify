@@ -4,6 +4,7 @@ import { NSpace, NList, NSpin, NEmpty, NText } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useRoute } from 'vue-router'
+import LySearch from '@/components/ly-search/LySearch.vue'
 import LyRecord from '@/components/ly-record/LyRecord.vue'
 import LyAddRecord from '@/components/ly-add-record/LyAddRecord.vue'
 import LyImport from '@/components/ly-import/LyImport.vue'
@@ -64,6 +65,7 @@ watch(
         </template>
 
         <template v-else>
+          <ly-search />
           <n-list
             hoverable
             :show-divider="!gridStore.screenLargerThen('m')"

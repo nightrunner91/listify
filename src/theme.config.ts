@@ -43,8 +43,8 @@ const globalOverrides = {
     borderRadiusLarge: '6px',
   },
   Input: {
-    border: 'none',
-    color: 'transparent',
+    borderRadius: '6px',
+    lineHeight: 1,
   },
   Drawer: {
     boxShadow: 'none',
