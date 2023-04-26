@@ -2,12 +2,14 @@
 import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import {
+  NSpace,
   NLayoutContent,
   NGrid,
   NGridItem,
   type LayoutInst,
 } from 'naive-ui'
 import LyTitle from '@/components/ly-title/LyTitle.vue'
+import LySort from '@/components/ly-sort/LySort.vue'
 import LyScroller from '@/components/ly-scroller/LyScroller.vue'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
@@ -42,7 +44,13 @@ function updateScroll(event: Event) {
       <n-grid-item
         span="6 s:4 l:4"
         offset="0 s:1 l:1">
-        <ly-title />
+        <n-space
+          justify="space-between"
+          align="center"
+          class="mb-6">
+          <ly-title />
+          <ly-sort />
+        </n-space>
         <router-view />
       </n-grid-item>
     </n-grid>

@@ -27,7 +27,7 @@ watch(
 </script>
 
 <template>
-  <n-h1>
+  <n-h1 class="mb-0">
     <n-text>
       {{ route.meta.title }}
       <n-badge
