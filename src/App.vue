@@ -9,6 +9,7 @@ import LyHeader from '@/components/ly-header/LyHeader.vue'
 import LySider from '@/components/ly-sider/LySider.vue'
 import LyContent from '@/components/ly-content/LyContent.vue'
 import LyControls from '@/components/ly-controls/LyControls.vue'
+import LyNotifications from '@/components/ly-notifications/LyNotifications.vue'
 
 const themeStore = useThemeStore()
 const gridStore = useGridStore()
@@ -34,5 +35,6 @@ onBeforeMount(() => {
         <ly-controls />
       </n-layout>
     </n-layout>
+    <ly-notifications />
   </app-provider>
 </template>

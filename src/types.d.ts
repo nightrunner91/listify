@@ -24,7 +24,7 @@ interface CategoriesColors {
 
 interface LyRecord {
   [k: string]: any,
-  id: any,
+  id: string | number,
   category: string,
   title: string,
   score: number,
@@ -56,4 +56,9 @@ interface AddRecordOptions {
   record?: LyRecord,
   listType: string,
   saveLocal: boolean,
+}
+
+interface NotificationMessage {
+  message: string,
+  type: string,
 }

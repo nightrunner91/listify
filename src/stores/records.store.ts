@@ -1,6 +1,7 @@
 import { ref, shallowRef, computed, type ComputedRef, type Component } from 'vue'
 import type { UploadFileInfo } from 'naive-ui'
 import { defineStore } from 'pinia'
+import { useNotificationsStore } from '@/stores/notifications.store'
 import { generateUniqueId } from '@/utils/random-number'
 import { lyStorage } from '@/main'
 import {
@@ -185,7 +186,7 @@ export const useRecordsStore = defineStore('records', () => {
         records.value[key] = []
       })
       
-      return true
+      return Promise.resolve(true)
     } catch (err) {
       console.error(err)
       throw err
@@ -239,6 +240,8 @@ export const useRecordsStore = defineStore('records', () => {
     'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music'
   ])
 
+  const validCategories = Object.keys(records.value)
+
   const processingImport = ref<boolean>(false)
 
   function exportCollection(): void {
@@ -274,30 +277,86 @@ export const useRecordsStore = defineStore('records', () => {
   }
 
   async function importCollection(data: { file: UploadFileInfo }) {
+    // Change loading state
     processingImport.value = true
 
-    await deleteAllRecords()
-
+    // Create reader instance
     const reader = new FileReader()
   
     reader.onload = () => {
       const fileContents = reader.result as string
       const jsonObject = JSON.parse(fileContents)
-  
-      Object.keys(jsonObject).forEach(key => {
-        for (let i = 0; i < jsonObject[key].length; i++) {
-          addRecord({
-            record: jsonObject[key][i],
-            listType: key,
-            saveLocal: true
-          })
-        }
-      })
+      
+      validateJSON(jsonObject)
+        .then(result => {
+          if (result) {
+            deleteAllRecords().then(() => {
+              // Process the records
+              Object.keys(jsonObject).forEach(key => {
+                for (let i = 0; i < jsonObject[key].length; i++) {
+                  addRecord({
+                    record: jsonObject[key][i],
+                    listType: key,
+                    saveLocal: true
+                  })
+                }
+              })
 
-      processingImport.value = false
+              // Change loading state
+              processingImport.value = false
+            })
+          }
+        })
     }
   
     reader.readAsText(data.file.file as Blob)
+  }
+
+  function validateJSON(obj: any): Promise<boolean> {
+    const notificationsStore = useNotificationsStore()
+    try {
+      // Check that the object has exactly the required categories
+      const categories = Object.keys(obj)
+      const errorMsg = 'Looks like your collection is corrupted.'
+
+      if (categories.length !== validCategories.length || !categories.every(c => validCategories.includes(c))) {
+        notificationsStore.pushNotification({
+          message: errorMsg,
+          type: 'error'
+        })
+        throw new Error(errorMsg)
+      }
+
+      // Check that each category has records in the correct format
+      for (const category of categories) {
+        const records = obj[category]
+        if (!Array.isArray(records) || records.some(r => !isValidRecord(r, category))) {
+          notificationsStore.pushNotification({
+            message: errorMsg,
+            type: 'error'
+          })
+          throw new Error(errorMsg)
+        }
+      }
+
+      return Promise.resolve(true)
+    } catch (error) {
+      console.error(error)
+      processingImport.value = false
+      return Promise.resolve(false)
+    }
+  }
+
+  function isValidRecord(record: LyRecord, category: string): record is LyRecord {
+    const validLabels = labels.value[category].map(l => l.key)
+
+    return typeof record.id === 'string'
+      && typeof record.category === 'string'
+      && validLabels.includes(record.label)
+      && validCategories.includes(record.category)
+      && typeof record.title === 'string'
+      && typeof record.score === 'number'
+      && typeof record.liked === 'boolean'
   }
 
 
