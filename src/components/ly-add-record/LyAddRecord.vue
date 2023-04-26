@@ -43,7 +43,7 @@ defineProps(['variant'])
     vertical
     align="center"
     justify="center"
-    class="position-fixed right-10 bottom-10">
+    class="position-fixed right-5 bottom-5 right-s-10 bottom-s-10">
     <n-button
       strong
       circle

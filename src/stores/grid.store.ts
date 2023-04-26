@@ -39,7 +39,7 @@ export const useGridStore = defineStore('grid', () => {
    * @description Reactively updates with window resize event
    * @returns
    * String corresponding to the current window width.
-   * 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+   * 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl'
    * @default 'xs'
    * @example
    * <div v-if="configState.currentBreakpoint == 'md'">Visible on MD</div>
@@ -59,7 +59,7 @@ export const useGridStore = defineStore('grid', () => {
 
 
   const showScroller = computed(() => {
-    return scrollPosition.value >= windowSizes.value.height / 2
+    return scrollPosition.value >= windowSizes.value.height / 2 && screenLargerThen('l')
   })
 
 
