@@ -20,8 +20,8 @@ const gridStore = useGridStore()
       vertical
       align="center"
       justify="center"
-      class="position-absolute right-6 top-0 bottom-0 m-auto"
-      style="height: fit-content;">
+      class="position-absolute right-10 top-0 bottom-0 m-auto"
+      style="height: fit-content; width: 40px;">
       <n-button
         secondary
         circle

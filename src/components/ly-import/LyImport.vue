@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { 
+import {
   PhDownloadSimple as ImportIcon,
   PhArchiveBox as UploadIcon
 } from 'phosphor-vue'

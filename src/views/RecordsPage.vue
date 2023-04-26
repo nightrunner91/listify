@@ -55,7 +55,7 @@ watch(
                 :wrap-item="false"
                 :vertical="!gridStore.screenLargerThen('m')"
                 align="center">
-                <ly-add-record />
+                <ly-add-record variant="inline" />
                 <n-text align="center" depth="3" style="font-size: 14px;">or</n-text>
                 <ly-import variant="full" />
               </n-space>
@@ -67,14 +67,14 @@ watch(
           <n-list
             hoverable
             :show-divider="!gridStore.screenLargerThen('m')"
-            class="mb-4">
+            class="">
             <ly-record
               v-for="(record, index) in recordsStore.records[route.meta.tag as string]"
               :key="record.id"
               :id="record.id"
               :index="index" />
           </n-list>
-          <ly-add-record />
+          <ly-add-record variant="floating" />
         </template>
 
       </n-space>
