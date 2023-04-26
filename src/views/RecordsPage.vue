@@ -57,7 +57,7 @@ watch(
                 align="center">
                 <ly-add-record variant="inline" />
                 <n-text align="center" depth="3" style="font-size: 14px;">or</n-text>
-                <ly-import variant="full" />
+                <ly-import variant="inline" />
               </n-space>
             </template>
           </n-empty>

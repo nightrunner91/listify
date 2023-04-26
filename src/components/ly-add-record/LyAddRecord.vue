@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick } from 'vue'
+import { nextTick, toRefs } from 'vue'
 import { NSpace, NButton } from 'naive-ui'
 import { 
   PhPlus as PlusIcon,
@@ -26,7 +26,17 @@ async function focusInput(record: LyRecord) {
   document.querySelector<HTMLInputElement>(`#input-${record.id} input`)?.focus()
 }
 
-defineProps(['variant'])
+const props = defineProps({
+  variant: {
+    type: String as () => 'inline' | 'floating',
+    required: true,
+    default: 'inline',
+    validator: (value: string) =>
+      ['inline', 'floating'].includes(value),
+  },
+})
+
+const { variant } = toRefs(props)
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 import {
   PhDownloadSimple as ImportIcon,
   PhArchiveBox as UploadIcon
@@ -22,20 +22,30 @@ const recordsStore = useRecordsStore()
 
 const showModal = ref<boolean>(false)
 
-defineProps(['variant'])
+const props = defineProps({
+  variant: {
+    type: String as () => 'inline' | 'minified',
+    required: true,
+    default: 'inline',
+    validator: (value: string) =>
+      ['inline', 'minified'].includes(value),
+  },
+})
+
+const { variant } = toRefs(props)
 </script>
 
 <template>
   <n-button
     secondary
-    v-if="variant == 'full'"
+    v-if="variant === 'inline'"
     :render-icon="renderIcon(ImportIcon)"
     @click="showModal = true">
     Import Collection
   </n-button>
 
   <n-tooltip
-    v-else
+    v-else-if="variant === 'minified'"
     trigger="hover">
     <template #trigger>
       <n-button

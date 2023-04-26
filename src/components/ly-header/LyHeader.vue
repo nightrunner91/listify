@@ -18,7 +18,7 @@ import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
       align="center"
       class="w-100 h-100">
       <ly-logo />
-      <ly-import />
+      <ly-import variant="minified" />
       <ly-export />
       <ly-theme-switcher />
     </n-space>
