@@ -16,7 +16,7 @@ export const useGridStore = defineStore('grid', () => {
    * @param {Number} width - window width in px
    * @param {Number} height - window width in px
    */
-  const windowSizes = ref<WindowSizes>({
+  const windowSizes = ref({
     width: 0,
     height: 0
   })
@@ -30,7 +30,7 @@ export const useGridStore = defineStore('grid', () => {
    * @see {@link https://www.naiveui.com/en-US/dark/docs/customize-theme}
    * @see {@link https://www.naiveui.com/en-US/dark/components/config-provider}
    */
-  const gridBreakpoints: GridBreakpoints = breakpoints
+  const gridBreakpoints = breakpoints
 
 
   /**
@@ -55,7 +55,7 @@ export const useGridStore = defineStore('grid', () => {
   })
 
 
-  const scrollPosition = ref<number>(0)
+  const scrollPosition = ref(0)
 
 
   const showScroller = computed(() => {
@@ -71,7 +71,7 @@ export const useGridStore = defineStore('grid', () => {
    * @example
    * <div v-if="configStore.screenLargerThen('lg')">Visible on LG+</div>
    */
-  function screenLargerThen(breakpoint: keyof GridBreakpoints):boolean {
+  function screenLargerThen(breakpoint) {
     return windowSizes.value.width >= gridBreakpoints[breakpoint]
   }
 
@@ -80,7 +80,7 @@ export const useGridStore = defineStore('grid', () => {
    * @function saveWindowSizes
    * @description Reactively saves current window width and height
    */
-  function saveWindowSizes():void {
+  function saveWindowSizes() {
     windowSizes.value.width = window.innerWidth
     windowSizes.value.height = window.innerHeight
   }
@@ -91,7 +91,7 @@ export const useGridStore = defineStore('grid', () => {
    * @event resize
    * @description Continously watches for window resize event and saves window sizes
    */
-  function watchWindowSizes():void {
+  function watchWindowSizes() {
     saveWindowSizes()
     window.addEventListener('resize', saveWindowSizes)
   }

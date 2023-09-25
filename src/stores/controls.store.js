@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useControlsStore = defineStore('controls', () => {
-  const collapsed = ref<boolean>(true)
+  const collapsed = ref(true)
 
   function toggleControls() {
     collapsed.value = !collapsed.value

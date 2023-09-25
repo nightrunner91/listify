@@ -1,21 +1,21 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { darkTheme, type GlobalTheme } from 'naive-ui'
+import { darkTheme } from 'naive-ui'
 import { darkThemeOverrides, lightThemeOverrides } from '@/theme.config'
 import { lyStorage } from '@/main'
 
 const THEME_KEY = 'theme'
 
 export const useThemeStore = defineStore('theme', () => {
-  const currentTheme = ref<GlobalTheme | null>(null)
+  const currentTheme = ref(null)
 
-  const categoryColor = (tag: string) => (
+  const categoryColor = (tag) => (
     currentTheme.value
       ? darkThemeOverrides.Categories[`${tag}Color`]
       : lightThemeOverrides.Categories[`${tag}Color`]
   )
 
-  function toggleTheme(): void {
+  function toggleTheme() {
     currentTheme.value = currentTheme.value ? null : darkTheme
     lyStorage.setStorage({
       key: THEME_KEY,
@@ -33,7 +33,7 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
-  function restoreTheme(): void {
+  function restoreTheme() {
     const savedTheme = lyStorage.getStorageSync(THEME_KEY)
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   

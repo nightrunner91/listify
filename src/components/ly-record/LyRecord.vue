@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { h, ref, computed, watch } from 'vue'
 import {
   NListItem,
@@ -21,20 +21,20 @@ const recordsStore = useRecordsStore()
 const gridStore = useGridStore()
 const route = useRoute()
 const props = defineProps(['id', 'index'])
-const tag = route.meta.tag as string
-const showCheckbox = ref<boolean>(false)
+const tag = route.meta.tag
+const showCheckbox = ref(false)
 
 const record = computed(() => {
   return recordsStore.getRecord(props.id, tag) || {}
 })
 
-const renderDropdownIcon = (option: any) => {
+const renderDropdownIcon = (option) => {
   return h(option.icon, { size: 16 })
 }
 
 watch(record, () => {
   if (record.value.id) {
-    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+    /* eslint-disable-next-line no-unused-vars */
     const { selected, ...recordWithoutSelected } = record.value
     lyStorage.setStorage({
       key: `rec_${record.value.id}`,

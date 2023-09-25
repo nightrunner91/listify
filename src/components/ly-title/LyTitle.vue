@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { NH1, NText, NBadge } from 'naive-ui'
@@ -20,7 +20,7 @@ watch(
     barWidth.value = barSize
     await new Promise((resolve) => setTimeout(resolve, barSpeed * 1.5))
     barWidth.value = '70px'
-    barColor.value = themeStore.categoryColor(route.meta.tag as string)
+    barColor.value = themeStore.categoryColor(route.meta.tag)
   },
   { immediate: true, deep: true }
 )
@@ -32,7 +32,7 @@ watch(
       {{ route.meta.title }}
       <n-badge
         v-if="route.meta.tag !== 'start'"
-        :value="recordsStore.recordsLength(route.meta.tag as string).value"
+        :value="recordsStore.recordsLength(route.meta.tag).value"
         :show-zero="true"
         class="z-0" />
       <div

@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { ref } from 'vue'
 import { PhUploadSimple as ExportIcon } from 'phosphor-vue'
 import {
@@ -18,7 +18,7 @@ import { useRecordsStore } from '@/stores/records.store'
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 
-const showModal = ref<boolean>(false)
+const showModal = ref(false)
 </script>
 
 <template>

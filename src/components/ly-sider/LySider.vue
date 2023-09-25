@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { NLayoutSider } from 'naive-ui'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'

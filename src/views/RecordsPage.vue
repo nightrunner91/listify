@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, watch, nextTick } from 'vue'
 import { NSpace, NList, NSpin, NEmpty, NText } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
@@ -12,7 +12,7 @@ import LyImport from '@/components/ly-import/LyImport.vue'
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
-const routeLoading = ref<boolean>(true)
+const routeLoading = ref(true)
 
 watch(
   route,
@@ -44,7 +44,7 @@ watch(
     <template v-else>
       <n-space vertical>
 
-        <template v-if="recordsStore.recordsLength(route.meta.tag as string).value == 0">
+        <template v-if="recordsStore.recordsLength(route.meta.tag).value == 0">
           <n-empty
             size="large"
             description="Looks like your list is empty."
@@ -71,7 +71,7 @@ watch(
             :show-divider="!gridStore.screenLargerThen('m')"
             class="">
             <ly-record
-              v-for="(record, index) in (recordsStore.sortedRecords(route.meta.tag as string, 'score') as any)"
+              v-for="(record, index) in recordsStore.sortedRecords(route.meta.tag, 'score')"
               :key="record.id"
               :id="record.id"
               :index="index" />

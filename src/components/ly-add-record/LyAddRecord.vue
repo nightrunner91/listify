@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { nextTick, toRefs } from 'vue'
 import { NSpace, NButton } from 'naive-ui'
 import { 
@@ -14,24 +14,24 @@ const recordsStore = useRecordsStore()
 async function handleNewRecord() {
   recordsStore
     .addRecord({
-      listType: route.meta.tag as string,
+      listType: route.meta.tag,
       saveLocal: true,
     })
     .then(record => { focusInput(record) })
 }
 
 /* eslint-disable-next-line no-undef */
-async function focusInput(record: LyRecord) {
+async function focusInput(record) {
   await nextTick()
-  document.querySelector<HTMLInputElement>(`#input-${record.id} input`)?.focus()
+  document.querySelector(`#input-${record.id} input`).focus()
 }
 
 const props = defineProps({
   variant: {
-    type: String as () => 'inline' | 'floating',
+    type: String,
     required: true,
     default: 'inline',
-    validator: (value: string) =>
+    validator: value =>
       ['inline', 'floating'].includes(value),
   },
 })

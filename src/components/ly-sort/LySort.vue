@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { h } from 'vue'
 import { useRoute } from 'vue-router'
 import {
@@ -12,12 +12,12 @@ import { useRecordsStore } from '@/stores/records.store'
 const route = useRoute()
 const recordsStore = useRecordsStore()
 
-const renderDropdownIcon = (option: any) => {
+const renderDropdownIcon = (option) => {
   return h(option.icon, { size: 16 })
 }
 
-function handleSelect(): void {
-  console.log('g7676o')
+function handleSelect() {
+  console.log('go')
 }
 </script>
 
@@ -30,7 +30,7 @@ function handleSelect(): void {
     <n-dropdown
       trigger="click"
       placement="bottom-end"
-      :options="(recordsStore.sortOptions as any)"
+      :options="(recordsStore.sortOptions)"
       :render-icon="renderDropdownIcon"
       @select="handleSelect">
       <n-button
@@ -40,5 +40,4 @@ function handleSelect(): void {
       </n-button>
     </n-dropdown>
   </n-space>
-  
 </template>

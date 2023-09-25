@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { NLayoutHeader, NSpace } from 'naive-ui'
 
 import LyLogo from '@/components/ly-logo/LyLogo.vue'

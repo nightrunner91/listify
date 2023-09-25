@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 /**
  * @module LyNotifications
  * @description Component watches Pinia notifications store and fires message via NaiveUI message plugin
@@ -20,7 +20,7 @@ const piniaMessages = computed(() => {
 watch(piniaMessages, newValue => {
   const slot = toRaw(newValue)
   if (slot.length > 0) {
-    // @ts-ignore
+    // @js-ignore
     message[slot[0].type](slot[0].message)
   }
 }, { deep: true })

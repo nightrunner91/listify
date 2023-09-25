@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import {
@@ -6,7 +6,6 @@ import {
   NLayoutContent,
   NGrid,
   NGridItem,
-  type LayoutInst,
 } from 'naive-ui'
 import LyTitle from '@/components/ly-title/LyTitle.vue'
 import LySort from '@/components/ly-sort/LySort.vue'
@@ -17,10 +16,10 @@ import { useGridStore } from '@/stores/grid.store'
 const menuStore = useMenuStore()
 const gridStore = useGridStore()
 
-const contentRef = ref<LayoutInst | null>(null)
+const contentRef = ref(null)
 
-function updateScroll(event: Event) {
-  gridStore.scrollPosition = (event.target as Element).scrollTop
+function updateScroll(event) {
+  gridStore.scrollPosition = (event.target).scrollTop
 }
 </script>
 
@@ -63,8 +62,9 @@ function updateScroll(event: Event) {
 <style lang="scss" scoped>
 .ly-content {
   &::before {
-    @include pseudoelem();
-
+    content: '';
+    display: block;
+    position: absolute;
     top: 0;
     right: 0;
     width: 100%;

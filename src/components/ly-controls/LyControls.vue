@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { watch, computed } from 'vue'
 import {
   NDrawer,
@@ -22,26 +22,26 @@ const recordsStore = useRecordsStore()
 const route = useRoute()
 
 const recordsPlural = computed(() => {
-  return recordsStore.selectedRecordsLength(route.meta.tag as string).value > 1
+  return recordsStore.selectedRecordsLength(route.meta.tag).value > 1
 })
 
-function handleSelection(): void {
-  if (recordsStore.allRecordsSelected(route.meta.tag as string).value) {
-    recordsStore.deselectAllRecords(route.meta.tag as string)
+function handleSelection() {
+  if (recordsStore.allRecordsSelected(route.meta.tag).value) {
+    recordsStore.deselectAllRecords(route.meta.tag)
   } else {
-    recordsStore.selectAllRecords(route.meta.tag as string)
+    recordsStore.selectAllRecords(route.meta.tag)
   }
 }
 
 watch(route, () => {
-  recordsStore.deselectAllRecords(route.meta.tag as string)
+  recordsStore.deselectAllRecords(route.meta.tag)
 }, { immediate: true, deep: true })
 </script>
 
 <template>
   <n-drawer
     :show-mask="false"
-    :show="recordsStore.someRecordsSelected(route.meta.tag as string).value"
+    :show="recordsStore.someRecordsSelected(route.meta.tag).value"
     :height="56"
     placement="bottom">
     <n-space
@@ -66,18 +66,18 @@ watch(route, () => {
               size="small"
               class="mr-auto"
               :render-icon="
-                recordsStore.allRecordsSelected(route.meta.tag as string).value
+                recordsStore.allRecordsSelected(route.meta.tag).value
                 ? renderIcon(DeselectAllIcon)
                 : renderIcon(SelectAllIcon)"
               @click="handleSelection">
-              <n-text v-if="recordsStore.allRecordsSelected(route.meta.tag as string).value">
+              <n-text v-if="recordsStore.allRecordsSelected(route.meta.tag).value">
                 Deselect All
               </n-text>
               <n-text v-else>
                 Select All
               </n-text>
             </n-button>
-            <n-popconfirm @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag as string)">
+            <n-popconfirm @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag)">
               <template #trigger>
                 <n-button
                   type="error"
@@ -90,7 +90,7 @@ watch(route, () => {
               <n-text
                 strong
                 class="mx-1">
-                {{ recordsStore.selectedRecordsLength(route.meta.tag as string) }}
+                {{ recordsStore.selectedRecordsLength(route.meta.tag) }}
               </n-text>
               <n-text>record<n-text v-if="recordsPlural">s</n-text>?</n-text>
             </n-popconfirm>

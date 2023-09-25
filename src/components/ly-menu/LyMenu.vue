@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script setup>
 import { h, ref, watch } from 'vue'
-import { NMenu, NBadge, type MenuOption } from 'naive-ui'
+import { NMenu, NBadge } from 'naive-ui'
 import { RouterLink, useRoute } from 'vue-router'
 import {
   PhGameController as GamesIcon,
@@ -23,9 +23,9 @@ const menuStore = useMenuStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
 
-const activeKey = ref<any>(null)
+const activeKey = ref(null)
 
-function renderExtra (total: number) {
+function renderExtra (total) {
   return () => h(NBadge, {
     class: 'ml-auto',
     value: total,
@@ -34,7 +34,7 @@ function renderExtra (total: number) {
   })
 }
 
-const menuOptions: MenuOption[] = [
+const menuOptions = [
   {
     label: () =>
       h(

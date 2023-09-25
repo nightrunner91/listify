@@ -12,7 +12,7 @@
  * @param {Number} max - maximum possible value of generated number @default 10000000
  * @returns Returns a random number between min (inclusive) and max (exclusive)
  */
-function getRandomArbitrary(min:number = 1000000, max:number = 10000000): number {
+function getRandomArbitrary(min = 1000000, max = 10000000) {
   return Math.random() * (max - min) + min
 }
 
@@ -27,7 +27,7 @@ function getRandomArbitrary(min:number = 1000000, max:number = 10000000): number
  * lower than max if max isn't an integer).
  * Using Math.round() will give you a non-uniform distribution!
  */
-function getRandomInt(min:number = 1000000, max:number = 10000000): number {
+function getRandomInt(min = 1000000, max = 10000000) {
   const minVal = Math.ceil(min)
   const maxVal = Math.floor(max)
   return Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal

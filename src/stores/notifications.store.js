@@ -2,9 +2,9 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useNotificationsStore = defineStore('notifications', () => {
-  const notifications = ref<NotificationMessage[]>([])
+  const notifications = ref([])
 
-  function pushNotification(message: NotificationMessage) {
+  function pushNotification(message) {
     notifications.value.push(message)
     setTimeout(() => { notifications.value = [] }, 50)
   }

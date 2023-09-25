@@ -2,10 +2,7 @@ import {
   ref,
   shallowRef,
   computed,
-  type ComputedRef,
-  type Component
 } from 'vue'
-import type { UploadFileInfo } from 'naive-ui'
 import { defineStore } from 'pinia'
 import { useNotificationsStore } from '@/stores/notifications.store'
 import { generateUniqueId } from '@/utils/random-number'
@@ -33,7 +30,7 @@ export const useRecordsStore = defineStore('records', () => {
   /* ======== Records ======== */
   /* ========================= */
 
-  const records = ref<LyRecords<LyRecord>>({
+  const records = ref({
     games: [],
     tvshows: [],
     films: [],
@@ -43,14 +40,14 @@ export const useRecordsStore = defineStore('records', () => {
     music: [],
   })
 
-  const recordsLength = (listType: string): ComputedRef<number> => {
+  const recordsLength = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
       return list ? list.length : 0
     })
   }
 
-  const allRecordsLength = (): ComputedRef<number> => {
+  const allRecordsLength = () => {
     return computed(() => {
       const categories = Object.keys(records.value)
       let total = 0
@@ -61,58 +58,54 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
-  const someRecordsSelected = (listType: string): ComputedRef<boolean> => {
+  const someRecordsSelected = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
-      return list?.some((record: LyRecord) => record.selected)
+      return list?.some((record) => record.selected)
     })
   }
   
-  const allRecordsSelected = (listType: string): ComputedRef<boolean> => {
+  const allRecordsSelected = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
-      return list?.every((record: LyRecord) => record.selected)
+      return list?.every((record) => record.selected)
     })
   }
 
-  const selectedRecords = (listType: string): ComputedRef<LyRecord[]> => {
+  const selectedRecords = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
-      return list?.filter((record: LyRecord) => record.selected)
+      return list?.filter((record) => record.selected)
     })
   }
 
-  const selectedRecordsLength = (listType: string): ComputedRef<number> => {
+  const selectedRecordsLength = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
-      return list?.filter((record: LyRecord) => record.selected).length || 0
+      return list?.filter((record) => record.selected).length || 0
     })
   }
 
-  function selectAllRecords(listType: string): LyRecord[] {
+  function selectAllRecords(listType) {
     const { [listType]: list = [] } = records.value
     return list?.filter((record) => record.selected = true)
   }
   
-  function deselectAllRecords(listType: string): LyRecord[] {
+  function deselectAllRecords(listType) {
     const { [listType]: list = [] } = records.value
     return list?.filter((record) => record.selected = false)
   }
 
-  function checkRecordExist(item: LyRecord, listType: string): boolean {
-    return records.value[listType].some((i: LyRecord) => i.id === item.id)
+  function checkRecordExist(item, listType) {
+    return records.value[listType].some((i) => i.id === item.id)
   }
 
-  function getRecord(id: number, listType: string): LyRecord {
-    const record = records.value[listType].find((i: LyRecord) => i.id === id)
-    return record as LyRecord
+  function getRecord(id, listType) {
+    const record = records.value[listType].find((i) => i.id === id)
+    return record
   }
 
-  async function addRecord({
-    record,
-    listType,
-    saveLocal
-  }: AddRecordOptions): Promise<LyRecord> {
+  async function addRecord({ record, listType, saveLocal }) {
     try {
       const income = record || {
         id: await generateUniqueId(),
@@ -124,8 +117,8 @@ export const useRecordsStore = defineStore('records', () => {
         selected: false,
       }
       
-      if (checkRecordExist(income as LyRecord, listType)) {
-        const index = records.value[listType].findIndex((i: LyRecord) => i.id === income.id)
+      if (checkRecordExist(income, listType)) {
+        const index = records.value[listType].findIndex((i) => i.id === income.id)
         records.value[listType].splice(index, 1, income)
       } else {
         records.value[listType].push(income)
@@ -134,34 +127,34 @@ export const useRecordsStore = defineStore('records', () => {
       if (saveLocal) {
         try {
           await lyStorage.setStorage({ key: `${RECORDS_KEY}${income.id}`, data: income })
-        } catch (err: any) {
+        } catch (err) {
           console.error(err.errMsg)
         }
       }
   
-      return income as LyRecord
+      return income
     } catch (err) {
       console.error(err)
       throw err
     }
   }
 
-  function restoreRecords(): void {
-    const recKeys: string[] = []
+  function restoreRecords() {
+    const recKeys = []
     for (let i = 0; i < localStorage.length; i++) {
-      const key: string | null = localStorage.key(i)
+      const key = localStorage.key(i)
       if (key && key.includes(RECORDS_KEY)) {
         recKeys.push(key)
       }
     }
     for (let i = 0; i < recKeys.length; i++) {
-      const key: string = recKeys[i]
-      const value: LyRecord = JSON.parse(localStorage.getItem(key) as string).value
+      const key = recKeys[i]
+      const value = JSON.parse(localStorage.getItem(key)).value
       records.value[value.category].push(value)
     }
   }
 
-  async function deleteSelectedRecords(listType: string): Promise<LyRecord[]> {
+  async function deleteSelectedRecords(listType) {
     const selected = selectedRecords(listType).value
     try {
       for (let n = 0; n < selected.length; n++) {
@@ -181,7 +174,7 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
-  async function deleteAllRecords(): Promise<boolean> {
+  async function deleteAllRecords() {
     try {
       // Remove from localStorage
       Object.keys(records.value).forEach(key => {
@@ -209,7 +202,7 @@ export const useRecordsStore = defineStore('records', () => {
   /* ======== Labels ======== */
   /* ======================== */
 
-  const labels = shallowRef<LyLabels<LyLabel>>({
+  const labels = shallowRef({
     games: [
       { key: 'playing_now', label: 'Playing Now', icon: InProgressIcon, default: true },
       { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
@@ -225,20 +218,20 @@ export const useRecordsStore = defineStore('records', () => {
     music: [],
   })
 
-  function getDefaultLabel(listType: string): LyLabel {
-    return labels.value[listType].find((i: LyLabel) => i.default) || labels.value[listType][0]
+  function getDefaultLabel(listType) {
+    return labels.value[listType].find((i) => i.default) || labels.value[listType][0]
   }  
 
-  function getLabel(listType: string, key: string): LyLabel {
-    const targetItem = labels.value[listType].filter((i: LyLabel) => {return i.key === key })[0]
+  function getLabel(listType, key) {
+    const targetItem = labels.value[listType].filter((i) => {return i.key === key })[0]
     return targetItem ? targetItem : getDefaultLabel(listType)
   }
 
-  function getLabelName(listType: string, key: string): string {
+  function getLabelName(listType, key) {
     return getLabel(listType, key).label
   }
 
-  function getLabelIcon(listType: string, key: string): Component {
+  function getLabelIcon(listType, key) {
     return getLabel(listType, key).icon
   }
 
@@ -253,19 +246,19 @@ export const useRecordsStore = defineStore('records', () => {
 
   const validCategories = Object.keys(records.value)
 
-  const processingImport = ref<boolean>(false)
+  const processingImport = ref(false)
 
-  function exportCollection(): void {
+  function exportCollection() {
     // Filter records based on selected categories
     const filteredRecords = Object.entries(records.value)
       .reduce((acc, [category, records]) => {
         if (selectedCategories.value.includes(category)) {
           // Remove 'selected' property from each record
-          /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-          acc[category] = records.map(({selected, ...rest}) => rest as LyRecord)
+          /* eslint-disable-next-line no-unused-vars */
+          acc[category] = records.map(({selected, ...rest}) => rest)
         }
         return acc
-      }, {} as Record<string, LyRecord[]>)
+      }, {})
 
     /**
      * Sanitize resulting object with jsesc
@@ -287,7 +280,7 @@ export const useRecordsStore = defineStore('records', () => {
     URL.revokeObjectURL(url)
   }
 
-  async function importCollection(data: { file: UploadFileInfo }) {
+  async function importCollection(data) {
     // Change loading state
     processingImport.value = true
 
@@ -295,7 +288,7 @@ export const useRecordsStore = defineStore('records', () => {
     const reader = new FileReader()
   
     reader.onload = () => {
-      const fileContents = reader.result as string
+      const fileContents = reader.result
       const jsonObject = JSON.parse(fileContents)
       
       validateJSON(jsonObject)
@@ -320,17 +313,19 @@ export const useRecordsStore = defineStore('records', () => {
         })
     }
   
-    reader.readAsText(data.file.file as Blob)
+    reader.readAsText(data.file.file)
   }
 
-  function validateJSON(obj: any): Promise<boolean> {
+  function validateJSON(obj) {
     const notificationsStore = useNotificationsStore()
     try {
       // Check that the object has exactly the required categories
       const categories = Object.keys(obj)
       const errorMsg = 'Looks like your collection is corrupted.'
 
-      if (categories.length !== validCategories.length || !categories.every(c => validCategories.includes(c))) {
+      if (
+        categories.length !== validCategories.length
+        || !categories.every(c => validCategories.includes(c))) {
         notificationsStore.pushNotification({
           message: errorMsg,
           type: 'error'
@@ -358,7 +353,7 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
-  function isValidRecord(record: LyRecord, category: string): record is LyRecord {
+  function isValidRecord(record, category) {
     const validLabels = labels.value[category].map(l => l.key)
 
     return typeof record.id === 'string'
@@ -374,7 +369,7 @@ export const useRecordsStore = defineStore('records', () => {
   /* ===== Sorting ===== */
   /* =================== */
 
-  const sortOptions = shallowRef<LySortOption>([
+  const sortOptions = shallowRef([
     {
       key: 'status',
       label: 'Status',
@@ -398,7 +393,7 @@ export const useRecordsStore = defineStore('records', () => {
     },
   ])
 
-  const sortedRecords = (listType: string, sortBy: string): ComputedRef<LyRecord[]> => {
+  const sortedRecords = (listType, sortBy) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
       return [...list].sort((a, b) => b[sortBy] - a[sortBy])

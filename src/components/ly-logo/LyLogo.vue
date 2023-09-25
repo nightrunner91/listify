@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import {
   NButton,
   NH3,
@@ -27,7 +27,7 @@ const themeStore = useThemeStore()
     <router-link
       :to="{ name: 'Start' }"
       style="text-decoration: none;">
-      <n-text :style="{color: themeStore.categoryColor(route.meta.tag as string)}">Li</n-text>
+      <n-text :style="{color: themeStore.categoryColor(route.meta.tag)}">Li</n-text>
       <n-text
         class="ly-logo__suffix"
         depth="2">stify</n-text>
@@ -56,8 +56,9 @@ const themeStore = useThemeStore()
     transition: transition(opacity, short, ease);
 
     &::before {
-      @include pseudoelem();
-
+      content: '';
+      display: block;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;

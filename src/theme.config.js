@@ -57,7 +57,7 @@ const globalOverrides = {
 
 export const lightThemeOverrides = {
   ...globalOverrides,
-  Categories: <CategoriesColors> {
+  Categories: {
     startColor: '#3CBCBC',
     gamesColor: '#DB574E',
     tvshowsColor: '#20B5F0',
@@ -83,7 +83,7 @@ export const lightThemeOverrides = {
 
 export const darkThemeOverrides = {
   ...globalOverrides,
-  Categories: <CategoriesColors> {
+  Categories: {
     startColor: '#42D4D4',
     gamesColor: '#FF7B72',
     tvshowsColor: '#79E2FF',

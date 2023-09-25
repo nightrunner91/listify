@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useMenuStore = defineStore('menu', () => {
-  const collapsed = ref<boolean>(true)
+  const collapsed = ref(true)
 
   function toggleMenu() {
     collapsed.value = !collapsed.value

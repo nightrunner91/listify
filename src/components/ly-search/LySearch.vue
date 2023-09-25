@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { NInput } from 'naive-ui'
 import { PhMagnifyingGlass as SearchIcon } from 'phosphor-vue'
 import { useRoute } from 'vue-router'

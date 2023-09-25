@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { onBeforeMount } from 'vue'
 import { NLayout } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'

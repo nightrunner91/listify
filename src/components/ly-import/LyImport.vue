@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { ref, toRefs } from 'vue'
 import {
   PhDownloadSimple as ImportIcon,
@@ -20,14 +20,14 @@ import { useRecordsStore } from '@/stores/records.store'
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 
-const showModal = ref<boolean>(false)
+const showModal = ref(false)
 
 const props = defineProps({
   variant: {
-    type: String as () => 'inline' | 'minified',
+    type: String,
     required: true,
     default: 'inline',
-    validator: (value: string) =>
+    validator: value =>
       ['inline', 'minified'].includes(value),
   },
 })
