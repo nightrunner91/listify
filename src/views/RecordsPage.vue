@@ -71,7 +71,7 @@ watch(
             :show-divider="!gridStore.screenLargerThen('m')"
             class="">
             <ly-record
-              v-for="(record, index) in recordsStore.sortedRecords(route.meta.tag, 'score')"
+              v-for="(record, index) in recordsStore.sortedRecords(route.meta.tag).value"
               :key="record.id"
               :id="record.id"
               :index="index" />

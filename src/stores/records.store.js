@@ -371,7 +371,7 @@ export const useRecordsStore = defineStore('records', () => {
 
   const sortOptions = shallowRef([
     {
-      key: 'status',
+      key: 'label',
       label: 'Status',
       icon: StatusIcon
     },
@@ -381,22 +381,25 @@ export const useRecordsStore = defineStore('records', () => {
       icon: RatingIcon
     },
     {
-      key: 'favourite',
+      key: 'liked',
       label: 'Favourite',
       icon: FavouriteIcon
     },
     {
-      key: 'alphabetically-ascending',
+      key: 'title',
       label: 'A → Z',
       icon: AlphabeticalIcon,
       default: true
     },
   ])
 
-  const sortedRecords = (listType, sortBy) => {
+  const selectedSort = ref('label')
+
+  const sortedRecords = listType => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
-      return [...list].sort((a, b) => b[sortBy] - a[sortBy])
+      console.log(list)
+      return [...list].sort((a, b) => b[selectedSort.value] - a[selectedSort.value])
     })
   }
 
@@ -430,6 +433,7 @@ export const useRecordsStore = defineStore('records', () => {
     importCollection,
 
     sortOptions,
+    selectedSort,
     sortedRecords,
   }
 })
