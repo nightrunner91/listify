@@ -62,3 +62,11 @@ interface NotificationMessage {
   message: string,
   type: string,
 }
+
+interface LySortOptions<T> {
+  [k: string]: Array<T>,
+}
+
+interface LySortOption {
+  [k: string]: string | Component,
+}

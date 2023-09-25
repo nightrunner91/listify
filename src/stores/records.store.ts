@@ -1,4 +1,10 @@
-import { ref, shallowRef, computed, type ComputedRef, type Component } from 'vue'
+import {
+  ref,
+  shallowRef,
+  computed,
+  type ComputedRef,
+  type Component
+} from 'vue'
 import type { UploadFileInfo } from 'naive-ui'
 import { defineStore } from 'pinia'
 import { useNotificationsStore } from '@/stores/notifications.store'
@@ -10,6 +16,11 @@ import {
   PhBookmark as PlanIcon,
   PhChecks as CompletedIcon,
   PhProhibit as DroppedIcon,
+
+  PhTextAa as AlphabeticalIcon,
+  PhStar as RatingIcon,
+  PhHeart as FavouriteIcon,
+  PhList as StatusIcon,
 } from 'phosphor-vue'
 import jsesc from 'jsesc'
 import moment from 'moment'
@@ -359,6 +370,41 @@ export const useRecordsStore = defineStore('records', () => {
       && typeof record.liked === 'boolean'
   }
 
+  /* =================== */
+  /* ===== Sorting ===== */
+  /* =================== */
+
+  const sortOptions = shallowRef<LySortOption>([
+    {
+      key: 'status',
+      label: 'Status',
+      icon: StatusIcon
+    },
+    {
+      key: 'score',
+      label: 'Rating',
+      icon: RatingIcon
+    },
+    {
+      key: 'favourite',
+      label: 'Favourite',
+      icon: FavouriteIcon
+    },
+    {
+      key: 'alphabetically-ascending',
+      label: 'A → Z',
+      icon: AlphabeticalIcon,
+      default: true
+    },
+  ])
+
+  const sortedRecords = (listType: string, sortBy: string): ComputedRef<LyRecord[]> => {
+    return computed(() => {
+      const { [listType]: list = [] } = records.value
+      return [...list].sort((a, b) => b[sortBy] - a[sortBy])
+    })
+  }
+
 
   return {
     records,
@@ -387,5 +433,8 @@ export const useRecordsStore = defineStore('records', () => {
     processingImport,
     exportCollection,
     importCollection,
+
+    sortOptions,
+    sortedRecords,
   }
 })

@@ -50,12 +50,12 @@ const { variant } = toRefs(props)
     <template #trigger>
       <n-button
         quaternary
-        circle
-        size="large"
+        size="small"
         @click="showModal = true">
         <template #icon>
           <n-icon :component="ImportIcon" />
         </template>
+        Import
       </n-button>
     </template>
     Import Collection

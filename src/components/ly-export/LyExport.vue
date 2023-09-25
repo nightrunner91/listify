@@ -26,12 +26,12 @@ const showModal = ref<boolean>(false)
     <template #trigger>
       <n-button
         quaternary
-        circle
-        size="large"
+        size="small"
         @click="showModal = true">
         <template #icon>
           <n-icon :component="ExportIcon" />
         </template>
+        Export
       </n-button>
     </template>
     Export Collection
