@@ -395,11 +395,9 @@ export const useRecordsStore = defineStore('records', () => {
 
   const selectedSort = ref('label')
 
-  const sortedRecords = listType => {
+  const getSortOption = (key) => {
     return computed(() => {
-      const { [listType]: list = [] } = records.value
-      console.log(list)
-      return [...list].sort((a, b) => b[selectedSort.value] - a[selectedSort.value])
+      return sortOptions.value.find(option => option.key === key)
     })
   }
 
@@ -434,6 +432,6 @@ export const useRecordsStore = defineStore('records', () => {
 
     sortOptions,
     selectedSort,
-    sortedRecords,
+    getSortOption,
   }
 })

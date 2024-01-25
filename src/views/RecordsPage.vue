@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, nextTick } from 'vue'
+import { ref, watch, nextTick, onMounted } from 'vue'
 import { NSpace, NList, NSpin, NEmpty, NText } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -13,6 +13,11 @@ const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
 const routeLoading = ref(true)
+let sortedRecords = ref([])
+
+onMounted(() => {
+  sortedRecords.value = recordsStore.records[route.meta.tag]
+})
 
 watch(
   route,
@@ -24,6 +29,14 @@ watch(
   },
   { flush: 'pre', immediate: true, deep: true }
 )
+
+function sortRecords(key) {
+  return recordsStore.records[route.meta.tag].sort((a, b) => b[key] - a[key])
+}
+
+watch(() => recordsStore.selectedSort, (key) => {
+  sortedRecords.value = sortRecords(key)
+})
 </script>
 
 <template>
@@ -71,7 +84,7 @@ watch(
             :show-divider="!gridStore.screenLargerThen('m')"
             class="">
             <ly-record
-              v-for="(record, index) in recordsStore.sortedRecords(route.meta.tag).value"
+              v-for="(record, index) in sortedRecords"
               :key="record.id"
               :id="record.id"
               :index="index" />

@@ -33,7 +33,7 @@ const renderDropdownIcon = (option) => {
           depth="2"
           :component="SortIcon" />
       </template>
-      Sort by
+      {{ recordsStore.getSortOption(recordsStore.selectedSort).value.label }}
     </n-button>
     </n-dropdown>
 </template>
