@@ -15,9 +15,42 @@ const route = useRoute()
 const routeLoading = ref(true)
 let sortedRecords = ref([])
 
-onMounted(() => {
-  sortedRecords.value = recordsStore.records[route.meta.tag]
-})
+function sortRecords(key) {
+  const list = recordsStore.records[route.meta.tag]
+  
+  const labelPriority = {
+    'playing_now': 1,
+    'plan_to_play': 2,
+    'on_hold': 3,
+    'completed': 4,
+    'dropped': 5
+  }
+
+  return [...list].sort((a, b) => {
+    if (key === 'label') {
+      const orderA = labelPriority[a.label] ?? 999
+      const orderB = labelPriority[b.label] ?? 999
+      if (orderA !== orderB) return orderA - orderB
+      return a.title.localeCompare(b.title)
+    }
+
+    if (key === 'liked' || key === 'score') {
+      if (b[key] !== a[key]) return b[key] - a[key]
+      return a.title.localeCompare(b.title)
+    }
+
+    if (key === 'title') {
+      return a.title.localeCompare(b.title)
+    }
+
+    return 0
+  })
+}
+
+function setDefaultSortLabel() {
+  recordsStore.selectedSort = 'label'
+  sortedRecords.value = sortRecords(recordsStore.selectedSort)
+}
 
 watch(
   route,
@@ -26,17 +59,17 @@ watch(
     await nextTick()
     await new Promise((resolve) => setTimeout(resolve, 500))
     routeLoading.value = false
+
+    setDefaultSortLabel()
   },
   { flush: 'pre', immediate: true, deep: true }
 )
 
-function sortRecords(key) {
-  return recordsStore.records[route.meta.tag].sort((a, b) => b[key] - a[key])
-}
-
 watch(() => recordsStore.selectedSort, (key) => {
   sortedRecords.value = sortRecords(key)
 })
+
+onMounted(() => setDefaultSortLabel)
 </script>
 
 <template>
