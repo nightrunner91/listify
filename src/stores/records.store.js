@@ -13,7 +13,12 @@ import {
   PhBookmark as PlanIcon,
   PhChecks as CompletedIcon,
   PhProhibit as DroppedIcon,
-
+  PhTelevision as WatchingIcon,
+  PhEye as WatchingNowIcon,
+  PhBookOpen as ReadingIcon,
+  PhBook as ReadIcon,
+  PhMusicNote as ListeningIcon,
+  PhHeadphones as MusicIcon,
   PhTextAa as AlphabeticalIcon,
   PhStar as RatingIcon,
   PhHeart as FavouriteIcon,
@@ -225,12 +230,49 @@ export const useRecordsStore = defineStore('records', () => {
       { key: 'completed', label: 'Completed', icon: CompletedIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
     ],
-    tvshows: [],
-    films: [],
-    anime: [],
-    manga: [],
-    books: [],
-    music: [],
+    tvshows: [
+      { key: 'watching_ongoing', label: 'Watching Ongoing', icon: WatchingIcon, default: true },
+      { key: 'watching_now', label: 'Watching Now', icon: WatchingNowIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
+      { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon },
+      { key: 'watched_all', label: 'Watched All', icon: CompletedIcon },
+      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+    ],
+    films: [
+      { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon, default: true },
+      { key: 'watched', label: 'Watched', icon: CompletedIcon },
+      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+    ],
+    anime: [
+      { key: 'watching_ongoing', label: 'Watching Ongoing', icon: WatchingIcon, default: true },
+      { key: 'watching_now', label: 'Watching Now', icon: WatchingNowIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
+      { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon },
+      { key: 'watched_all', label: 'Watched All', icon: CompletedIcon },
+      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+    ],
+    manga: [
+      { key: 'read_ongoing', label: 'Read Ongoing', icon: ReadingIcon, default: true },
+      { key: 'read_now', label: 'Read Now', icon: ReadingIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
+      { key: 'plan_to_read', label: 'Plan to Read', icon: PlanIcon },
+      { key: 'read', label: 'Read', icon: ReadIcon },
+      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+    ],
+    books: [
+      { key: 'read_now', label: 'Read Now', icon: ReadingIcon, default: true },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
+      { key: 'plan_to_read', label: 'Plan to Read', icon: PlanIcon },
+      { key: 'read', label: 'Read', icon: ReadIcon },
+      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+    ],
+    music: [
+      { key: 'listening_now', label: 'Listening Now', icon: ListeningIcon, default: true },
+      { key: 'on_repeat', label: 'On Repeat', icon: MusicIcon },
+      { key: 'plan_to_listen', label: 'Plan to Listen', icon: PlanIcon },
+      { key: 'completed', label: 'Completed', icon: CompletedIcon },
+      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+    ],
   })
 
   function getDefaultLabel(listType) {
@@ -449,11 +491,33 @@ export const useRecordsStore = defineStore('records', () => {
     const key = selectedSort.value
     
     const labelPriority = {
+      // Games
       'playing_now': 1,
       'plan_to_play': 2,
       'on_hold': 3,
       'completed': 4,
-      'dropped': 5
+      'dropped': 5,
+      
+      // TV Shows & Anime
+      'watching_ongoing': 1,
+      'watching_now': 2,
+      'plan_to_watch': 3,
+      'watched_all': 4,
+      
+      // Films
+      'watched': 2,
+      
+      // Manga & Books
+      'read_ongoing': 1,
+      'read_now': 2,
+      'plan_to_read': 3,
+      'read': 4,
+      
+      // Music
+      'listening_now': 1,
+      'on_repeat': 2,
+      'liked': 3,
+      'plan_to_listen': 4,
     }
 
     const sortedIds = [...list].sort((a, b) => {
