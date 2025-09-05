@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, nextTick, onMounted } from 'vue'
+import { ref, watch, nextTick, onMounted, computed } from 'vue'
 import { NSpace, NList, NSpin, NEmpty, NText } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -13,10 +13,10 @@ const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
 const routeLoading = ref(true)
-let sortedRecords = ref([])
 
-function sortRecords(key) {
-  const list = recordsStore.records[route.meta.tag]
+const sortedRecords = computed(() => {
+  const list = recordsStore.records[route.meta.tag] || []
+  const key = recordsStore.selectedSort
   
   const labelPriority = {
     'playing_now': 1,
@@ -45,11 +45,10 @@ function sortRecords(key) {
 
     return 0
   })
-}
+})
 
 function setDefaultSortLabel() {
   recordsStore.selectedSort = 'label'
-  sortedRecords.value = sortRecords(recordsStore.selectedSort)
 }
 
 watch(
@@ -64,10 +63,6 @@ watch(
   },
   { flush: 'pre', immediate: true, deep: true }
 )
-
-watch(() => recordsStore.selectedSort, (key) => {
-  sortedRecords.value = sortRecords(key)
-})
 
 onMounted(() => setDefaultSortLabel)
 </script>

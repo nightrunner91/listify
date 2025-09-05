@@ -12,16 +12,7 @@ const route = useRoute()
     :placeholder="`Search in ${route.meta.title}...`"
     class="mb-4">
     <template #prefix>
-      <search-icon weight="bold" class="opacity-5" />
+      <search-icon weight="regular" size="16" class="opacity-5 mr-2" />
     </template>
   </n-input>
 </template>
-
-<style lang="scss">
-.n-input .n-input__prefix {
-  margin-right: spacer(2);
-}
-.n-input .n-input__suffix {
-  margin-left: spacer(2);
-}
-</style>
