@@ -410,6 +410,10 @@ export const useRecordsStore = defineStore('records', () => {
 
   const selectedSort = ref('label')
 
+  // Search functionality
+  const searchQuery = ref('')
+  const isSearching = ref(false)
+
   // Display order for each category - maintains stable positions during editing
   const displayOrder = ref({
     games: [],
@@ -490,6 +494,38 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+  // Search functionality
+  function setSearchQuery(query) {
+    searchQuery.value = query
+    const wasSearching = isSearching.value
+    isSearching.value = query.length > 0
+    
+    // If exiting search mode, apply default sorting
+    if (wasSearching && !isSearching.value) {
+      selectedSort.value = 'label' // Default sort by status
+    }
+  }
+
+  function clearSearch() {
+    searchQuery.value = ''
+    isSearching.value = false
+    // Apply default sorting when clearing search
+    selectedSort.value = 'label' // Default sort by status
+  }
+
+  function searchRecords(listType) {
+    if (!isSearching.value || !searchQuery.value.trim()) {
+      return records.value[listType] || []
+    }
+
+    const query = searchQuery.value.toLowerCase().trim()
+    const list = records.value[listType] || []
+    
+    return list.filter(record => 
+      record.title.toLowerCase().includes(query)
+    )
+  }
+
 
   return {
     records,
@@ -527,5 +563,11 @@ export const useRecordsStore = defineStore('records', () => {
     syncDisplayOrderWithSort,
     addToDisplayOrder,
     removeFromDisplayOrder,
+
+    searchQuery,
+    isSearching,
+    setSearchQuery,
+    clearSearch,
+    searchRecords,
   }
 })

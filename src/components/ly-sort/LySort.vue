@@ -30,10 +30,12 @@ function handleSortChange(key) {
     placement="bottom-end"
     :options="recordsStore.sortOptions"
     :render-icon="renderDropdownIcon"
+    :disabled="recordsStore.isSearching"
     @select="handleSortChange">
     <n-button
       secondary
-      class="ml-auto">
+      class="ml-auto"
+      :disabled="recordsStore.isSearching">
       <template #icon>
         <n-icon
           depth="2"

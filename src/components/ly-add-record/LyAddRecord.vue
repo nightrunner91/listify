@@ -11,13 +11,21 @@ import { renderIcon } from '@/utils/render-icon'
 const route = useRoute()
 const recordsStore = useRecordsStore()
 
+const emit = defineEmits(['scrollBottom'])
+
 async function handleNewRecord() {
   recordsStore
     .addRecord({
       listType: route.meta.tag,
       saveLocal: true,
     })
-    .then(record => { focusInput(record) })
+    .then(record => { 
+      focusInput(record)
+      // Emit scroll event for floating button
+      if (props.variant === 'floating') {
+        emit('scrollBottom')
+      }
+    })
 }
 
 /* eslint-disable-next-line no-undef */
@@ -60,9 +68,6 @@ const { variant } = toRefs(props)
       type="primary"
       size="large"
       :render-icon="renderIcon(PlusIcon)"
-      @click="[
-        handleNewRecord(),
-        $emit('scrollBottom')
-      ]" />
+      @click="handleNewRecord" />
   </n-space>
 </template>

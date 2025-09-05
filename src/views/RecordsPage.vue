@@ -15,6 +15,12 @@ const route = useRoute()
 const routeLoading = ref(true)
 
 const sortedRecords = computed(() => {
+  // If searching, return filtered results
+  if (recordsStore.isSearching) {
+    return recordsStore.searchRecords(route.meta.tag)
+  }
+  
+  // Otherwise, return sorted records as before
   const list = recordsStore.records[route.meta.tag] || []
   const displayOrder = recordsStore.displayOrder[route.meta.tag] || []
   
@@ -28,6 +34,14 @@ const sortedRecords = computed(() => {
   return displayOrder
     .map(id => list.find(record => record.id === id))
     .filter(record => record !== undefined)
+})
+
+// Watch for search state changes to reinitialize display order when exiting search
+watch(() => recordsStore.isSearching, (isSearching) => {
+  if (!isSearching) {
+    // Reinitialize display order with current sort when exiting search
+    recordsStore.syncDisplayOrderWithSort(route.meta.tag)
+  }
 })
 
 function setDefaultSortLabel() {
@@ -44,12 +58,24 @@ watch(
     await new Promise((resolve) => setTimeout(resolve, 500))
     routeLoading.value = false
 
+    // Clear search when changing routes
+    recordsStore.clearSearch()
     setDefaultSortLabel()
   },
   { flush: 'pre', immediate: true, deep: true }
 )
 
 onMounted(() => setDefaultSortLabel)
+
+// Handle scroll to bottom when adding new record
+function handleScrollBottom() {
+  nextTick(() => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    })
+  })
+}
 </script>
 
 <template>
@@ -92,17 +118,35 @@ onMounted(() => setDefaultSortLabel)
 
         <template v-else>
           <ly-search />
-          <n-list
-            hoverable
-            :show-divider="!gridStore.screenLargerThen('m')"
-            class="">
-            <ly-record
-              v-for="(record, index) in sortedRecords"
-              :key="record.id"
-              :id="record.id"
-              :index="index" />
-          </n-list>
-          <ly-add-record variant="floating" />
+          
+          <template v-if="recordsStore.isSearching && sortedRecords.length === 0">
+            <n-empty
+              size="large"
+              description="No records found matching your search."
+              class="p-10">
+            </n-empty>
+          </template>
+          
+          <template v-else>
+            <n-list
+              hoverable
+              :show-divider="!gridStore.screenLargerThen('m')"
+              class="">
+              <ly-record
+                v-for="(record, index) in sortedRecords"
+                :key="record.id"
+                :id="record.id"
+                :index="index" />
+            </n-list>
+            <transition
+              name="fade-up-down"
+              mode="out-in">
+              <ly-add-record 
+                v-if="!recordsStore.isSearching"
+                variant="floating"
+                @scroll-bottom="handleScrollBottom" />
+            </transition>
+          </template>
         </template>
 
       </n-space>
@@ -110,3 +154,20 @@ onMounted(() => setDefaultSortLabel)
 
   </n-space>
 </template>
+
+<style lang="scss" scoped>
+.fade-up-down-enter-active,
+.fade-up-down-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-up-down-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-up-down-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+</style>
