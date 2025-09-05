@@ -29,7 +29,7 @@ function updateScroll(event) {
     has-sider
     @click="menuStore.closeMenu"
     :class="{ 'ly-content--dimmed' : !menuStore.collapsed }"
-    :native-scrollbar="false"
+    :native-scrollbar="true"
     :scrollbar-props="{ trigger: 'none' }"
     @scroll="updateScroll($event)"
     class="pl-4 pl-s-18 ly-content">
