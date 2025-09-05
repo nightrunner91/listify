@@ -16,39 +16,24 @@ const routeLoading = ref(true)
 
 const sortedRecords = computed(() => {
   const list = recordsStore.records[route.meta.tag] || []
-  const key = recordsStore.selectedSort
+  const displayOrder = recordsStore.displayOrder[route.meta.tag] || []
   
-  const labelPriority = {
-    'playing_now': 1,
-    'plan_to_play': 2,
-    'on_hold': 3,
-    'completed': 4,
-    'dropped': 5
+  // If display order is empty, initialize it
+  if (displayOrder.length === 0 && list.length > 0) {
+    recordsStore.initializeDisplayOrder(route.meta.tag)
+    return list
   }
-
-  return [...list].sort((a, b) => {
-    if (key === 'label') {
-      const orderA = labelPriority[a.label] ?? 999
-      const orderB = labelPriority[b.label] ?? 999
-      if (orderA !== orderB) return orderA - orderB
-      return a.title.localeCompare(b.title)
-    }
-
-    if (key === 'liked' || key === 'score') {
-      if (b[key] !== a[key]) return b[key] - a[key]
-      return a.title.localeCompare(b.title)
-    }
-
-    if (key === 'title') {
-      return a.title.localeCompare(b.title)
-    }
-
-    return 0
-  })
+  
+  // Return records in display order
+  return displayOrder
+    .map(id => list.find(record => record.id === id))
+    .filter(record => record !== undefined)
 })
 
 function setDefaultSortLabel() {
   recordsStore.selectedSort = 'label'
+  // Initialize display order for the current category
+  recordsStore.initializeDisplayOrder(route.meta.tag)
 }
 
 watch(

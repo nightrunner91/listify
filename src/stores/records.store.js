@@ -117,11 +117,14 @@ export const useRecordsStore = defineStore('records', () => {
         selected: false,
       }
       
-      if (checkRecordExist(income, listType)) {
+      const isNewRecord = !checkRecordExist(income, listType)
+      
+      if (isNewRecord) {
+        records.value[listType].push(income)
+        addToDisplayOrder(income.id, listType)
+      } else {
         const index = records.value[listType].findIndex((i) => i.id === income.id)
         records.value[listType].splice(index, 1, income)
-      } else {
-        records.value[listType].push(income)
       }
   
       if (saveLocal) {
@@ -152,6 +155,15 @@ export const useRecordsStore = defineStore('records', () => {
       const value = JSON.parse(localStorage.getItem(key)).value
       records.value[value.category].push(value)
     }
+    
+    // Initialize display order for all categories after restoring records
+    // Set default sort to 'label' and initialize display order
+    selectedSort.value = 'label'
+    Object.keys(records.value).forEach(category => {
+      if (records.value[category].length > 0) {
+        initializeDisplayOrder(category)
+      }
+    })
   }
 
   async function deleteSelectedRecords(listType) {
@@ -166,6 +178,8 @@ export const useRecordsStore = defineStore('records', () => {
         // Remove from Pinia
         const index = records.value[listType].findIndex(record => record.id === selected[n].id)
         records.value[listType].splice(index, 1)
+        // Remove from display order
+        removeFromDisplayOrder(selected[n].id, listType)
       }
       return selected
     } catch (err) {
@@ -188,6 +202,7 @@ export const useRecordsStore = defineStore('records', () => {
       // Remove from Pinia
       Object.keys(records.value).forEach(key => {
         records.value[key] = []
+        displayOrder.value[key] = []
       })
       
       return Promise.resolve(true)
@@ -395,10 +410,84 @@ export const useRecordsStore = defineStore('records', () => {
 
   const selectedSort = ref('label')
 
+  // Display order for each category - maintains stable positions during editing
+  const displayOrder = ref({
+    games: [],
+    tvshows: [],
+    films: [],
+    anime: [],
+    manga: [],
+    books: [],
+    music: [],
+  })
+
   const getSortOption = (key) => {
     return computed(() => {
       return sortOptions.value.find(option => option.key === key)
     })
+  }
+
+  // Initialize display order for a category
+  function initializeDisplayOrder(listType) {
+    const list = records.value[listType] || []
+    if (list.length === 0) {
+      displayOrder.value[listType] = []
+      return
+    }
+    
+    // Apply current sort when initializing
+    syncDisplayOrderWithSort(listType)
+  }
+
+  // Sync display order with current sort
+  function syncDisplayOrderWithSort(listType) {
+    const list = records.value[listType] || []
+    const key = selectedSort.value
+    
+    const labelPriority = {
+      'playing_now': 1,
+      'plan_to_play': 2,
+      'on_hold': 3,
+      'completed': 4,
+      'dropped': 5
+    }
+
+    const sortedIds = [...list].sort((a, b) => {
+      if (key === 'label') {
+        const orderA = labelPriority[a.label] ?? 999
+        const orderB = labelPriority[b.label] ?? 999
+        if (orderA !== orderB) return orderA - orderB
+        return a.title.localeCompare(b.title)
+      }
+
+      if (key === 'liked' || key === 'score') {
+        if (b[key] !== a[key]) return b[key] - a[key]
+        return a.title.localeCompare(b.title)
+      }
+
+      if (key === 'title') {
+        return a.title.localeCompare(b.title)
+      }
+
+      return 0
+    }).map(record => record.id)
+
+    displayOrder.value[listType] = sortedIds
+  }
+
+  // Add new record to display order (at the end)
+  function addToDisplayOrder(recordId, listType) {
+    if (!displayOrder.value[listType].includes(recordId)) {
+      displayOrder.value[listType].push(recordId)
+    }
+  }
+
+  // Remove record from display order
+  function removeFromDisplayOrder(recordId, listType) {
+    const index = displayOrder.value[listType].indexOf(recordId)
+    if (index > -1) {
+      displayOrder.value[listType].splice(index, 1)
+    }
   }
 
 
@@ -433,5 +522,10 @@ export const useRecordsStore = defineStore('records', () => {
     sortOptions,
     selectedSort,
     getSortOption,
+    displayOrder,
+    initializeDisplayOrder,
+    syncDisplayOrderWithSort,
+    addToDisplayOrder,
+    removeFromDisplayOrder,
   }
 })

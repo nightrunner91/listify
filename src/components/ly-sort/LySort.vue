@@ -15,6 +15,12 @@ const recordsStore = useRecordsStore()
 const renderDropdownIcon = (option) => {
   return h(option.icon, { size: 16 })
 }
+
+function handleSortChange(key) {
+  recordsStore.selectedSort = key
+  // Sync display order with new sort when user manually changes sorting
+  recordsStore.syncDisplayOrderWithSort(route.meta.tag)
+}
 </script>
 
 <template>
@@ -24,7 +30,7 @@ const renderDropdownIcon = (option) => {
     placement="bottom-end"
     :options="recordsStore.sortOptions"
     :render-icon="renderDropdownIcon"
-    @select="key => recordsStore.selectedSort = key">
+    @select="handleSortChange">
     <n-button
       secondary
       class="ml-auto">
