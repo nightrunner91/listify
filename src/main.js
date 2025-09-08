@@ -6,14 +6,13 @@ const app = createApp(App)
 /** plugins */
 import { createPinia } from 'pinia'
 import router from './router'
-import smoothscroll from 'smoothscroll-polyfill'
 import { useStorage } from 'vue3-storage'
 
 /** fonts and stylesheets */
 import '@/assets/styles/nightvue.scss'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 /** plugins */
-smoothscroll.polyfill()
 const pinia = createPinia()
 app
   .use(pinia)

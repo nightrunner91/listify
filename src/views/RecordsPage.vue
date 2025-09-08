@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, nextTick, onMounted, computed } from 'vue'
 import { NSpace, NList, NSpin, NEmpty, NText } from 'naive-ui'
+import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useRoute } from 'vue-router'
@@ -30,9 +31,10 @@ const sortedRecords = computed(() => {
     return list
   }
   
-  // Return records in display order
+  // Return records in display order (O(n) using index map)
+  const indexById = new Map(list.map(r => [r.id, r]))
   return displayOrder
-    .map(id => list.find(record => record.id === id))
+    .map(id => indexById.get(id))
     .filter(record => record !== undefined)
 })
 
@@ -128,15 +130,18 @@ function handleScrollBottom() {
           </template>
           
           <template v-else>
-            <n-list
-              hoverable
-              :show-divider="!gridStore.screenLargerThen('m')"
-              class="">
-              <ly-record
-                v-for="(record, index) in sortedRecords"
-                :key="record.id"
-                :id="record.id"
-                :index="index" />
+            <n-list hoverable :show-divider="!gridStore.screenLargerThen('m')" class="">
+              <dynamic-scroller
+                :items="sortedRecords"
+                key-field="id"
+                :min-item-size="58"
+                watch-data>
+                <template #default="{ item, index, active }">
+                  <dynamic-scroller-item :item="item" :active="active" :data-index="index" :key="item.id">
+                    <ly-record :id="item.id" :index="index" />
+                  </dynamic-scroller-item>
+                </template>
+              </dynamic-scroller>
             </n-list>
             <transition
               name="fade-up-down"
