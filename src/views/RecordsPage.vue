@@ -130,7 +130,7 @@ function handleScrollBottom() {
           </template>
           
           <template v-else>
-            <n-list hoverable :show-divider="!gridStore.screenLargerThen('m')" class="">
+            <n-list hoverable :show-divider="!gridStore.screenLargerThen('m')" class="" style="padding-bottom: 56px;">
               <dynamic-scroller
                 :items="sortedRecords"
                 key-field="id"

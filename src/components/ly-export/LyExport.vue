@@ -29,9 +29,9 @@ const showModal = ref(false)
         size="small"
         @click="showModal = true">
         <template #icon>
-          <n-icon :component="ExportIcon" />
+          <n-icon :component="ExportIcon" :size="18" />
         </template>
-        Export
+        <span v-if="gridStore.screenLargerThen('s')">Export</span>
       </n-button>
     </template>
     Export Collection

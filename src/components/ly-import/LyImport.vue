@@ -53,9 +53,9 @@ const { variant } = toRefs(props)
         size="small"
         @click="showModal = true">
         <template #icon>
-          <n-icon :component="ImportIcon" />
+          <n-icon :component="ImportIcon" :size="18" />
         </template>
-        Import
+        <span v-if="gridStore.screenLargerThen('s')">Import</span>
       </n-button>
     </template>
     Import Collection

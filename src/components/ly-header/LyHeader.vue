@@ -5,6 +5,8 @@ import LyLogo from '@/components/ly-logo/LyLogo.vue'
 import LyImport from '@/components/ly-import/LyImport.vue'
 import LyExport from '@/components/ly-export/LyExport.vue'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
+import LyGithub from '@/components/ly-github/LyGithub.vue'
+import LyVersion from '@/components/ly-version/LyVersion.vue'
 </script>
 
 <template>
@@ -21,6 +23,8 @@ import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
       <ly-import variant="minified" />
       <ly-export />
       <ly-theme-switcher />
+      <ly-github />
+      <ly-version />
     </n-space>
   </n-layout-header>
 </template>
