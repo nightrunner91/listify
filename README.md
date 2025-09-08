@@ -70,10 +70,12 @@ For customization and advanced configuration, see the [Vite Documentation](https
 
 ## 📌 Roadmap / Ideas
 
-- [ ] Cloud sync & multi-device support  
-- [ ] Advanced filtering & sorting  
-- [ ] Custom tags and categories  
-- [ ] Dark/Light themes with personalization  
+- [ ] Cloud sync & multi-device support
+- [ ] Import data from popular resoursec (Steam, Letterboxd, MyanimeList, etc)
+- [ ] Advanced filtering & sorting
+- [ ] Custom tags and categories
+- [ ] Custom user lists
+- [ ] Dark/Light themes with personalization
 
 ---
 
