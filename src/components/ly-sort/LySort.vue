@@ -1,5 +1,5 @@
 <script setup>
-import { h } from 'vue'
+import { h, ref, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   NDropdown,
@@ -12,6 +12,8 @@ import { useRecordsStore } from '@/stores/records.store'
 const route = useRoute()
 const recordsStore = useRecordsStore()
 
+const routeLoading = ref(false)
+
 const renderDropdownIcon = (option) => {
   return h(option.icon, { size: 16 })
 }
@@ -21,6 +23,17 @@ function handleSortChange(key) {
   // Sync display order with new sort when user manually changes sorting
   recordsStore.syncDisplayOrderWithSort(route.meta.tag)
 }
+
+watch(
+  route,
+  async () => {
+    routeLoading.value = true
+    await nextTick()
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    routeLoading.value = false
+  },
+  { flush: 'pre', deep: true }
+)
 </script>
 
 <template>
@@ -30,12 +43,12 @@ function handleSortChange(key) {
     placement="bottom-end"
     :options="recordsStore.sortOptions"
     :render-icon="renderDropdownIcon"
-    :disabled="recordsStore.isSearching"
+    :disabled="recordsStore.isSearching || routeLoading || recordsStore.processingImport"
     @select="handleSortChange">
     <n-button
       secondary
       class="ml-auto"
-      :disabled="recordsStore.isSearching">
+      :disabled="recordsStore.isSearching || routeLoading || recordsStore.processingImport">
       <template #icon>
         <n-icon
           depth="2"
