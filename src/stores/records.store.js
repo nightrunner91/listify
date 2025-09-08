@@ -380,26 +380,48 @@ export const useRecordsStore = defineStore('records', () => {
       const categories = Object.keys(obj)
       const errorMsg = 'Looks like your collection is corrupted.'
 
-      if (
-        categories.length !== validCategories.length
-        || !categories.every(c => validCategories.includes(c))) {
+      const errors = []
+
+      const missingCategories = validCategories.filter(vc => !categories.includes(vc))
+      const extraCategories = categories.filter(c => !validCategories.includes(c))
+
+      if (missingCategories.length > 0) {
+        errors.push({ type: 'missing_categories', details: missingCategories })
+      }
+      if (extraCategories.length > 0) {
+        errors.push({ type: 'unexpected_categories', details: extraCategories })
+      }
+
+      // Validate each category payload and collect precise record errors
+      for (const category of categories) {
+        const records = obj[category]
+        if (!validCategories.includes(category)) {
+          // Already reported as extra, but keep a per-category entry
+          errors.push({ type: 'unexpected_category', category })
+          continue
+        }
+
+        if (!Array.isArray(records)) {
+          errors.push({ type: 'invalid_category_payload', category, message: 'Category must be an array of records' })
+          continue
+        }
+
+        for (let index = 0; index < records.length; index++) {
+          const record = records[index]
+          const recordErrors = getRecordValidationErrors(record, category)
+          if (recordErrors.length > 0) {
+            errors.push({ type: 'invalid_record', category, index, id: record && record.id, errors: recordErrors })
+          }
+        }
+      }
+
+      if (errors.length > 0) {
         notificationsStore.pushNotification({
           message: errorMsg,
           type: 'error'
         })
+        console.error('[ImportValidation] Detailed errors:', errors)
         throw new Error(errorMsg)
-      }
-
-      // Check that each category has records in the correct format
-      for (const category of categories) {
-        const records = obj[category]
-        if (!Array.isArray(records) || records.some(r => !isValidRecord(r, category))) {
-          notificationsStore.pushNotification({
-            message: errorMsg,
-            type: 'error'
-          })
-          throw new Error(errorMsg)
-        }
       }
 
       return Promise.resolve(true)
@@ -410,16 +432,28 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
-  function isValidRecord(record, category) {
-    const validLabels = labels.value[category].map(l => l.key)
+  function getRecordValidationErrors(record, category) {
+    const errors = []
+    const validLabels = (labels.value[category] || []).map(l => l.key)
 
-    return typeof record.id === 'string'
-      && typeof record.category === 'string'
-      && validLabels.includes(record.label)
-      && validCategories.includes(record.category)
-      && typeof record.title === 'string'
-      && typeof record.score === 'number'
-      && typeof record.liked === 'boolean'
+    if (!record || typeof record !== 'object') {
+      errors.push('Record is not an object')
+      return errors
+    }
+
+    if (typeof record.id !== 'string') errors.push("'id' must be a string")
+    if (typeof record.category !== 'string') {
+      errors.push("'category' must be a string")
+    } else {
+      if (!validCategories.includes(record.category)) errors.push(`'category' must be one of: ${validCategories.join(', ')}`)
+      if (record.category !== category) errors.push(`'category' value '${record.category}' does not match parent category '${category}'`)
+    }
+    if (!validLabels.includes(record.label)) errors.push(`'label' must be one of: ${(validLabels || []).join(', ')}`)
+    if (typeof record.title !== 'string') errors.push("'title' must be a string")
+    if (typeof record.score !== 'number') errors.push("'score' must be a number")
+    if (typeof record.liked !== 'boolean') errors.push("'liked' must be a boolean")
+
+    return errors
   }
 
   /* =================== */
@@ -505,7 +539,7 @@ export const useRecordsStore = defineStore('records', () => {
       'watched_all': 4,
       
       // Films
-      'watched': 2,
+      'watched': 4,
       
       // Manga & Books
       'read_ongoing': 1,
