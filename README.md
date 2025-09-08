@@ -23,7 +23,6 @@ Data is stored locally in your browser using `localStorage`, with easy **export/
 - [Vue 3](https://vuejs.org/) (Composition API)  
 - [Vite](https://vitejs.dev/)  
 - [Naive UI](https://www.naiveui.com/en-US/)  
-- [TypeScript](https://www.typescriptlang.org/)  
 - [ESLint](https://eslint.org/)  
 
 ---
