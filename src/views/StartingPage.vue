@@ -27,10 +27,6 @@ const usedStuff = ref([
     title: 'Vue 3'
   },
   {
-    icon: TypescriptIcon,
-    title: 'Typescript'
-  },
-  {
     icon: NaiveIcon,
     title: 'Naive UI'
   },
