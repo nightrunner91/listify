@@ -6,6 +6,7 @@ Data is stored locally in your browser using `localStorage`, with easy **export/
 
 🚀 Listify is the next evolution of [Nightlist](https://github.com/nightrunner91/nightlist), rebuilt from the ground up with **Vue 3**, **Vite**, and a refined, user-friendly interface powered by **Naive UI**.  
 
+
 ## ✨ Features
 
 - 📚 Track multiple media categories (games, shows, movies, anime, manga, books, music)  
@@ -13,12 +14,14 @@ Data is stored locally in your browser using `localStorage`, with easy **export/
 - 🔄 Import/Export your lists in JSON format  
 - 🎨 Modern UI built with [Naive UI](https://www.naiveui.com/en-US/)  
 
+
 ## 🛠️ Tech Stack
 
 - [Vue 3](https://vuejs.org/) (Composition API)  
 - [Vite](https://vitejs.dev/)  
 - [Naive UI](https://www.naiveui.com/en-US/)  
 - [ESLint](https://eslint.org/)  
+
 
 ## 🖥️ Development Setup
 
@@ -52,9 +55,11 @@ npm run build
 npm run lint
 ```
 
+
 ## 📦 Configuration
 
 For customization and advanced configuration, see the [Vite Documentation](https://vitejs.dev/config/).  
+
 
 ## 🤝 Contributing
 
