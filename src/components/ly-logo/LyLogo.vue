@@ -27,10 +27,10 @@ const themeStore = useThemeStore()
     <router-link
       :to="{ name: 'Start' }"
       style="text-decoration: none;">
-      <n-text :style="{color: themeStore.categoryColor(route.meta.tag)}">Li</n-text>
-      <n-text
-        class="ly-logo__suffix"
-        depth="2">stify</n-text>
+      <span class="ly-logo__container">
+        <n-text class="ly-logo__prefix" :style="{color: themeStore.categoryColor(route.meta.tag)}">Li</n-text>
+        <n-text class="ly-logo__suffix" depth="2">stify</n-text>
+      </span>
     </router-link>
   </n-h3>
   <n-button
@@ -49,38 +49,36 @@ const themeStore = useThemeStore()
 
 <style lang="scss" scoped>
 .ly-logo {
-  &__suffix {
+  &__container {
     position: relative;
     display: inline-block;
-    opacity: 0;
-    transition: transition(opacity, short, ease);
 
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--n-color);
-      z-index: 2;
-      transform: scaleX(1);
-      transform-origin: 100% 100%;
-      transition: transition(transform, short, emphasized);
-    }
-  }
-
-  &:hover {
-    .ly-logo {
-      &__suffix {
-        opacity: 1;
-
-        &::before {
-          transform: scaleX(0);
+    &:hover {
+      .ly-logo {
+        &__suffix {
+          transform: translateX(0);
+          opacity: 1;
         }
       }
     }
+  }
+
+  &__prefix {
+    position: relative;
+    background-color: var(--n-color);
+    z-index: 2;
+  }
+
+  &__suffix {
+    position: absolute;
+    top: 0;
+    left: 25px;
+    width: 100%;
+    display: block;
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.2s cubic-bezier(0.77,0,0.175,1), opacity 0.3s ease;
+    z-index: 1;
   }
 }
 </style>

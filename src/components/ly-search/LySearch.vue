@@ -38,7 +38,7 @@ const clearSearch = () => {
   <n-input
     v-model:value="searchInput"
     size="large"
-    :placeholder="`Search in ${route.meta.title.toLowerCase()}...`"
+    :placeholder="`Search in ${route.meta.title}...`"
     class="ly-search mb-4">
     <template #prefix>
       <search-icon weight="bold" size="16" class="opacity-5 mr-2" style="margin-bottom: 0.1rem;"/>
