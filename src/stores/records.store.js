@@ -31,6 +31,175 @@ const RECORDS_KEY = 'rec_'
 
 export const useRecordsStore = defineStore('records', () => {
 
+  /* =================== */
+  /* ===== Sorting ===== */
+  /* =================== */
+
+  const sortOptions = shallowRef([
+    {
+      key: 'label',
+      label: 'Status',
+      icon: StatusIcon
+    },
+    {
+      key: 'score',
+      label: 'Rating',
+      icon: RatingIcon
+    },
+    {
+      key: 'liked',
+      label: 'Favourite',
+      icon: FavouriteIcon
+    },
+    {
+      key: 'title',
+      label: 'A → Z',
+      icon: AlphabeticalIcon,
+      default: true
+    },
+  ])
+
+  const selectedSort = ref('label')
+
+  // Search functionality
+  const searchQuery = ref('')
+  const isSearching = ref(false)
+
+  // Display order for each category - maintains stable positions during editing
+  const displayOrder = ref({
+    games: [],
+    tvshows: [],
+    films: [],
+    anime: [],
+    manga: [],
+    books: [],
+    music: [],
+  })
+
+  const getSortOption = (key) => {
+    return computed(() => {
+      return sortOptions.value.find(option => option.key === key)
+    })
+  }
+
+  // Initialize display order for a category
+  function initializeDisplayOrder(listType) {
+    const list = records.value[listType] || []
+    if (list.length === 0) {
+      displayOrder.value[listType] = []
+      return
+    }
+    
+    // Apply current sort when initializing
+    syncDisplayOrderWithSort(listType)
+  }
+
+  const labelPriority = {
+    // 1. Ongoing
+    'watching_ongoing': 1,
+    'read_ongoing': 1,
+    'playing_now': 1,
+    'listening_now': 1,
+
+    // 2. Currently
+    'watching_now': 2,
+    'read_now': 2,
+
+    // 3. Plan to...
+    'plan_to_watch': 3,
+    'plan_to_read': 3,
+    'plan_to_play': 3,
+    'plan_to_listen': 3,
+
+    // 4. On hold
+    'on_hold': 4,
+
+    // 5. Completed / Consumed
+    'completed': 5,
+    'watched_all': 5,
+    'read': 5,
+    'watched': 5,
+    'listened_all': 5,
+
+    // 6. Dropped
+    'dropped': 6,
+  }
+
+  // Sync display order with current sort
+  function syncDisplayOrderWithSort(listType) {
+    const list = records.value[listType] || []
+    const key = selectedSort.value
+
+    const sortedIds = [...list].sort((a, b) => {
+      if (key === 'label') {
+        const orderA = labelPriority[a.label] ?? 999
+        const orderB = labelPriority[b.label] ?? 999
+        if (orderA !== orderB) return orderA - orderB
+        return a.title.localeCompare(b.title)
+      }
+
+      if (key === 'liked' || key === 'score') {
+        if (b[key] !== a[key]) return b[key] - a[key]
+        return a.title.localeCompare(b.title)
+      }
+
+      if (key === 'title') {
+        return a.title.localeCompare(b.title)
+      }
+
+      return 0
+    }).map(record => record.id)
+
+    displayOrder.value[listType] = sortedIds
+  }
+
+  // Add new record to display order (at the end)
+  function addToDisplayOrder(recordId, listType) {
+    if (!displayOrder.value[listType].includes(recordId)) {
+      displayOrder.value[listType].push(recordId)
+    }
+  }
+
+  // Remove record from display order
+  function removeFromDisplayOrder(recordId, listType) {
+    const index = displayOrder.value[listType].indexOf(recordId)
+    if (index > -1) {
+      displayOrder.value[listType].splice(index, 1)
+    }
+  }
+
+  // Search functionality
+  function setSearchQuery(query) {
+    searchQuery.value = query
+    const wasSearching = isSearching.value
+    isSearching.value = query.length > 0
+    
+    // If exiting search mode, apply default sorting
+    if (wasSearching && !isSearching.value) {
+      selectedSort.value = 'label' // Default sort by status
+    }
+  }
+
+  function clearSearch() {
+    searchQuery.value = ''
+    isSearching.value = false
+    // Apply default sorting when clearing search
+    selectedSort.value = 'label' // Default sort by status
+  }
+
+  function searchRecords(listType) {
+    if (!isSearching.value || !searchQuery.value.trim()) {
+      return records.value[listType] || []
+    }
+
+    const query = searchQuery.value.toLowerCase().trim()
+    const list = records.value[listType] || []
+    
+    return list.filter(record => 
+      record.title.toLowerCase().includes(query)
+    )
+  }
+
   /* ========================= */
   /* ======== Records ======== */
   /* ========================= */
@@ -217,7 +386,6 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
-
   /* ======================== */
   /* ======== Labels ======== */
   /* ======================== */
@@ -225,54 +393,60 @@ export const useRecordsStore = defineStore('records', () => {
   const labels = shallowRef({
     games: [
       { key: 'playing_now', label: 'Playing Now', icon: InProgressIcon, default: true },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'plan_to_play', label: 'Plan to Play', icon: PlanIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'completed', label: 'Completed', icon: CompletedIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ],
+    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+
     tvshows: [
       { key: 'watching_ongoing', label: 'Watching Ongoing', icon: WatchingIcon, default: true },
       { key: 'watching_now', label: 'Watching Now', icon: WatchingNowIcon },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'watched_all', label: 'Watched All', icon: CompletedIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ],
+    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+
     films: [
       { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon, default: true },
       { key: 'watched', label: 'Watched', icon: CompletedIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ],
+    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+
     anime: [
       { key: 'watching_ongoing', label: 'Watching Ongoing', icon: WatchingIcon, default: true },
       { key: 'watching_now', label: 'Watching Now', icon: WatchingNowIcon },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'watched_all', label: 'Watched All', icon: CompletedIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ],
+    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+
     manga: [
       { key: 'read_ongoing', label: 'Read Ongoing', icon: ReadingIcon, default: true },
       { key: 'read_now', label: 'Read Now', icon: ReadingIcon },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'plan_to_read', label: 'Plan to Read', icon: PlanIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'read', label: 'Read', icon: ReadIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ],
+    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+
     books: [
       { key: 'read_now', label: 'Read Now', icon: ReadingIcon, default: true },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'plan_to_read', label: 'Plan to Read', icon: PlanIcon },
+      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
       { key: 'read', label: 'Read', icon: ReadIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ],
+    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+
     music: [
       { key: 'listening_now', label: 'Listening Now', icon: ListeningIcon, default: true },
       { key: 'on_repeat', label: 'On Repeat', icon: MusicIcon },
       { key: 'plan_to_listen', label: 'Plan to Listen', icon: PlanIcon },
-      { key: 'completed', label: 'Completed', icon: CompletedIcon },
+      { key: 'listened_all', label: 'Completed', icon: CompletedIcon },
       { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
-    ],
+    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
   })
 
   function getDefaultLabel(listType) {
@@ -328,7 +502,7 @@ export const useRecordsStore = defineStore('records', () => {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `listify-collection-${moment().format('DD-MM-YYYY')}.json`
+    a.download = `listify-collection-${moment().format('DD-MM-YYYY-HH-mm')}.json`
     document.body.appendChild(a)
     a.click()
 
@@ -455,175 +629,6 @@ export const useRecordsStore = defineStore('records', () => {
 
     return errors
   }
-
-  /* =================== */
-  /* ===== Sorting ===== */
-  /* =================== */
-
-  const sortOptions = shallowRef([
-    {
-      key: 'label',
-      label: 'Status',
-      icon: StatusIcon
-    },
-    {
-      key: 'score',
-      label: 'Rating',
-      icon: RatingIcon
-    },
-    {
-      key: 'liked',
-      label: 'Favourite',
-      icon: FavouriteIcon
-    },
-    {
-      key: 'title',
-      label: 'A → Z',
-      icon: AlphabeticalIcon,
-      default: true
-    },
-  ])
-
-  const selectedSort = ref('label')
-
-  // Search functionality
-  const searchQuery = ref('')
-  const isSearching = ref(false)
-
-  // Display order for each category - maintains stable positions during editing
-  const displayOrder = ref({
-    games: [],
-    tvshows: [],
-    films: [],
-    anime: [],
-    manga: [],
-    books: [],
-    music: [],
-  })
-
-  const getSortOption = (key) => {
-    return computed(() => {
-      return sortOptions.value.find(option => option.key === key)
-    })
-  }
-
-  // Initialize display order for a category
-  function initializeDisplayOrder(listType) {
-    const list = records.value[listType] || []
-    if (list.length === 0) {
-      displayOrder.value[listType] = []
-      return
-    }
-    
-    // Apply current sort when initializing
-    syncDisplayOrderWithSort(listType)
-  }
-
-  // Sync display order with current sort
-  function syncDisplayOrderWithSort(listType) {
-    const list = records.value[listType] || []
-    const key = selectedSort.value
-    
-    const labelPriority = {
-      // Games
-      'playing_now': 1,
-      'plan_to_play': 2,
-      'on_hold': 3,
-      'completed': 4,
-      'dropped': 5,
-      
-      // TV Shows & Anime
-      'watching_ongoing': 1,
-      'watching_now': 2,
-      'plan_to_watch': 3,
-      'watched_all': 4,
-      
-      // Films
-      'watched': 4,
-      
-      // Manga & Books
-      'read_ongoing': 1,
-      'read_now': 2,
-      'plan_to_read': 3,
-      'read': 4,
-      
-      // Music
-      'listening_now': 1,
-      'on_repeat': 2,
-      'liked': 3,
-      'plan_to_listen': 4,
-    }
-
-    const sortedIds = [...list].sort((a, b) => {
-      if (key === 'label') {
-        const orderA = labelPriority[a.label] ?? 999
-        const orderB = labelPriority[b.label] ?? 999
-        if (orderA !== orderB) return orderA - orderB
-        return a.title.localeCompare(b.title)
-      }
-
-      if (key === 'liked' || key === 'score') {
-        if (b[key] !== a[key]) return b[key] - a[key]
-        return a.title.localeCompare(b.title)
-      }
-
-      if (key === 'title') {
-        return a.title.localeCompare(b.title)
-      }
-
-      return 0
-    }).map(record => record.id)
-
-    displayOrder.value[listType] = sortedIds
-  }
-
-  // Add new record to display order (at the end)
-  function addToDisplayOrder(recordId, listType) {
-    if (!displayOrder.value[listType].includes(recordId)) {
-      displayOrder.value[listType].push(recordId)
-    }
-  }
-
-  // Remove record from display order
-  function removeFromDisplayOrder(recordId, listType) {
-    const index = displayOrder.value[listType].indexOf(recordId)
-    if (index > -1) {
-      displayOrder.value[listType].splice(index, 1)
-    }
-  }
-
-  // Search functionality
-  function setSearchQuery(query) {
-    searchQuery.value = query
-    const wasSearching = isSearching.value
-    isSearching.value = query.length > 0
-    
-    // If exiting search mode, apply default sorting
-    if (wasSearching && !isSearching.value) {
-      selectedSort.value = 'label' // Default sort by status
-    }
-  }
-
-  function clearSearch() {
-    searchQuery.value = ''
-    isSearching.value = false
-    // Apply default sorting when clearing search
-    selectedSort.value = 'label' // Default sort by status
-  }
-
-  function searchRecords(listType) {
-    if (!isSearching.value || !searchQuery.value.trim()) {
-      return records.value[listType] || []
-    }
-
-    const query = searchQuery.value.toLowerCase().trim()
-    const list = records.value[listType] || []
-    
-    return list.filter(record => 
-      record.title.toLowerCase().includes(query)
-    )
-  }
-
 
   return {
     records,
