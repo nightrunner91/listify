@@ -14,7 +14,6 @@ Data is stored locally in your browser using `localStorage`, with easy **export/
 - 💾 Data persistence using browser `localStorage`  
 - 🔄 Import/Export your lists in JSON format  
 - 🎨 Modern UI built with [Naive UI](https://www.naiveui.com/en-US/)  
-- ⚡️ Built with [Vue 3 (Composition API)](https://vuejs.org/guide/introduction.html) + [Vite](https://vitejs.dev/) for a fast, modern dev experience  
 
 ---
 
@@ -69,11 +68,8 @@ For customization and advanced configuration, see the [Vite Documentation](https
 
 ## 📌 Roadmap / Ideas
 
-- [ ] Cloud sync & multi-device support
-- [ ] Import data from popular resoursec (Steam, Letterboxd, MyanimeList, etc)
-- [ ] Advanced filtering & sorting
-- [ ] Custom tags and categories
 - [ ] Custom user lists
+- [ ] Improved mobile version
 - [ ] Dark/Light themes with personalization
 
 ---
@@ -81,7 +77,7 @@ For customization and advanced configuration, see the [Vite Documentation](https
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!  
-Feel free to check the [issues page](../../issues).  
+Feel free to check the [issues page](../../issues).
 
 ---
 
