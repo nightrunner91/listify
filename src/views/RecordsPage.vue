@@ -14,6 +14,7 @@ const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
 const routeLoading = ref(true)
+const scrollerKey = ref(0)
 
 const sortedRecords = computed(() => {
   // If searching, return filtered results
@@ -43,6 +44,7 @@ watch(() => recordsStore.isSearching, (isSearching) => {
   if (!isSearching) {
     // Reinitialize display order with current sort when exiting search
     recordsStore.syncDisplayOrderWithSort(route.meta.tag)
+    scrollerKey.value++ // Force scroller to re-render
   }
 })
 
@@ -50,6 +52,7 @@ function setDefaultSortLabel() {
   recordsStore.selectedSort = 'label'
   // Initialize display order for the current category
   recordsStore.initializeDisplayOrder(route.meta.tag)
+  scrollerKey.value++ // Force scroller to re-render
 }
 
 watch(
@@ -135,6 +138,7 @@ function handleScrollBottom() {
                 :items="sortedRecords"
                 key-field="id"
                 :min-item-size="58"
+                :key="scrollerKey"
                 watch-data>
                 <template #default="{ item, index, active }">
                   <dynamic-scroller-item :item="item" :active="active" :data-index="index" :key="item.id">
