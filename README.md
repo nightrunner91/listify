@@ -6,22 +6,22 @@ Data is stored locally in your browser using `localStorage`, with easy **export/
 
 🚀 Listify is the next evolution of [Nightlist](https://github.com/nightrunner91/nightlist), rebuilt from the ground up with **Vue 3**, **Vite**, and a refined, user-friendly interface powered by **Naive UI**.  
 
-
 ## ✨ Features
 
-- 📚 Track multiple media categories (games, shows, movies, anime, manga, books, music)  
-- 💾 Data persistence using browser `localStorage`  
+- 📚 Track multiple media categories with ease (games, shows, movies, anime, manga, books, music)
+- 💾 Data persistence using browser `localStorage`
 - 🔄 Import/Export your lists in JSON format  
-- 🎨 Modern UI built with [Naive UI](https://www.naiveui.com/en-US/)  
+- 🎨 Modern UI built with [Naive UI](https://www.naiveui.com/en-US/)
 
+## 🛠️ Tech Stack / Plugins / Assets
 
-## 🛠️ Tech Stack
-
-- [Vue 3](https://vuejs.org/) (Composition API)  
-- [Vite](https://vitejs.dev/)  
-- [Naive UI](https://www.naiveui.com/en-US/)  
-- [ESLint](https://eslint.org/)  
-
+- [Vue 3 (Composition API)](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [ESLint](https://eslint.org/) 
+- [Naive UI](https://www.naiveui.com/en-US/)
+- [Vue 3 Storage](https://github.com/aesoper101/vue3-storage) 
+- [Onest Font](https://fonts.google.com/specimen/Onest)
+- [Phosphor Icons](https://phosphoricons.com/)
 
 ## 🖥️ Development Setup
 
@@ -33,7 +33,6 @@ Data is stored locally in your browser using `localStorage`, with easy **export/
 ### Installation
 
 ```sh
-# Install dependencies
 npm install
 ```
 
@@ -55,11 +54,9 @@ npm run build
 npm run lint
 ```
 
-
 ## 📦 Configuration
 
 For customization and advanced configuration, see the [Vite Documentation](https://vitejs.dev/config/).  
-
 
 ## 🤝 Contributing
 
