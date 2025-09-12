@@ -34,7 +34,9 @@ function renderExtra (total) {
   })
 }
 
-const menuOptions = [
+import { computed } from 'vue'
+
+const menuOptions = computed(() => [
   {
     label: () =>
       h(
@@ -136,7 +138,7 @@ const menuOptions = [
     icon: renderIcon(NewIcon),
     disabled: true,
   },
-]
+])
 
 watch(route, () => {
   activeKey.value = route.meta.tag
