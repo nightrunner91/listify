@@ -521,7 +521,7 @@ export const useRecordsStore = defineStore('records', () => {
     reader.onload = () => {
       const fileContents = reader.result
       const jsonObject = JSON.parse(fileContents)
-      
+
       validateJSON(jsonObject)
         .then(result => {
           if (result) {
@@ -536,14 +536,17 @@ export const useRecordsStore = defineStore('records', () => {
                   })
                 }
               })
-
+              // Sync display order with default sort for each category
+              Object.keys(jsonObject).forEach(key => {
+                syncDisplayOrderWithSort(key)
+              })
               // Change loading state
               processingImport.value = false
             })
           }
         })
     }
-  
+
     reader.readAsText(data.file.file)
   }
 
