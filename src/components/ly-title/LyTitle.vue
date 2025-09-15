@@ -1,9 +1,8 @@
 <script setup>
-
 import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { NH1, NText, NBadge, NIcon, NModal, NInput, NButton } from 'naive-ui'
-import { PhPencilSimple as PencilIcon } from 'phosphor-vue'
+import { NH1, NSpace, NText, NBadge, NIcon, NModal, NInput, NButton } from 'naive-ui'
+import { PhPencilSimple as EditIcon, PhTrashSimple as DeleteIcon } from 'phosphor-vue'
 import { useThemeStore } from '@/stores/theme.store'
 import { useRecordsStore } from '@/stores/records.store'
 
@@ -65,26 +64,27 @@ function saveRename() {
 <template>
   <n-h1 class="mb-0">
     <n-text>
-      <span class="title-row">
-        <template v-if="isCustomList">
-          {{ customList?.name }}
-          <n-icon
-            class="edit-icon"
-            size="18"
-            style="cursor:pointer;opacity:0.7;"
-            @click="openRenameModal"
-            v-show="isCustomList"
-            ><PencilIcon /></n-icon>
-        </template>
-        <template v-else>
-          {{ route.meta.title }}
-        </template>
-      </span>
+      <template v-if="isCustomList">
+        <span class="mr-4">{{ customList?.name }}</span>
+
+        <n-button
+          text
+          @click="openRenameModal"
+          v-show="isCustomList">
+          <n-icon size="24"><EditIcon /></n-icon>
+        </n-button>
+      </template>
+
+      <template v-else>
+        {{ route.meta.title }}
+      </template>
+
       <n-badge
         v-if="route.meta.tag !== 'start' && !isCustomList"
         :value="recordsStore.recordsLength(route.meta.tag).value"
         :show-zero="true"
         class="ml-4 z-0" />
+
       <div
         :style="{
           backgroundColor: barColor,
