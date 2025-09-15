@@ -14,18 +14,36 @@ const recordsStore = useRecordsStore()
 const emit = defineEmits(['scrollBottom'])
 
 async function handleNewRecord() {
-  recordsStore
-    .addRecord({
-      listType: route.meta.tag,
-      saveLocal: true,
-    })
-    .then(record => { 
-      focusInput(record)
-      // Emit scroll event for floating button
+  // Detect if current route is a custom list
+  const customList = recordsStore.customLists.find(list => list.id === route.params.id)
+  if (customList) {
+    // Add to custom list
+    recordsStore.addCustomRecord(customList.id, '')
+    .then(() => {
+      // Focus last input (new record)
+      const lastRecord = customList.records[customList.records.length - 1]
+      if (lastRecord) {
+        focusInput(lastRecord)
+      }
       if (props.variant === 'floating') {
         emit('scrollBottom')
       }
     })
+  } else {
+    // Add to prepared list
+    recordsStore
+      .addRecord({
+        listType: route.meta.tag,
+        saveLocal: true,
+      })
+      .then(record => { 
+        focusInput(record)
+        // Emit scroll event for floating button
+        if (props.variant === 'floating') {
+          emit('scrollBottom')
+        }
+      })
+  }
 }
 
 /* eslint-disable-next-line no-undef */

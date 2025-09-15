@@ -218,6 +218,29 @@ export const useRecordsStore = defineStore('records', () => {
 
   // Custom lists
   const customLists = ref([])
+    // LocalStorage key for custom lists
+    const CUSTOM_LISTS_KEY = 'custom_lists'
+
+    // Save custom lists using lyStorage
+    async function saveCustomListsToLocalStorage() {
+      try {
+        await lyStorage.setStorage({ key: CUSTOM_LISTS_KEY, data: customLists.value })
+      } catch (e) {
+        console.error('Failed to save custom lists:', e)
+      }
+    }
+
+    // Restore custom lists using lyStorage
+    async function restoreCustomListsFromLocalStorage() {
+      try {
+        const stored = await lyStorage.getStorage({ key: CUSTOM_LISTS_KEY })
+        if (stored && stored.value) {
+          customLists.value = stored.value
+        }
+      } catch (e) {
+        console.error('Failed to restore custom lists:', e)
+      }
+    }
 
   // Helper to generate default custom list name
   function getNextCustomListName() {
@@ -243,6 +266,7 @@ export const useRecordsStore = defineStore('records', () => {
       updatedAt: now,
       records: []
     })
+    await saveCustomListsToLocalStorage()
     return id
   }
 
@@ -259,29 +283,33 @@ export const useRecordsStore = defineStore('records', () => {
       createdAt: now
     })
     list.updatedAt = now
+    await saveCustomListsToLocalStorage()
   }
 
   // Rename a custom list
   function renameCustomList(listId, newName) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
-    list.name = newName
-    list.updatedAt = new Date().toISOString()
+  list.name = newName
+  list.updatedAt = new Date().toISOString()
+  saveCustomListsToLocalStorage()
   }
 
   // Update custom list's updatedAt when a record is deleted/renamed
   function updateCustomListTimestamp(listId) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
-    list.updatedAt = new Date().toISOString()
+  list.updatedAt = new Date().toISOString()
+  saveCustomListsToLocalStorage()
   }
 
   // Remove a record from a custom list
   function removeCustomRecord(listId, recordId) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
-    list.records = list.records.filter(r => r.id !== recordId)
-    list.updatedAt = new Date().toISOString()
+  list.records = list.records.filter(r => r.id !== recordId)
+  list.updatedAt = new Date().toISOString()
+  saveCustomListsToLocalStorage()
   }
 
   // Sorting for custom lists
@@ -431,6 +459,8 @@ export const useRecordsStore = defineStore('records', () => {
         initializeDisplayOrder(category)
       }
     })
+  // Restore custom lists from lyStorage
+  restoreCustomListsFromLocalStorage()
   }
 
   async function deleteSelectedRecords(listType) {
@@ -830,5 +860,9 @@ export const useRecordsStore = defineStore('records', () => {
     sortCustomRecords,
     getCustomList,
     getCustomRecord,
+
+    // Custom lists localStorage helpers
+    saveCustomListsToLocalStorage,
+    restoreCustomListsFromLocalStorage,
   }
 })
