@@ -204,6 +204,8 @@ export const useRecordsStore = defineStore('records', () => {
   /* ======== Records ======== */
   /* ========================= */
 
+
+  // Standard categories
   const records = ref({
     games: [],
     tvshows: [],
@@ -213,6 +215,97 @@ export const useRecordsStore = defineStore('records', () => {
     books: [],
     music: [],
   })
+
+  // Custom lists
+  const customLists = ref([])
+
+  // Helper to generate default custom list name
+  function getNextCustomListName() {
+    const base = 'Custom List'
+    let maxNum = 0
+    customLists.value.forEach(list => {
+      const match = list.name.match(/Custom List #(\d+)/)
+      if (match) {
+        maxNum = Math.max(maxNum, parseInt(match[1]))
+      }
+    })
+    return `${base} #${maxNum + 1}`
+  }
+
+  // Create a new custom list
+  async function createCustomList() {
+    const now = new Date().toISOString()
+    const id = await generateUniqueId()
+    customLists.value.push({
+      id,
+      name: getNextCustomListName(),
+      createdAt: now,
+      updatedAt: now,
+      records: []
+    })
+    return id
+  }
+
+  // Add a record to a custom list
+  async function addCustomRecord(listId, title) {
+    const list = customLists.value.find(l => l.id === listId)
+    if (!list) return
+    const now = new Date().toISOString()
+    const id = await generateUniqueId()
+    list.records.push({
+      id,
+      category: listId,
+      title,
+      createdAt: now
+    })
+    list.updatedAt = now
+  }
+
+  // Rename a custom list
+  function renameCustomList(listId, newName) {
+    const list = customLists.value.find(l => l.id === listId)
+    if (!list) return
+    list.name = newName
+    list.updatedAt = new Date().toISOString()
+  }
+
+  // Update custom list's updatedAt when a record is deleted/renamed
+  function updateCustomListTimestamp(listId) {
+    const list = customLists.value.find(l => l.id === listId)
+    if (!list) return
+    list.updatedAt = new Date().toISOString()
+  }
+
+  // Remove a record from a custom list
+  function removeCustomRecord(listId, recordId) {
+    const list = customLists.value.find(l => l.id === listId)
+    if (!list) return
+    list.records = list.records.filter(r => r.id !== recordId)
+    list.updatedAt = new Date().toISOString()
+  }
+
+  // Sorting for custom lists
+  function sortCustomRecords(listId, sortKey = 'initial') {
+    const list = customLists.value.find(l => l.id === listId)
+    if (!list) return []
+    if (sortKey === 'az') {
+      return [...list.records].sort((a, b) => a.title.localeCompare(b.title))
+    }
+    // 'initial' sort by createdAt
+    return [...list.records].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+  }
+
+  // Get custom list by id
+  function getCustomList(listId) {
+    return customLists.value.find(l => l.id === listId)
+  }
+
+  // Get custom record by id
+  function getCustomRecord(listId, recordId) {
+    const list = customLists.value.find(l => l.id === listId)
+    if (!list) return null
+    return list.records.find(r => r.id === recordId)
+  }
 
   const recordsLength = (listType) => {
     return computed(() => {
@@ -484,12 +577,24 @@ export const useRecordsStore = defineStore('records', () => {
     const filteredRecords = Object.entries(records.value)
       .reduce((acc, [category, records]) => {
         if (selectedCategories.value.includes(category)) {
-          // Remove 'selected' property from each record
-          /* eslint-disable-next-line no-unused-vars */
           acc[category] = records.map(({selected, ...rest}) => rest)
         }
         return acc
       }, {})
+
+    // Add custom lists
+    filteredRecords.customLists = customLists.value.map(list => ({
+      id: list.id,
+      name: list.name,
+      createdAt: list.createdAt,
+      updatedAt: list.updatedAt,
+      records: list.records.map(r => ({
+        id: r.id,
+        category: r.category,
+        title: r.title,
+        createdAt: r.createdAt
+      }))
+    }))
 
     /**
      * Sanitize resulting object with jsesc
@@ -528,6 +633,7 @@ export const useRecordsStore = defineStore('records', () => {
             deleteAllRecords().then(() => {
               // Process the records
               Object.keys(jsonObject).forEach(key => {
+                if (key === 'customLists') return
                 for (let i = 0; i < jsonObject[key].length; i++) {
                   addRecord({
                     record: jsonObject[key][i],
@@ -536,8 +642,26 @@ export const useRecordsStore = defineStore('records', () => {
                   })
                 }
               })
+              // Import custom lists
+              if (Array.isArray(jsonObject.customLists)) {
+                customLists.value = jsonObject.customLists.map(list => ({
+                  id: list.id,
+                  name: list.name,
+                  createdAt: list.createdAt,
+                  updatedAt: list.updatedAt,
+                  records: Array.isArray(list.records)
+                    ? list.records.map(r => ({
+                        id: r.id,
+                        category: r.category,
+                        title: r.title,
+                        createdAt: r.createdAt
+                      }))
+                    : []
+                }))
+              }
               // Sync display order with default sort for each category
               Object.keys(jsonObject).forEach(key => {
+                if (key === 'customLists') return
                 syncDisplayOrderWithSort(key)
               })
               // Change loading state
@@ -553,14 +677,15 @@ export const useRecordsStore = defineStore('records', () => {
   function validateJSON(obj) {
     const notificationsStore = useNotificationsStore()
     try {
-      // Check that the object has exactly the required categories
+      // Check that the object has at least the required categories
       const categories = Object.keys(obj)
       const errorMsg = 'Looks like your collection is corrupted.'
 
       const errors = []
 
       const missingCategories = validCategories.filter(vc => !categories.includes(vc))
-      const extraCategories = categories.filter(c => !validCategories.includes(c))
+      // customLists is optional
+      const extraCategories = categories.filter(c => !validCategories.includes(c) && c !== 'customLists')
 
       if (missingCategories.length > 0) {
         errors.push({ type: 'missing_categories', details: missingCategories })
@@ -571,23 +696,42 @@ export const useRecordsStore = defineStore('records', () => {
 
       // Validate each category payload and collect precise record errors
       for (const category of categories) {
+        if (category === 'customLists') continue
         const records = obj[category]
         if (!validCategories.includes(category)) {
-          // Already reported as extra, but keep a per-category entry
           errors.push({ type: 'unexpected_category', category })
           continue
         }
-
         if (!Array.isArray(records)) {
           errors.push({ type: 'invalid_category_payload', category, message: 'Category must be an array of records' })
           continue
         }
-
         for (let index = 0; index < records.length; index++) {
           const record = records[index]
           const recordErrors = getRecordValidationErrors(record, category)
           if (recordErrors.length > 0) {
             errors.push({ type: 'invalid_record', category, index, id: record && record.id, errors: recordErrors })
+          }
+        }
+      }
+
+      // Validate custom lists
+      if (Array.isArray(obj.customLists)) {
+        for (const list of obj.customLists) {
+          if (typeof list.id !== 'string' || typeof list.name !== 'string') {
+            errors.push({ type: 'invalid_custom_list', list })
+            continue
+          }
+          if (!Array.isArray(list.records)) {
+            errors.push({ type: 'invalid_custom_list_records', list })
+            continue
+          }
+          for (const r of list.records) {
+            if (typeof r.id !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'id' })
+            if (typeof r.category !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'category' })
+            if (typeof r.title !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'title' })
+            if (typeof r.createdAt !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'createdAt' })
+            // No score, liked, label fields required
           }
         }
       }
@@ -675,5 +819,16 @@ export const useRecordsStore = defineStore('records', () => {
     setSearchQuery,
     clearSearch,
     searchRecords,
+
+    // Custom lists API
+    customLists,
+    createCustomList,
+    addCustomRecord,
+    renameCustomList,
+    updateCustomListTimestamp,
+    removeCustomRecord,
+    sortCustomRecords,
+    getCustomList,
+    getCustomRecord,
   }
 })

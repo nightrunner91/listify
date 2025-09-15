@@ -89,6 +89,16 @@ const router = createRouter({
             thing: 'Music',
           }
         },
+        {
+          path: '/custom/:id',
+          name: 'CustomList',
+          component: () => import('@/views/CustomListPage.vue'),
+          meta: {
+            tag: route => `custom-${route.params.id}`,
+            title: 'Custom List',
+            thing: 'Custom',
+          }
+        },
       ]
     },
   ]
