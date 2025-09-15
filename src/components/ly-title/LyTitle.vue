@@ -7,17 +7,16 @@ import { PhPencilSimple as PencilIcon } from 'phosphor-vue'
 import { useThemeStore } from '@/stores/theme.store'
 import { useRecordsStore } from '@/stores/records.store'
 
-
 const route = useRoute()
 const themeStore = useThemeStore()
 const recordsStore = useRecordsStore()
 
 const isCustomList = computed(() => {
-  return route.meta.tag && route.meta.tag.startsWith('custom-')
+  return route.meta.isCustom
 })
 
 const customListId = computed(() => {
-  return isCustomList.value ? route.meta.tag.replace('custom-', '') : null
+  return route.params.id || null
 })
 
 const customList = computed(() => {
@@ -32,7 +31,6 @@ const barColor = ref('transparent')
 const barWidth = ref('3px')
 const barSize = '3px'
 const barSpeed = 250
-
 
 watch(
   [route, themeStore],
@@ -97,6 +95,7 @@ function saveRename() {
           transitionTimingFunction: 'cubic-bezier(0.0, 0, 0.2, 1)',
         }" />
     </n-text>
+
     <n-modal v-model:show="showRenameModal" preset="dialog" title="Rename Custom List">
       <div>
         <n-input v-model:value="newListName" placeholder="Enter new name" maxlength="50" />

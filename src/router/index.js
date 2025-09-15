@@ -94,9 +94,10 @@ const router = createRouter({
           name: 'CustomList',
           component: () => import('@/views/CustomListPage.vue'),
           meta: {
-            tag: route => `custom-${route.params.id}`,
+            tag: 'custom',
             title: 'Custom List',
             thing: 'Custom',
+            isCustom: true
           }
         },
       ]
@@ -105,11 +106,15 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.title && to.meta.tag !== 'start') {
-    document.title = `${to.meta.title} - Listify`
-  } else {
-    document.title = 'Listify'
+  let title = 'Listify'
+  if (to.meta.title && (to.meta.tag !== 'start')) {
+    title = `${to.meta.title} - Listify`
   }
+  // Handle dynamic tag for custom lists
+  if (to.meta.isCustom && to.params.id) {
+    title = `Custom List (${to.params.id}) - Listify`
+  }
+  document.title = title
   next()
 })
 
