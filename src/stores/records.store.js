@@ -6,7 +6,7 @@ import {
 import { defineStore } from 'pinia'
 import { useNotificationsStore } from '@/stores/notifications.store'
 import { generateUniqueId } from '@/utils/random-number'
-import { lyStorage } from '@/main'
+import { api } from '@/api/client'
 import {
   PhPlay as InProgressIcon,
   PhHourglass as OnHoldIcon,
@@ -218,29 +218,6 @@ export const useRecordsStore = defineStore('records', () => {
 
   // Custom lists
   const customLists = ref([])
-    // LocalStorage key for custom lists
-    const CUSTOM_LISTS_KEY = 'custom_lists'
-
-    // Save custom lists using lyStorage
-    async function saveCustomListsToLocalStorage() {
-      try {
-        await lyStorage.setStorage({ key: CUSTOM_LISTS_KEY, data: customLists.value })
-      } catch (e) {
-        console.error('Failed to save custom lists:', e)
-      }
-    }
-
-    // Restore custom lists using lyStorage
-    async function restoreCustomListsFromLocalStorage() {
-      try {
-        const stored = await lyStorage.getStorage({ key: CUSTOM_LISTS_KEY })
-        if (stored && stored.value) {
-          customLists.value = stored.value
-        }
-      } catch (e) {
-        console.error('Failed to restore custom lists:', e)
-      }
-    }
 
   // Helper to generate default custom list name
   function getNextCustomListName() {
@@ -257,59 +234,43 @@ export const useRecordsStore = defineStore('records', () => {
 
   // Create a new custom list
   async function createCustomList() {
-    const now = new Date().toISOString()
-    const id = await generateUniqueId()
-    customLists.value.push({
-      id,
-      name: getNextCustomListName(),
-      createdAt: now,
-      updatedAt: now,
-      records: []
-    })
-    await saveCustomListsToLocalStorage()
-    return id
+    const list = await api.post('/custom-lists')
+    customLists.value.push(list)
+    return list.id
   }
 
   // Add a record to a custom list
   async function addCustomRecord(listId, title) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
-    const now = new Date().toISOString()
-    const id = await generateUniqueId()
-    list.records.push({
-      id,
-      category: listId,
-      title,
-      createdAt: now
-    })
-    list.updatedAt = now
-    await saveCustomListsToLocalStorage()
+    const record = await api.post(`/custom-lists/${listId}/records`, { title })
+    list.records.push(record)
+    list.updatedAt = new Date().toISOString()
   }
 
   // Rename a custom list
-  function renameCustomList(listId, newName) {
+  async function renameCustomList(listId, newName) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
-  list.name = newName
-  list.updatedAt = new Date().toISOString()
-  saveCustomListsToLocalStorage()
+    await api.patch(`/custom-lists/${listId}`, { name: newName })
+    list.name = newName
+    list.updatedAt = new Date().toISOString()
   }
 
   // Update custom list's updatedAt when a record is deleted/renamed
   function updateCustomListTimestamp(listId) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
-  list.updatedAt = new Date().toISOString()
-  saveCustomListsToLocalStorage()
+    list.updatedAt = new Date().toISOString()
   }
 
   // Remove a record from a custom list
-  function removeCustomRecord(listId, recordId) {
+  async function removeCustomRecord(listId, recordId) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
-  list.records = list.records.filter(r => r.id !== recordId)
-  list.updatedAt = new Date().toISOString()
-  saveCustomListsToLocalStorage()
+    await api.delete(`/custom-lists/${listId}/records/${recordId}`)
+    list.records = list.records.filter(r => r.id !== recordId)
+    list.updatedAt = new Date().toISOString()
   }
 
   // Sorting for custom lists
@@ -400,83 +361,77 @@ export const useRecordsStore = defineStore('records', () => {
     return record
   }
 
-  async function addRecord({ record, listType, saveLocal }) {
+  async function addRecord({ record, listType }) {
     try {
       const income = record || {
-        id: await generateUniqueId(),
         category: listType,
         title: '',
         score: 0,
         liked: false,
         label: getDefaultLabel(listType).key,
-        selected: false,
       }
       
       const isNewRecord = !checkRecordExist(income, listType)
       
+      let savedRecord
       if (isNewRecord) {
-        records.value[listType].push(income)
-        addToDisplayOrder(income.id, listType)
+        savedRecord = await api.post(`/records/${listType}`, income)
+        // Ensure UI-only fields
+        savedRecord.selected = false
+        records.value[listType].push(savedRecord)
+        addToDisplayOrder(savedRecord.id, listType)
       } else {
+        const { id, category, userId, createdAt, updatedAt, selected, ...updates } = income
+        savedRecord = await api.put(`/records/${income.id}`, updates)
+        // Re-attach UI-only fields
+        savedRecord.selected = income.selected
         const index = records.value[listType].findIndex((i) => i.id === income.id)
-        records.value[listType].splice(index, 1, income)
+        records.value[listType].splice(index, 1, savedRecord)
       }
   
-      if (saveLocal) {
-        try {
-          await lyStorage.setStorage({ key: `${RECORDS_KEY}${income.id}`, data: income })
-        } catch (err) {
-          console.error(err.errMsg)
-        }
-      }
-  
-      return income
+      return savedRecord
     } catch (err) {
       console.error(err)
       throw err
     }
   }
 
-  function restoreRecords() {
-    const recKeys = []
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      if (key && key.includes(RECORDS_KEY)) {
-        recKeys.push(key)
-      }
+  async function restoreRecords() {
+    try {
+      const data = await api.get('/records')
+      
+      // Merge with default shape and add selected property
+      const defaultCategories = ['games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music']
+      const newRecords = {}
+      defaultCategories.forEach(cat => {
+        newRecords[cat] = (data[cat] || []).map(r => ({ ...r, selected: false }))
+      })
+      records.value = newRecords
+
+      selectedSort.value = 'label'
+      Object.keys(records.value).forEach(category => {
+        if (records.value[category].length > 0) {
+          initializeDisplayOrder(category)
+        }
+      })
+      
+      customLists.value = await api.get('/custom-lists')
+    } catch (err) {
+      console.error('Failed to restore records:', err)
     }
-    for (let i = 0; i < recKeys.length; i++) {
-      const key = recKeys[i]
-      const value = JSON.parse(localStorage.getItem(key)).value
-      records.value[value.category].push(value)
-    }
-    
-    // Initialize display order for all categories after restoring records
-    // Set default sort to 'label' and initialize display order
-    selectedSort.value = 'label'
-    Object.keys(records.value).forEach(category => {
-      if (records.value[category].length > 0) {
-        initializeDisplayOrder(category)
-      }
-    })
-  // Restore custom lists from lyStorage
-  restoreCustomListsFromLocalStorage()
   }
 
   async function deleteSelectedRecords(listType) {
     const selected = selectedRecords(listType).value
     try {
-      for (let n = 0; n < selected.length; n++) {
-        // Remove from localStorage
-        lyStorage.removeStorage({
-          namespace: 'ly_',
-          key: `${RECORDS_KEY}${selected[n].id}`
-        })
-        // Remove from Pinia
-        const index = records.value[listType].findIndex(record => record.id === selected[n].id)
-        records.value[listType].splice(index, 1)
-        // Remove from display order
-        removeFromDisplayOrder(selected[n].id, listType)
+      const ids = selected.map(r => r.id)
+      if (ids.length > 0) {
+        await api.delete('/records', { ids })
+        for (let n = 0; n < selected.length; n++) {
+          const index = records.value[listType].findIndex(record => record.id === selected[n].id)
+          records.value[listType].splice(index, 1)
+          removeFromDisplayOrder(selected[n].id, listType)
+        }
       }
       return selected
     } catch (err) {
@@ -486,27 +441,8 @@ export const useRecordsStore = defineStore('records', () => {
   }
 
   async function deleteAllRecords() {
-    try {
-      // Remove from localStorage
-      Object.keys(records.value).forEach(key => {
-        for (let i = 0; i < records.value[key].length; i++) {
-          lyStorage.removeStorage({
-            namespace: 'ly_',
-            key: `${RECORDS_KEY}${records.value[key][i].id}`
-          })
-        }
-      })
-      // Remove from Pinia
-      Object.keys(records.value).forEach(key => {
-        records.value[key] = []
-        displayOrder.value[key] = []
-      })
-      
-      return Promise.resolve(true)
-    } catch (err) {
-      console.error(err)
-      throw err
-    }
+    // Handled by the import route on the backend
+    return Promise.resolve(true)
   }
 
   /* ======================== */
@@ -647,60 +583,25 @@ export const useRecordsStore = defineStore('records', () => {
   }
 
   async function importCollection(data) {
-    // Change loading state
     processingImport.value = true
-
-    // Create reader instance
     const reader = new FileReader()
-  
-    reader.onload = () => {
-      const fileContents = reader.result
-      const jsonObject = JSON.parse(fileContents)
-
-      validateJSON(jsonObject)
-        .then(result => {
-          if (result) {
-            deleteAllRecords().then(() => {
-              // Process the records
-              Object.keys(jsonObject).forEach(key => {
-                if (key === 'customLists') return
-                for (let i = 0; i < jsonObject[key].length; i++) {
-                  addRecord({
-                    record: jsonObject[key][i],
-                    listType: key,
-                    saveLocal: true
-                  })
-                }
-              })
-              // Import custom lists
-              if (Array.isArray(jsonObject.customLists)) {
-                customLists.value = jsonObject.customLists.map(list => ({
-                  id: list.id,
-                  name: list.name,
-                  createdAt: list.createdAt,
-                  updatedAt: list.updatedAt,
-                  records: Array.isArray(list.records)
-                    ? list.records.map(r => ({
-                        id: r.id,
-                        category: r.category,
-                        title: r.title,
-                        createdAt: r.createdAt
-                      }))
-                    : []
-                }))
-              }
-              // Sync display order with default sort for each category
-              Object.keys(jsonObject).forEach(key => {
-                if (key === 'customLists') return
-                syncDisplayOrderWithSort(key)
-              })
-              // Change loading state
-              processingImport.value = false
-            })
-          }
-        })
+    reader.onload = async () => {
+      try {
+        const fileContents = reader.result
+        const jsonObject = JSON.parse(fileContents)
+        
+        await validateJSON(jsonObject)
+        
+        await api.post('/import', jsonObject)
+        await restoreRecords() // Reload everything from server
+        processingImport.value = false
+        useNotificationsStore().pushNotification({ message: 'Import successful!', type: 'success' })
+      } catch (err) {
+        console.error(err)
+        processingImport.value = false
+        // validateJSON already pushes an error notification
+      }
     }
-
     reader.readAsText(data.file.file)
   }
 
@@ -860,9 +761,5 @@ export const useRecordsStore = defineStore('records', () => {
     sortCustomRecords,
     getCustomList,
     getCustomRecord,
-
-    // Custom lists localStorage helpers
-    saveCustomListsToLocalStorage,
-    restoreCustomListsFromLocalStorage,
   }
 })

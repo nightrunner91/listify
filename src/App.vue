@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { NLayout } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'
 import { useGridStore } from '@/stores/grid.store'
@@ -11,20 +11,32 @@ import LyContent from '@/components/ly-content/LyContent.vue'
 import LyControls from '@/components/ly-controls/LyControls.vue'
 import LyNotifications from '@/components/ly-notifications/LyNotifications.vue'
 
+import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
+
 const themeStore = useThemeStore()
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
+const authStore = useAuthStore()
+const route = useRoute()
 
-onBeforeMount(() => {
+const isReady = ref(false)
+
+onBeforeMount(async () => {
+  await authStore.fetchMe()
   themeStore.restoreTheme()
   gridStore.watchWindowSizes()
-  recordsStore.restoreRecords()
+  
+  if (authStore.user) {
+    await recordsStore.restoreRecords()
+  }
+  isReady.value = true
 })
 </script>
 
 <template>
-  <app-provider>
-    <n-layout position="absolute">
+  <app-provider v-if="isReady">
+    <n-layout position="absolute" v-if="route.meta.requiresAuth !== false">
       <ly-header />
       <n-layout
         has-sider
@@ -35,6 +47,9 @@ onBeforeMount(() => {
         <ly-controls />
       </n-layout>
     </n-layout>
+    
+    <router-view v-else />
+
     <ly-notifications />
   </app-provider>
 </template>

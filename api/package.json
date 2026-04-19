@@ -7,8 +7,10 @@
   "scripts": {
     "dev": "node --env-file=.env --watch src/index.js",
     "start": "node --env-file=.env src/index.js",
+    "start:prod": "node src/index.js",
     "db:generate": "node --env-file=.env node_modules/.bin/drizzle-kit generate",
     "db:migrate": "node --env-file=.env src/db/migrate.js",
+    "db:migrate:prod": "node src/db/migrate.js",
     "db:studio": "node --env-file=.env node_modules/.bin/drizzle-kit studio"
   },
   "dependencies": {

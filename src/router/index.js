@@ -6,6 +6,18 @@ const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/auth/LoginView.vue'),
+      meta: { requiresAuth: false, title: 'Login' }
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: () => import('@/views/auth/RegisterView.vue'),
+      meta: { requiresAuth: false, title: 'Register' }
+    },
+    {
       path: '/',
       name: 'Home',
       redirect: '/start',
@@ -15,6 +27,7 @@ const router = createRouter({
           name: 'Start',
           component: StartingPage,
           meta: {
+            requiresAuth: true,
             tag: 'start',
             title: 'Welcome to Listify!',
           }
@@ -24,6 +37,7 @@ const router = createRouter({
           name: 'Games',
           component: RecordsPage,
           meta: {
+            requiresAuth: true,
             tag: 'games',
             title: 'Games',
             thing: 'Game',
@@ -34,6 +48,7 @@ const router = createRouter({
           name: 'TVShows',
           component: RecordsPage,
           meta: {
+            requiresAuth: true,
             tag: 'tvshows',
             title: 'TV Shows',
             thing: 'TV Show'
@@ -44,6 +59,7 @@ const router = createRouter({
           name: 'Films',
           component: RecordsPage,
           meta: {
+            requiresAuth: true,
             tag: 'films',
             title: 'Films',
             thing: 'Film',
@@ -54,6 +70,7 @@ const router = createRouter({
           name: 'Anime',
           component: RecordsPage,
           meta: {
+            requiresAuth: true,
             tag: 'anime',
             title: 'Anime',
             thing: 'Anime'
@@ -64,6 +81,7 @@ const router = createRouter({
           name: 'Manga',
           component: RecordsPage,
           meta: {
+            requiresAuth: true,
             tag: 'manga',
             title: 'Manga',
             thing: 'Manga'
@@ -74,6 +92,7 @@ const router = createRouter({
           name: 'Books',
           component: RecordsPage,
           meta: {
+            requiresAuth: true,
             tag: 'books',
             title: 'Books',
             thing: 'Book',
@@ -84,6 +103,7 @@ const router = createRouter({
           name: 'Music',
           component: RecordsPage,
           meta: {
+            requiresAuth: true,
             tag: 'music',
             title: 'Music',
             thing: 'Music',
@@ -94,6 +114,7 @@ const router = createRouter({
           name: 'CustomList',
           component: () => import('@/views/CustomListPage.vue'),
           meta: {
+            requiresAuth: true,
             tag: 'custom',
             title: 'Custom List',
             thing: 'Custom',
@@ -105,6 +126,8 @@ const router = createRouter({
   ]
 })
 
+import { useAuthStore } from '@/stores/auth.store'
+
 router.beforeEach((to, from, next) => {
   let title = 'Listify'
   if (to.meta.title && (to.meta.tag !== 'start')) {
@@ -115,7 +138,16 @@ router.beforeEach((to, from, next) => {
     title = `Custom List (${to.params.id}) - Listify`
   }
   document.title = title
-  next()
+
+  // Auth Guard
+  const authStore = useAuthStore()
+  if (to.meta.requiresAuth !== false && !authStore.user) {
+    next('/login')
+  } else if ((to.path === '/login' || to.path === '/register') && authStore.user) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router

@@ -2,9 +2,8 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme } from 'naive-ui'
 import { darkThemeOverrides, lightThemeOverrides } from '@/theme.config'
-import { lyStorage } from '@/main'
-
-const THEME_KEY = 'theme'
+import { api } from '@/api/client'
+import { useAuthStore } from '@/stores/auth.store'
 
 export const useThemeStore = defineStore('theme', () => {
   const currentTheme = ref(null)
@@ -15,12 +14,23 @@ export const useThemeStore = defineStore('theme', () => {
       : lightThemeOverrides.Categories[`${tag}Color`]
   )
 
-  function toggleTheme() {
+  async function toggleTheme() {
     currentTheme.value = currentTheme.value ? null : darkTheme
-    lyStorage.setStorage({
-      key: THEME_KEY,
-      data: currentTheme.value ? 'dark' : 'light',
-    })
+    const themeString = currentTheme.value ? 'dark' : 'light'
+    
+    // Save to local storage as fallback
+    localStorage.setItem('theme', themeString)
+
+    // Save to API if authenticated
+    const authStore = useAuthStore()
+    if (authStore.user) {
+      try {
+        await api.put('/settings', { theme: themeString })
+      } catch (e) {
+        // ignore errors
+      }
+    }
+    
     applyBodyClassname()
   }
 
@@ -33,10 +43,24 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
-  function restoreTheme() {
-    const savedTheme = lyStorage.getStorageSync(THEME_KEY)
+  async function restoreTheme() {
+    let savedTheme = localStorage.getItem('theme')
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  
+    
+    // If authenticated, try to fetch from API
+    const authStore = useAuthStore()
+    if (authStore.user) {
+      try {
+        const settings = await api.get('/settings')
+        if (settings.theme !== 'system') {
+          savedTheme = settings.theme
+          localStorage.setItem('theme', savedTheme)
+        }
+      } catch (e) {
+        // use local fallback
+      }
+    }
+
     if (savedTheme === 'dark') {
       currentTheme.value = darkTheme
     } else if (savedTheme === 'light') {
