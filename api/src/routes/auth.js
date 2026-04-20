@@ -54,6 +54,7 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
+    reply.setCookie('listify_uid', String(user.id), { path: '/', secure: process.env.NODE_ENV === 'production', sameSite: 'strict' })
     return reply.status(201).send({ user, accessToken })
   })
 
@@ -80,6 +81,7 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
+    reply.setCookie('listify_uid', String(user.id), { path: '/', secure: process.env.NODE_ENV === 'production', sameSite: 'strict' })
     return reply.send({ user, accessToken })
   })
 

@@ -23,7 +23,6 @@ const route = useRoute()
 const isReady = ref(false)
 
 onBeforeMount(async () => {
-  await authStore.fetchMe()
   themeStore.restoreTheme()
   gridStore.watchWindowSizes()
   

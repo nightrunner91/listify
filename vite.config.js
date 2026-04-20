@@ -9,7 +9,7 @@ export default defineConfig({
   base: '/listify/',
   server: {
     // host: '192.168.88.224',
-    port: 4096,
+    port: 5173,
   },
   css: {
     preprocessorOptions: {

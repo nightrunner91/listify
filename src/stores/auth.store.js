@@ -54,7 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function refresh() {
     try {
-      const data = await api.post('/auth/refresh')
+      const data = await api.post('/auth/refresh', {})
       accessToken.value = data.accessToken
       return true
     } catch (e) {

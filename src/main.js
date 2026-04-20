@@ -14,11 +14,14 @@ import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 /** plugins */
 const pinia = createPinia()
-app
-  .use(pinia)
-  .use(router)
+app.use(pinia)
 
 export const lyStorage = useStorage('ly_')
 
-/** mount app */
-app.mount('#app')
+import { useAuthStore } from '@/stores/auth.store'
+const authStore = useAuthStore()
+
+authStore.fetchMe().then(() => {
+  app.use(router)
+  app.mount('#app')
+})

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NSpace, NH2, NText } from 'naive-ui'
+import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NSpace, NH3, NText } from 'naive-ui'
 import { useAuthStore } from '@/stores/auth.store'
 
 const router = useRouter()
@@ -49,9 +49,9 @@ async function handleLogin() {
 
 <template>
   <div class="auth-container">
-    <n-card class="auth-card" hoverable>
+    <n-card class="auth-card" size="huge" hoverable>
       <div class="auth-header">
-        <n-h2 style="margin-bottom: 0;">Login to Listify</n-h2>
+        <n-h3 style="margin-bottom: 0;">Sign in to Listify</n-h3>
         <n-text depth="3">Welcome back!</n-text>
       </div>
 
