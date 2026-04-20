@@ -1,25 +1,48 @@
 <script setup>
 import { ref } from 'vue'
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute, useRouter } from 'vue-router'
 import {
   NSpace,
   NLayoutContent,
   NGrid,
   NGridItem,
+  NButton,
+  useDialog,
 } from 'naive-ui'
+import { PhTrashSimple as DeleteIcon } from 'phosphor-vue'
+import { renderIcon } from '@/utils/render-icon'
 import LyTitle from '@/components/ly-title/LyTitle.vue'
 import LySort from '@/components/ly-sort/LySort.vue'
 import LyScroller from '@/components/ly-scroller/LyScroller.vue'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
+import { useRecordsStore } from '@/stores/records.store'
 
 const menuStore = useMenuStore()
 const gridStore = useGridStore()
+const recordsStore = useRecordsStore()
+const route = useRoute()
+const router = useRouter()
+const dialog = useDialog()
 
 const contentRef = ref(null)
 
 function updateScroll(event) {
   gridStore.scrollPosition = (event.target).scrollTop
+}
+
+function confirmDeleteList() {
+  const list = recordsStore.getCustomList(route.params.id)
+  dialog.warning({
+    title: 'Confirm action',
+    content: `Delete "${list?.name}"? This cannot be undone.`,
+    positiveText: 'Delete',
+    negativeText: 'Cancel',
+    onPositiveClick: async () => {
+      await recordsStore.deleteCustomList(route.params.id)
+      router.push('/start')
+    },
+  })
 }
 </script>
 
@@ -48,7 +71,16 @@ function updateScroll(event) {
           align="center"
           class="mb-6">
           <ly-title />
-          <ly-sort />
+          <ly-sort v-if="!route.meta.isCustom" />
+          <n-button
+            v-else
+            secondary
+            type="error"
+            size="small"
+            :render-icon="renderIcon(DeleteIcon)"
+            @click="confirmDeleteList">
+            Delete
+          </n-button>
         </n-space>
         <router-view />
       </n-grid-item>

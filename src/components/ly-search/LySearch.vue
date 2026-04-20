@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { NInput } from 'naive-ui'
 import { PhMagnifyingGlass as SearchIcon, PhX as ClearIcon } from 'phosphor-vue'
 import { useRoute } from 'vue-router'
@@ -10,6 +10,14 @@ const recordsStore = useRecordsStore()
 
 const searchInput = ref('')
 let searchTimeout = null
+
+const searchPlaceholder = computed(() => {
+  if (route.meta.isCustom && route.params.id) {
+    const list = recordsStore.getCustomList(route.params.id)
+    return `Search in ${list?.name ?? 'Custom List'}...`
+  }
+  return `Search in ${route.meta.title}...`
+})
 
 // Debounced search function
 const performSearch = (query) => {
@@ -38,7 +46,7 @@ const clearSearch = () => {
   <n-input
     v-model:value="searchInput"
     size="large"
-    :placeholder="`Search in ${route.meta.title}...`"
+    :placeholder="searchPlaceholder"
     class="ly-search mb-4">
     <template #prefix>
       <search-icon weight="bold" size="16" class="opacity-5 mr-2" style="margin-bottom: 0.1rem;"/>

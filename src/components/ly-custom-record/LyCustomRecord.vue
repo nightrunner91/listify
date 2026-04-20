@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { NListItem, NSpace, NInput, NButton, NIcon, NText } from 'naive-ui'
-import { PhTrashSimple as DeleteIcon } from 'phosphor-vue'
+import { PhX as DeleteIcon } from 'phosphor-vue'
 import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
 

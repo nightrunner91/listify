@@ -127,6 +127,7 @@ const router = createRouter({
 })
 
 import { useAuthStore } from '@/stores/auth.store'
+import { useRecordsStore } from '@/stores/records.store'
 
 router.beforeEach((to, from, next) => {
   let title = 'Listify'
@@ -135,7 +136,9 @@ router.beforeEach((to, from, next) => {
   }
   // Handle dynamic tag for custom lists
   if (to.meta.isCustom && to.params.id) {
-    title = `Custom List (${to.params.id}) - Listify`
+    const recordsStore = useRecordsStore()
+    const list = recordsStore.getCustomList(to.params.id)
+    title = list ? `${list.name} - Listify` : 'Custom List - Listify'
   }
   document.title = title
 
