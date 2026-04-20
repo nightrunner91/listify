@@ -1,14 +1,16 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { NH1, NSpace, NText, NBadge, NIcon, NModal, NInput, NButton } from 'naive-ui'
+import { useRoute, useRouter } from 'vue-router'
+import { NH1, NSpace, NText, NBadge, NIcon, NModal, NInput, NButton, useDialog } from 'naive-ui'
 import { PhPencilSimple as EditIcon, PhTrashSimple as DeleteIcon } from 'phosphor-vue'
 import { useThemeStore } from '@/stores/theme.store'
 import { useRecordsStore } from '@/stores/records.store'
 
 const route = useRoute()
+const router = useRouter()
 const themeStore = useThemeStore()
 const recordsStore = useRecordsStore()
+const dialog = useDialog()
 
 const isCustomList = computed(() => {
   return route.meta.isCustom
@@ -59,6 +61,19 @@ function saveRename() {
   recordsStore.renameCustomList(customListId.value, newListName.value.trim())
   showRenameModal.value = false
 }
+
+function confirmDeleteList() {
+  dialog.warning({
+    title: 'Delete List',
+    content: `Delete "${customList.value?.name}"? This cannot be undone.`,
+    positiveText: 'Delete',
+    negativeText: 'Cancel',
+    onPositiveClick: async () => {
+      await recordsStore.deleteCustomList(customListId.value)
+      router.push('/start')
+    },
+  })
+}
 </script>
 
 <template>
@@ -73,6 +88,15 @@ function saveRename() {
           v-show="isCustomList">
           <n-icon size="24"><EditIcon /></n-icon>
         </n-button>
+
+        <n-button
+          text
+          type="error"
+          class="ml-2"
+          @click="confirmDeleteList"
+          v-show="isCustomList">
+          <n-icon size="24"><DeleteIcon /></n-icon>
+        </n-button>
       </template>
 
       <template v-else>
@@ -82,6 +106,12 @@ function saveRename() {
       <n-badge
         v-if="route.meta.tag !== 'start' && !isCustomList"
         :value="recordsStore.recordsLength(route.meta.tag).value"
+        :show-zero="true"
+        class="ml-4 z-0" />
+
+      <n-badge
+        v-if="isCustomList"
+        :value="customList?.records.length ?? 0"
         :show-zero="true"
         class="ml-4 z-0" />
 
@@ -97,7 +127,7 @@ function saveRename() {
     </n-text>
 
     <n-modal v-model:show="showRenameModal" preset="dialog" title="Rename Custom List">
-      <div>
+      <div class="p-10">
         <n-input v-model:value="newListName" placeholder="Enter new name" maxlength="50" />
         <div v-if="nameError" style="color:red;font-size:12px;margin-top:4px;">{{ nameError }}</div>
       </div>

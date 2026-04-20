@@ -37,7 +37,7 @@ export async function apiClient(endpoint, options = {}) {
   
   const url = `${API_BASE}${endpoint}`
   const headers = {
-    'Content-Type': 'application/json',
+    ...(options.body !== undefined ? { 'Content-Type': 'application/json' } : {}),
     ...options.headers,
   }
 

@@ -139,7 +139,7 @@ export default async function customListsRoutes(app) {
       body: {
         type: 'object',
         required: ['title'],
-        properties: { title: { type: 'string', minLength: 1, maxLength: 500 } },
+        properties: { title: { type: 'string', maxLength: 500 } },
         additionalProperties: false,
       },
     },
@@ -171,6 +171,66 @@ export default async function customListsRoutes(app) {
       .where(eq(customLists.id, listId))
 
     return reply.status(201).send(record)
+  })
+
+  // ─── PATCH /api/custom-lists/:listId/records/:recordId ───────────────────
+
+  app.patch('/:listId/records/:recordId', {
+    schema: {
+      params: {
+        type: 'object',
+        required: ['listId', 'recordId'],
+        properties: {
+          listId:   { type: 'string', format: 'uuid' },
+          recordId: { type: 'string', format: 'uuid' },
+        },
+      },
+      body: {
+        type: 'object',
+        required: ['title'],
+        properties: { title: { type: 'string', maxLength: 500 } },
+        additionalProperties: false,
+      },
+    },
+  }, async (request, reply) => {
+    const { listId, recordId } = request.params
+    const { title } = request.body
+    const userId = request.user.id
+
+    // Verify list ownership
+    const [list] = await db
+      .select({ id: customLists.id })
+      .from(customLists)
+      .where(and(eq(customLists.id, listId), eq(customLists.userId, userId)))
+      .limit(1)
+
+    if (!list) {
+      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
+    }
+
+    const [updated] = await db
+      .update(customListRecords)
+      .set({ title })
+      .where(
+        and(
+          eq(customListRecords.id, recordId),
+          eq(customListRecords.listId, listId),
+          eq(customListRecords.userId, userId),
+        )
+      )
+      .returning()
+
+    if (!updated) {
+      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Record not found' })
+    }
+
+    // Touch the list updatedAt
+    await db
+      .update(customLists)
+      .set({ updatedAt: new Date() })
+      .where(eq(customLists.id, listId))
+
+    return reply.send(updated)
   })
 
   // ─── DELETE /api/custom-lists/:listId/records/:recordId ──────────────────

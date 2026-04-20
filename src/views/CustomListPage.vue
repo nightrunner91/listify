@@ -6,7 +6,7 @@ import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useRoute } from 'vue-router'
 import LySearch from '@/components/ly-search/LySearch.vue'
-import LyRecord from '@/components/ly-record/LyRecord.vue'
+import LyCustomRecord from '@/components/ly-custom-record/LyCustomRecord.vue'
 import LyAddRecord from '@/components/ly-add-record/LyAddRecord.vue'
 import LyImport from '@/components/ly-import/LyImport.vue'
 
@@ -19,8 +19,10 @@ const customListId = computed(() => route.params.id)
 const customList = computed(() => recordsStore.getCustomList(customListId.value))
 const sortedRecords = computed(() => {
   if (!customList.value) return []
-  // Default sort: initial (createdAt)
-  return recordsStore.sortCustomRecords(customListId.value, 'initial')
+  const records = recordsStore.sortCustomRecords(customListId.value, 'initial')
+  if (!recordsStore.isSearching || !recordsStore.searchQuery.trim()) return records
+  const query = recordsStore.searchQuery.toLowerCase().trim()
+  return records.filter(r => r.title.toLowerCase().includes(query))
 })
 
 // Watch for search state changes to reinitialize display order when exiting search
@@ -85,7 +87,7 @@ function handleScrollBottom() {
     <template v-else>
       <n-space vertical>
 
-        <template v-if="recordsStore.recordsLength(route.meta.tag).value == 0">
+        <template v-if="!customList || customList.records.length === 0">
           <n-empty
             size="large"
             description="Looks like your list is empty."
@@ -126,7 +128,7 @@ function handleScrollBottom() {
                 watch-data>
                 <template #default="{ item, index, active }">
                   <dynamic-scroller-item :item="item" :active="active" :data-index="index" :key="item.id">
-                    <ly-record :id="item.id" :index="index" />
+                    <ly-custom-record :id="item.id" :list-id="customListId" :index="index" />
                   </dynamic-scroller-item>
                 </template>
               </dynamic-scroller>

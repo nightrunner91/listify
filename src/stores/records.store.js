@@ -273,6 +273,26 @@ export const useRecordsStore = defineStore('records', () => {
     list.updatedAt = new Date().toISOString()
   }
 
+  // Rename a record within a custom list
+  async function renameCustomRecord(listId, recordId, newTitle) {
+    const list = customLists.value.find(l => l.id === listId)
+    if (!list) return
+    const record = list.records.find(r => r.id === recordId)
+    if (!record) return
+    await api.patch(`/custom-lists/${listId}/records/${recordId}`, { title: newTitle })
+    record.title = newTitle
+    list.updatedAt = new Date().toISOString()
+  }
+
+  // Delete an entire custom list
+  async function deleteCustomList(listId) {
+    await api.delete(`/custom-lists/${listId}`)
+    const index = customLists.value.findIndex(l => l.id === listId)
+    if (index > -1) {
+      customLists.value.splice(index, 1)
+    }
+  }
+
   // Sorting for custom lists
   function sortCustomRecords(listId, sortKey = 'initial') {
     const list = customLists.value.find(l => l.id === listId)
@@ -756,6 +776,8 @@ export const useRecordsStore = defineStore('records', () => {
     createCustomList,
     addCustomRecord,
     renameCustomList,
+    renameCustomRecord,
+    deleteCustomList,
     updateCustomListTimestamp,
     removeCustomRecord,
     sortCustomRecords,
