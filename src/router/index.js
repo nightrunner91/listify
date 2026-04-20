@@ -121,6 +121,16 @@ const router = createRouter({
             isCustom: true
           }
         },
+        {
+          path: '/about',
+          name: 'About',
+          component: () => import('@/views/AboutPage.vue'),
+          meta: {
+            requiresAuth: true,
+            tag: 'about',
+            title: 'About Listify',
+          }
+        },
       ]
     },
   ]

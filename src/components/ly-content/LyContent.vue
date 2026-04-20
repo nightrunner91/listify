@@ -71,9 +71,9 @@ function confirmDeleteList() {
           align="center"
           class="mb-6">
           <ly-title />
-          <ly-sort v-if="!route.meta.isCustom" />
+          <ly-sort v-if="!route.meta.isCustom && route.meta.tag !== 'about'" />
           <n-button
-            v-else
+            v-else-if="route.meta.isCustom"
             secondary
             type="error"
             size="small"

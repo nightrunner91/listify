@@ -7,12 +7,13 @@ import {
   PhTelevision as TvShowsIcon,
   PhSmileyWink as AnimeIcon,
   PhFilmStrip as FilmsIcon,
-  PhNotebook as MangaIcon,
+  PhImageSquare as MangaIcon,
   PhBooks as BooksIcon,
   PhMusicNotes as MusicIcon,
   PhPlus as NewIcon,
   PhHouse as StartIcon,
-  PhList as CustomIcon
+  PhList as CustomIcon,
+  PhInfo as AboutIcon
 } from 'phosphor-vue'
 import { useGridStore } from '@/stores/grid.store'
 import { useMenuStore } from '@/stores/menu.store'
@@ -133,10 +134,6 @@ const menuOptions = computed(() => {
       extra: renderExtra(recordsStore.recordsLength('music').value),
       icon: renderIcon(MusicIcon, { weight: iconsStyle })
     },
-    {
-      key: 'divider-2',
-      type: 'divider',
-    },
   ]
 
   // Add custom lists
@@ -149,12 +146,6 @@ const menuOptions = computed(() => {
       ),
     key: `custom-${list.id}`,
     icon: renderIcon(CustomIcon, { weight: iconsStyle }),
-    extra: () => h(NBadge, {
-      value: list.records.length,
-      max: 1000,
-      showZero: true,
-      class: 'ml-auto',
-    })
   }))
 
   // Add create button at the end
@@ -165,10 +156,23 @@ const menuOptions = computed(() => {
     disabled: false,
   }
 
+  const aboutOption = {
+    label: () =>
+      h(
+        RouterLink,
+        { to: { name: 'About' } },
+        { default: () => 'About' }
+      ),
+    key: 'about',
+    icon: renderIcon(AboutIcon, { weight: iconsStyle }),
+  }
+
   return [
     ...baseOptions,
     ...customListOptions,
     createOption,
+    { key: 'divider-about', type: 'divider' },
+    aboutOption,
   ]
 })
 

@@ -78,7 +78,7 @@ watch(listName, (newVal) => {
     </template>
 
     <n-badge
-      v-if="route.meta.tag !== 'start' && !isCustomList"
+      v-if="route.meta.tag !== 'start' && route.meta.tag !== 'about' && !isCustomList"
       :value="recordsStore.recordsLength(route.meta.tag).value"
       :show-zero="true"
       class="ml-4 z-0" />

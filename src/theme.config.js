@@ -67,6 +67,7 @@ export const lightThemeOverrides = {
     booksColor: '#13E344',
     musicColor: '#CDD87D',
     customColor: '#A1A8B2',
+    aboutColor: '#7C8FA6',
   },
   Layout: {
     headerColor: 'rgb(250, 250, 252)',
@@ -94,6 +95,7 @@ export const darkThemeOverrides = {
     booksColor: '#5CB969',
     musicColor: '#CDD87D',
     customColor: '#A1A8B2',
+    aboutColor: '#A0B4C8',
   },
   Layout: {
     siderColorInverted: 'rgb(28, 28, 32)',
