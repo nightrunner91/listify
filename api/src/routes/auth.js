@@ -15,8 +15,8 @@ import { eq } from 'drizzle-orm'
 const COOKIE_NAME = 'listify_refresh'
 const COOKIE_OPTS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict',
+  secure: true, // Required for SameSite=None; Railway always serves over HTTPS
+  sameSite: 'none', // Required for cross-origin requests (e.g. GitHub Pages → Railway)
   path: '/api/auth',
   maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
 }
@@ -54,7 +54,7 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), { path: '/', secure: process.env.NODE_ENV === 'production', sameSite: 'strict' })
+    reply.setCookie('listify_uid', String(user.id), { path: '/', secure: true, sameSite: 'none' })
     return reply.status(201).send({ user, accessToken })
   })
 
@@ -81,7 +81,7 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), { path: '/', secure: process.env.NODE_ENV === 'production', sameSite: 'strict' })
+    reply.setCookie('listify_uid', String(user.id), { path: '/', secure: true, sameSite: 'none' })
     return reply.send({ user, accessToken })
   })
 
