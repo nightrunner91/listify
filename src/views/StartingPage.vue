@@ -69,7 +69,7 @@ const usedStuff = ref([
         <n-list-item>
           <n-space :wrap-item="false" align="center">
             <n-icon size="24" :component="AccountIcon" />
-            <n-text>Create an account to securely store your data.</n-text>
+            <n-text>Create a Listify account.</n-text>
           </n-space>
         </n-list-item>
         <n-list-item>
@@ -88,7 +88,7 @@ const usedStuff = ref([
 
       <n-h4>Your Data is Portable</n-h4>
       <n-p>
-        Your collection is safely persisted on our servers. However, we believe in data portability. You can always export your collection as a <n-a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a> file for personal backups, migration, or sharing.
+        Your collection is safely persisted on our servers. However, we believe in data portability. You can always export your collection as a <n-a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a> file for personal use, migration, or sharing.
       </n-p>
 
       <n-h4>Community</n-h4>
@@ -98,7 +98,7 @@ const usedStuff = ref([
 
       <n-p>Thank you for using Listify!</n-p>
 
-      <n-h4>Tech stack:</n-h4>
+      <n-h4>Tech stack</n-h4>
       <n-list :show-divider="false" class="mb-10">
         <n-list-item
           v-for="(item, index) in usedStuff"
