@@ -5,7 +5,7 @@ import { RouterLink, useRoute } from 'vue-router'
 import {
   PhGameController as GamesIcon,
   PhTelevision as TvShowsIcon,
-  PhSparkle as AnimeIcon,
+  PhSmileyWink as AnimeIcon,
   PhFilmStrip as FilmsIcon,
   PhNotebook as MangaIcon,
   PhBooks as BooksIcon,
@@ -27,6 +27,7 @@ const route = useRoute()
 const router = useRouter()
 
 const activeKey = ref(null)
+const iconsStyle = 'duotone'
 
 function renderExtra (total) {
   return () => h(NBadge, {
@@ -49,7 +50,7 @@ const menuOptions = computed(() => {
           { default: () => 'Home' }
         ),
       key: 'start',
-      icon: renderIcon(StartIcon),
+      icon: renderIcon(StartIcon, { weight: iconsStyle }),
     },
     {
       key: 'divider-2',
@@ -64,7 +65,7 @@ const menuOptions = computed(() => {
         ),
       key: 'games',
       extra: renderExtra(recordsStore.recordsLength('games').value),
-      icon: renderIcon(GamesIcon)
+      icon: renderIcon(GamesIcon, { weight: iconsStyle })
     },
     {
       label: () =>
@@ -75,7 +76,7 @@ const menuOptions = computed(() => {
         ),
       key: 'tvshows',
       extra: renderExtra(recordsStore.recordsLength('tvshows').value),
-      icon: renderIcon(TvShowsIcon)
+      icon: renderIcon(TvShowsIcon, { weight: iconsStyle })
     },
     {
       label: () =>
@@ -86,7 +87,7 @@ const menuOptions = computed(() => {
         ),
       key: 'films',
       extra: renderExtra(recordsStore.recordsLength('films').value),
-      icon: renderIcon(FilmsIcon)
+      icon: renderIcon(FilmsIcon, { weight: iconsStyle })
     },
     {
       label: () =>
@@ -97,7 +98,7 @@ const menuOptions = computed(() => {
         ),
       key: 'anime',
       extra: renderExtra(recordsStore.recordsLength('anime').value),
-      icon: renderIcon(AnimeIcon)
+      icon: renderIcon(AnimeIcon, { weight: iconsStyle })
     },
     {
       label: () =>
@@ -108,7 +109,7 @@ const menuOptions = computed(() => {
         ),
       key: 'manga',
       extra: renderExtra(recordsStore.recordsLength('manga').value),
-      icon: renderIcon(MangaIcon)
+      icon: renderIcon(MangaIcon, { weight: iconsStyle })
     },
     {
       label: () =>
@@ -119,7 +120,7 @@ const menuOptions = computed(() => {
         ),
       key: 'books',
       extra: renderExtra(recordsStore.recordsLength('books').value),
-      icon: renderIcon(BooksIcon)
+      icon: renderIcon(BooksIcon, { weight: iconsStyle })
     },
     {
       label: () =>
@@ -130,7 +131,7 @@ const menuOptions = computed(() => {
         ),
       key: 'music',
       extra: renderExtra(recordsStore.recordsLength('music').value),
-      icon: renderIcon(MusicIcon)
+      icon: renderIcon(MusicIcon, { weight: iconsStyle })
     },
     {
       key: 'divider-2',
@@ -147,7 +148,7 @@ const menuOptions = computed(() => {
         { default: () => list.name }
       ),
     key: `custom-${list.id}`,
-    icon: renderIcon(CustomIcon),
+    icon: renderIcon(CustomIcon, { weight: iconsStyle }),
     extra: () => h(NBadge, {
       value: list.records.length,
       max: 1000,
@@ -160,7 +161,7 @@ const menuOptions = computed(() => {
   const createOption = {
     label: 'Create a New List',
     key: 'create-new',
-    icon: renderIcon(NewIcon),
+    icon: renderIcon(NewIcon, { weight: iconsStyle }),
     disabled: false,
   }
 

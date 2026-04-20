@@ -21,7 +21,7 @@ import {
   PhTextAa as FontIcon,
   PhPhosphorLogo as PhosphorIcon,
   PhDatabase as PostgresIcon,
-  PhDatabase as FastifyIcon,
+  PhHardDrive as FastifyIcon,
   PhCloudCheck as SyncIcon,
   PhUserCircle as AccountIcon,
   PhDesktop as DevicesIcon,
@@ -33,16 +33,16 @@ const usedStuff = ref([
     title: 'Vue 3'
   },
   {
-    icon: NaiveIcon,
-    title: 'Naive UI'
-  },
-  {
     icon: FastifyIcon,
     title: 'Fastify'
   },
   {
     icon: PostgresIcon,
     title: 'PostgreSQL'
+  },
+  {
+    icon: NaiveIcon,
+    title: 'Naive UI'
   },
   {
     icon: FontIcon,
