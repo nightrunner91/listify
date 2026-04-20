@@ -65,7 +65,7 @@ const themeStore = useThemeStore()
 
   &__prefix {
     position: relative;
-    background-color: var(--n-color);
+    transition: none !important;
     z-index: 2;
   }
 
@@ -75,9 +75,9 @@ const themeStore = useThemeStore()
     left: 25px;
     width: 100%;
     display: block;
-    transform: translateX(-100%);
+    transform: translateX(-50%);
     opacity: 0;
-    transition: transform 0.2s cubic-bezier(0.77,0,0.175,1), opacity 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.77,0,0.175,1), opacity 0.12s ease;
     z-index: 1;
   }
 }

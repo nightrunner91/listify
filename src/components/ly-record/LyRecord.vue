@@ -42,6 +42,33 @@ watch(record, () => {
     })
   }
 }, { immediate: true, deep: true })
+
+const getComparableString = (r) => r && r.id ? JSON.stringify({
+  title: r.title,
+  score: r.score,
+  label: r.label,
+  liked: r.liked
+}) : null
+
+let updateTimeout = null
+let lastSavedString = getComparableString(record.value)
+
+watch(record, (newVal) => {
+  if (newVal && newVal.id) {
+    const currentString = getComparableString(newVal)
+    if (currentString === lastSavedString) return
+
+    clearTimeout(updateTimeout)
+    updateTimeout = setTimeout(() => {
+      lastSavedString = currentString
+      recordsStore.addRecord({ record: { ...newVal }, listType: tag })
+        .catch(err => {
+          console.error('Failed to update record:', err)
+          lastSavedString = null
+        })
+    }, 500)
+  }
+}, { deep: true })
 </script>
 
 <template>
@@ -49,12 +76,12 @@ watch(record, () => {
     @mouseover="showCheckbox = true"
     @mouseleave="showCheckbox = false"
     class="px-4 px-sm-5"
-    :style="gridStore.screenLargerThen('m') ? '' : 'border-radius: 0;'">
+    :style="gridStore.screenLargerThen('l') ? '' : 'border-radius: 0;'">
     <n-space
       :wrap-item="false"
       align="center"
-      :wrap="!gridStore.screenLargerThen('m')"
-      :size="gridStore.screenLargerThen('m') ? 'medium' : 'small'"
+      :wrap="!gridStore.screenLargerThen('l')"
+      :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
       class="py-2 py-m-0">
 
       <n-space
@@ -62,7 +89,7 @@ watch(record, () => {
         :wrap="false"
         align="center"
         size="small"
-        class="w-100 w-m-50">
+        class="w-100 w-l-50">
         <n-space
           :wrap-item="false"
           align="center"
@@ -85,9 +112,9 @@ watch(record, () => {
           :id="`input-${record.id}`"
           v-model:value="record.title"
           type="text"
-          :size="gridStore.screenLargerThen('m') ? 'medium' : 'small'"
+          :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
           placeholder="Name of record"
-          class="w-100 w-m-75 record-input" />
+          class="w-100 w-l-75 record-input" />
       </n-space>
 
       <n-space
@@ -95,12 +122,12 @@ watch(record, () => {
         align="center"
         justify="center"
         size="small"
-        class="w-100 w-m-50">
+        class="w-100 w-l-50">
         <n-rate
           v-model:value="record.score"
           clearable
           size="small"
-          class="mr-0 mr-s-4 mr-m-7" />
+          class="mr-0 mr-s-4 mr-l-7" />
           
         <n-button
           quaternary
@@ -108,7 +135,7 @@ watch(record, () => {
           circle
           type="error"
           size="small"
-          class="ml-4 ml-s-6 ml-m-10"
+          class="ml-4 ml-s-6 ml-l-10"
           @click="record.liked = !record.liked">
           <template #icon>
             <like-icon
