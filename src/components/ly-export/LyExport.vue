@@ -80,7 +80,7 @@ const showModal = ref(false)
     <n-p
       depth="3"
       style="font-size: 14px;">
-      Listify relies on browser memory which makes it an unreliable form of storage. To prevent sudden data loss, it's recommended to export your collection from time to time.
+      Export your collection as a JSON file for backup, migration, or portability. Your data is safely stored on the server, but a local copy never hurts.
     </n-p>
     <template #footer>
       <n-button

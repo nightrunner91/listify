@@ -92,7 +92,7 @@ const { variant } = toRefs(props)
         <n-p
           depth="3"
           style="font-size: 14px;">
-          Attention! The imported collection will completely replace the current one, so please be careful!
+          The imported file will replace your entire server-side collection. Make sure to export a backup first if needed.
         </n-p>
       </n-upload-dragger>
     </n-upload>
