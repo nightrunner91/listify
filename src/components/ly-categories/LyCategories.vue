@@ -127,7 +127,7 @@ function getCount(key) {
   }
 
   &--light {
-    background: transparent;
+    background: linear-gradient(135deg, rgba(var(--card-rgb), 0.08) 0%, transparent 100%);
 
     .card-icon {
       color: rgba(var(--card-rgb), 0.75);
