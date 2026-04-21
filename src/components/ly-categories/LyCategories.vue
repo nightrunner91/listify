@@ -55,6 +55,8 @@ function cardStyle(key) {
   return { '--card-rgb': hexToRgb(color) }
 }
 
+const isLightTheme = computed(() => !themeStore.currentTheme)
+
 function getCount(key) {
   return recordsStore.recordsLength(key).value
 }
@@ -72,6 +74,7 @@ function getCount(key) {
       <n-grid-item v-for="cat in categories" :key="cat.key">
         <n-card
           class="category-card"
+          :class="{ 'category-card--light': isLightTheme }"
           :style="cardStyle(cat.key)"
           @click="router.push({ name: cat.route })"
         >
@@ -110,17 +113,40 @@ function getCount(key) {
 }
 
 .category-card {
-  background: linear-gradient(135deg, rgba(var(--card-rgb), 0.08) 0%, transparent 100%);
+  background: linear-gradient(135deg, rgba(var(--card-rgb), 0.11) 0%, transparent 100%);
   cursor: pointer;
-  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+  transition: background 150ms ease, border-color 150ms ease, transform 200ms ease;
   display: flex;
   flex-direction: column;
   gap: 6px;
 
   &:hover {
-    border-color: rgba(var(--card-rgb), 0.18);
+    transform: translateY(-2px);
+    border-color: rgba(var(--card-rgb), 0.24);
     background: linear-gradient(135deg, rgba(var(--card-rgb), 0.1) 0%, rgba(var(--card-rgb), 0.02) 100%);
   }
+
+  &--light {
+    background: transparent;
+
+    .card-icon {
+      color: rgba(var(--card-rgb), 0.75);
+      opacity: 1;
+    }
+
+    &:hover {
+      border-color: rgba(var(--card-rgb), 0.3);
+      background: linear-gradient(135deg, rgba(var(--card-rgb), 0.05) 0%, rgba(var(--card-rgb), 0.04) 100%);
+
+      .card-icon {
+        color: rgba(var(--card-rgb), 1);
+      }
+    }
+  }
+}
+
+.card-title {
+  font-size: 18px;
 }
 
 .card-icon {

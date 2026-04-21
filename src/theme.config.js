@@ -65,7 +65,7 @@ export const lightThemeOverrides = {
     animeColor: '#F02085',
     mangaColor: '#9574F7',
     booksColor: '#13E344',
-    musicColor: '#CDD87D',
+    musicColor: '#C6D36B',
     customColor: '#A1A8B2',
     aboutColor: '#7C8FA6',
   },
