@@ -3,10 +3,14 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NSpace, NH3, NText } from 'naive-ui'
 import { useAuthStore } from '@/stores/auth.store'
+import { useRecordsStore } from '@/stores/records.store'
+import { useThemeStore } from '@/stores/theme.store'
 
 const router = useRouter()
 const message = useMessage()
 const authStore = useAuthStore()
+const recordsStore = useRecordsStore()
+const themeStore = useThemeStore()
 
 const loading = ref(false)
 const formRef = ref(null)
@@ -46,6 +50,10 @@ async function handleRegister() {
       loading.value = true
       try {
         await authStore.register(formModel.value.email, formModel.value.password)
+        await Promise.all([
+          recordsStore.restoreRecords(),
+          themeStore.restoreTheme(),
+        ])
         message.success('Account created successfully!')
         router.push('/')
       } catch (error) {

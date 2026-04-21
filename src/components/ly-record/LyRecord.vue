@@ -32,17 +32,6 @@ const renderDropdownIcon = (option) => {
   return h(option.icon, { size: 16 })
 }
 
-watch(record, () => {
-  if (record.value.id) {
-    /* eslint-disable-next-line no-unused-vars */
-    const { selected, ...recordWithoutSelected } = record.value
-    lyStorage.setStorage({
-      key: `rec_${record.value.id}`,
-      data: recordWithoutSelected
-    })
-  }
-}, { immediate: true, deep: true })
-
 const getComparableString = (r) => r && r.id ? JSON.stringify({
   title: r.title,
   score: r.score,
