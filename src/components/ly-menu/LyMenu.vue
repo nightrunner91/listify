@@ -28,7 +28,7 @@ const route = useRoute()
 const router = useRouter()
 
 const activeKey = ref(null)
-const iconsStyle = 'duotone'
+const iconsStyle = 'regular'
 
 function renderExtra (total) {
   return () => h(NBadge, {
