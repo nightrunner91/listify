@@ -29,7 +29,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'start',
-            title: 'Welcome to Listify!',
+            title: 'My Collection',
           }
         },
         {
