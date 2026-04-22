@@ -39,8 +39,8 @@ const categories = [
 const gridCols = computed(() => {
   const bp = gridStore.currentBreakpoint
   if (bp === 'xs' || bp === 's') return 1
-  if (bp === 'm') return 2
-  return 3
+  if (bp === 'm') return 3
+  return 4
 })
 
 function hexToRgb(hex) {
