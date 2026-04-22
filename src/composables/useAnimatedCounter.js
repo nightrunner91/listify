@@ -1,15 +1,20 @@
-import { ref, watch, onUnmounted } from 'vue'
+import { ref, watch, onUnmounted, isRef } from 'vue'
 
-export function useAnimatedCounter(targetValue) {
+export function useAnimatedCounter(getTarget) {
   const animatedValue = ref(0)
   let frameId = null
+
+  const easeOutQuint = t => 1 - Math.pow(1 - t, 5)
 
   const animate = (start, end, duration) => {
     let startTimestamp = null
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp
       const progress = Math.min((timestamp - startTimestamp) / duration, 1)
-      animatedValue.value = Math.floor(progress * (end - start) + start)
+      const easedProgress = easeOutQuint(progress)
+      
+      animatedValue.value = Math.floor(easedProgress * (end - start) + start)
+
       if (progress < 1) {
         frameId = window.requestAnimationFrame(step)
       }
@@ -17,11 +22,11 @@ export function useAnimatedCounter(targetValue) {
     frameId = window.requestAnimationFrame(step)
   }
 
-  watch(targetValue, (newValue, oldValue) => {
+  watch(() => getTarget(), (newValue, oldValue) => {
     if (frameId) {
       window.cancelAnimationFrame(frameId)
     }
-    animate(oldValue || 0, newValue, 800)
+    animate(0, newValue, 1200)
   }, { immediate: true })
 
   onUnmounted(() => {
