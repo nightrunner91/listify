@@ -30,9 +30,9 @@ const categories = [
   { key: 'games',   label: 'Games',    route: 'Games',   icon: GamesIcon },
   { key: 'tvshows', label: 'TV Shows', route: 'TVShows', icon: TvShowsIcon },
   { key: 'films',   label: 'Films',    route: 'Films',   icon: FilmsIcon },
-  { key: 'books',   label: 'Books',    route: 'Books',   icon: BooksIcon },
   { key: 'anime',   label: 'Anime',    route: 'Anime',   icon: AnimeIcon },
   { key: 'manga',   label: 'Manga',    route: 'Manga',   icon: MangaIcon },
+  { key: 'books',   label: 'Books',    route: 'Books',   icon: BooksIcon },
   { key: 'music',   label: 'Music',    route: 'Music',   icon: MusicIcon },
 ]
 
@@ -113,7 +113,8 @@ function getCount(key) {
 }
 
 .category-card {
-  background: linear-gradient(135deg, rgba(var(--card-rgb), 0.11) 0%, transparent 100%);
+  border-color: rgba(var(--card-rgb), 0.17);
+  background: linear-gradient(135deg, rgba(var(--card-rgb), 0.15) 0%, transparent 100%);
   cursor: pointer;
   transition: background 150ms ease, border-color 150ms ease, transform 200ms ease;
   display: flex;
@@ -123,14 +124,14 @@ function getCount(key) {
   &:hover {
     transform: translateY(-2px);
     border-color: rgba(var(--card-rgb), 0.24);
-    background: linear-gradient(135deg, rgba(var(--card-rgb), 0.1) 0%, rgba(var(--card-rgb), 0.02) 100%);
+    background: linear-gradient(135deg, rgba(var(--card-rgb), 0.19) 0%, rgba(var(--card-rgb), 0.03) 100%);
   }
 
   &--light {
-    background: linear-gradient(135deg, rgba(var(--card-rgb), 0.08) 0%, transparent 100%);
+    background: linear-gradient(135deg, rgba(var(--card-rgb), 0.08) 0%, rgba(var(--card-rgb), 0.01) 100%);
 
     .card-icon {
-      color: rgba(var(--card-rgb), 0.75);
+      color: rgba(var(--card-rgb), 0.65);
       opacity: 1;
     }
 
