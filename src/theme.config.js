@@ -58,7 +58,7 @@ const globalOverrides = {
 export const lightThemeOverrides = {
   ...globalOverrides,
   Categories: {
-    startColor: '#3CBCBC',
+    startColor: '#c5c5c5',
     gamesColor: '#DB574E',
     tvshowsColor: '#20B5F0',
     filmsColor: '#F0A020',

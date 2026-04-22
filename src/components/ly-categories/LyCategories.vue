@@ -113,8 +113,8 @@ function getCount(key) {
 }
 
 .category-card {
-  border-color: rgba(var(--card-rgb), 0.17);
-  background: linear-gradient(135deg, rgba(var(--card-rgb), 0.15) 0%, transparent 100%);
+  border-color: rgba(var(--card-rgb), 0.36);
+  background: linear-gradient(165deg, rgba(var(--card-rgb), 0.1) 0%, rgba(var(--card-rgb), 0.07) 52%, rgba(var(--card-rgb), 0.01) 100%);
   cursor: pointer;
   transition: background 150ms ease, border-color 150ms ease, transform 200ms ease;
   display: flex;
@@ -123,24 +123,44 @@ function getCount(key) {
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(var(--card-rgb), 0.24);
-    background: linear-gradient(135deg, rgba(var(--card-rgb), 0.19) 0%, rgba(var(--card-rgb), 0.03) 100%);
+    border-color: rgba(var(--card-rgb), 0.62);
+    background: linear-gradient(165deg, rgba(var(--card-rgb), 0.43) 0%, rgba(var(--card-rgb), 0.37) 52%, rgba(var(--card-rgb), 0.3) 100%);
   }
 
   &--light {
-    background: linear-gradient(135deg, rgba(var(--card-rgb), 0.08) 0%, rgba(var(--card-rgb), 0.01) 100%);
+    border-color: rgba(var(--card-rgb), 0.4);
+    background: linear-gradient(165deg, rgba(var(--card-rgb), 0.89) 0%, rgba(var(--card-rgb), 0.8) 52%, rgba(var(--card-rgb), 0.72) 100%);
+    box-shadow: 0 8px 20px rgba(var(--card-rgb), 0.25);
+
+    .card-title,
+    .card-count,
+    .card-icon {
+      color: rgb(255, 255, 255);
+    }
+
+    .card-description {
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .card-count--empty {
+      opacity: 0.85;
+    }
+
+    .card-description--empty {
+      opacity: 0.75;
+    }
 
     .card-icon {
-      color: rgba(var(--card-rgb), 0.65);
+      color: rgb(255, 255, 255);
       opacity: 1;
     }
 
     &:hover {
-      border-color: rgba(var(--card-rgb), 0.3);
-      background: linear-gradient(135deg, rgba(var(--card-rgb), 0.05) 0%, rgba(var(--card-rgb), 0.04) 100%);
+      border-color: rgba(var(--card-rgb), 0.58);
+      background: linear-gradient(165deg, rgba(var(--card-rgb), 0.96) 0%, rgba(var(--card-rgb), 0.87) 52%, rgba(var(--card-rgb), 0.79) 100%);
 
       .card-icon {
-        color: rgba(var(--card-rgb), 1);
+        color: rgb(255, 255, 255);
       }
     }
   }
@@ -152,7 +172,7 @@ function getCount(key) {
 
 .card-icon {
   color: rgba(var(--card-rgb), 1);
-  opacity: 0.85;
+  opacity: 0.92;
   flex-shrink: 0;
 }
 
@@ -164,7 +184,7 @@ function getCount(key) {
   margin-top: 4px;
 
   &--empty {
-    opacity: 0.25;
+    opacity: 0.38;
   }
 }
 
@@ -172,7 +192,7 @@ function getCount(key) {
   font-size: 13px;
 
   &--empty {
-    opacity: 0.45;
+    opacity: 0.58;
   }
 }
 </style>
