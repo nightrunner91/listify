@@ -74,7 +74,7 @@ function getIconColor(key) {
             <n-statistic :label="cat.label">
               <ly-animated-counter :target="getCount(cat.key).value" />
             </n-statistic>
-            <n-icon :size="32" :color="getIconColor(cat.key)" class="category-icon">
+            <n-icon :size="28" :color="getIconColor(cat.key)" class="category-icon">
               <component :is="cat.icon" weight="duotone" />
             </n-icon>
           </n-space>
@@ -87,7 +87,6 @@ function getIconColor(key) {
 <style scoped>
 .category-card {
   cursor: pointer;
-  border-radius: 12px;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 .category-card:hover {

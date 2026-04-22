@@ -41,7 +41,7 @@ function formatRelativeTime(dateString) {
       </n-button>
     </n-space>
 
-    <n-card :bordered="true" content-class="p-0">
+    <n-card :bordered="true" content-style="padding: 0;">
       <!-- Empty State -->
       <n-empty 
         v-if="customLists.length === 0" 
@@ -80,5 +80,27 @@ function formatRelativeTime(dateString) {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
+}
+
+.n-list {
+  .n-list-item {
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0 !important;
+    }
+
+    &:first-child {
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+    }
+
+    &:last-child {
+      border-top-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
+    }
+
+    &:hover {
+      background-color: var(--n-action-color) !important;
+    }
+  }
 }
 </style>
