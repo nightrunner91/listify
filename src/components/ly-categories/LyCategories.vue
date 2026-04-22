@@ -14,6 +14,7 @@ import { useRouter } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
 import { useThemeStore } from '@/stores/theme.store'
 import { useGridStore } from '@/stores/grid.store'
+import LyAnimatedCounter from '@/components/ly-animated-counter/LyAnimatedCounter.vue'
 
 const router = useRouter()
 const recordsStore = useRecordsStore()
@@ -58,7 +59,7 @@ function cardStyle(key) {
 const isLightTheme = computed(() => !themeStore.currentTheme)
 
 function getCount(key) {
-  return recordsStore.recordsLength(key).value
+  return recordsStore.recordsLength(key)
 }
 </script>
 
@@ -92,11 +93,11 @@ function getCount(key) {
 
           <n-text
             class="card-count"
-            :class="{ 'card-count--empty': getCount(cat.key) === 0 }"
+            :class="{ 'card-count--empty': getCount(cat.key).value === 0 }"
             tag="div"
             style="position: relative; z-index: 1;"
           >
-            {{ getCount(cat.key) }}
+            <ly-animated-counter :target="getCount(cat.key).value" />
           </n-text>
 
           <n-text
