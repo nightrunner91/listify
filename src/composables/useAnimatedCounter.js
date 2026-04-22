@@ -26,7 +26,7 @@ export function useAnimatedCounter(getTarget) {
     if (frameId) {
       window.cancelAnimationFrame(frameId)
     }
-    animate(0, newValue, 300)
+    animate(0, newValue, 700)
   }, { immediate: true })
 
   onUnmounted(() => {
