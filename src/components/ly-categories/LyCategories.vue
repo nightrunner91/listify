@@ -78,7 +78,12 @@ function getCount(key) {
           :style="cardStyle(cat.key)"
           @click="router.push({ name: cat.route })"
         >
-          <n-space justify="space-between" :wrap="false" align="center" style="width: 100%" class="mb-5">
+          <pixel-canvas
+            data-colors="#ffffff"
+            :data-gap="isLightTheme ? 8 : 6"
+            :data-speed="isLightTheme ? 20 : 80"
+          />
+          <n-space justify="space-between" :wrap="false" align="center" style="width: 100%; position: relative; z-index: 1;" class="mb-5">
             <n-text class="card-title" strong>{{ cat.label }}</n-text>
             <n-icon class="card-icon" :size="26">
               <component :is="cat.icon" weight="regular" />
@@ -89,6 +94,7 @@ function getCount(key) {
             class="card-count"
             :class="{ 'card-count--empty': getCount(cat.key) === 0 }"
             tag="div"
+            style="position: relative; z-index: 1;"
           >
             {{ getCount(cat.key) }}
           </n-text>
@@ -98,6 +104,7 @@ function getCount(key) {
             :class="{ 'card-description--empty': getCount(cat.key) === 0 }"
             :depth="getCount(cat.key) > 0 ? 3 : 3"
             tag="span"
+            style="position: relative; z-index: 1;"
           >
             {{ getCount(cat.key) > 0 ? 'items added' : 'nothing here yet' }}
           </n-text>
@@ -113,6 +120,9 @@ function getCount(key) {
 }
 
 .category-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   border-color: rgba(var(--card-rgb), 0.36);
   background: linear-gradient(165deg, rgba(var(--card-rgb), 0.1) 0%, rgba(var(--card-rgb), 0.07) 52%, rgba(var(--card-rgb), 0.01) 100%);
   cursor: pointer;
@@ -121,10 +131,23 @@ function getCount(key) {
   flex-direction: column;
   gap: 6px;
 
-  &:hover {
-    transform: translateY(-2px);
+  pixel-canvas {
+    opacity: 0;
+    transition: opacity 800ms cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  &:where(:hover, :focus-within) {
     border-color: rgba(var(--card-rgb), 0.62);
-    background: linear-gradient(165deg, rgba(var(--card-rgb), 0.43) 0%, rgba(var(--card-rgb), 0.37) 52%, rgba(var(--card-rgb), 0.3) 100%);
+    transition: border-color 800ms cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  &:where(:hover, :focus-within) .card-icon {
+    color: rgba(var(--card-rgb), 1);
+    transition: 300ms cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  &:where(:hover, :focus-within) pixel-canvas {
+    opacity: 0.17;
   }
 
   &--light {
@@ -155,13 +178,16 @@ function getCount(key) {
       opacity: 1;
     }
 
-    &:hover {
+    &:where(:hover, :focus-within) {
       border-color: rgba(var(--card-rgb), 0.58);
-      background: linear-gradient(165deg, rgba(var(--card-rgb), 0.96) 0%, rgba(var(--card-rgb), 0.87) 52%, rgba(var(--card-rgb), 0.79) 100%);
+    }
 
-      .card-icon {
-        color: rgb(255, 255, 255);
-      }
+    &:where(:hover, :focus-within) .card-icon {
+      color: rgb(255, 255, 255);
+    }
+
+    &:where(:hover, :focus-within) pixel-canvas {
+      opacity: 0.35;
     }
   }
 }
@@ -171,9 +197,11 @@ function getCount(key) {
 }
 
 .card-icon {
-  color: rgba(var(--card-rgb), 1);
+  color: rgba(var(--card-rgb), 0.92);
   opacity: 0.92;
   flex-shrink: 0;
+  transition: 300ms cubic-bezier(0.5, 1, 0.89, 1);
+  transition-property: color, transform;
 }
 
 .card-count {
