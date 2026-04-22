@@ -31,47 +31,54 @@ function formatRelativeTime(dateString) {
 </script>
 
 <template>
-  <n-space vertical :size="16" style="margin-top: 40px">
+  <n-space vertical :size="16">
     <n-space justify="space-between" align="center">
-      <n-text tag="h2" style="font-size: 24px; font-weight: 500; margin: 0; letter-spacing: -0.5px">Custom Lists</n-text>
-      <n-button v-if="customLists.length > 0" secondary circle @click="handleCreateList">
+      <n-text depth="3" class="section-title">CUSTOM LISTS</n-text>
+      <n-button v-if="customLists.length > 0" text circle @click="handleCreateList" style="font-size: 18px;">
         <template #icon>
-          <n-icon><ph-plus weight="regular" /></n-icon>
+          <n-icon><ph-plus weight="bold" /></n-icon>
         </template>
       </n-button>
     </n-space>
 
-    <!-- Empty State -->
-    <n-card
-      v-if="customLists.length === 0"
-      :bordered="false"
-      style="border-radius: 12px; background-color: var(--n-color-embedded); padding: 24px 0"
-    >
-      <n-empty description="You haven't created any custom lists yet.">
+    <n-card :bordered="true" content-class="p-0">
+      <!-- Empty State -->
+      <n-empty 
+        v-if="customLists.length === 0" 
+        description="You haven't created any custom lists yet."
+        style="padding: 24px 0"
+      >
         <template #extra>
           <n-button type="primary" @click="handleCreateList">
             Create new list
           </n-button>
         </template>
       </n-empty>
-    </n-card>
 
-    <!-- List -->
-    <n-list v-else hoverable clickable bordered>
-      <n-list-item v-for="list in customLists" :key="list.id" @click="handleListClick(list.id)">
-        <n-thing :title="list.name">
-          <template #description>
-            <n-space :size="8" align="center">
-              <n-text depth="3">{{ list.records?.length || 0 }} items</n-text>
-              <n-text v-if="list.updatedAt || list.createdAt" depth="3">&bull;</n-text>
-              <n-text v-if="list.updatedAt || list.createdAt" depth="3">
-                Updated {{ formatRelativeTime(list.updatedAt || list.createdAt) }}
-              </n-text>
-            </n-space>
-          </template>
-        </n-thing>
-      </n-list-item>
-    </n-list>
+      <!-- List -->
+      <n-list v-else hoverable clickable style="background: transparent;">
+        <n-list-item v-for="list in customLists" :key="list.id" @click="handleListClick(list.id)">
+          <n-thing :title="list.name">
+            <template #description>
+              <n-space :size="8" align="center">
+                <n-text depth="3">{{ list.records?.length || 0 }} items</n-text>
+                <n-text v-if="list.updatedAt || list.createdAt" depth="3">&bull;</n-text>
+                <n-text v-if="list.updatedAt || list.createdAt" depth="3">
+                  Updated {{ formatRelativeTime(list.updatedAt || list.createdAt) }}
+                </n-text>
+              </n-space>
+            </template>
+          </n-thing>
+        </n-list-item>
+      </n-list>
+    </n-card>
   </n-space>
 </template>
 
+<style scoped>
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+</style>
