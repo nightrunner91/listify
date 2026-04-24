@@ -236,6 +236,7 @@ export const useRecordsStore = defineStore('records', () => {
   async function createCustomList() {
     const list = await api.post('/custom-lists')
     customLists.value.push(list)
+    selectedCustomLists.value.push(list.id)
     return list.id
   }
 
@@ -290,6 +291,10 @@ export const useRecordsStore = defineStore('records', () => {
     const index = customLists.value.findIndex(l => l.id === listId)
     if (index > -1) {
       customLists.value.splice(index, 1)
+      const selectedIndex = selectedCustomLists.value.indexOf(listId)
+      if (selectedIndex > -1) {
+        selectedCustomLists.value.splice(selectedIndex, 1)
+      }
     }
   }
 
@@ -436,6 +441,7 @@ export const useRecordsStore = defineStore('records', () => {
       })
       
       customLists.value = await api.get('/custom-lists')
+      selectedCustomLists.value = customLists.value.map(l => l.id)
     } catch (err) {
       console.error('Failed to restore records:', err)
     }
@@ -554,6 +560,8 @@ export const useRecordsStore = defineStore('records', () => {
     'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music'
   ])
 
+  const selectedCustomLists = ref([])
+
   const validCategories = Object.keys(records.value)
 
   const processingImport = ref(false)
@@ -569,7 +577,8 @@ export const useRecordsStore = defineStore('records', () => {
       }, {})
 
     // Add custom lists
-    filteredRecords.customLists = customLists.value.map(list => ({
+    const filteredCustomLists = customLists.value.filter(list => selectedCustomLists.value.includes(list.id))
+    filteredRecords.customLists = filteredCustomLists.map(list => ({
       id: list.id,
       name: list.name,
       createdAt: list.createdAt,
@@ -610,7 +619,11 @@ export const useRecordsStore = defineStore('records', () => {
         const fileContents = reader.result
         const jsonObject = JSON.parse(fileContents)
         
-        await validateJSON(jsonObject)
+        const isValid = await validateJSON(jsonObject)
+        if (!isValid) {
+          processingImport.value = false
+          return
+        }
         
         await api.post('/import', jsonObject)
         await restoreRecords() // Reload everything from server
@@ -628,19 +641,14 @@ export const useRecordsStore = defineStore('records', () => {
   function validateJSON(obj) {
     const notificationsStore = useNotificationsStore()
     try {
-      // Check that the object has at least the required categories
       const categories = Object.keys(obj)
       const errorMsg = 'Looks like your collection is corrupted.'
 
       const errors = []
 
-      const missingCategories = validCategories.filter(vc => !categories.includes(vc))
       // customLists is optional
       const extraCategories = categories.filter(c => !validCategories.includes(c) && c !== 'customLists')
 
-      if (missingCategories.length > 0) {
-        errors.push({ type: 'missing_categories', details: missingCategories })
-      }
       if (extraCategories.length > 0) {
         errors.push({ type: 'unexpected_categories', details: extraCategories })
       }
@@ -679,7 +687,6 @@ export const useRecordsStore = defineStore('records', () => {
           }
           for (const r of list.records) {
             if (typeof r.id !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'id' })
-            if (typeof r.category !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'category' })
             if (typeof r.title !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'title' })
             if (typeof r.createdAt !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'createdAt' })
             // No score, liked, label fields required
@@ -699,7 +706,6 @@ export const useRecordsStore = defineStore('records', () => {
       return Promise.resolve(true)
     } catch (error) {
       console.error(error)
-      processingImport.value = false
       return Promise.resolve(false)
     }
   }
@@ -752,6 +758,7 @@ export const useRecordsStore = defineStore('records', () => {
     getLabelIcon,
 
     selectedCategories,
+    selectedCustomLists,
     processingImport,
     exportCollection,
     importCollection,

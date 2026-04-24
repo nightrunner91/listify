@@ -45,6 +45,9 @@ const showModal = ref(false)
     to="body"
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
+    <div style="margin-bottom: 12px;">
+      <span style="font-weight: 500; font-size: 14px;">Categories</span>
+    </div>
     <n-checkbox-group
       v-model:value="recordsStore.selectedCategories"
       class="mb-6">
@@ -77,6 +80,26 @@ const showModal = ref(false)
         </n-grid-item>
       </n-grid>
     </n-checkbox-group>
+
+    <template v-if="recordsStore.customLists.length > 0">
+      <div style="margin-bottom: 12px; margin-top: -12px;">
+        <span style="font-weight: 500; font-size: 14px;">Custom Lists</span>
+      </div>
+      <n-checkbox-group
+        v-model:value="recordsStore.selectedCustomLists"
+        class="mb-6">
+        <n-grid
+          item-responsive
+          responsive="screen"
+          :x-gap="12"
+          :y-gap="8"
+          :cols="2">
+          <n-grid-item span="2 s:1" v-for="list in recordsStore.customLists" :key="list.id">
+            <n-checkbox :value="list.id" :label="list.name" />
+          </n-grid-item>
+        </n-grid>
+      </n-checkbox-group>
+    </template>
     <n-p
       depth="3"
       style="font-size: 14px;">

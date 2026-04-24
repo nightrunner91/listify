@@ -92,7 +92,7 @@ const { variant } = toRefs(props)
         <n-p
           depth="3"
           style="font-size: 14px;">
-          The imported file will replace your entire server-side collection. Make sure to export a backup first if needed.
+          The imported file will be merged with your server-side collection. Existing items will be preserved. Make sure to export a backup first if needed.
         </n-p>
       </n-upload-dragger>
     </n-upload>

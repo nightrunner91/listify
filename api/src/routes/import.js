@@ -49,10 +49,10 @@ export default async function importRoutes(app) {
     const userId = request.user.id
     const body = request.body
 
-    // ── Wipe existing data ──────────────────────────────────────────────────
-    await db.delete(records).where(eq(records.userId, userId))
-    await db.delete(customLists).where(eq(customLists.userId, userId))
-    // customListRecords cascade-deletes with customLists
+    // ── Fetch existing data ─────────────────────────────────────────────────
+    const existingRecords = await db.select().from(records).where(eq(records.userId, userId))
+    const existingCustomLists = await db.select().from(customLists).where(eq(customLists.userId, userId))
+    const existingCustomListRecords = await db.select().from(customListRecords).where(eq(customListRecords.userId, userId))
 
     // ── Import standard records ─────────────────────────────────────────────
     const recordsToInsert = []
@@ -60,6 +60,15 @@ export default async function importRoutes(app) {
       const items = body[category] ?? []
       for (const item of items) {
         if (!item.title || !item.label) continue  // skip malformed
+        
+        // Check for duplicate in existingRecords
+        const isDuplicate = existingRecords.some(r => 
+          r.category === category && 
+          r.title.toLowerCase() === String(item.title).toLowerCase()
+        )
+        
+        if (isDuplicate) continue // Keep server version
+
         recordsToInsert.push({
           userId,
           category,
@@ -83,29 +92,49 @@ export default async function importRoutes(app) {
     for (const rawList of rawLists) {
       if (!rawList.name) continue
 
-      const [insertedList] = await db
-        .insert(customLists)
-        .values({
-          userId,
-          name: String(rawList.name).slice(0, 255),
-          createdAt: rawList.createdAt ? new Date(rawList.createdAt) : new Date(),
-          updatedAt: rawList.updatedAt ? new Date(rawList.updatedAt) : new Date(),
-        })
-        .returning()
+      // Check if custom list exists
+      let listId = null
+      const existingList = existingCustomLists.find(l => l.name.toLowerCase() === String(rawList.name).toLowerCase())
 
-      importedListCount++
+      if (existingList) {
+        listId = existingList.id
+      } else {
+        const [insertedList] = await db
+          .insert(customLists)
+          .values({
+            userId,
+            name: String(rawList.name).slice(0, 255),
+            createdAt: rawList.createdAt ? new Date(rawList.createdAt) : new Date(),
+            updatedAt: rawList.updatedAt ? new Date(rawList.updatedAt) : new Date(),
+          })
+          .returning()
+        listId = insertedList.id
+        importedListCount++
+      }
+
+      // Get existing records for this list (either from DB if it existed, or empty if new)
+      const existingRecordsForList = existingCustomListRecords.filter(r => r.listId === listId)
 
       const listRecords = Array.isArray(rawList.records) ? rawList.records : []
       const clrToInsert = []
       for (const r of listRecords) {
         if (!r.title) continue
+
+        // Check for duplicate
+        const isDuplicate = existingRecordsForList.some(existing => 
+          existing.title.toLowerCase() === String(r.title).toLowerCase()
+        )
+
+        if (isDuplicate) continue
+
         clrToInsert.push({
-          listId:    insertedList.id,
+          listId,
           userId,
           title:     String(r.title).slice(0, 500),
           createdAt: r.createdAt ? new Date(r.createdAt) : new Date(),
         })
       }
+      
       if (clrToInsert.length > 0) {
         await db.insert(customListRecords).values(clrToInsert)
         importedListRecordCount += clrToInsert.length
