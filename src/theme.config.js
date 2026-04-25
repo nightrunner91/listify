@@ -5,8 +5,8 @@ const globalOverrides = {
   common: {
     fontFamily: 'Onest',
     fontSize: '16px',
-    fontSizeMini: '12px',
-    fontSizeTiny: '11px',
+    fontSizeMini: '11px',
+    fontSizeTiny: '12px',
     fontSizeSmall: '14px',
     fontSizeMedium: '16px',
     fontSizeLarge: '18px',
@@ -66,7 +66,7 @@ export const lightThemeOverrides = {
     mangaColor: '#9574F7',
     booksColor: '#13E344',
     musicColor: '#A8B82C',
-    customColor: '#0AC0C0',
+    customColor: '#A1A8B2',
     aboutColor: '#0AC0C0',
   },
   Layout: {
@@ -94,7 +94,7 @@ export const darkThemeOverrides = {
     mangaColor: '#9A79FF',
     booksColor: '#5CB969',
     musicColor: '#CDD87D',
-    customColor: '#0AC0C0',
+    customColor: '#A1A8B2',
     aboutColor: '#0AC0C0',
   },
   Layout: {

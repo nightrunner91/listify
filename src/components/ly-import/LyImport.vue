@@ -93,8 +93,7 @@ const { variant } = toRefs(props)
         <n-p
           depth="3"
           style="font-size: 14px; display: flex; align-items: flex-start; gap: 8px;">
-          <n-icon :component="InfoIcon" :size="16" style="margin-top: 2px" />
-          <span>The imported file (JSON or CSV) will be merged with your server-side collection. Existing items will be preserved. Make sure to export a backup first if needed.</span>
+          <span>The imported file will be merged with your server-side collection. Existing items will be preserved. Make sure to export a backup first if needed.</span>
         </n-p>
       </n-upload-dragger>
     </n-upload>

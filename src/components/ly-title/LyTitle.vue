@@ -63,7 +63,7 @@ watch(listName, (newVal) => {
 </script>
 
 <template>
-  <n-h1 class="mb-0">
+  <n-h1 class="position-relative mb-0" style="height: 80px;">
     <template v-if="isCustomList">
       <n-input
         v-model:value="listName"
@@ -84,6 +84,7 @@ watch(listName, (newVal) => {
       class="ml-4 z-0" />
 
     <div
+      class="position-absolute bottom-0 left-0"
       :style="{
         backgroundColor: barColor,
         width: barWidth,
@@ -115,6 +116,7 @@ watch(listName, (newVal) => {
     line-height: 1.6;
     color: inherit;
     padding-left: 0;
+    padding-bottom: 4px;
 
     &:hover, &:focus {
       opacity: 0.85;
