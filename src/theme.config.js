@@ -58,7 +58,7 @@ const globalOverrides = {
 export const lightThemeOverrides = {
   ...globalOverrides,
   Categories: {
-    startColor: '#c5c5c5',
+    startColor: '#0AC0C0',
     gamesColor: '#DB574E',
     tvshowsColor: '#20B5F0',
     filmsColor: '#F0A020',
@@ -66,8 +66,8 @@ export const lightThemeOverrides = {
     mangaColor: '#9574F7',
     booksColor: '#13E344',
     musicColor: '#A8B82C',
-    customColor: '#A1A8B2',
-    aboutColor: '#7C8FA6',
+    customColor: '#0AC0C0',
+    aboutColor: '#0AC0C0',
   },
   Layout: {
     headerColor: 'rgb(250, 250, 252)',
@@ -86,7 +86,7 @@ export const lightThemeOverrides = {
 export const darkThemeOverrides = {
   ...globalOverrides,
   Categories: {
-    startColor: '#42D4D4',
+    startColor: '#0AC0C0',
     gamesColor: '#FF7B72',
     tvshowsColor: '#79E2FF',
     filmsColor: '#FFB672',
@@ -94,8 +94,8 @@ export const darkThemeOverrides = {
     mangaColor: '#9A79FF',
     booksColor: '#5CB969',
     musicColor: '#CDD87D',
-    customColor: '#A1A8B2',
-    aboutColor: '#A0B4C8',
+    customColor: '#0AC0C0',
+    aboutColor: '#0AC0C0',
   },
   Layout: {
     siderColorInverted: 'rgb(28, 28, 32)',
