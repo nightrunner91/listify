@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { NGrid, NGridItem, NIcon, NCard, NSkeleton, NStatistic, NSpace } from 'naive-ui'
+import { NGrid, NGridItem, NIcon, NCard, NSkeleton, NStatistic, NSpace, NNumberAnimation } from 'naive-ui'
 import {
   PhGameController as GamesIcon,
   PhTelevision as TvShowsIcon,
@@ -14,7 +14,7 @@ import { useRouter } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
 import { useThemeStore } from '@/stores/theme.store'
-import LyAnimatedCounter from '@/components/ly-animated-counter/LyAnimatedCounter.vue'
+
 
 const router = useRouter()
 const recordsStore = useRecordsStore()
@@ -72,7 +72,7 @@ function getIconColor(key) {
         >
           <n-space align="center" :wrap="false" justify="space-between">
             <n-statistic :label="cat.label">
-              <ly-animated-counter :target="getCount(cat.key).value" />
+              <n-number-animation :to="getCount(cat.key).value" />
             </n-statistic>
             <n-icon :size="28" :color="getIconColor(cat.key)" class="category-icon">
               <component :is="cat.icon" weight="duotone" />
