@@ -5,7 +5,7 @@ import LyCustomLists from '@/components/ly-custom-lists/LyCustomLists.vue'
 </script>
 
 <template>
-  <div class="dashboard-container">
+  <div class="pb-10">
     <n-grid :x-gap="24" :y-gap="32" :cols="1">
       <n-grid-item>
         <n-space vertical :size="16">
@@ -22,12 +22,4 @@ import LyCustomLists from '@/components/ly-custom-lists/LyCustomLists.vue'
 </template>
 
 <style scoped>
-.dashboard-container {
-  padding-bottom: 2rem;
-}
-.section-title {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
 </style>

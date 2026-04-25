@@ -26,6 +26,7 @@ import {
 } from 'phosphor-vue'
 import jsesc from 'jsesc'
 import moment from 'moment'
+import Papa from 'papaparse'
 
 const RECORDS_KEY = 'rec_'
 
@@ -566,7 +567,7 @@ export const useRecordsStore = defineStore('records', () => {
 
   const processingImport = ref(false)
 
-  function exportCollection() {
+  function exportCollection(format = 'json') {
     // Filter records based on selected categories
     const filteredRecords = Object.entries(records.value)
       .reduce((acc, [category, records]) => {
@@ -591,18 +592,61 @@ export const useRecordsStore = defineStore('records', () => {
       }))
     }))
 
-    /**
-     * Sanitize resulting object with jsesc
-     * @see {@link https://github.com/mathiasbynens/jsesc}
-     */ 
-    const json = jsesc(filteredRecords, { json: true })
+    let content
+    let mimeType
+    let extension
 
-    // Create link, attach blob to it and progrmically click on it
-    const blob = new Blob([json], { type: 'application/json' })
+    if (format === 'csv') {
+      const csvRows = []
+      
+      // Standard categories
+      Object.entries(filteredRecords).forEach(([category, items]) => {
+        if (category === 'customLists') return
+        items.forEach(item => {
+          csvRows.push({
+            Type: category,
+            Title: item.title,
+            Score: item.score,
+            Status: item.label,
+            Liked: item.liked,
+            CreatedAt: item.createdAt
+          })
+        })
+      })
+
+      // Custom lists
+      filteredRecords.customLists.forEach(list => {
+        list.records.forEach(item => {
+          csvRows.push({
+            Type: `List: ${list.name} #${list.id}`,
+            Title: item.title,
+            Score: '',
+            Status: '',
+            Liked: '',
+            CreatedAt: item.createdAt
+          })
+        })
+      })
+
+      content = Papa.unparse(csvRows)
+      mimeType = 'text/csv'
+      extension = 'csv'
+    } else {
+      /**
+       * Sanitize resulting object with jsesc
+       * @see {@link https://github.com/mathiasbynens/jsesc}
+       */ 
+      content = jsesc(filteredRecords, { json: true })
+      mimeType = 'application/json'
+      extension = 'json'
+    }
+
+    // Create link, attach blob to it and programmatically click on it
+    const blob = new Blob([content], { type: mimeType })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `listify-collection-${moment().format('DD-MM-YYYY-HH-mm')}.json`
+    a.download = `listify-collection-${moment().format('DD-MM-YYYY-HH-mm')}.${extension}`
     document.body.appendChild(a)
     a.click()
 
@@ -613,29 +657,90 @@ export const useRecordsStore = defineStore('records', () => {
 
   async function importCollection(data) {
     processingImport.value = true
+    const file = data.file.file
+    const isCSV = file.name.endsWith('.csv')
+    
     const reader = new FileReader()
     reader.onload = async () => {
       try {
         const fileContents = reader.result
-        const jsonObject = JSON.parse(fileContents)
+        let importData
         
-        const isValid = await validateJSON(jsonObject)
+        if (isCSV) {
+          importData = await parseCSVToCollection(fileContents)
+        } else {
+          importData = JSON.parse(fileContents)
+        }
+        
+        const isValid = await validateJSON(importData)
         if (!isValid) {
           processingImport.value = false
           return
         }
         
-        await api.post('/import', jsonObject)
+        await api.post('/import', importData)
         await restoreRecords() // Reload everything from server
         processingImport.value = false
         useNotificationsStore().pushNotification({ message: 'Import successful!', type: 'success' })
       } catch (err) {
         console.error(err)
         processingImport.value = false
-        // validateJSON already pushes an error notification
+        useNotificationsStore().pushNotification({ 
+          message: isCSV ? 'Failed to parse CSV file.' : 'Failed to parse JSON file.', 
+          type: 'error' 
+        })
       }
     }
-    reader.readAsText(data.file.file)
+    reader.readAsText(file)
+  }
+
+  async function parseCSVToCollection(csvText) {
+    const { data } = Papa.parse(csvText, { header: true, skipEmptyLines: true })
+    const collection = {
+      games: [], tvshows: [], films: [], anime: [], manga: [], books: [], music: [],
+      customLists: []
+    }
+
+    for (const row of data) {
+      const type = row.Type || ''
+      const title = row.Title || ''
+      if (!title) continue
+
+      if (type.startsWith('List: ')) {
+        // Group by the exact 'Type' string to avoid merging lists with duplicate names
+        let list = collection.customLists.find(l => l._csvType === type)
+        if (!list) {
+          // Strip the #id suffix if present for the actual list name
+          const listName = type.replace('List: ', '').split(' #')[0]
+          list = {
+            id: await generateUniqueId(),
+            name: listName,
+            _csvType: type, // Internal key for grouping
+            records: [],
+            createdAt: row.CreatedAt || new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          }
+          collection.customLists.push(list)
+        }
+        list.records.push({
+          id: await generateUniqueId(),
+          title: title,
+          createdAt: row.CreatedAt || new Date().toISOString()
+        })
+      } else if (validCategories.includes(type)) {
+        collection[type].push({
+          id: await generateUniqueId(),
+          category: type,
+          title: title,
+          score: parseInt(row.Score) || 0,
+          label: row.Status || getDefaultLabel(type).key,
+          liked: row.Liked === 'true' || row.Liked === true,
+          createdAt: row.CreatedAt || new Date().toISOString()
+        })
+      }
+    }
+
+    return collection
   }
 
   function validateJSON(obj) {

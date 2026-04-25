@@ -2,7 +2,8 @@
 import { ref, toRefs } from 'vue'
 import {
   PhDownloadSimple as ImportIcon,
-  PhArchiveBox as UploadIcon
+  PhArchiveBox as UploadIcon,
+  PhInfo as InfoIcon
 } from 'phosphor-vue'
 import {
   NButton,
@@ -73,7 +74,7 @@ const { variant } = toRefs(props)
     <n-upload
       id="import-collection"
       directory-dnd
-      accept=".json"
+      accept=".json,.csv"
       :max="1"
       :show-file-list="false"
       :default-upload="true"
@@ -91,8 +92,9 @@ const { variant } = toRefs(props)
         </n-p>
         <n-p
           depth="3"
-          style="font-size: 14px;">
-          The imported file will be merged with your server-side collection. Existing items will be preserved. Make sure to export a backup first if needed.
+          style="font-size: 14px; display: flex; align-items: flex-start; gap: 8px;">
+          <n-icon :component="InfoIcon" :size="16" style="margin-top: 2px" />
+          <span>The imported file (JSON or CSV) will be merged with your server-side collection. Existing items will be preserved. Make sure to export a backup first if needed.</span>
         </n-p>
       </n-upload-dragger>
     </n-upload>

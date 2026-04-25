@@ -1,6 +1,11 @@
 <script setup>
 import { ref } from 'vue'
-import { PhUploadSimple as ExportIcon } from 'phosphor-vue'
+import { 
+  PhUploadSimple as ExportIcon,
+  PhFileCode as JsonIcon,
+  PhTable as CsvIcon,
+  PhInfo as InfoIcon
+} from 'phosphor-vue'
 import {
   NButton,
   NIcon,
@@ -11,6 +16,8 @@ import {
   NCheckboxGroup,
   NCheckbox,
   NP,
+  NText,
+  NButtonGroup,
 } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -40,13 +47,13 @@ const showModal = ref(false)
   <n-modal
     v-model:show="showModal"
     preset="card"
-    title="Select Categories"
+    title="Export Collection"
     transform-origin="center"
     to="body"
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
-    <div style="margin-bottom: 12px;">
-      <span style="font-weight: 500; font-size: 14px;">Categories</span>
+    <div class="mb-3">
+      <n-text depth="3" class="section-title">CATEGORIES</n-text>
     </div>
     <n-checkbox-group
       v-model:value="recordsStore.selectedCategories"
@@ -82,35 +89,54 @@ const showModal = ref(false)
     </n-checkbox-group>
 
     <template v-if="recordsStore.customLists.length > 0">
-      <div style="margin-bottom: 12px; margin-top: -12px;">
-        <span style="font-weight: 500; font-size: 14px;">Custom Lists</span>
+      <div class="mb-3">
+        <n-text depth="3" class="section-title">CUSTOM LISTS</n-text>
       </div>
       <n-checkbox-group
         v-model:value="recordsStore.selectedCustomLists"
-        class="mb-6">
+        class="">
         <n-grid
           item-responsive
           responsive="screen"
           :x-gap="12"
           :y-gap="8"
-          :cols="2">
+          :cols="1">
           <n-grid-item span="2 s:1" v-for="list in recordsStore.customLists" :key="list.id">
             <n-checkbox :value="list.id" :label="list.name" />
           </n-grid-item>
         </n-grid>
       </n-checkbox-group>
     </template>
-    <n-p
-      depth="3"
-      style="font-size: 14px;">
-      Export your collection as a JSON file for backup, migration, or portability. Your data is safely stored on the server, but a local copy never hurts.
-    </n-p>
     <template #footer>
-      <n-button
-        block
-        @click="recordsStore.exportCollection">
-        Export Collection
-      </n-button>
+      <div class="mb-3">
+        <n-text depth="3" class="section-title">FORMAT</n-text>
+      </div>
+      <n-button-group block class="w-100 mb-5">
+        <n-button
+          primary
+          class="w-50"
+          @click="recordsStore.exportCollection('json')">
+          <template #icon>
+            <n-icon :component="JsonIcon" />
+          </template>
+          JSON
+        </n-button>
+        <n-button
+          primary
+          class="w-50"
+          @click="recordsStore.exportCollection('csv')">
+          <template #icon>
+            <n-icon :component="CsvIcon" />
+          </template>
+          CSV
+        </n-button>
+      </n-button-group>
+      <n-p
+        depth="3"
+        style="font-size: 13px; display: flex; align-items: flex-start; gap: 8px;">
+        <n-icon :component="InfoIcon" :size="16" style="margin-top: 2px" />
+        <span>Export your collection for backup, migration, or portability. Your data is safely stored on the server, but a local copy never hurts.</span>
+      </n-p>
     </template>
   </n-modal>
 </template>
