@@ -2,6 +2,7 @@ import { db } from '../db/index.js'
 import { customLists, customListRecords } from '../db/schema.js'
 import { eq, and } from 'drizzle-orm'
 import { authenticate } from '../middleware/authenticate.js'
+import { logActivity } from '../services/activity.service.js'
 
 export default async function customListsRoutes(app) {
 
@@ -64,6 +65,13 @@ export default async function customListsRoutes(app) {
       .values({ userId, name })
       .returning()
 
+    // Log activity
+    await logActivity(userId, {
+      action: 'custom_list_created',
+      category: 'custom',
+      entityName: name,
+    })
+
     return reply.status(201).send({ ...list, records: [] })
   })
 
@@ -118,11 +126,18 @@ export default async function customListsRoutes(app) {
     const [deleted] = await db
       .delete(customLists)
       .where(and(eq(customLists.id, id), eq(customLists.userId, userId)))
-      .returning({ id: customLists.id })
+      .returning()
 
     if (!deleted) {
       return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
     }
+
+    // Log activity
+    await logActivity(userId, {
+      action: 'custom_list_deleted',
+      category: 'custom',
+      entityName: deleted.name,
+    })
 
     return reply.status(204).send()
   })
@@ -150,7 +165,7 @@ export default async function customListsRoutes(app) {
 
     // Verify list belongs to user
     const [list] = await db
-      .select({ id: customLists.id })
+      .select({ id: customLists.id, name: customLists.name })
       .from(customLists)
       .where(and(eq(customLists.id, listId), eq(customLists.userId, userId)))
       .limit(1)
@@ -169,6 +184,14 @@ export default async function customListsRoutes(app) {
       .update(customLists)
       .set({ updatedAt: new Date() })
       .where(eq(customLists.id, listId))
+
+    // Log activity
+    await logActivity(userId, {
+      action: 'custom_list_record_added',
+      category: 'custom',
+      entityName: title,
+      metadata: { listName: list.name }
+    })
 
     return reply.status(201).send(record)
   })
@@ -250,6 +273,17 @@ export default async function customListsRoutes(app) {
     const { listId, recordId } = request.params
     const userId = request.user.id
 
+    // Verify list ownership to get its name for the log
+    const [list] = await db
+      .select({ id: customLists.id, name: customLists.name })
+      .from(customLists)
+      .where(and(eq(customLists.id, listId), eq(customLists.userId, userId)))
+      .limit(1)
+
+    if (!list) {
+      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
+    }
+
     const [deleted] = await db
       .delete(customListRecords)
       .where(
@@ -259,7 +293,7 @@ export default async function customListsRoutes(app) {
           eq(customListRecords.userId, userId),
         )
       )
-      .returning({ id: customListRecords.id })
+      .returning()
 
     if (!deleted) {
       return reply.status(404).send({ error: 'NOT_FOUND', message: 'Record not found' })
@@ -270,6 +304,14 @@ export default async function customListsRoutes(app) {
       .update(customLists)
       .set({ updatedAt: new Date() })
       .where(eq(customLists.id, listId))
+
+    // Log activity
+    await logActivity(userId, {
+      action: 'custom_list_record_deleted',
+      category: 'custom',
+      entityName: deleted.title,
+      metadata: { listName: list.name }
+    })
 
     return reply.status(204).send()
   })

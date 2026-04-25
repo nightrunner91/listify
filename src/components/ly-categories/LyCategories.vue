@@ -72,7 +72,7 @@ function getIconColor(key) {
         >
           <n-space align="center" :wrap="false" justify="space-between">
             <n-statistic :label="cat.label">
-              <n-number-animation :to="getCount(cat.key).value" />
+              <n-number-animation :to="getCount(cat.key).value" class="category-number" />
             </n-statistic>
             <n-icon :size="28" :color="getIconColor(cat.key)" class="category-icon">
               <component :is="cat.icon" weight="duotone" />

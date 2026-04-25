@@ -8,6 +8,13 @@
       "when": 1776610873426,
       "tag": "0000_windy_giant_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1777147725365,
+      "tag": "0001_milky_kingpin",
+      "breakpoints": true
     }
   ]
 }

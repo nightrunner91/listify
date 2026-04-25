@@ -3,6 +3,7 @@ import { records, customLists, customListRecords, userSettings } from '../db/sch
 import { VALID_CATEGORIES } from '../db/schema.js'
 import { eq } from 'drizzle-orm'
 import { authenticate } from '../middleware/authenticate.js'
+import { logActivity } from '../services/activity.service.js'
 
 /**
  * POST /api/import
@@ -139,6 +140,16 @@ export default async function importRoutes(app) {
         await db.insert(customListRecords).values(clrToInsert)
         importedListRecordCount += clrToInsert.length
       }
+    }
+
+    const totalImported = recordsToInsert.length + importedListCount + importedListRecordCount
+
+    if (totalImported > 0) {
+      await logActivity(userId, {
+        action: 'collection_imported',
+        category: 'system',
+        metadata: { count: totalImported }
+      })
     }
 
     return reply.status(200).send({

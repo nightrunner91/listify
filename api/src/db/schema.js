@@ -65,3 +65,15 @@ export const userSettings = pgTable('user_settings', {
   theme:     varchar('theme', { length: 10 }).notNull().default('system'),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 })
+
+// ─── Activities ───────────────────────────────────────────────────────────────
+
+export const activities = pgTable('activities', {
+  id:         uuid('id').primaryKey().defaultRandom(),
+  userId:     uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  action:     varchar('action', { length: 100 }).notNull(),
+  category:   varchar('category', { length: 50 }),
+  entityName: varchar('entity_name', { length: 500 }),
+  metadata:   text('metadata'), // JSON string
+  createdAt:  timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+})
