@@ -11,6 +11,7 @@ import customListsRoutes from './routes/custom-lists.js'
 import settingsRoutes from './routes/settings.js'
 import importRoutes from './routes/import.js'
 import activitiesRoutes from './routes/activities.js'
+import userRoutes from './routes/users.js'
 
 export async function buildApp() {
   const app = Fastify({
@@ -60,6 +61,7 @@ export async function buildApp() {
   await app.register(customListsRoutes, { prefix: '/api/custom-lists' })
   await app.register(settingsRoutes,    { prefix: '/api/settings' })
   await app.register(activitiesRoutes,  { prefix: '/api/activities' })
+  await app.register(userRoutes,        { prefix: '/api/users' })
   await app.register(importRoutes,      { prefix: '/api' })
 
   // ─── Health check ──────────────────────────────────────────────────────────

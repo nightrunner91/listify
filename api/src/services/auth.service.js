@@ -79,8 +79,21 @@ export async function createUser(email, password) {
 
   const [user] = await db
     .insert(users)
-    .values({ email, password: passwordHash })
-    .returning({ id: users.id, email: users.email, createdAt: users.createdAt })
+    .values({ 
+      email, 
+      password: passwordHash,
+      username: `User-${nanoid(5)}`,
+      avatarSeed: nanoid(10),
+    })
+    .returning({ 
+      id: users.id, 
+      email: users.email, 
+      username: users.username,
+      avatarStyle: users.avatarStyle,
+      avatarSeed: users.avatarSeed,
+      backgroundColor: users.backgroundColor,
+      createdAt: users.createdAt 
+    })
 
   // Create default settings row
   await db.insert(userSettings).values({ userId: user.id }).onConflictDoNothing()
@@ -99,12 +112,28 @@ export async function verifyCredentials(email, password) {
     throw Object.assign(new Error('Invalid email or password'), { statusCode: 401, code: 'INVALID_CREDENTIALS' })
   }
 
-  return { id: user.id, email: user.email, createdAt: user.createdAt }
+  return { 
+    id: user.id, 
+    email: user.email, 
+    username: user.username,
+    avatarStyle: user.avatarStyle,
+    avatarSeed: user.avatarSeed,
+    backgroundColor: user.backgroundColor,
+    createdAt: user.createdAt 
+  }
 }
 
 export async function getUserById(id) {
   const [user] = await db
-    .select({ id: users.id, email: users.email, createdAt: users.createdAt })
+    .select({ 
+      id: users.id, 
+      email: users.email, 
+      username: users.username,
+      avatarStyle: users.avatarStyle,
+      avatarSeed: users.avatarSeed,
+      backgroundColor: users.backgroundColor,
+      createdAt: users.createdAt 
+    })
     .from(users)
     .where(eq(users.id, id))
     .limit(1)
@@ -114,4 +143,25 @@ export async function getUserById(id) {
 
 export async function deleteUserRefreshTokens(userId) {
   await db.delete(refreshTokens).where(eq(refreshTokens.userId, userId))
+}
+
+export async function updateUserProfile(userId, data) {
+  const [updated] = await db
+    .update(users)
+    .set({
+      ...data,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.id, userId))
+    .returning({
+      id: users.id,
+      email: users.email,
+      username: users.username,
+      avatarStyle: users.avatarStyle,
+      avatarSeed: users.avatarSeed,
+      backgroundColor: users.backgroundColor,
+      createdAt: users.createdAt,
+    })
+
+  return updated
 }

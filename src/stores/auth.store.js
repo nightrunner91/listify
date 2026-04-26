@@ -63,6 +63,17 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function updateProfile(profileData) {
+    try {
+      const updated = await api.patch('/users/profile', profileData)
+      user.value = updated
+      return true
+    } catch (e) {
+      console.error('Failed to update profile:', e)
+      return false
+    }
+  }
+
   return {
     user,
     accessToken,
@@ -71,6 +82,7 @@ export const useAuthStore = defineStore('auth', () => {
     logout,
     logoutLocally,
     fetchMe,
-    refresh
+    refresh,
+    updateProfile
   }
 })

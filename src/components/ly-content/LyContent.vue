@@ -12,6 +12,8 @@ import {
 import { PhTrashSimple as DeleteIcon } from 'phosphor-vue'
 import { renderIcon } from '@/utils/render-icon'
 import LyTitle from '@/components/ly-title/LyTitle.vue'
+import LyUserProfile from '@/components/ly-user-profile/LyUserProfile.vue'
+import LyImport from '@/components/ly-import/LyImport.vue'
 import LySort from '@/components/ly-sort/LySort.vue'
 import LyScroller from '@/components/ly-scroller/LyScroller.vue'
 import { useMenuStore } from '@/stores/menu.store'
@@ -26,6 +28,7 @@ const router = useRouter()
 const dialog = useDialog()
 
 const contentRef = ref(null)
+const importRef = ref(null)
 
 function updateScroll(event) {
   gridStore.scrollPosition = (event.target).scrollTop
@@ -70,19 +73,25 @@ function confirmDeleteList() {
           justify="space-between"
           align="center"
           class="mb-6">
-          <ly-title />
-          <ly-sort v-if="!route.meta.isCustom && route.meta.tag !== 'about'" />
-          <n-button
-            v-else-if="route.meta.isCustom"
-            secondary
-            type="error"
-            size="small"
-            :render-icon="renderIcon(DeleteIcon)"
-            @click="confirmDeleteList">
-            Delete
-          </n-button>
+          <template v-if="route.meta.tag === 'start'">
+            <ly-user-profile class="w-100" @import="importRef.showModal = true" />
+          </template>
+          <template v-else>
+            <ly-title />
+            <ly-sort v-if="!route.meta.isCustom && route.meta.tag !== 'about'" />
+            <n-button
+              v-else-if="route.meta.isCustom"
+              secondary
+              type="error"
+              size="small"
+              :render-icon="renderIcon(DeleteIcon)"
+              @click="confirmDeleteList">
+              Delete
+            </n-button>
+          </template>
         </n-space>
         <router-view />
+        <ly-import ref="importRef" variant="hidden" v-show="false" />
       </n-grid-item>
     </n-grid>
     <ly-scroller

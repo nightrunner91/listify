@@ -3,11 +3,15 @@ import { pgTable, uuid, varchar, smallint, boolean, timestamp, text, index, json
 // ─── Users ───────────────────────────────────────────────────────────────────
 
 export const users = pgTable('users', {
-  id:        uuid('id').primaryKey().defaultRandom(),
-  email:     varchar('email', { length: 255 }).unique().notNull(),
-  password:  varchar('password', { length: 255 }),   // null for OAuth-only accounts
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  id:              uuid('id').primaryKey().defaultRandom(),
+  email:           varchar('email', { length: 255 }).unique().notNull(),
+  password:        varchar('password', { length: 255 }),   // null for OAuth-only accounts
+  username:        varchar('username', { length: 255 }),
+  avatarStyle:     varchar('avatar_style', { length: 50 }).notNull().default('adventurer'),
+  avatarSeed:      varchar('avatar_seed', { length: 255 }),
+  backgroundColor: varchar('background_color', { length: 50 }).notNull().default('#18a058'),
+  createdAt:       timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt:       timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 })
 
 // ─── Refresh Tokens ──────────────────────────────────────────────────────────

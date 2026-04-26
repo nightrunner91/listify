@@ -29,11 +29,15 @@ const props = defineProps({
     required: true,
     default: 'inline',
     validator: value =>
-      ['inline', 'minified'].includes(value),
+      ['inline', 'minified', 'hidden'].includes(value),
   },
 })
 
 const { variant } = toRefs(props)
+
+defineExpose({
+  showModal
+})
 </script>
 
 <template>
