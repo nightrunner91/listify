@@ -36,6 +36,13 @@
       "when": 1777209358205,
       "tag": "0004_daffy_micromax",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1777225980619,
+      "tag": "0005_simple_moon_knight",
+      "breakpoints": true
     }
   ]
 }

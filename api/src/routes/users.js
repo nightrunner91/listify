@@ -14,6 +14,7 @@ export default async function userRoutes(app) {
           username:        { type: 'string', minLength: 1, maxLength: 255 },
           avatarStyle:     { type: 'string', minLength: 1, maxLength: 50 },
           avatarSeed:      { type: 'string', minLength: 1, maxLength: 255 },
+          avatarOptions:   { type: 'object', additionalProperties: true },
           backgroundColor: { type: 'string', minLength: 1, maxLength: 50 },
         },
         additionalProperties: false,

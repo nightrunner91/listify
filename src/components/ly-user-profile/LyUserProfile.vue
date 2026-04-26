@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import {
   NCard,
   NAvatar,
@@ -79,6 +79,19 @@ const editableUsername = ref(user.value?.username || '')
 
 const showAvatarPicker = ref(false)
 
+watch(() => user.value?.username, (newVal) => {
+  if (newVal) editableUsername.value = newVal
+})
+
+async function toggleEditUsername() {
+  if (editableUsername.value === user.value?.username) return
+  if (!editableUsername.value.trim()) {
+    editableUsername.value = user.value?.username || ''
+    return
+  }
+  await authStore.updateProfile({ username: editableUsername.value })
+}
+
 async function updateBackgroundColor(color) {
   await authStore.updateProfile({ backgroundColor: color })
 }
@@ -86,7 +99,16 @@ async function updateBackgroundColor(color) {
 const avatarUrl = computed(() => {
   const style = user.value?.avatarStyle || 'adventurer'
   const seed = user.value?.avatarSeed || 'default'
-  return `https://api.dicebear.com/9.x/${style}/svg?seed=${seed}`
+  const options = user.value?.avatarOptions || {}
+  
+  const query = new URLSearchParams({
+    seed,
+    flip: (options.flip ?? false).toString(),
+    rotate: (options.rotate ?? 0).toString(),
+    scale: (options.scale ?? 100).toString(),
+  })
+
+  return `https://api.dicebear.com/9.x/${style}/svg?${query.toString()}`
 })
 
 async function handleLogout() {
@@ -96,7 +118,7 @@ async function handleLogout() {
 </script>
 
 <template>
-  <n-card class="ly-user-profile no-overflow mb-5" content-class="p-0">
+  <n-card v-if="user" class="ly-user-profile no-overflow mb-5" content-class="p-0">
     <n-space vertical :wrap-item="false" :size="0">
       <!-- Background Strip -->
       <n-color-picker
@@ -154,17 +176,18 @@ async function handleLogout() {
           </n-dropdown>
         </n-space>
       </n-space>
+
+      <ly-import ref="importRef" variant="hidden" />
+      <ly-export ref="exportRef" variant="hidden" />
+
+      <ly-avatar-picker
+        v-model:show="showAvatarPicker"
+        :current-style="user?.avatarStyle"
+        :current-seed="user?.avatarSeed"
+        :current-options="user?.avatarOptions"
+        @update="authStore.updateProfile($event)"
+      />
     </n-space>
-
-    <ly-import ref="importRef" variant="hidden" />
-    <ly-export ref="exportRef" variant="hidden" />
-
-    <ly-avatar-picker
-      v-model:show="showAvatarPicker"
-      :current-style="user?.avatarStyle"
-      :current-seed="user?.avatarSeed"
-      @update="authStore.updateProfile($event)"
-    />
   </n-card>
 </template>
 

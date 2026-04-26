@@ -91,6 +91,7 @@ export async function createUser(email, password) {
       username: users.username,
       avatarStyle: users.avatarStyle,
       avatarSeed: users.avatarSeed,
+      avatarOptions: users.avatarOptions,
       backgroundColor: users.backgroundColor,
       createdAt: users.createdAt 
     })
@@ -118,6 +119,7 @@ export async function verifyCredentials(email, password) {
     username: user.username,
     avatarStyle: user.avatarStyle,
     avatarSeed: user.avatarSeed,
+    avatarOptions: user.avatarOptions,
     backgroundColor: user.backgroundColor,
     createdAt: user.createdAt 
   }
@@ -131,6 +133,7 @@ export async function getUserById(id) {
       username: users.username,
       avatarStyle: users.avatarStyle,
       avatarSeed: users.avatarSeed,
+      avatarOptions: users.avatarOptions,
       backgroundColor: users.backgroundColor,
       createdAt: users.createdAt 
     })
@@ -159,6 +162,7 @@ export async function updateUserProfile(userId, data) {
       username: users.username,
       avatarStyle: users.avatarStyle,
       avatarSeed: users.avatarSeed,
+      avatarOptions: users.avatarOptions,
       backgroundColor: users.backgroundColor,
       createdAt: users.createdAt,
     })
