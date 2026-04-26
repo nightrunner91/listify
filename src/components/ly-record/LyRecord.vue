@@ -115,7 +115,6 @@ watch(record, (newVal) => {
         <n-rate
           v-model:value="record.score"
           clearable
-          size="small"
           class="mr-0 mr-s-4 mr-l-7" />
           
         <n-button

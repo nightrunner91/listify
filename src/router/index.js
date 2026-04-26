@@ -117,7 +117,7 @@ const router = createRouter({
             requiresAuth: true,
             tag: 'custom',
             title: 'Custom List',
-            thing: 'Custom',
+            thing: 'Item',
             isCustom: true
           }
         },

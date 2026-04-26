@@ -11,6 +11,7 @@ const globalOverrides = {
     fontSizeMedium: '16px',
     fontSizeLarge: '18px',
     fontSizeHuge: '20px',
+    fontWeightStrong: 500,
   },
   Typography: {
     headerFontSize1: '3rem',
@@ -53,6 +54,11 @@ const globalOverrides = {
     fontSize: '14px',
     iconSize: '18px',
   },
+  Rate: {
+    sizeSmall: '14px',
+    sizeMedium: '16px',
+    sizeLarge: '18px',
+  }
 }
 
 export const lightThemeOverrides = {
