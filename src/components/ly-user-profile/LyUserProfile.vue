@@ -34,22 +34,9 @@ const message = useMessage()
 const user = computed(() => authStore.user)
 const totalItems = recordsStore.allRecordsLength()
 
-const isEditingUsername = ref(false)
 const editableUsername = ref(user.value?.username || '')
 
 const showAvatarPicker = ref(false)
-
-async function toggleEditUsername() {
-  if (isEditingUsername.value) {
-    if (editableUsername.value.trim() && editableUsername.value !== user.value.username) {
-      const success = await authStore.updateProfile({ username: editableUsername.value.trim() })
-      if (success) message.success('Username updated')
-    }
-  } else {
-    editableUsername.value = user.value.username
-  }
-  isEditingUsername.value = !isEditingUsername.value
-}
 
 async function updateBackgroundColor(color) {
   await authStore.updateProfile({ backgroundColor: color })
@@ -68,9 +55,6 @@ function handleLogout() {
 function handleExport() {
   recordsStore.exportCollection()
 }
-
-// We need a way to trigger import, maybe via a hidden input or just opening the import component
-// For now, let's assume we can trigger it or just use the existing logic if available.
 </script>
 
 <template>
@@ -87,7 +71,7 @@ function handleExport() {
         <template #label></template>
       </n-color-picker>
 
-      <n-space align="center" :wrap-item="false" :size="24" class="profile-content px-5">
+      <n-space align="center" :wrap-item="false" size="large" class="profile-content px-5 py-4">
         <!-- Avatar -->
         <div class="avatar-container" @click="showAvatarPicker = true">
           <n-avatar
@@ -102,44 +86,20 @@ function handleExport() {
         </div>
 
         <!-- Info -->
-        <n-space vertical :size="4" class="flex-grow-1">
-          <n-space align="center" :size="8" class="">
-            <template v-if="!isEditingUsername">
-              <n-text strong class="username-display">{{ user?.username }}</n-text>
-              <n-button quaternary circle size="tiny" @click="toggleEditUsername">
-                <template #icon><n-icon :component="EditIcon" /></template>
-              </n-button>
-            </template>
-            <template v-else>
-              <n-input
-                v-model:value="editableUsername"
-                size="small"
-                placeholder="Username"
-                autofocus
-                @blur="toggleEditUsername"
-                @keyup.enter="toggleEditUsername"
-                style="width: 200px"
-              />
-            </template>
+        <n-space vertical :size="4" :wrap-item="false">
+          <n-space :size="0" vertical>
+            <n-input
+              v-model:value="editableUsername"
+              size="small"
+              placeholder="Username"
+              autofocus
+              @blur="toggleEditUsername"
+              @keyup.enter="toggleEditUsername"
+              style="width: 200px"
+              class="profile-name"
+            />
+            <n-text depth="3" class="profile-email">{{ user?.email }}</n-text>
           </n-space>
-          <n-text depth="3">{{ user?.email }}</n-text>
-          <n-text depth="2" class="stats-text">
-            <b>{{ totalItems }}</b> items in collection
-          </n-text>
-        </n-space>
-
-        <!-- Actions -->
-        <n-space class="profile-actions">
-          <!-- We use the minified variant of LyImport if we can, or just trigger it -->
-          <n-button secondary size="small" :render-icon="renderIcon(ImportIcon)" @click="$emit('import')">
-            Import
-          </n-button>
-          <n-button secondary size="small" :render-icon="renderIcon(ExportIcon)" @click="handleExport">
-            Export
-          </n-button>
-          <n-button secondary type="error" size="small" :render-icon="renderIcon(LogoutIcon)" @click="handleLogout">
-            Logout
-          </n-button>
         </n-space>
       </n-space>
     </n-space>
@@ -182,8 +142,39 @@ function handleExport() {
   }
 }
 
-.profile-content {
-  
+.profile-name {
+  background-color: transparent !important;
+  height: 28px;
+  width: auto;
+  display: inline-flex;
+
+  :deep(.n-input__border),
+  :deep(.n-input__state-border) {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  :deep(.n-input__input-el) {
+    font-size: 1.25rem;
+    height: 100%;
+    font-weight: 500;
+    line-height: 1.6;
+    color: inherit;
+    padding-left: 0;
+
+    &:hover, &:focus {
+      opacity: 0.85;
+    }
+  }
+
+  :deep(.n-input-wrapper) {
+    padding-left: 0;
+  }
+}
+
+.profile-email {
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .avatar-container {
