@@ -157,13 +157,15 @@ const formatActivity = (activity) => {
       return {
         prefix: 'Added',
         entity: entityName,
-        suffix: `to ${metadata.listName}`
+        suffix: 'to',
+        listName: metadata.listName
       }
     case 'custom_list_record_deleted':
       return {
         prefix: 'Removed',
         entity: entityName,
-        suffix: `from ${metadata.listName}`
+        suffix: 'from',
+        listName: metadata.listName
       }
     case 'collection_imported':
       return {
@@ -210,6 +212,7 @@ const formatActivity = (activity) => {
                 {{ formatActivity(activity).prefix }}
                 <span class="highlight" v-if="formatActivity(activity).entity"> {{ formatActivity(activity).entity }}</span>
                 <span v-if="formatActivity(activity).suffix" class="ml-1"> {{ formatActivity(activity).suffix }}</span>
+                <span v-if="formatActivity(activity).listName" class="highlight ml-1"> {{ formatActivity(activity).listName }}</span>
               </span>
               
               <n-rate 

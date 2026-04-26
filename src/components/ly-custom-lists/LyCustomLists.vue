@@ -49,7 +49,7 @@ function formatRelativeTime(dateString) {
         style="padding: 24px 0"
       >
         <template #extra>
-          <n-button type="primary" @click="handleCreateList">
+          <n-button primary @click="handleCreateList">
             Create new list
           </n-button>
         </template>
