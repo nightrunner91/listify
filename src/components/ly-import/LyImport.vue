@@ -49,22 +49,23 @@ defineExpose({
     Import Collection
   </n-button>
 
-  <n-tooltip
-    v-else-if="variant === 'minified'"
-    trigger="hover">
-    <template #trigger>
-      <n-button
-        quaternary
-        size="small"
-        @click="showModal = true">
-        <template #icon>
-          <n-icon :component="ImportIcon" :size="18" />
-        </template>
-        <span v-if="gridStore.screenLargerThen('s')">Import</span>
-      </n-button>
-    </template>
-    Import Collection
-  </n-tooltip>
+  <template v-else-if="variant === 'minified'">
+    <n-tooltip
+      trigger="hover">
+      <template #trigger>
+        <n-button
+          quaternary
+          size="small"
+          @click="showModal = true">
+          <template #icon>
+            <n-icon :component="ImportIcon" :size="18" />
+          </template>
+          <span v-if="gridStore.screenLargerThen('s')">Import</span>
+        </n-button>
+      </template>
+      Import Collection
+    </n-tooltip>
+  </template>
 
   <n-modal
     v-model:show="showModal"

@@ -2,12 +2,9 @@
 import { NLayoutHeader, NSpace } from 'naive-ui'
 
 import LyLogo from '@/components/ly-logo/LyLogo.vue'
-import LyImport from '@/components/ly-import/LyImport.vue'
-import LyExport from '@/components/ly-export/LyExport.vue'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
-// import LyGithub from '@/components/ly-github/LyGithub.vue'
-// import LyVersion from '@/components/ly-version/LyVersion.vue'
-import LyLogout from '@/components/ly-logout/LyLogout.vue'
+import LyGithub from '@/components/ly-github/LyGithub.vue'
+import LyVersion from '@/components/ly-version/LyVersion.vue'
 </script>
 
 <template>
@@ -22,11 +19,8 @@ import LyLogout from '@/components/ly-logout/LyLogout.vue'
       class="w-100 h-100">
       <ly-logo />
       <ly-theme-switcher />
-      <ly-import variant="minified" />
-      <ly-export />
-      <!-- <ly-github /> -->
-      <!-- <ly-version /> -->
-      <ly-logout />
+      <ly-github />
+      <ly-version />
     </n-space>
   </n-layout-header>
 </template>

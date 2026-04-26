@@ -26,23 +26,46 @@ const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 
 const showModal = ref(false)
+
+const props = defineProps({
+  variant: {
+    type: String,
+    required: false,
+    default: 'minified',
+    validator: value => ['inline', 'minified', 'hidden'].includes(value),
+  },
+})
+
+defineExpose({
+  showModal
+})
 </script>
 
 <template>
-  <n-tooltip trigger="hover">
-    <template #trigger>
-      <n-button
-        quaternary
-        size="small"
-        @click="showModal = true">
-        <template #icon>
-          <n-icon :component="ExportIcon" :size="18" />
-        </template>
-        <span v-if="gridStore.screenLargerThen('s')">Export</span>
-      </n-button>
-    </template>
+  <template v-if="variant === 'minified'">
+    <n-tooltip trigger="hover">
+      <template #trigger>
+        <n-button
+          quaternary
+          size="small"
+          @click="showModal = true">
+          <template #icon>
+            <n-icon :component="ExportIcon" :size="18" />
+          </template>
+          <span v-if="gridStore.screenLargerThen('s')">Export</span>
+        </n-button>
+      </template>
+      Export Collection
+    </n-tooltip>
+  </template>
+
+  <n-button
+    secondary
+    v-else-if="variant === 'inline'"
+    :render-icon="renderIcon(ExportIcon)"
+    @click="showModal = true">
     Export Collection
-  </n-tooltip>
+  </n-button>
 
   <n-modal
     v-model:show="showModal"

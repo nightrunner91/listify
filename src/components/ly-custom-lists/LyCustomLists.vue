@@ -34,7 +34,7 @@ function formatRelativeTime(dateString) {
   <n-space vertical :size="16">
     <n-space justify="space-between" align="center">
       <n-text depth="3" class="section-title">CUSTOM LISTS</n-text>
-      <n-button v-if="customLists.length > 0" text circle @click="handleCreateList" style="font-size: 18px;">
+      <n-button v-if="customLists.length > 0" tertiary circle @click="handleCreateList" style="font-size: 18px;">
         <template #icon>
           <n-icon><ph-plus weight="bold" /></n-icon>
         </template>

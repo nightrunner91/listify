@@ -12,24 +12,65 @@ import {
   NGrid,
   NGridItem,
   NIcon,
+  NDropdown,
   useMessage,
 } from 'naive-ui'
 import {
   PhSignOut as LogoutIcon,
-  PhDownloadSimple as ExportIcon,
-  PhUploadSimple as ImportIcon,
+  PhUploadSimple as ExportIcon,
+  PhDownloadSimple as ImportIcon,
   PhPencilSimple as EditIcon,
   PhCheck as SaveIcon,
   PhDiceFive as RandomIcon,
+  PhDotsThreeVertical as MenuIcon,
 } from 'phosphor-vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { useRecordsStore } from '@/stores/records.store'
+import { useRouter } from 'vue-router'
 import { renderIcon } from '@/utils/render-icon'
 import LyAvatarPicker from './LyAvatarPicker.vue'
+import LyImport from '@/components/ly-import/LyImport.vue'
+import LyExport from '@/components/ly-export/LyExport.vue'
 
 const authStore = useAuthStore()
 const recordsStore = useRecordsStore()
+const router = useRouter()
 const message = useMessage()
+
+const importRef = ref(null)
+const exportRef = ref(null)
+
+const dropdownOptions = [
+  {
+    label: 'Import collection',
+    key: 'import',
+    icon: renderIcon(ImportIcon)
+  },
+  {
+    label: 'Export collection',
+    key: 'export',
+    icon: renderIcon(ExportIcon)
+  },
+  {
+    type: 'divider',
+    key: 'd1'
+  },
+  {
+    label: 'Logout',
+    key: 'logout',
+    icon: renderIcon(LogoutIcon)
+  }
+]
+
+function handleSelect(key) {
+  if (key === 'import') {
+    if (importRef.value) importRef.value.showModal = true
+  } else if (key === 'export') {
+    if (exportRef.value) exportRef.value.showModal = true
+  } else if (key === 'logout') {
+    handleLogout()
+  }
+}
 
 const user = computed(() => authStore.user)
 const totalItems = recordsStore.allRecordsLength()
@@ -48,17 +89,14 @@ const avatarUrl = computed(() => {
   return `https://api.dicebear.com/9.x/${style}/svg?seed=${seed}`
 })
 
-function handleLogout() {
-  authStore.logout()
-}
-
-function handleExport() {
-  recordsStore.exportCollection()
+async function handleLogout() {
+  await authStore.logout()
+  router.push('/login')
 }
 </script>
 
 <template>
-  <n-card class="ly-user-profile no-overflow" content-class="p-0">
+  <n-card class="ly-user-profile no-overflow mb-5" content-class="p-0">
     <n-space vertical :wrap-item="false" :size="0">
       <!-- Background Strip -->
       <n-color-picker
@@ -86,23 +124,40 @@ function handleExport() {
         </div>
 
         <!-- Info -->
-        <n-space vertical :size="4" :wrap-item="false">
-          <n-space :size="0" vertical>
-            <n-input
-              v-model:value="editableUsername"
-              size="small"
-              placeholder="Username"
-              autofocus
-              @blur="toggleEditUsername"
-              @keyup.enter="toggleEditUsername"
-              style="width: 200px"
-              class="profile-name"
-            />
-            <n-text depth="3" class="profile-email">{{ user?.email }}</n-text>
+        <n-space justify="space-between" align="center" :wrap-item="false" class="w-100">
+          <n-space vertical :size="4" :wrap-item="false">
+            <n-space :size="0" vertical>
+              <n-input
+                v-model:value="editableUsername"
+                size="small"
+                placeholder="Username"
+                @blur="toggleEditUsername"
+                @keyup.enter="toggleEditUsername"
+                style="width: 200px"
+                class="profile-name"
+              />
+              <n-text depth="3" class="profile-email">{{ user?.email }}</n-text>
+            </n-space>
           </n-space>
+
+          <n-dropdown
+            trigger="click"
+            placement="bottom-end"
+            :options="dropdownOptions"
+            @select="handleSelect"
+          >
+            <n-button tertiary circle>
+              <template #icon>
+                <n-icon :component="MenuIcon" size="24" />
+              </template>
+            </n-button>
+          </n-dropdown>
         </n-space>
       </n-space>
     </n-space>
+
+    <ly-import ref="importRef" variant="hidden" />
+    <ly-export ref="exportRef" variant="hidden" />
 
     <ly-avatar-picker
       v-model:show="showAvatarPicker"
@@ -183,7 +238,7 @@ function handleExport() {
   display: flex;
   border: 3px solid var(--n-color);
   border-radius: 50%;
-  margin-top: -30px;
+  margin-top: -60px;
 
   &:hover .avatar-overlay {
     opacity: 1;
