@@ -58,7 +58,7 @@ const globalOverrides = {
     sizeSmall: '14px',
     sizeMedium: '16px',
     sizeLarge: '18px',
-  }
+  },
 }
 
 export const lightThemeOverrides = {

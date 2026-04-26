@@ -2,7 +2,7 @@ import { db } from '../db/index.js'
 import { records, VALID_CATEGORIES } from '../db/schema.js'
 import { eq, and, inArray } from 'drizzle-orm'
 import { authenticate } from '../middleware/authenticate.js'
-import { logActivity } from '../services/activity.service.js'
+import { logActivity, logBatchActivities } from '../services/activity.service.js'
 
 const CATEGORY_ENUM = { enum: VALID_CATEGORIES }
 
@@ -232,13 +232,14 @@ export default async function recordsRoutes(app) {
       .where(and(eq(records.userId, userId), inArray(records.id, ids)))
       .returning()
 
-    // Log activities for each deleted item
-    for (const row of deletedRows) {
-      await logActivity(userId, {
+    // Log activities for each deleted item in a single batch
+    if (deletedRows.length > 0) {
+      const activitiesToLog = deletedRows.map(row => ({
         action: 'record_deleted',
         category: row.category,
         entityName: row.title,
-      })
+      }))
+      await logBatchActivities(userId, activitiesToLog)
     }
 
     return reply.status(204).send()

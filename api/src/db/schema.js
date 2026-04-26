@@ -1,4 +1,4 @@
-import { pgTable, uuid, varchar, smallint, boolean, timestamp, text } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, varchar, smallint, boolean, timestamp, text, index, jsonb } from 'drizzle-orm/pg-core'
 
 // ─── Users ───────────────────────────────────────────────────────────────────
 
@@ -75,6 +75,9 @@ export const activities = pgTable('activities', {
   category:   varchar('category', { length: 50 }),
   entityId:   uuid('entity_id'),
   entityName: varchar('entity_name', { length: 500 }),
-  metadata:   text('metadata'), // JSON string
+  metadata:   jsonb('metadata'),
   createdAt:  timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-})
+}, (table) => [
+  index('activities_user_id_idx').on(table.userId),
+  index('activities_user_created_at_idx').on(table.userId, table.createdAt.desc()),
+])
