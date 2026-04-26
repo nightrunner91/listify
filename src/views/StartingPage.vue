@@ -10,7 +10,7 @@ import LyActivityTimeline from '@/components/ly-activity-timeline/LyActivityTime
     <n-grid :x-gap="24" :y-gap="40" cols="24" item-responsive responsive="screen">
       <n-grid-item span="24">
         <n-space vertical :size="16">
-          <n-text depth="3" class="section-title">CATEGORIES</n-text>
+          <n-text depth="3" class="section-title">{{ $t('home.categories') }}</n-text>
           <ly-categories />
         </n-space>
       </n-grid-item>

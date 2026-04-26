@@ -1,0 +1,8 @@
+{
+  "errors": {
+    "RATE_LIMITED": "Prea multe cereri, vă rugăm să încercați mai târziu.",
+    "INTERNAL_ERROR": "Ceva nu a mers bine.",
+    "NOT_FOUND": "Ruta nu a fost găsită",
+    "UNAUTHORIZED": "Acces neautorizat"
+  }
+}

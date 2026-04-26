@@ -1,0 +1,94 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close"
+  },
+  "home": {
+    "categories": "CATEGORIES"
+  },
+  "categories": {
+    "start": "My Collection",
+    "games": "Games",
+    "tvshows": "TV Shows",
+    "films": "Films",
+    "anime": "Anime",
+    "manga": "Manga",
+    "books": "Books",
+    "music": "Music",
+    "about": "About Listify"
+  },
+  "customLists": {
+    "title": "CUSTOM LISTS",
+    "emptyDescription": "You haven't created any custom lists yet.",
+    "createList": "Create new list",
+    "items": "items",
+    "updated": "Updated {time}"
+  },
+  "userProfile": {
+    "importCollection": "Import collection",
+    "exportCollection": "Export collection",
+    "logout": "Logout",
+    "usernamePlaceholder": "Username"
+  },
+  "records": {
+    "emptyDescription": "Looks like your list is empty.",
+    "searchEmptyDescription": "No records found matching your search.",
+    "or": "or"
+  },
+  "about": {
+    "description": "Listify is a personal media tracker built around one idea: your collection should be simple to maintain, always accessible, and entirely yours. Whether you're logging games you've finished, films on your watchlist, books you're reading, or anything in between — Listify keeps it organized without getting in the way.",
+    "howItWorks": "How it works",
+    "step1": "Sign up and create your personal Listify account.",
+    "step2": "Add and manage records from any device — desktop or mobile.",
+    "step3": "Use built-in categories or create custom lists for anything that doesn't fit the defaults.",
+    "dataTitle": "Your Data, Your Rules",
+    "dataDescription": "Your collection lives on our servers, but it belongs to you. Listify supports full data portability — export your entire collection as a {format1} or {format2} file at any time. Use it for backups, migration, or just keeping a local copy in your favorite spreadsheet software.",
+    "privacy": "No tracking, no ads, no third-party data sharing.",
+    "openSource": "Open-source — inspect, fork, or self-host the entire project.",
+    "communityTitle": "Community & Contributions",
+    "communityDescription": "Listify is an actively developed open-source project. New features, categories, and quality-of-life improvements are added regularly. If you have an idea, found a bug, or just want to say hello — reach out via {link1} or {link2}. Contributions are always welcome.",
+    "telegram": "Telegram",
+    "githubIssue": "open an issue on GitHub",
+    "thankYou": "Thank you for using Listify — and for being part of what it's becoming.",
+    "techStack": "Tech Stack"
+  },
+  "store": {
+    "sorting": {
+      "status": "Status",
+      "rating": "Rating",
+      "favourite": "Favourite",
+      "az": "A → Z"
+    },
+    "labels": {
+      "playing_now": "Playing Now",
+      "plan_to_play": "Plan to Play",
+      "on_hold": "On Hold",
+      "completed": "Completed",
+      "dropped": "Dropped",
+      "watching_ongoing": "Watching Ongoing",
+      "watching_now": "Watching Now",
+      "plan_to_watch": "Plan to Watch",
+      "watched_all": "Watched All",
+      "watched": "Watched",
+      "read_ongoing": "Read Ongoing",
+      "read_now": "Read Now",
+      "plan_to_read": "Plan to Read",
+      "read": "Read",
+      "listening_now": "Listening Now",
+      "on_repeat": "On Repeat",
+      "plan_to_listen": "Plan to Listen",
+      "listened_all": "Completed"
+    },
+    "notifications": {
+      "importSuccess": "Import successful!",
+      "importErrorCSV": "Failed to parse CSV file.",
+      "importErrorJSON": "Failed to parse JSON file."
+    },
+    "customListName": "Custom List"
+  }
+}

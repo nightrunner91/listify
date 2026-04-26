@@ -5,6 +5,9 @@ import { NSpace, NText, NButton, NIcon, NEmpty, NList, NListItem, NThing, NCard 
 import { PhArrowRight, PhPlus } from 'phosphor-vue'
 import { useRecordsStore } from '@/stores/records.store'
 import moment from 'moment'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const router = useRouter()
 const recordsStore = useRecordsStore()
@@ -33,7 +36,7 @@ function formatRelativeTime(dateString) {
 <template>
   <n-space vertical :size="16">
     <n-space justify="space-between" align="center">
-      <n-text depth="3" class="section-title">CUSTOM LISTS</n-text>
+      <n-text depth="3" class="section-title">{{ t('customLists.title') }}</n-text>
       <n-button v-if="customLists.length > 0" tertiary circle @click="handleCreateList" style="font-size: 18px;">
         <template #icon>
           <n-icon><ph-plus weight="bold" /></n-icon>
@@ -45,12 +48,12 @@ function formatRelativeTime(dateString) {
       <!-- Empty State -->
       <n-empty 
         v-if="customLists.length === 0" 
-        description="You haven't created any custom lists yet."
+        :description="t('customLists.emptyDescription')"
         style="padding: 24px 0"
       >
         <template #extra>
           <n-button primary @click="handleCreateList">
-            Create new list
+            {{ t('customLists.createList') }}
           </n-button>
         </template>
       </n-empty>
@@ -61,10 +64,10 @@ function formatRelativeTime(dateString) {
           <n-thing :title="list.name">
             <template #description>
               <n-space :size="8" align="center">
-                <n-text depth="3">{{ list.records?.length || 0 }} items</n-text>
+                <n-text depth="3">{{ list.records?.length || 0 }} {{ t('customLists.items') }}</n-text>
                 <n-text v-if="list.updatedAt || list.createdAt" depth="3">&bull;</n-text>
                 <n-text v-if="list.updatedAt || list.createdAt" depth="3">
-                  Updated {{ formatRelativeTime(list.updatedAt || list.createdAt) }}
+                  {{ t('customLists.updated', { time: formatRelativeTime(list.updatedAt || list.createdAt) }) }}
                 </n-text>
               </n-space>
             </template>

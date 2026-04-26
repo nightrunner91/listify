@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import {
   NP,
   NH4,
@@ -26,6 +27,7 @@ import {
   PhGitBranch as OpenSourceIcon,
 } from 'phosphor-vue'
 
+const { t } = useI18n()
 const usedStuff = ref([
   {
     icon: VueIcon,
@@ -62,58 +64,72 @@ const usedStuff = ref([
     class="pt-6">
     <n-grid-item span="6 m:5 l:4">
       <n-p>
-        Listify is a personal media tracker built around one idea: your collection should be simple to maintain, always accessible, and entirely yours. Whether you're logging games you've finished, films on your watchlist, books you're reading, or anything in between — Listify keeps it organized without getting in the way.
+        {{ t('about.description') }}
       </n-p>
 
-      <n-h4>How it works</n-h4>
+      <n-h4>{{ t('about.howItWorks') }}</n-h4>
       <n-list :show-divider="false" class="mb-6">
         <n-list-item>
           <n-space :wrap-item="false" align="center">
             <n-icon size="24" :component="AccountIcon" />
-            <n-text>Sign up and create your personal Listify account.</n-text>
+            <n-text>{{ t('about.step1') }}</n-text>
           </n-space>
         </n-list-item>
         <n-list-item>
           <n-space :wrap-item="false" align="center">
             <n-icon size="24" :component="DevicesIcon" />
-            <n-text>Add and manage records from any device — desktop or mobile.</n-text>
+            <n-text>{{ t('about.step2') }}</n-text>
           </n-space>
         </n-list-item>
         <n-list-item>
           <n-space :wrap-item="false" align="center">
             <n-icon size="24" :component="SyncIcon" />
-            <n-text>Use built-in categories or create custom lists for anything that doesn't fit the defaults.</n-text>
+            <n-text>{{ t('about.step3') }}</n-text>
           </n-space>
         </n-list-item>
       </n-list>
 
-      <n-h4>Your Data, Your Rules</n-h4>
+      <n-h4>{{ t('about.dataTitle') }}</n-h4>
       <n-p>
-        Your collection lives on our servers, but it belongs to you. Listify supports full data portability — export your entire collection as a <n-a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a> or <n-a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank">CSV</n-a> file at any time. Use it for backups, migration, or just keeping a local copy in your favorite spreadsheet software.
+        <i18n-t keypath="about.dataDescription" tag="span">
+          <template #format1>
+            <n-a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a>
+          </template>
+          <template #format2>
+            <n-a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank">CSV</n-a>
+          </template>
+        </i18n-t>
       </n-p>
       <n-list :show-divider="false" class="mb-6">
         <n-list-item>
           <n-space :wrap-item="false" align="center">
             <n-icon size="24" :component="PrivacyIcon" />
-            <n-text>No tracking, no ads, no third-party data sharing.</n-text>
+            <n-text>{{ t('about.privacy') }}</n-text>
           </n-space>
         </n-list-item>
         <n-list-item>
           <n-space :wrap-item="false" align="center">
             <n-icon size="24" :component="OpenSourceIcon" />
-            <n-text>Open-source — inspect, fork, or self-host the entire project.</n-text>
+            <n-text>{{ t('about.openSource') }}</n-text>
           </n-space>
         </n-list-item>
       </n-list>
 
-      <n-h4>Community & Contributions</n-h4>
+      <n-h4>{{ t('about.communityTitle') }}</n-h4>
       <n-p>
-        Listify is an actively developed open-source project. New features, categories, and quality-of-life improvements are added regularly. If you have an idea, found a bug, or just want to say hello — reach out via <n-a href="https://t.me/nightrunner91" target="_blank">Telegram</n-a> or <n-a href="https://github.com/nightrunner91/listify/issues" target="_blank">open an issue on GitHub</n-a>. Contributions are always welcome.
+        <i18n-t keypath="about.communityDescription" tag="span">
+          <template #link1>
+            <n-a href="https://t.me/nightrunner91" target="_blank">{{ t('about.telegram') }}</n-a>
+          </template>
+          <template #link2>
+            <n-a href="https://github.com/nightrunner91/listify/issues" target="_blank">{{ t('about.githubIssue') }}</n-a>
+          </template>
+        </i18n-t>
       </n-p>
 
-      <n-p>Thank you for using Listify — and for being part of what it's becoming.</n-p>
+      <n-p>{{ t('about.thankYou') }}</n-p>
 
-      <n-h4>Tech Stack</n-h4>
+      <n-h4>{{ t('about.techStack') }}</n-h4>
       <n-list :show-divider="false" class="mb-10">
         <n-list-item
           v-for="(item, index) in usedStuff"

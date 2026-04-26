@@ -5,6 +5,7 @@ import LyLogo from '@/components/ly-logo/LyLogo.vue'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import LyGithub from '@/components/ly-github/LyGithub.vue'
 import LyVersion from '@/components/ly-version/LyVersion.vue'
+import LyLanguageSwitcher from '@/components/ly-language-switcher/LyLanguageSwitcher.vue'
 </script>
 
 <template>
@@ -19,6 +20,7 @@ import LyVersion from '@/components/ly-version/LyVersion.vue'
       class="w-100 h-100">
       <ly-logo />
       <ly-theme-switcher />
+      <ly-language-switcher />
       <ly-github />
       <ly-version />
     </n-space>

@@ -10,6 +10,9 @@ import LyCustomRecord from '@/components/ly-custom-record/LyCustomRecord.vue'
 import LyAddRecord from '@/components/ly-add-record/LyAddRecord.vue'
 import LyImport from '@/components/ly-import/LyImport.vue'
 
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
@@ -90,7 +93,7 @@ function handleScrollBottom() {
         <template v-if="!customList || customList.records.length === 0">
           <n-empty
             size="large"
-            description="Looks like your list is empty."
+            :description="t('records.emptyDescription')"
             class="p-10">
             <template #extra>
               <n-space
@@ -100,7 +103,7 @@ function handleScrollBottom() {
                 :vertical="!gridStore.screenLargerThen('m')"
                 align="center">
                 <ly-add-record variant="inline" />
-                <n-text align="center" depth="3" style="font-size: 14px;">or</n-text>
+                <n-text align="center" depth="3" style="font-size: 14px;">{{ t('records.or') }}</n-text>
                 <ly-import variant="inline" />
               </n-space>
             </template>
@@ -113,7 +116,7 @@ function handleScrollBottom() {
           <template v-if="recordsStore.isSearching && sortedRecords.length === 0">
             <n-empty
               size="large"
-              description="No records found matching your search."
+              :description="t('records.searchEmptyDescription')"
               class="p-10">
             </n-empty>
           </template>

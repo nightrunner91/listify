@@ -1,10 +1,12 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { NH1, NText, NBadge, NInput } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'
 import { useRecordsStore } from '@/stores/records.store'
 
+const { t } = useI18n()
 const route = useRoute()
 const themeStore = useThemeStore()
 const recordsStore = useRecordsStore()
@@ -60,6 +62,22 @@ watch(listName, (newVal) => {
     recordsStore.renameCustomList(customListId.value, trimmed)
   }, 500)
 })
+
+const getTranslatedTitle = computed(() => {
+  if (route.meta.tag && t(`categories.${route.meta.tag}`)) {
+    const translation = t(`categories.${route.meta.tag}`)
+    if (!translation.startsWith('categories.')) {
+      return translation
+    }
+  }
+  return route.meta.title
+})
+
+watch(getTranslatedTitle, (newTitle) => {
+  if (!isCustomList.value && newTitle) {
+    document.title = `${newTitle} - Listify`
+  }
+}, { immediate: true })
 </script>
 
 <template>
@@ -74,7 +92,7 @@ watch(listName, (newVal) => {
     </template>
 
     <template v-else>
-      {{ route.meta.title }}
+      {{ getTranslatedTitle }}
     </template>
 
     <n-badge

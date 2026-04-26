@@ -20,7 +20,7 @@ const globalOverrides = {
     headerFontSize4: '1.25rem',
     headerFontSize5: '1rem',
     headerFontSize6: '0.875rem',
-    pFontSize: '16px',
+    pFontSize: '18px',
   },
   Alert: {
     padding: '10px 14px',

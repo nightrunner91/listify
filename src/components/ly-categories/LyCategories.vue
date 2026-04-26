@@ -14,6 +14,9 @@ import { useRouter } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
 import { useThemeStore } from '@/stores/theme.store'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 
 const router = useRouter()
@@ -27,15 +30,15 @@ onMounted(() => {
   isLoading.value = false
 })
 
-const categories = [
-  { key: 'games',   label: 'Games',    route: 'Games',   icon: GamesIcon },
-  { key: 'tvshows', label: 'TV Shows', route: 'TVShows', icon: TvShowsIcon },
-  { key: 'films',   label: 'Films',    route: 'Films',   icon: FilmsIcon },
-  { key: 'anime',   label: 'Anime',    route: 'Anime',   icon: AnimeIcon },
-  { key: 'manga',   label: 'Manga',    route: 'Manga',   icon: MangaIcon },
-  { key: 'books',   label: 'Books',    route: 'Books',   icon: BooksIcon },
-  { key: 'music',   label: 'Music',    route: 'Music',   icon: MusicIcon },
-]
+const categories = computed(() => [
+  { key: 'games',   label: t('categories.games'),    route: 'Games',   icon: GamesIcon },
+  { key: 'tvshows', label: t('categories.tvshows'), route: 'TVShows', icon: TvShowsIcon },
+  { key: 'films',   label: t('categories.films'),    route: 'Films',   icon: FilmsIcon },
+  { key: 'anime',   label: t('categories.anime'),    route: 'Anime',   icon: AnimeIcon },
+  { key: 'manga',   label: t('categories.manga'),    route: 'Manga',   icon: MangaIcon },
+  { key: 'books',   label: t('categories.books'),    route: 'Books',   icon: BooksIcon },
+  { key: 'music',   label: t('categories.music'),    route: 'Music',   icon: MusicIcon },
+])
 
 const gridCols = computed(() => {
   const bp = gridStore.currentBreakpoint

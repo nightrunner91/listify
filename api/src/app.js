@@ -12,6 +12,7 @@ import settingsRoutes from './routes/settings.js'
 import importRoutes from './routes/import.js'
 import activitiesRoutes from './routes/activities.js'
 import userRoutes from './routes/users.js'
+import i18nPlugin from './plugins/i18n.js'
 
 export async function buildApp() {
   const app = Fastify({
@@ -24,6 +25,8 @@ export async function buildApp() {
   })
 
   // ─── Plugins ───────────────────────────────────────────────────────────────
+
+  await app.register(i18nPlugin)
 
   await app.register(helmet, {
     contentSecurityPolicy: false, // frontend handles its own CSP
@@ -48,9 +51,9 @@ export async function buildApp() {
     global: true,
     max: 200,
     timeWindow: '1 minute',
-    errorResponseBuilder: () => ({
+    errorResponseBuilder: (request, context) => ({
       error: 'RATE_LIMITED',
-      message: 'Too many requests, please try again later.',
+      message: request.t ? request.t('errors.RATE_LIMITED') : 'Too many requests, please try again later.',
     }),
   })
 
@@ -96,7 +99,7 @@ export async function buildApp() {
     request.log.error(error)
     return reply.status(500).send({
       error: 'INTERNAL_ERROR',
-      message: 'Something went wrong.',
+      message: request.t ? request.t('errors.INTERNAL_ERROR') : 'Something went wrong.',
     })
   })
 

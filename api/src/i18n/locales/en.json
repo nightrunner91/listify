@@ -1,0 +1,8 @@
+{
+  "errors": {
+    "RATE_LIMITED": "Too many requests, please try again later.",
+    "INTERNAL_ERROR": "Something went wrong.",
+    "NOT_FOUND": "Route not found",
+    "UNAUTHORIZED": "Unauthorized access"
+  }
+}

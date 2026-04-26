@@ -31,7 +31,9 @@ import { renderIcon } from '@/utils/render-icon'
 import LyAvatarPicker from './LyAvatarPicker.vue'
 import LyImport from '@/components/ly-import/LyImport.vue'
 import LyExport from '@/components/ly-export/LyExport.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const authStore = useAuthStore()
 const recordsStore = useRecordsStore()
 const router = useRouter()
@@ -40,14 +42,14 @@ const message = useMessage()
 const importRef = ref(null)
 const exportRef = ref(null)
 
-const dropdownOptions = [
+const dropdownOptions = computed(() => [
   {
-    label: 'Import collection',
+    label: t('userProfile.importCollection'),
     key: 'import',
     icon: renderIcon(ImportIcon)
   },
   {
-    label: 'Export collection',
+    label: t('userProfile.exportCollection'),
     key: 'export',
     icon: renderIcon(ExportIcon)
   },
@@ -56,11 +58,11 @@ const dropdownOptions = [
     key: 'd1'
   },
   {
-    label: 'Logout',
+    label: t('userProfile.logout'),
     key: 'logout',
     icon: renderIcon(LogoutIcon)
   }
-]
+])
 
 function handleSelect(key) {
   if (key === 'import') {
@@ -152,7 +154,7 @@ async function handleLogout() {
               <n-input
                 v-model:value="editableUsername"
                 size="small"
-                placeholder="Username"
+                :placeholder="t('userProfile.usernamePlaceholder')"
                 @blur="toggleEditUsername"
                 @keyup.enter="toggleEditUsername"
                 style="width: 200px"

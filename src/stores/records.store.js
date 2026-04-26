@@ -27,6 +27,7 @@ import {
 import jsesc from 'jsesc'
 import moment from 'moment'
 import Papa from 'papaparse'
+import i18n from '@/i18n'
 
 const RECORDS_KEY = 'rec_'
 
@@ -36,25 +37,25 @@ export const useRecordsStore = defineStore('records', () => {
   /* ===== Sorting ===== */
   /* =================== */
 
-  const sortOptions = shallowRef([
+  const sortOptions = computed(() => [
     {
       key: 'label',
-      label: 'Status',
+      label: i18n.global.t('store.sorting.status'),
       icon: StatusIcon
     },
     {
       key: 'score',
-      label: 'Rating',
+      label: i18n.global.t('store.sorting.rating'),
       icon: RatingIcon
     },
     {
       key: 'liked',
-      label: 'Favourite',
+      label: i18n.global.t('store.sorting.favourite'),
       icon: FavouriteIcon
     },
     {
       key: 'title',
-      label: 'A → Z',
+      label: i18n.global.t('store.sorting.az'),
       icon: AlphabeticalIcon,
       default: true
     },
@@ -230,7 +231,7 @@ export const useRecordsStore = defineStore('records', () => {
         maxNum = Math.max(maxNum, parseInt(match[1]))
       }
     })
-    return `${base} #${maxNum + 1}`
+    return `${i18n.global.t('store.customListName')} #${maxNum + 1}`
   }
 
   // Create a new custom list
@@ -545,7 +546,7 @@ export const useRecordsStore = defineStore('records', () => {
   }
 
   function getLabelName(listType, key) {
-    return getLabel(listType, key).label
+    return i18n.global.t(`store.labels.${key}`)
   }
 
   function getLabelIcon(listType, key) {
@@ -681,12 +682,12 @@ export const useRecordsStore = defineStore('records', () => {
         await api.post('/import', importData)
         await restoreRecords() // Reload everything from server
         processingImport.value = false
-        useNotificationsStore().pushNotification({ message: 'Import successful!', type: 'success' })
+        useNotificationsStore().pushNotification({ message: i18n.global.t('store.notifications.importSuccess'), type: 'success' })
       } catch (err) {
         console.error(err)
         processingImport.value = false
         useNotificationsStore().pushNotification({ 
-          message: isCSV ? 'Failed to parse CSV file.' : 'Failed to parse JSON file.', 
+          message: isCSV ? i18n.global.t('store.notifications.importErrorCSV') : i18n.global.t('store.notifications.importErrorJSON'), 
           type: 'error' 
         })
       }

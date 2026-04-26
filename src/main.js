@@ -14,8 +14,10 @@ import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import '@/components/ly-pixel-canvas/pixel-canvas.js'
 
 /** plugins */
+import i18n from '@/i18n'
 const pinia = createPinia()
 app.use(pinia)
+app.use(i18n)
 
 export const lyStorage = useStorage('ly_')
 

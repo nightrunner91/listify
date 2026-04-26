@@ -1,0 +1,94 @@
+{
+  "common": {
+    "loading": "Încărcare...",
+    "save": "Salvează",
+    "cancel": "Anulează",
+    "delete": "Șterge",
+    "edit": "Editează",
+    "add": "Adaugă",
+    "close": "Închide"
+  },
+  "home": {
+    "categories": "CATEGORII"
+  },
+  "categories": {
+    "start": "Colecția mea",
+    "games": "Jocuri",
+    "tvshows": "Seriale",
+    "films": "Filme",
+    "anime": "Anime",
+    "manga": "Manga",
+    "books": "Cărți",
+    "music": "Muzică",
+    "about": "Despre Listify"
+  },
+  "customLists": {
+    "title": "LISTE PERSONALIZATE",
+    "emptyDescription": "Nu ați creat nicio listă personalizată încă.",
+    "createList": "Creează listă nouă",
+    "items": "elemente",
+    "updated": "Actualizat {time}"
+  },
+  "userProfile": {
+    "importCollection": "Importă colecția",
+    "exportCollection": "Exportă colecția",
+    "logout": "Deconectare",
+    "usernamePlaceholder": "Nume de utilizator"
+  },
+  "records": {
+    "emptyDescription": "Se pare că lista ta este goală.",
+    "searchEmptyDescription": "Nu am găsit înregistrări care să corespundă căutării tale.",
+    "or": "sau"
+  },
+  "about": {
+    "description": "Listify este un tracker media personal construit în jurul unei idei: colecția ta ar trebui să fie simplu de întreținut, mereu accesibilă și în întregime a ta. Fie că jurnalizezi jocuri pe care le-ai terminat, filme pe lista de așteptare, cărți pe care le citești sau orice altceva — Listify le menține organizate fără a-ți sta în cale.",
+    "howItWorks": "Cum funcționează",
+    "step1": "Înregistrează-te și creează-ți contul personal Listify.",
+    "step2": "Adaugă și gestionează înregistrări de pe orice dispozitiv — desktop sau mobil.",
+    "step3": "Folosește categoriile încorporate sau creează liste personalizate pentru orice nu se potrivește cu setările implicite.",
+    "dataTitle": "Datele tale, regulile tale",
+    "dataDescription": "Colecția ta trăiește pe serverele noastre, dar îți aparține. Listify acceptă portabilitatea completă a datelor — exportă întreaga colecție ca fișier {format1} sau {format2} în orice moment. Folosește-l pentru copii de rezervă, migrare sau doar pentru a păstra o copie locală în software-ul tău preferat de calcul tabelar.",
+    "privacy": "Fără urmărire, fără reclame, fără partajarea datelor cu terți.",
+    "openSource": "Open-source — inspectă, fă fork sau găzduiește singur întregul proiect.",
+    "communityTitle": "Comunitate și contribuții",
+    "communityDescription": "Listify este un proiect open-source dezvoltat activ. Noi funcții, categorii și îmbunătățiri ale calității vieții sunt adăugate în mod regulat. Dacă ai o idee, ai găsit un bug sau vrei doar să ne saluți — contactează-ne prin {link1} sau {link2}. Contribuțiile sunt întotdeauna binevenite.",
+    "telegram": "Telegram",
+    "githubIssue": "deschide o problemă pe GitHub",
+    "thankYou": "Îți mulțumim că folosești Listify — și pentru că faci parte din ceea ce devine.",
+    "techStack": "Stack tehnologic"
+  },
+  "store": {
+    "sorting": {
+      "status": "Status",
+      "rating": "Rating",
+      "favourite": "Favorit",
+      "az": "A → Z"
+    },
+    "labels": {
+      "playing_now": "Mă joc acum",
+      "plan_to_play": "În plan",
+      "on_hold": "În pauză",
+      "completed": "Finalizat",
+      "dropped": "Abandonat",
+      "watching_ongoing": "Vizionez acum",
+      "watching_now": "Vizionez acum",
+      "plan_to_watch": "În plan",
+      "watched_all": "Vizionat tot",
+      "watched": "Vizionat",
+      "read_ongoing": "Citesc acum",
+      "read_now": "Citesc acum",
+      "plan_to_read": "În plan",
+      "read": "Citit",
+      "listening_now": "Ascult acum",
+      "on_repeat": "Pe repeat",
+      "plan_to_listen": "În plan",
+      "listened_all": "Finalizat"
+    },
+    "notifications": {
+      "importSuccess": "Import reușit!",
+      "importErrorCSV": "Eroare la procesarea fișierului CSV.",
+      "importErrorJSON": "Eroare la procesarea fișierului JSON."
+    },
+    "customListName": "Listă personalizată"
+  }
+}
