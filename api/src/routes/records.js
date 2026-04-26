@@ -83,12 +83,15 @@ export default async function recordsRoutes(app) {
       .values({ userId, category, title, score, liked, label })
       .returning()
 
-    // Log activity
-    await logActivity(userId, {
-      action: 'record_created',
-      category,
-      entityName: title,
-    })
+    // Log activity only if title is not empty
+    if (title && title.trim()) {
+      await logActivity(userId, {
+        action: 'record_created',
+        category,
+        entityId: record.id,
+        entityName: title,
+      })
+    }
 
     return reply.status(201).send(record)
   })
@@ -134,11 +137,22 @@ export default async function recordsRoutes(app) {
       .returning()
 
     // Log activities based on changes
+    // If title was empty and is now non-empty, or if title changed and is non-empty
+    if (updates.title && updates.title.trim() && (updates.title !== old.title)) {
+      await logActivity(userId, {
+        action: 'record_created', // We still call it record_created for the first meaningful title
+        category: old.category,
+        entityId: id,
+        entityName: updates.title,
+      })
+    }
+
     if (updates.score !== undefined && updates.score !== old.score) {
       await logActivity(userId, {
         action: 'record_score_updated',
         category: old.category,
-        entityName: old.title,
+        entityId: id,
+        entityName: updated.title,
         metadata: { score: updates.score }
       })
     }
@@ -146,14 +160,16 @@ export default async function recordsRoutes(app) {
       await logActivity(userId, {
         action: updates.liked ? 'record_liked' : 'record_unliked',
         category: old.category,
-        entityName: old.title,
+        entityId: id,
+        entityName: updated.title,
       })
     }
     if (updates.label !== undefined && updates.label !== old.label) {
       await logActivity(userId, {
         action: 'record_status_updated',
         category: old.category,
-        entityName: old.title,
+        entityId: id,
+        entityName: updated.title,
         metadata: { label: updates.label }
       })
     }

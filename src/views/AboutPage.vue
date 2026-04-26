@@ -89,7 +89,7 @@ const usedStuff = ref([
 
       <n-h4>Your Data, Your Rules</n-h4>
       <n-p>
-        Your collection lives on our servers, but it belongs to you. Listify supports full data portability — export your entire collection as a <n-a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a> or CSV file at any time. Use it for backups, migration, or just keeping a local copy in your favorite spreadsheet software.
+        Your collection lives on our servers, but it belongs to you. Listify supports full data portability — export your entire collection as a <n-a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank">JSON</n-a> or <n-a href="https://en.wikipedia.org/wiki/Comma-separated_values" target="_blank">CSV</n-a> file at any time. Use it for backups, migration, or just keeping a local copy in your favorite spreadsheet software.
       </n-p>
       <n-list :show-divider="false" class="mb-6">
         <n-list-item>

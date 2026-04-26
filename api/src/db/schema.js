@@ -73,6 +73,7 @@ export const activities = pgTable('activities', {
   userId:     uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   action:     varchar('action', { length: 100 }).notNull(),
   category:   varchar('category', { length: 50 }),
+  entityId:   uuid('entity_id'),
   entityName: varchar('entity_name', { length: 500 }),
   metadata:   text('metadata'), // JSON string
   createdAt:  timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),

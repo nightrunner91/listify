@@ -169,6 +169,10 @@ const menuOptions = computed(() => {
 
   return [
     ...baseOptions,
+    {
+      key: 'divider-2',
+      type: 'divider',
+    },
     ...customListOptions,
     createOption,
     { key: 'divider-about', type: 'divider' },

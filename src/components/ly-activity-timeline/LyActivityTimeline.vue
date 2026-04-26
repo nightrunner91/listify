@@ -104,7 +104,9 @@ const formatActivity = (activity) => {
     case 'record_deleted':
       return `Deleted **${entityName}** from ${category}`
     case 'custom_list_created':
-      return `Created a new list **${entityName}**`
+      return entityName ? `Created a new list **${entityName}**` : 'Created a new custom list'
+    case 'custom_list_renamed':
+      return `Renamed custom list as **${entityName}**`
     case 'custom_list_deleted':
       return `Deleted list **${entityName}**`
     case 'custom_list_record_added':

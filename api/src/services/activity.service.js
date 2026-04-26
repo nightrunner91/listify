@@ -1,6 +1,6 @@
 import { db } from '../db/index.js'
 import { activities } from '../db/schema.js'
-import { eq, desc } from 'drizzle-orm'
+import { eq, desc, and, gte } from 'drizzle-orm'
 
 /**
  * Log a user activity to the database.
@@ -9,19 +9,55 @@ import { eq, desc } from 'drizzle-orm'
  * @param {Object} data - Activity data
  * @param {string} data.action - Action key (e.g., 'record_created')
  * @param {string} [data.category] - Category (e.g., 'games')
+ * @param {string} [data.entityId] - UUID of the item/list
  * @param {string} [data.entityName] - Name of the item/list
  * @param {Object} [data.metadata] - Extra info (score, listName, etc.)
  */
-export async function logActivity(userId, { action, category, entityName, metadata }) {
+export async function logActivity(userId, { action, category, entityId, entityName, metadata }) {
   try {
+    const now = new Date()
+    const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000)
+
+    // Coalescing logic: if there's a recent activity for the same entity and action, update it
+    if (entityId) {
+      const [existing] = await db
+        .select()
+        .from(activities)
+        .where(
+          and(
+            eq(activities.userId, userId),
+            eq(activities.action, action),
+            eq(activities.entityId, entityId),
+            gte(activities.createdAt, tenMinutesAgo)
+          )
+        )
+        .orderBy(desc(activities.createdAt))
+        .limit(1)
+
+      if (existing) {
+        const [updated] = await db
+          .update(activities)
+          .set({
+            entityName,
+            metadata: metadata ? JSON.stringify(metadata) : existing.metadata,
+            createdAt: now, // Move to top of timeline
+          })
+          .where(eq(activities.id, existing.id))
+          .returning()
+        return updated
+      }
+    }
+
     const [inserted] = await db
       .insert(activities)
       .values({
         userId,
         action,
         category,
+        entityId,
         entityName,
         metadata: metadata ? JSON.stringify(metadata) : null,
+        createdAt: now,
       })
       .returning()
     return inserted

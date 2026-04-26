@@ -15,6 +15,13 @@
       "when": 1777147725365,
       "tag": "0001_milky_kingpin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1777192162991,
+      "tag": "0002_good_firebird",
+      "breakpoints": true
     }
   ]
 }

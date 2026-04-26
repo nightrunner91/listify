@@ -65,11 +65,12 @@ export default async function customListsRoutes(app) {
       .values({ userId, name })
       .returning()
 
-    // Log activity
+    // Log generic creation activity
     await logActivity(userId, {
       action: 'custom_list_created',
       category: 'custom',
-      entityName: name,
+      entityId: list.id,
+      entityName: null, // Triggers "Created a new custom list" in frontend
     })
 
     return reply.status(201).send({ ...list, records: [] })
@@ -104,6 +105,16 @@ export default async function customListsRoutes(app) {
 
     if (!updated) {
       return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
+    }
+
+    // Log activity when list is renamed
+    if (name && name.trim()) {
+      await logActivity(userId, {
+        action: 'custom_list_renamed',
+        category: 'custom',
+        entityId: id,
+        entityName: name,
+      })
     }
 
     return reply.send(updated)
@@ -185,13 +196,16 @@ export default async function customListsRoutes(app) {
       .set({ updatedAt: new Date() })
       .where(eq(customLists.id, listId))
 
-    // Log activity
-    await logActivity(userId, {
-      action: 'custom_list_record_added',
-      category: 'custom',
-      entityName: title,
-      metadata: { listName: list.name }
-    })
+    // Log activity only if title is not empty
+    if (title && title.trim()) {
+      await logActivity(userId, {
+        action: 'custom_list_record_added',
+        category: 'custom',
+        entityId: record.id,
+        entityName: title,
+        metadata: { listName: list.name }
+      })
+    }
 
     return reply.status(201).send(record)
   })
@@ -220,9 +234,9 @@ export default async function customListsRoutes(app) {
     const { title } = request.body
     const userId = request.user.id
 
-    // Verify list ownership
+    // Verify list ownership and get name for log
     const [list] = await db
-      .select({ id: customLists.id })
+      .select({ id: customLists.id, name: customLists.name })
       .from(customLists)
       .where(and(eq(customLists.id, listId), eq(customLists.userId, userId)))
       .limit(1)
@@ -245,6 +259,17 @@ export default async function customListsRoutes(app) {
 
     if (!updated) {
       return reply.status(404).send({ error: 'NOT_FOUND', message: 'Record not found' })
+    }
+
+    // Log activity if title becomes non-empty or changes
+    if (title && title.trim()) {
+      await logActivity(userId, {
+        action: 'custom_list_record_added', // Use same action for first meaningful title
+        category: 'custom',
+        entityId: recordId,
+        entityName: title,
+        metadata: { listName: list.name }
+      })
     }
 
     // Touch the list updatedAt
