@@ -71,8 +71,9 @@ function confirmDeleteList() {
         offset="0 s:1 l:1">
         <n-space
           justify="space-between"
+          :wrap-item="false"
           align="center"
-          class="mb-6">
+          class="w-100 mb-6">
           <template v-if="route.meta.tag === 'start'">
             <ly-user-profile class="w-100" @import="importRef.showModal = true" />
           </template>
