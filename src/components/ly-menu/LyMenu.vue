@@ -1,7 +1,8 @@
 <script setup>
-import { h, ref, watch } from 'vue'
+import { h, ref, watch, computed } from 'vue'
 import { NMenu, NBadge } from 'naive-ui'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import {
   PhGameController as GamesIcon,
   PhTelevision as TvShowsIcon,
@@ -18,9 +19,9 @@ import {
 import { useGridStore } from '@/stores/grid.store'
 import { useMenuStore } from '@/stores/menu.store'
 import { useRecordsStore } from '@/stores/records.store'
-import { useRouter } from 'vue-router'
 import { renderIcon } from '@/utils/render-icon'
 
+const { t } = useI18n()
 const gridStore = useGridStore()
 const menuStore = useMenuStore()
 const recordsStore = useRecordsStore()
@@ -39,8 +40,6 @@ function renderExtra (total) {
   })
 }
 
-import { computed } from 'vue'
-
 const menuOptions = computed(() => {
   const baseOptions = [
     {
@@ -48,7 +47,7 @@ const menuOptions = computed(() => {
         h(
           RouterLink,
           { to: { name: 'Start' } },
-          { default: () => 'Home' }
+          { default: () => t('menu.home') }
         ),
       key: 'start',
       icon: renderIcon(StartIcon, { weight: iconsStyle }),
@@ -62,7 +61,7 @@ const menuOptions = computed(() => {
         h(
           RouterLink,
           { to: { name: 'Games' } },
-          { default: () => 'Games' }
+          { default: () => t('categories.games') }
         ),
       key: 'games',
       extra: renderExtra(recordsStore.recordsLength('games').value),
@@ -73,7 +72,7 @@ const menuOptions = computed(() => {
         h(
           RouterLink,
           { to: { name: 'TVShows' } },
-          { default: () => 'TV Shows' }
+          { default: () => t('categories.tvshows') }
         ),
       key: 'tvshows',
       extra: renderExtra(recordsStore.recordsLength('tvshows').value),
@@ -84,7 +83,7 @@ const menuOptions = computed(() => {
         h(
           RouterLink,
           { to: { name: 'Films' } },
-          { default: () => 'Films' }
+          { default: () => t('categories.films') }
         ),
       key: 'films',
       extra: renderExtra(recordsStore.recordsLength('films').value),
@@ -95,7 +94,7 @@ const menuOptions = computed(() => {
         h(
           RouterLink,
           { to: { name: 'Anime' } },
-          { default: () => 'Anime' }
+          { default: () => t('categories.anime') }
         ),
       key: 'anime',
       extra: renderExtra(recordsStore.recordsLength('anime').value),
@@ -106,7 +105,7 @@ const menuOptions = computed(() => {
         h(
           RouterLink,
           { to: { name: 'Manga' } },
-          { default: () => 'Manga' }
+          { default: () => t('categories.manga') }
         ),
       key: 'manga',
       extra: renderExtra(recordsStore.recordsLength('manga').value),
@@ -117,7 +116,7 @@ const menuOptions = computed(() => {
         h(
           RouterLink,
           { to: { name: 'Books' } },
-          { default: () => 'Books' }
+          { default: () => t('categories.books') }
         ),
       key: 'books',
       extra: renderExtra(recordsStore.recordsLength('books').value),
@@ -128,7 +127,7 @@ const menuOptions = computed(() => {
         h(
           RouterLink,
           { to: { name: 'Music' } },
-          { default: () => 'Music' }
+          { default: () => t('categories.music') }
         ),
       key: 'music',
       extra: renderExtra(recordsStore.recordsLength('music').value),
@@ -150,7 +149,7 @@ const menuOptions = computed(() => {
 
   // Add create button at the end
   const createOption = {
-    label: 'Create a New List',
+    label: () => t('menu.createList'),
     key: 'create-new',
     icon: renderIcon(NewIcon, { weight: iconsStyle }),
     disabled: false,
@@ -161,7 +160,7 @@ const menuOptions = computed(() => {
       h(
         RouterLink,
         { to: { name: 'About' } },
-        { default: () => 'About' }
+        { default: () => t('categories.about') }
       ),
     key: 'about',
     icon: renderIcon(AboutIcon, { weight: iconsStyle }),

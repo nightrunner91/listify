@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NSpace, NH3, NText } from 'naive-ui'
+import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NSpace, NH3, NText, NLayout, NGrid, NGi } from 'naive-ui'
 import { useAuthStore } from '@/stores/auth.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useThemeStore } from '@/stores/theme.store'
@@ -11,6 +12,7 @@ const message = useMessage()
 const authStore = useAuthStore()
 const recordsStore = useRecordsStore()
 const themeStore = useThemeStore()
+const { t } = useI18n()
 
 const loading = ref(false)
 const formRef = ref(null)
@@ -24,12 +26,12 @@ const formModel = ref({
 const rules = {
   email: {
     required: true,
-    message: 'Please input your email',
+    message: t('validation.emailRequired'),
     trigger: 'blur'
   },
   password: {
     required: true,
-    message: 'Please input your password',
+    message: t('validation.passwordRequired'),
     trigger: 'blur',
     min: 8
   },
@@ -37,8 +39,8 @@ const rules = {
     required: true,
     trigger: 'blur',
     validator: (rule, value) => {
-      if (!value) return new Error('Please confirm your password')
-      if (value !== formModel.value.password) return new Error('Passwords do not match')
+      if (!value) return new Error(t('validation.confirmPasswordRequired'))
+      if (value !== formModel.value.password) return new Error(t('validation.passwordMismatch'))
       return true
     }
   }
@@ -54,10 +56,10 @@ async function handleRegister() {
           recordsStore.restoreRecords(),
           themeStore.restoreTheme(),
         ])
-        message.success('Account created successfully!')
+        message.success(t('auth.register.successMessage'))
         router.push('/')
       } catch (error) {
-        message.error(error.message || 'Failed to register')
+        message.error(error.message || t('auth.register.errorMessage'))
       } finally {
         loading.value = false
       }
@@ -67,87 +69,74 @@ async function handleRegister() {
 </script>
 
 <template>
-  <div class="auth-container">
-    <n-card class="auth-card" size="huge" hoverable>
-      <div class="auth-header">
-        <n-h3 style="margin-bottom: 0;">Create an Account</n-h3>
-        <n-text depth="3">Join Listify today</n-text>
-      </div>
+  <n-layout position="absolute">
+    <n-space
+      vertical
+      justify="center"
+      align="center"
+      style="height: 100%; padding: 16px;"
+    >
+      <n-grid :cols="24">
+        <n-gi :span="24" :m="16" :l="10" :offset="0" :m-offset="4" :l-offset="7">
+          <n-card size="huge" hoverable>
+            <n-space vertical :size="32">
+              <n-space vertical align="center" :size="8">
+                <n-h3>{{ $t('auth.register.title') }}</n-h3>
+                <n-text depth="3">{{ $t('auth.register.subtitle') }}</n-text>
+              </n-space>
 
-      <n-form
-        ref="formRef"
-        :model="formModel"
-        :rules="rules"
-        size="large"
-        @keyup.enter="handleRegister"
-      >
-        <n-form-item path="email" label="Email">
-          <n-input v-model:value="formModel.email" placeholder="example@email.com" />
-        </n-form-item>
-        
-        <n-form-item path="password" label="Password">
-          <n-input
-            v-model:value="formModel.password"
-            type="password"
-            show-password-on="click"
-            placeholder="At least 8 characters"
-          />
-        </n-form-item>
+              <n-form
+                ref="formRef"
+                :model="formModel"
+                :rules="rules"
+                size="large"
+                @keyup.enter="handleRegister"
+              >
+                <n-form-item path="email" :label="$t('auth.login.emailLabel')">
+                  <n-input v-model:value="formModel.email" :placeholder="$t('auth.login.emailPlaceholder')" />
+                </n-form-item>
+                
+                <n-form-item path="password" :label="$t('auth.login.passwordLabel')">
+                  <n-input
+                    v-model:value="formModel.password"
+                    type="password"
+                    show-password-on="click"
+                    :placeholder="$t('auth.register.passwordPlaceholder')"
+                  />
+                </n-form-item>
 
-        <n-form-item path="confirmPassword" label="Confirm Password">
-          <n-input
-            v-model:value="formModel.confirmPassword"
-            type="password"
-            show-password-on="click"
-            placeholder="Repeat your password"
-          />
-        </n-form-item>
+                <n-form-item path="confirmPassword" :label="$t('auth.register.confirmPasswordLabel')">
+                  <n-input
+                    v-model:value="formModel.confirmPassword"
+                    type="password"
+                    show-password-on="click"
+                    :placeholder="$t('auth.register.confirmPasswordPlaceholder')"
+                  />
+                </n-form-item>
 
-        <n-button
-          type="primary"
-          size="large"
-          block
-          :loading="loading"
-          @click="handleRegister"
-          style="margin-top: 12px;"
-        >
-          Register
-        </n-button>
-      </n-form>
+                <n-form-item :show-label="false">
+                  <n-button
+                    type="primary"
+                    size="large"
+                    block
+                    :loading="loading"
+                    @click="handleRegister"
+                  >
+                    {{ $t('auth.register.registerButton') }}
+                  </n-button>
+                </n-form-item>
+              </n-form>
 
-      <div class="auth-footer">
-        <n-text depth="3">Already have an account? </n-text>
-        <n-button text type="primary" @click="router.push('/login')">
-          Log in here
-        </n-button>
-      </div>
-    </n-card>
-  </div>
+              <n-space justify="center" align="center" :size="4">
+                <n-text depth="3">{{ $t('auth.register.haveAccount') }}</n-text>
+                <n-button text type="primary" @click="router.push('/login')">
+                  {{ $t('auth.register.loginLink') }}
+                </n-button>
+              </n-space>
+            </n-space>
+          </n-card>
+        </n-gi>
+      </n-grid>
+    </n-space>
+  </n-layout>
 </template>
-
-<style scoped lang="scss">
-.auth-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--n-color);
-  padding: 16px;
-}
-
-.auth-card {
-  max-width: 400px;
-  width: 100%;
-  border-radius: 12px;
-}
-
-.auth-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.auth-footer {
-  margin-top: 24px;
-  text-align: center;
-}
-</style>

@@ -17,7 +17,9 @@ import {
 import { renderIcon } from '@/utils/render-icon'
 import { useRecordsStore } from '@/stores/records.store'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const recordsStore = useRecordsStore()
 const route = useRoute()
 
@@ -76,9 +78,11 @@ watch(
               @click="handleSelection"
             >
               <n-text v-if="recordsStore.allRecordsSelected(route.meta.tag).value">
-                Deselect All
+                {{ t('common.deselectAll') }}
               </n-text>
-              <n-text v-else>Select All</n-text>
+              <n-text v-else>
+                {{ t('common.selectAll') }}
+              </n-text>
             </n-button>
 
             <n-popconfirm
@@ -90,14 +94,17 @@ watch(
                   size="small"
                   :render-icon="renderIcon(DeleteIcon)"
                 >
-                  Delete
+                  {{ t('common.delete') }}
                 </n-button>
               </template>
-              <n-text>You sure want to delete</n-text>
-              <n-text strong class="mx-1">
-                {{ selectedCount }}
+              <n-text>
+                {{
+                  t('controls.deleteConfirm', {
+                    count: selectedCount,
+                    record: t('controls.record', selectedCount),
+                  })
+                }}
               </n-text>
-              <n-text>record<n-text v-if="selectedCount > 1">s</n-text>?</n-text>
             </n-popconfirm>
           </n-space>
         </n-grid-item>
@@ -105,3 +112,4 @@ watch(
     </n-space>
   </n-drawer>
 </template>
+

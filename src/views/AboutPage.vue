@@ -70,19 +70,19 @@ const usedStuff = ref([
       <n-h4>{{ t('about.howItWorks') }}</n-h4>
       <n-list :show-divider="false" class="mb-6">
         <n-list-item>
-          <n-space :wrap-item="false" align="center">
+          <n-space :wrap-item="false" align="start" :wrap="false">
             <n-icon size="24" :component="AccountIcon" />
             <n-text>{{ t('about.step1') }}</n-text>
           </n-space>
         </n-list-item>
         <n-list-item>
-          <n-space :wrap-item="false" align="center">
+          <n-space :wrap-item="false" align="start" :wrap="false">
             <n-icon size="24" :component="DevicesIcon" />
             <n-text>{{ t('about.step2') }}</n-text>
           </n-space>
         </n-list-item>
         <n-list-item>
-          <n-space :wrap-item="false" align="center">
+          <n-space :wrap-item="false" align="start" :wrap="false">
             <n-icon size="24" :component="SyncIcon" />
             <n-text>{{ t('about.step3') }}</n-text>
           </n-space>
@@ -102,13 +102,13 @@ const usedStuff = ref([
       </n-p>
       <n-list :show-divider="false" class="mb-6">
         <n-list-item>
-          <n-space :wrap-item="false" align="center">
+          <n-space :wrap-item="false" align="start" :wrap="false">
             <n-icon size="24" :component="PrivacyIcon" />
             <n-text>{{ t('about.privacy') }}</n-text>
           </n-space>
         </n-list-item>
         <n-list-item>
-          <n-space :wrap-item="false" align="center">
+          <n-space :wrap-item="false" align="start" :wrap="false">
             <n-icon size="24" :component="OpenSourceIcon" />
             <n-text>{{ t('about.openSource') }}</n-text>
           </n-space>

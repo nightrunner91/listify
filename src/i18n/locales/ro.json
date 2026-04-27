@@ -6,7 +6,13 @@
     "delete": "Șterge",
     "edit": "Editează",
     "add": "Adaugă",
-    "close": "Închide"
+    "close": "Închide",
+    "selectAll": "Selectează tot",
+    "deselectAll": "Deselectează tot",
+    "export": "Export",
+    "import": "Import",
+    "light": "Luminos",
+    "dark": "Întunecat"
   },
   "home": {
     "categories": "CATEGORII"
@@ -79,6 +85,9 @@
       "read_now": "Citesc acum",
       "plan_to_read": "În plan",
       "read": "Citit",
+      "playing": "Mă joc",
+      "reading": "Citesc",
+      "watching": "Vizionez",
       "listening_now": "Ascult acum",
       "on_repeat": "Pe repeat",
       "plan_to_listen": "În plan",
@@ -90,5 +99,90 @@
       "importErrorJSON": "Eroare la procesarea fișierului JSON."
     },
     "customListName": "Listă personalizată"
+  },
+  "controls": {
+    "deleteConfirm": "Ești sigur că vrei să ștergi {count} {record}?",
+    "record": "înregistrare | înregistrări"
+  },
+  "menu": {
+    "home": "Acasă",
+    "createList": "Creează o listă nouă"
+  },
+  "export": {
+    "modalTitle": "Exportă colecția",
+    "sectionCategories": "CATEGORII",
+    "sectionCustomLists": "LISTE PERSONALIZATE",
+    "sectionFormat": "FORMAT",
+    "footerInfo": "Exportă colecția pentru backup, migrare sau portabilitate. Datele tale sunt stocate în siguranță pe server, dar o copie locală nu strică niciodată."
+  },
+  "import": {
+    "modalTitle": "Importă colecția",
+    "draggerText": "Apasă sau trage colecția aici",
+    "draggerInfo": "Fișierul importat va fi îmbinat cu colecția de pe server. Elementele existente vor fi păstrate. Asigură-te că exporți un backup mai întâi dacă este necesar."
+  },
+  "search": {
+    "placeholder": "Caută în {name}..."
+  },
+  "addRecord": {
+    "button": "Adaugă {thing}"
+  },
+  "avatarPicker": {
+    "modalTitle": "Personalizează avatarul",
+    "randomSeed": "Seed aleatoriu",
+    "resetOptions": "Resetează opțiunile",
+    "configuration": "Configurație",
+    "styleLabel": "Stil avatar",
+    "seedLabel": "Seed",
+    "seedPlaceholder": "Orice șir...",
+    "rotationLabel": "Rotație ({angle}°)",
+    "scaleLabel": "Scară ({percent}%)",
+    "flipLabel": "Întoarce orizontal",
+    "confirmButton": "Confirmă configurația"
+  },
+  "things": {
+    "game": "un joc",
+    "tvshow": "un serial",
+    "film": "un film",
+    "anime": "un anime",
+    "manga": "o manga",
+    "book": "o carte",
+    "music": "muzică",
+    "item": "un element"
+  },
+  "auth": {
+    "login": {
+      "title": "Autentificare în Listify",
+      "subtitle": "Bine ai revenit!",
+      "emailLabel": "Email",
+      "emailPlaceholder": "example{'@'}email.com",
+      "passwordLabel": "Parolă",
+      "passwordPlaceholder": "Parola ta",
+      "loginButton": "Conectare",
+      "tabTitle": "Autentificare",
+      "noAccount": "Nu ai un cont?",
+      "registerLink": "Înregistrează-te aici",
+      "successMessage": "Autentificare reușită!",
+      "errorMessage": "Eroare la autentificare"
+    },
+    "register": {
+      "title": "Creează un cont",
+      "subtitle": "Alătură-te Listify astăzi",
+      "confirmPasswordLabel": "Confirmă parola",
+      "confirmPasswordPlaceholder": "Repetă parola",
+      "passwordPlaceholder": "Cel puțin 8 caractere",
+      "registerButton": "Înregistrare",
+      "tabTitle": "Înregistrare",
+      "haveAccount": "Ai deja un cont?",
+      "loginLink": "Conectează-te aici",
+      "successMessage": "Cont creat cu succes!",
+      "errorMessage": "Eroare la înregistrare"
+    }
+  },
+  "validation": {
+    "emailRequired": "Vă rugăm să introduceți adresa de email",
+    "passwordRequired": "Vă rugăm să introduceți parola",
+    "confirmPasswordRequired": "Vă rugăm să confirmați parola",
+    "passwordMismatch": "Parolele nu se potrivesc"
   }
 }
+

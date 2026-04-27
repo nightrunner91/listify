@@ -17,7 +17,9 @@ import {
 import { renderIcon } from '@/utils/render-icon'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 
@@ -46,7 +48,7 @@ defineExpose({
     v-if="variant === 'inline'"
     :render-icon="renderIcon(ImportIcon)"
     @click="showModal = true">
-    Import Collection
+    {{ t('userProfile.importCollection') }}
   </n-button>
 
   <template v-else-if="variant === 'minified'">
@@ -60,17 +62,19 @@ defineExpose({
           <template #icon>
             <n-icon :component="ImportIcon" :size="18" />
           </template>
-          <span v-if="gridStore.screenLargerThen('s')">Import</span>
+          <span v-if="gridStore.screenLargerThen('s')">
+            {{ t('common.import') }}
+          </span>
         </n-button>
       </template>
-      Import Collection
+      {{ t('userProfile.importCollection') }}
     </n-tooltip>
   </template>
 
   <n-modal
     v-model:show="showModal"
     preset="card"
-    title="Import Collection"
+    :title="t('import.modalTitle')"
     transform-origin="center"
     to="body"
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
@@ -93,14 +97,17 @@ defineExpose({
             :depth="4" />
         </div>
         <n-p>
-          Click or drag your collection here
+          {{ t('import.draggerText') }}
         </n-p>
         <n-p
           depth="3"
           style="font-size: 14px; display: flex; align-items: flex-start; gap: 8px;">
-          <span>The imported file will be merged with your server-side collection. Existing items will be preserved. Make sure to export a backup first if needed.</span>
+          <span>
+            {{ t('import.draggerInfo') }}
+          </span>
         </n-p>
       </n-upload-dragger>
     </n-upload>
   </n-modal>
 </template>
+

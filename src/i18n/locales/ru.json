@@ -6,7 +6,13 @@
     "delete": "Удалить",
     "edit": "Редактировать",
     "add": "Добавить",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "selectAll": "Выбрать всё",
+    "deselectAll": "Снять выделение",
+    "export": "Экспорт",
+    "import": "Импорт",
+    "light": "Светлая",
+    "dark": "Тёмная"
   },
   "home": {
     "categories": "КАТЕГОРИИ"
@@ -79,6 +85,9 @@
       "read_now": "Читаю сейчас",
       "plan_to_read": "В планах",
       "read": "Прочитано",
+      "playing": "Играю",
+      "reading": "Читаю",
+      "watching": "Смотрю",
       "listening_now": "Слушаю сейчас",
       "on_repeat": "На повторе",
       "plan_to_listen": "В планах",
@@ -90,5 +99,90 @@
       "importErrorJSON": "Не удалось разобрать JSON-файл."
     },
     "customListName": "Свой список"
+  },
+  "controls": {
+    "deleteConfirm": "Вы уверены, что хотите удалить {count} {record}?",
+    "record": "запись | записи | записей"
+  },
+  "menu": {
+    "home": "Главная",
+    "createList": "Создать новый список"
+  },
+  "export": {
+    "modalTitle": "Экспорт коллекции",
+    "sectionCategories": "КАТЕГОРИИ",
+    "sectionCustomLists": "СВОИ СПИСКИ",
+    "sectionFormat": "ФОРМАТ",
+    "footerInfo": "Экспортируйте вашу коллекцию для резервного копирования, миграции или переносимости. Ваши данные надежно хранятся на сервере, но локальная копия никогда не помешает."
+  },
+  "import": {
+    "modalTitle": "Импорт коллекции",
+    "draggerText": "Нажмите или перетащите вашу коллекцию сюда",
+    "draggerInfo": "Импортируемый файл будет объединен с вашей коллекцией на сервере. Существующие элементы будут сохранены. Обязательно сначала экспортируйте резервную копию, если это необходимо."
+  },
+  "search": {
+    "placeholder": "Искать в {name}..."
+  },
+  "addRecord": {
+    "button": "Добавить {thing}"
+  },
+  "avatarPicker": {
+    "modalTitle": "Настройка аватара",
+    "randomSeed": "Случайный сид",
+    "resetOptions": "Сбросить настройки",
+    "configuration": "Конфигурация",
+    "styleLabel": "Стиль аватара",
+    "seedLabel": "Сид",
+    "seedPlaceholder": "Любая строка...",
+    "rotationLabel": "Поворот ({angle}°)",
+    "scaleLabel": "Масштаб ({percent}%)",
+    "flipLabel": "Отразить по горизонтали",
+    "confirmButton": "Подтвердить конфигурацию"
+  },
+  "things": {
+    "game": "игру",
+    "tvshow": "сериал",
+    "film": "фильм",
+    "anime": "аниме",
+    "manga": "мангу",
+    "book": "книгу",
+    "music": "музыку",
+    "item": "элемент"
+  },
+  "auth": {
+    "login": {
+      "title": "Вход в Listify",
+      "subtitle": "С возвращением!",
+      "emailLabel": "Электронная почта",
+      "emailPlaceholder": "example{'@'}email.com",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "Ваш пароль",
+      "loginButton": "Войти",
+      "tabTitle": "Вход",
+      "noAccount": "Нет аккаунта?",
+      "registerLink": "Зарегистрируйтесь здесь",
+      "successMessage": "Вход выполнен успешно!",
+      "errorMessage": "Не удалось войти"
+    },
+    "register": {
+      "title": "Создать аккаунт",
+      "subtitle": "Присоединяйтесь к Listify сегодня",
+      "confirmPasswordLabel": "Подтвердите пароль",
+      "confirmPasswordPlaceholder": "Повторите пароль",
+      "passwordPlaceholder": "Минимум 8 символов",
+      "registerButton": "Зарегистрироваться",
+      "tabTitle": "Регистрация",
+      "haveAccount": "Уже есть аккаунт?",
+      "loginLink": "Войдите здесь",
+      "successMessage": "Аккаунт успешно создан!",
+      "errorMessage": "Не удалось зарегистрироваться"
+    }
+  },
+  "validation": {
+    "emailRequired": "Пожалуйста, введите адрес электронной почты",
+    "passwordRequired": "Пожалуйста, введите пароль",
+    "confirmPasswordRequired": "Пожалуйста, подтвердите пароль",
+    "passwordMismatch": "Пароли не совпадают"
   }
 }
+

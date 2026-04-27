@@ -21,7 +21,9 @@ import {
 } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 
@@ -52,10 +54,12 @@ defineExpose({
           <template #icon>
             <n-icon :component="ExportIcon" :size="18" />
           </template>
-          <span v-if="gridStore.screenLargerThen('s')">Export</span>
+          <span v-if="gridStore.screenLargerThen('s')">
+            {{ t('common.export') }}
+          </span>
         </n-button>
       </template>
-      Export Collection
+      {{ t('userProfile.exportCollection') }}
     </n-tooltip>
   </template>
 
@@ -64,19 +68,21 @@ defineExpose({
     v-else-if="variant === 'inline'"
     :render-icon="renderIcon(ExportIcon)"
     @click="showModal = true">
-    Export Collection
+    {{ t('userProfile.exportCollection') }}
   </n-button>
 
   <n-modal
     v-model:show="showModal"
     preset="card"
-    title="Export Collection"
+    :title="t('export.modalTitle')"
     transform-origin="center"
     to="body"
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
     <div class="mb-3">
-      <n-text depth="3" class="section-title">CATEGORIES</n-text>
+      <n-text depth="3" class="section-title">
+        {{ t('export.sectionCategories') }}
+      </n-text>
     </div>
     <n-checkbox-group
       v-model:value="recordsStore.selectedCategories"
@@ -88,32 +94,34 @@ defineExpose({
         :y-gap="8"
         :cols="2">
         <n-grid-item span="2 s:1">
-          <n-checkbox value="games" label="Games" />
+          <n-checkbox value="games" :label="t('categories.games')" />
         </n-grid-item>
         <n-grid-item span="2 s:1">
-          <n-checkbox value="tvshows" label="TV Shows" />
+          <n-checkbox value="tvshows" :label="t('categories.tvshows')" />
         </n-grid-item>
         <n-grid-item span="2 s:1">
-          <n-checkbox value="films" label="Films" />
+          <n-checkbox value="films" :label="t('categories.films')" />
         </n-grid-item>
         <n-grid-item span="2 s:1">
-          <n-checkbox value="anime" label="Anime" />
+          <n-checkbox value="anime" :label="t('categories.anime')" />
         </n-grid-item>
         <n-grid-item span="2 s:1">
-          <n-checkbox value="manga" label="Manga" />
+          <n-checkbox value="manga" :label="t('categories.manga')" />
         </n-grid-item>
         <n-grid-item span="2 s:1">
-          <n-checkbox value="books" label="Books" />
+          <n-checkbox value="books" :label="t('categories.books')" />
         </n-grid-item>
         <n-grid-item span="2 s:1">
-          <n-checkbox value="music" label="Music" />
+          <n-checkbox value="music" :label="t('categories.music')" />
         </n-grid-item>
       </n-grid>
     </n-checkbox-group>
 
     <template v-if="recordsStore.customLists.length > 0">
       <div class="mb-3">
-        <n-text depth="3" class="section-title">CUSTOM LISTS</n-text>
+        <n-text depth="3" class="section-title">
+          {{ t('export.sectionCustomLists') }}
+        </n-text>
       </div>
       <n-checkbox-group
         v-model:value="recordsStore.selectedCustomLists"
@@ -132,7 +140,9 @@ defineExpose({
     </template>
     <template #footer>
       <div class="mb-3">
-        <n-text depth="3" class="section-title">FORMAT</n-text>
+        <n-text depth="3" class="section-title">
+          {{ t('export.sectionFormat') }}
+        </n-text>
       </div>
       <n-button-group block class="w-100 mb-5">
         <n-button
@@ -158,8 +168,11 @@ defineExpose({
         depth="3"
         style="font-size: 13px; display: flex; align-items: flex-start; gap: 8px;">
         <n-icon :component="InfoIcon" :size="16" style="margin-top: 2px" />
-        <span>Export your collection for backup, migration, or portability. Your data is safely stored on the server, but a local copy never hurts.</span>
+        <span>
+          {{ t('export.footerInfo') }}
+        </span>
       </n-p>
     </template>
   </n-modal>
 </template>
+

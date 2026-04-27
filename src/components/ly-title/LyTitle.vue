@@ -2,7 +2,7 @@
 import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { NH1, NText, NBadge, NInput } from 'naive-ui'
+import { NH1, NBadge, NInput } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'
 import { useRecordsStore } from '@/stores/records.store'
 
@@ -24,6 +24,16 @@ const barWidth = ref('3px')
 const barSize = '3px'
 const barSpeed = 250
 
+const getTranslatedTitle = computed(() => {
+  if (route.meta.tag && t(`categories.${route.meta.tag}`)) {
+    const translation = t(`categories.${route.meta.tag}`)
+    if (!translation.startsWith('categories.')) {
+      return translation
+    }
+  }
+  return route.meta.title
+})
+
 watch(
   [route, themeStore],
   async () => {
@@ -35,6 +45,8 @@ watch(
       listName.value = customList.value.name
       lastSavedName = customList.value.name
       document.title = `${customList.value.name} - Listify`
+    } else {
+      document.title = `${getTranslatedTitle.value} - Listify`
     }
   },
   { immediate: true, deep: true }
@@ -63,16 +75,6 @@ watch(listName, (newVal) => {
   }, 500)
 })
 
-const getTranslatedTitle = computed(() => {
-  if (route.meta.tag && t(`categories.${route.meta.tag}`)) {
-    const translation = t(`categories.${route.meta.tag}`)
-    if (!translation.startsWith('categories.')) {
-      return translation
-    }
-  }
-  return route.meta.title
-})
-
 watch(getTranslatedTitle, (newTitle) => {
   if (!isCustomList.value && newTitle) {
     document.title = `${newTitle} - Listify`
@@ -87,7 +89,7 @@ watch(getTranslatedTitle, (newTitle) => {
         v-model:value="listName"
         type="text"
         maxlength="50"
-        placeholder="List name"
+        :placeholder="t('customLists.createList')"
         class="title-input" />
     </template>
 
@@ -113,6 +115,7 @@ watch(getTranslatedTitle, (newTitle) => {
       }" />
   </n-h1>
 </template>
+
 
 <style lang="scss" scoped>
 .title-input {

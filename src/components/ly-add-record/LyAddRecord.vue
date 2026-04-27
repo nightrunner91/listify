@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, toRefs } from 'vue'
+import { nextTick, toRefs, computed } from 'vue'
 import { NSpace, NButton } from 'naive-ui'
 import { 
   PhPlus as PlusIcon,
@@ -7,7 +7,9 @@ import {
 import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
 import { renderIcon } from '@/utils/render-icon'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const recordsStore = useRecordsStore()
 
@@ -63,6 +65,21 @@ const props = defineProps({
 })
 
 const { variant } = toRefs(props)
+
+const addLabel = computed(() => {
+  const tag = route.meta.tag
+  let thingKey = 'item'
+  
+  if (tag === 'games') thingKey = 'game'
+  else if (tag === 'tvshows') thingKey = 'tvshow'
+  else if (tag === 'films') thingKey = 'film'
+  else if (tag === 'anime') thingKey = 'anime'
+  else if (tag === 'manga') thingKey = 'manga'
+  else if (tag === 'books') thingKey = 'book'
+  else if (tag === 'music') thingKey = 'music'
+  
+  return t('addRecord.button', { thing: t(`things.${thingKey}`) })
+})
 </script>
 
 <template>
@@ -71,7 +88,7 @@ const { variant } = toRefs(props)
     secondary
     :render-icon="renderIcon(PlusIcon)"
     @click="handleNewRecord">
-    Add New {{ route.meta.thing }}
+    {{ addLabel }}
   </n-button>
 
   <n-space
@@ -89,3 +106,4 @@ const { variant } = toRefs(props)
       @click="handleNewRecord" />
   </n-space>
 </template>
+

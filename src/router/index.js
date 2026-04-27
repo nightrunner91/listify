@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import i18n from '@/i18n'
 import RecordsPage from '@/views/RecordsPage.vue'
 import StartingPage from '@/views/StartingPage.vue'
 
@@ -9,13 +10,13 @@ const router = createRouter({
       path: '/login',
       name: 'Login',
       component: () => import('@/views/auth/LoginView.vue'),
-      meta: { requiresAuth: false, title: 'Login' }
+      meta: { requiresAuth: false, title: 'auth.login.tabTitle' }
     },
     {
       path: '/register',
       name: 'Register',
       component: () => import('@/views/auth/RegisterView.vue'),
-      meta: { requiresAuth: false, title: 'Register' }
+      meta: { requiresAuth: false, title: 'auth.register.tabTitle' }
     },
     {
       path: '/',
@@ -29,7 +30,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'start',
-            title: 'My Collection',
+            title: 'categories.start',
           }
         },
         {
@@ -39,7 +40,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'games',
-            title: 'Games',
+            title: 'categories.games',
             thing: 'Game',
           }
         },
@@ -50,7 +51,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'tvshows',
-            title: 'TV Shows',
+            title: 'categories.tvshows',
             thing: 'TV Show'
           }
         },
@@ -61,7 +62,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'films',
-            title: 'Films',
+            title: 'categories.films',
             thing: 'Film',
           }
         },
@@ -72,7 +73,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'anime',
-            title: 'Anime',
+            title: 'categories.anime',
             thing: 'Anime'
           }
         },
@@ -83,7 +84,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'manga',
-            title: 'Manga',
+            title: 'categories.manga',
             thing: 'Manga'
           }
         },
@@ -94,7 +95,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'books',
-            title: 'Books',
+            title: 'categories.books',
             thing: 'Book',
           }
         },
@@ -105,7 +106,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'music',
-            title: 'Music',
+            title: 'categories.music',
             thing: 'Music',
           }
         },
@@ -116,7 +117,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'custom',
-            title: 'Custom List',
+            title: 'store.customListName',
             thing: 'Item',
             isCustom: true
           }
@@ -128,7 +129,7 @@ const router = createRouter({
           meta: {
             requiresAuth: true,
             tag: 'about',
-            title: 'About Listify',
+            title: 'categories.about',
           }
         },
       ]
@@ -141,14 +142,19 @@ import { useRecordsStore } from '@/stores/records.store'
 
 router.beforeEach((to, from, next) => {
   let title = 'Listify'
-  if (to.meta.title && (to.meta.tag !== 'start')) {
-    title = `${to.meta.title} - Listify`
+  if (to.meta.title) {
+    const translatedTitle = i18n.global.t(to.meta.title)
+    if (to.meta.tag !== 'start') {
+      title = `${translatedTitle} - Listify`
+    } else {
+      title = translatedTitle
+    }
   }
   // Handle dynamic tag for custom lists
   if (to.meta.isCustom && to.params.id) {
     const recordsStore = useRecordsStore()
     const list = recordsStore.getCustomList(to.params.id)
-    title = list ? `${list.name} - Listify` : 'Custom List - Listify'
+    title = list ? `${list.name} - Listify` : `${i18n.global.t('store.customListName')} - Listify`
   }
   document.title = title
 

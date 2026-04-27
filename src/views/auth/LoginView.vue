@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NSpace, NH3, NText } from 'naive-ui'
+import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NSpace, NH3, NText, NLayout, NGrid, NGi } from 'naive-ui'
 import { useAuthStore } from '@/stores/auth.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useThemeStore } from '@/stores/theme.store'
@@ -11,6 +12,7 @@ const message = useMessage()
 const authStore = useAuthStore()
 const recordsStore = useRecordsStore()
 const themeStore = useThemeStore()
+const { t } = useI18n()
 
 const loading = ref(false)
 const formRef = ref(null)
@@ -23,12 +25,12 @@ const formModel = ref({
 const rules = {
   email: {
     required: true,
-    message: 'Please input your email',
+    message: t('validation.emailRequired'),
     trigger: 'blur'
   },
   password: {
     required: true,
-    message: 'Please input your password',
+    message: t('validation.passwordRequired'),
     trigger: 'blur'
   }
 }
@@ -43,10 +45,10 @@ async function handleLogin() {
           recordsStore.restoreRecords(),
           themeStore.restoreTheme(),
         ])
-        message.success('Logged in successfully!')
+        message.success(t('auth.login.successMessage'))
         router.push('/')
       } catch (error) {
-        message.error(error.message || 'Failed to login')
+        message.error(error.message || t('auth.login.errorMessage'))
       } finally {
         loading.value = false
       }
@@ -56,78 +58,65 @@ async function handleLogin() {
 </script>
 
 <template>
-  <div class="auth-container">
-    <n-card class="auth-card" size="huge" hoverable>
-      <div class="auth-header">
-        <n-h3 style="margin-bottom: 0;">Sign in to Listify</n-h3>
-        <n-text depth="3">Welcome back!</n-text>
-      </div>
+  <n-layout position="absolute">
+    <n-space
+      vertical
+      justify="center"
+      align="center"
+      style="height: 100%; padding: 16px;"
+    >
+      <n-grid :cols="24">
+        <n-gi :span="24" :m="16" :l="10" :offset="0" :m-offset="4" :l-offset="7">
+          <n-card size="huge" hoverable>
+            <n-space vertical :size="32">
+              <n-space vertical align="center" :size="8">
+                <n-h3>{{ $t('auth.login.title') }}</n-h3>
+                <n-text depth="3">{{ $t('auth.login.subtitle') }}</n-text>
+              </n-space>
 
-      <n-form
-        ref="formRef"
-        :model="formModel"
-        :rules="rules"
-        size="large"
-        @keyup.enter="handleLogin"
-      >
-        <n-form-item path="email" label="Email">
-          <n-input v-model:value="formModel.email" placeholder="example@email.com" />
-        </n-form-item>
-        
-        <n-form-item path="password" label="Password">
-          <n-input
-            v-model:value="formModel.password"
-            type="password"
-            show-password-on="click"
-            placeholder="Your password"
-          />
-        </n-form-item>
+              <n-form
+                ref="formRef"
+                :model="formModel"
+                :rules="rules"
+                size="large"
+                @keyup.enter="handleLogin"
+              >
+                <n-form-item path="email" :label="$t('auth.login.emailLabel')">
+                  <n-input v-model:value="formModel.email" :placeholder="$t('auth.login.emailPlaceholder')" />
+                </n-form-item>
+                
+                <n-form-item path="password" :label="$t('auth.login.passwordLabel')">
+                  <n-input
+                    v-model:value="formModel.password"
+                    type="password"
+                    show-password-on="click"
+                    :placeholder="$t('auth.login.passwordPlaceholder')"
+                  />
+                </n-form-item>
 
-        <n-button
-          type="primary"
-          size="large"
-          block
-          :loading="loading"
-          @click="handleLogin"
-          style="margin-top: 12px;"
-        >
-          Login
-        </n-button>
-      </n-form>
+                <n-form-item :show-label="false">
+                  <n-button
+                    type="primary"
+                    size="large"
+                    block
+                    :loading="loading"
+                    @click="handleLogin"
+                  >
+                    {{ $t('auth.login.loginButton') }}
+                  </n-button>
+                </n-form-item>
+              </n-form>
 
-      <div class="auth-footer">
-        <n-text depth="3">Don't have an account? </n-text>
-        <n-button text type="primary" @click="router.push('/register')">
-          Register here
-        </n-button>
-      </div>
-    </n-card>
-  </div>
+              <n-space justify="center" align="center" :size="4">
+                <n-text depth="3">{{ $t('auth.login.noAccount') }}</n-text>
+                <n-button text type="primary" @click="router.push('/register')">
+                  {{ $t('auth.login.registerLink') }}
+                </n-button>
+              </n-space>
+            </n-space>
+          </n-card>
+        </n-gi>
+      </n-grid>
+    </n-space>
+  </n-layout>
 </template>
-
-<style scoped lang="scss">
-.auth-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--n-color);
-  padding: 16px;
-}
-
-.auth-card {
-  max-width: 400px;
-  width: 100%;
-  border-radius: 12px;
-}
-
-.auth-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.auth-footer {
-  margin-top: 24px;
-  text-align: center;
-}
-</style>

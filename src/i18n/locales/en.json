@@ -6,7 +6,13 @@
     "delete": "Delete",
     "edit": "Edit",
     "add": "Add",
-    "close": "Close"
+    "close": "Close",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "export": "Export",
+    "import": "Import",
+    "light": "Light",
+    "dark": "Dark"
   },
   "home": {
     "categories": "CATEGORIES"
@@ -79,6 +85,9 @@
       "read_now": "Read Now",
       "plan_to_read": "Plan to Read",
       "read": "Read",
+      "playing": "Playing",
+      "reading": "Reading",
+      "watching": "Watching",
       "listening_now": "Listening Now",
       "on_repeat": "On Repeat",
       "plan_to_listen": "Plan to Listen",
@@ -90,5 +99,90 @@
       "importErrorJSON": "Failed to parse JSON file."
     },
     "customListName": "Custom List"
+  },
+  "controls": {
+    "deleteConfirm": "You sure want to delete {count} {record}?",
+    "record": "record | records"
+  },
+  "menu": {
+    "home": "Home",
+    "createList": "Create a New List"
+  },
+  "export": {
+    "modalTitle": "Export Collection",
+    "sectionCategories": "CATEGORIES",
+    "sectionCustomLists": "CUSTOM LISTS",
+    "sectionFormat": "FORMAT",
+    "footerInfo": "Export your collection for backup, migration, or portability. Your data is safely stored on the server, but a local copy never hurts."
+  },
+  "import": {
+    "modalTitle": "Import Collection",
+    "draggerText": "Click or drag your collection here",
+    "draggerInfo": "The imported file will be merged with your server-side collection. Existing items will be preserved. Make sure to export a backup first if needed."
+  },
+  "search": {
+    "placeholder": "Search in {name}..."
+  },
+  "addRecord": {
+    "button": "Add New {thing}"
+  },
+  "avatarPicker": {
+    "modalTitle": "Customize Avatar",
+    "randomSeed": "Random Seed",
+    "resetOptions": "Reset Options",
+    "configuration": "Configuration",
+    "styleLabel": "Avatar Style",
+    "seedLabel": "Seed",
+    "seedPlaceholder": "Any string...",
+    "rotationLabel": "Rotation ({angle}°)",
+    "scaleLabel": "Scale ({percent}%)",
+    "flipLabel": "Flip Horizontally",
+    "confirmButton": "Confirm configuration"
+  },
+  "things": {
+    "game": "Game",
+    "tvshow": "TV Show",
+    "film": "Film",
+    "anime": "Anime",
+    "manga": "Manga",
+    "book": "Book",
+    "music": "Music",
+    "item": "Item"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to Listify",
+      "subtitle": "Welcome back!",
+      "emailLabel": "Email",
+      "emailPlaceholder": "example{'@'}email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Your password",
+      "loginButton": "Login",
+      "tabTitle": "Login",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Register here",
+      "successMessage": "Logged in successfully!",
+      "errorMessage": "Failed to login"
+    },
+    "register": {
+      "title": "Create an Account",
+      "subtitle": "Join Listify today",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "passwordPlaceholder": "At least 8 characters",
+      "registerButton": "Register",
+      "tabTitle": "Register",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Log in here",
+      "successMessage": "Account created successfully!",
+      "errorMessage": "Failed to register"
+    }
+  },
+  "validation": {
+    "emailRequired": "Please input your email",
+    "passwordRequired": "Please input your password",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordMismatch": "Passwords do not match"
   }
 }
+
