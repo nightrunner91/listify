@@ -11,7 +11,6 @@ import { useStorage } from 'vue3-storage'
 /** fonts and stylesheets */
 import '@/assets/styles/nightvue.scss'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
-import '@/components/ly-pixel-canvas/pixel-canvas.js'
 
 /** plugins */
 import i18n from '@/i18n'
