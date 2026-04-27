@@ -78,10 +78,10 @@ async function handleRegister() {
     >
       <n-grid :cols="24">
         <n-gi :span="24" :m="16" :l="10" :offset="0" :m-offset="4" :l-offset="7">
-          <n-card size="huge" hoverable>
+          <n-card size="huge" hoverable  content-style="padding: 56px;">
             <n-space vertical :size="32">
-              <n-space vertical align="center" :size="8">
-                <n-h3>{{ $t('auth.register.title') }}</n-h3>
+              <n-space vertical align="center" :size="2">
+                <n-h3 class="mb-0">{{ $t('auth.register.title') }}</n-h3>
                 <n-text depth="3">{{ $t('auth.register.subtitle') }}</n-text>
               </n-space>
 
@@ -127,7 +127,7 @@ async function handleRegister() {
                 </n-form-item>
               </n-form>
 
-              <n-space justify="center" align="center" :size="4">
+              <n-space justify="center" align="center" :size="2" vertical>
                 <n-text depth="3">{{ $t('auth.register.haveAccount') }}</n-text>
                 <n-button text type="primary" @click="router.push('/login')">
                   {{ $t('auth.register.loginLink') }}
