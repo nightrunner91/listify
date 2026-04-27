@@ -65,7 +65,7 @@ function handleDelete() {
         v-model:value="record.title"
         type="text"
         :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
-        placeholder="Name of record"
+        :placeholder="$t('records.titlePlaceholder')"
         class="record-input" />
 
       <n-button

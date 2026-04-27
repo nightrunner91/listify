@@ -44,7 +44,8 @@
   "records": {
     "emptyDescription": "Se pare că lista ta este goală.",
     "searchEmptyDescription": "Nu am găsit înregistrări care să corespundă căutării tale.",
-    "or": "sau"
+    "or": "sau",
+    "titlePlaceholder": "Numele înregistrării"
   },
   "about": {
     "description": "Listify este un tracker media personal construit în jurul unei idei: colecția ta ar trebui să fie simplu de întreținut, mereu accesibilă și în întregime a ta. Fie că jurnalizezi jocuri pe care le-ai terminat, filme pe lista de așteptare, cărți pe care le citești sau orice altceva — Listify le menține organizate fără a-ți sta în cale.",

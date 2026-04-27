@@ -477,64 +477,64 @@ export const useRecordsStore = defineStore('records', () => {
   /* ======== Labels ======== */
   /* ======================== */
 
-  const labels = shallowRef({
+  const labels = computed(() => ({
     games: [
-      { key: 'playing_now', label: 'Playing Now', icon: InProgressIcon, default: true },
-      { key: 'plan_to_play', label: 'Plan to Play', icon: PlanIcon },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
-      { key: 'completed', label: 'Completed', icon: CompletedIcon },
-      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+      { key: 'playing_now', label: i18n.global.t('store.labels.playing_now'), icon: InProgressIcon, default: true },
+      { key: 'plan_to_play', label: i18n.global.t('store.labels.plan_to_play'), icon: PlanIcon },
+      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
+      { key: 'completed', label: i18n.global.t('store.labels.completed'), icon: CompletedIcon },
+      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     tvshows: [
-      { key: 'watching_ongoing', label: 'Watching Ongoing', icon: WatchingIcon, default: true },
-      { key: 'watching_now', label: 'Watching Now', icon: WatchingNowIcon },
-      { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
-      { key: 'watched_all', label: 'Watched All', icon: CompletedIcon },
-      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+      { key: 'watching_ongoing', label: i18n.global.t('store.labels.watching_ongoing'), icon: WatchingIcon, default: true },
+      { key: 'watching_now', label: i18n.global.t('store.labels.watching_now'), icon: WatchingNowIcon },
+      { key: 'plan_to_watch', label: i18n.global.t('store.labels.plan_to_watch'), icon: PlanIcon },
+      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
+      { key: 'watched_all', label: i18n.global.t('store.labels.watched_all'), icon: CompletedIcon },
+      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     films: [
-      { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon, default: true },
-      { key: 'watched', label: 'Watched', icon: CompletedIcon },
-      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+      { key: 'plan_to_watch', label: i18n.global.t('store.labels.plan_to_watch'), icon: PlanIcon, default: true },
+      { key: 'watched', label: i18n.global.t('store.labels.watched'), icon: CompletedIcon },
+      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     anime: [
-      { key: 'watching_ongoing', label: 'Watching Ongoing', icon: WatchingIcon, default: true },
-      { key: 'watching_now', label: 'Watching Now', icon: WatchingNowIcon },
-      { key: 'plan_to_watch', label: 'Plan to Watch', icon: PlanIcon },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
-      { key: 'watched_all', label: 'Watched All', icon: CompletedIcon },
-      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+      { key: 'watching_ongoing', label: i18n.global.t('store.labels.watching_ongoing'), icon: WatchingIcon, default: true },
+      { key: 'watching_now', label: i18n.global.t('store.labels.watching_now'), icon: WatchingNowIcon },
+      { key: 'plan_to_watch', label: i18n.global.t('store.labels.plan_to_watch'), icon: PlanIcon },
+      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
+      { key: 'watched_all', label: i18n.global.t('store.labels.watched_all'), icon: CompletedIcon },
+      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     manga: [
-      { key: 'read_ongoing', label: 'Read Ongoing', icon: ReadingIcon, default: true },
-      { key: 'read_now', label: 'Read Now', icon: ReadingIcon },
-      { key: 'plan_to_read', label: 'Plan to Read', icon: PlanIcon },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
-      { key: 'read', label: 'Read', icon: ReadIcon },
-      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+      { key: 'read_ongoing', label: i18n.global.t('store.labels.read_ongoing'), icon: ReadingIcon, default: true },
+      { key: 'read_now', label: i18n.global.t('store.labels.read_now'), icon: ReadingIcon },
+      { key: 'plan_to_read', label: i18n.global.t('store.labels.plan_to_read'), icon: PlanIcon },
+      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
+      { key: 'read', label: i18n.global.t('store.labels.read'), icon: ReadIcon },
+      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     books: [
-      { key: 'read_now', label: 'Read Now', icon: ReadingIcon, default: true },
-      { key: 'plan_to_read', label: 'Plan to Read', icon: PlanIcon },
-      { key: 'on_hold', label: 'On Hold', icon: OnHoldIcon },
-      { key: 'read', label: 'Read', icon: ReadIcon },
-      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+      { key: 'read_now', label: i18n.global.t('store.labels.read_now'), icon: ReadingIcon, default: true },
+      { key: 'plan_to_read', label: i18n.global.t('store.labels.plan_to_read'), icon: PlanIcon },
+      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
+      { key: 'read', label: i18n.global.t('store.labels.read'), icon: ReadIcon },
+      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     music: [
-      { key: 'listening_now', label: 'Listening Now', icon: ListeningIcon, default: true },
-      { key: 'on_repeat', label: 'On Repeat', icon: MusicIcon },
-      { key: 'plan_to_listen', label: 'Plan to Listen', icon: PlanIcon },
-      { key: 'listened_all', label: 'Completed', icon: CompletedIcon },
-      { key: 'dropped', label: 'Dropped', icon: DroppedIcon },
+      { key: 'listening_now', label: i18n.global.t('store.labels.listening_now'), icon: ListeningIcon, default: true },
+      { key: 'on_repeat', label: i18n.global.t('store.labels.on_repeat'), icon: MusicIcon },
+      { key: 'plan_to_listen', label: i18n.global.t('store.labels.plan_to_listen'), icon: PlanIcon },
+      { key: 'listened_all', label: i18n.global.t('store.labels.listened_all'), icon: CompletedIcon },
+      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
-  })
+  }))
 
   function getDefaultLabel(listType) {
     return labels.value[listType].find((i) => i.default) || labels.value[listType][0]

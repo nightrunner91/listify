@@ -102,7 +102,7 @@ watch(record, (newVal) => {
           v-model:value="record.title"
           type="text"
           :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
-          placeholder="Name of record"
+          :placeholder="$t('records.titlePlaceholder')"
           class="w-100 w-l-75 record-input" />
       </n-space>
 
