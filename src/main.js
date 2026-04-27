@@ -11,6 +11,7 @@ import { useStorage } from 'vue3-storage'
 /** fonts and stylesheets */
 import '@/assets/styles/nightvue.scss'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import 'flag-icons/css/flag-icons.min.css'
 
 /** plugins */
 import i18n from '@/i18n'

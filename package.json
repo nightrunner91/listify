@@ -10,6 +10,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@iconify/vue": "^5.0.0",
+    "flag-icons": "^7.5.0",
     "jsesc": "^3.0.2",
     "moment": "^2.29.4",
     "papaparse": "^5.5.3",

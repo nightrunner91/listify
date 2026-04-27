@@ -39,6 +39,9 @@ Every output must satisfy **all four**:
 4. **Thematic Consistency**
    If theming is applied, it must extend NaiveUI’s token system — never override styles ad hoc.
 
+5. **Internationalization (i18n) Compliance**
+   All labels, placeholders, tooltips, and feedback messages must use translation keys via `$t()` or `t()`. No hardcoded strings. Ensure translations exist for English (en), Russian (ru), and Romanian (ro).
+
 ❌ No custom design systems layered on top
 ❌ No arbitrary typography systems
 ❌ No visual styles that conflict with NaiveUI philosophy
@@ -149,6 +152,13 @@ List:
 * Do not add decorative animations.
 * Motion must reflect state change (loading, expand, collapse).
 
+### Internationalization (i18n)
+
+* Use `$t('key')` in templates and `t('key')` in scripts.
+* Follow the project's locale structure in `src/i18n/locales/`.
+* Provide content for all supported locales: `en.json`, `ru.json`, `ro.json`.
+* Design layouts to handle varying text lengths across different languages.
+
 ---
 
 ## 5. Implementation Standards
@@ -236,6 +246,8 @@ Before finalizing:
 * [ ] No hardcoded visual tokens
 * [ ] Minimal custom CSS
 * [ ] Vue 3 Composition API used correctly
+* [ ] All UI strings use i18n translation keys
+* [ ] Translations provided for en, ru, and ro
 * [ ] Clean, extendable architecture
 
 ---
