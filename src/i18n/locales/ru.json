@@ -184,6 +184,45 @@
     "passwordRequired": "Пожалуйста, введите пароль",
     "confirmPasswordRequired": "Пожалуйста, подтвердите пароль",
     "passwordMismatch": "Пароли не совпадают"
+  },
+  "timeline": {
+    "title": "НЕДАВНЯЯ АКТИВНОСТЬ",
+    "empty": "Пока нет недавней активности",
+    "actions": {
+      "record_created": "Добавлено {entity} в {category}",
+      "record_status_updated": "{status} {entity}",
+      "record_score_updated": "Оценено {entity}",
+      "record_liked": "Понравилось {entity}",
+      "record_unliked": "Больше не нравится {entity}",
+      "record_deleted": "Удалено {entity} из {category}",
+      "custom_list_created": "Создан новый список {entity}",
+      "custom_list_created_empty": "Создан новый список",
+      "custom_list_renamed": "Список переименован в {entity}",
+      "custom_list_deleted": "Удален список {entity}",
+      "custom_list_record_added": "Добавлено {entity} в {listName}",
+      "custom_list_record_deleted": "Удалено {entity} из {listName}",
+      "collection_imported": "Импортирована коллекция из {count} элементов",
+      "default_action": "{action}"
+    },
+    "sentences": {
+      "playing_now": "Начато прохождение",
+      "completed": "Пройдено",
+      "dropped": "Брошено",
+      "on_hold": "Отложено",
+      "plan_to_play": "Добавлено в В планах",
+      "watching_now": "Начат просмотр",
+      "watched_all": "Просмотрено полностью",
+      "plan_to_watch": "Добавлено в В планах",
+      "watching_ongoing": "Начат просмотр онгоинга",
+      "watched": "Просмотрено",
+      "read_now": "Начато чтение",
+      "read": "Прочитано",
+      "plan_to_read": "Добавлено в В планах",
+      "read_ongoing": "Начато чтение онгоинга",
+      "listening_now": "Начато прослушивание",
+      "listened_all": "Прослушано полностью",
+      "on_repeat": "На повторе",
+      "plan_to_listen": "Добавлено в В планах"
+    }
   }
 }
-

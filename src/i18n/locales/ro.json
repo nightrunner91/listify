@@ -184,6 +184,45 @@
     "passwordRequired": "Vă rugăm să introduceți parola",
     "confirmPasswordRequired": "Vă rugăm să confirmați parola",
     "passwordMismatch": "Parolele nu se potrivesc"
+  },
+  "timeline": {
+    "title": "ACTIVITATE RECENTĂ",
+    "empty": "Nicio activitate recentă",
+    "actions": {
+      "record_created": "A adăugat {entity} în {category}",
+      "record_status_updated": "{status} {entity}",
+      "record_score_updated": "A evaluat {entity}",
+      "record_liked": "A apreciat {entity}",
+      "record_unliked": "Nu a mai apreciat {entity}",
+      "record_deleted": "A șters {entity} din {category}",
+      "custom_list_created": "A creat o listă nouă {entity}",
+      "custom_list_created_empty": "A creat o listă personalizată nouă",
+      "custom_list_renamed": "A redenumit lista personalizată în {entity}",
+      "custom_list_deleted": "A șters lista {entity}",
+      "custom_list_record_added": "A adăugat {entity} în {listName}",
+      "custom_list_record_deleted": "A eliminat {entity} din {listName}",
+      "collection_imported": "A importat o colecție cu {count} elemente",
+      "default_action": "{action}"
+    },
+    "sentences": {
+      "playing_now": "A început să se joace",
+      "completed": "A terminat",
+      "dropped": "A abandonat",
+      "on_hold": "A pus pe pauză",
+      "plan_to_play": "A adăugat în Plan de jucat",
+      "watching_now": "A început să vizioneze",
+      "watched_all": "A vizionat tot din",
+      "plan_to_watch": "A adăugat în Plan de vizionat",
+      "watching_ongoing": "A început să vizioneze în curs",
+      "watched": "A vizionat",
+      "read_now": "A început să citească",
+      "read": "A citit",
+      "plan_to_read": "A adăugat în Plan de citit",
+      "read_ongoing": "A început să citească în curs",
+      "listening_now": "A început să asculte",
+      "listened_all": "A ascultat tot din",
+      "on_repeat": "Ascultă pe repetare",
+      "plan_to_listen": "A adăugat în Plan de ascultat"
+    }
   }
 }
-

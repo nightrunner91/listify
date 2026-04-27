@@ -3,8 +3,13 @@ import { ref, onMounted, computed } from 'vue'
 import { NTimeline, NTimelineItem, NCard, NSpace, NText, NEmpty, NSpin, NRate, NButton, NIcon } from 'naive-ui'
 import { api } from '@/api/client'
 import moment from 'moment'
+import 'moment/locale/ru'
+import 'moment/locale/ro'
 import { PhHeart as LikeIcon } from 'phosphor-vue'
 import { darkThemeOverrides } from '@/theme.config.js'
+import { useI18n } from 'vue-i18n'
+
+const { t, te, locale } = useI18n()
 
 const activities = ref([])
 const loading = ref(true)
@@ -29,166 +34,108 @@ const getCategoryColor = (category) => {
   return colors[`${category}Color`] || colors.customColor
 }
 
-const categoryLabels = {
-  games: 'Games',
-  tvshows: 'TV Shows',
-  films: 'Films',
-  anime: 'Anime',
-  manga: 'Manga',
-  books: 'Books',
-  music: 'Music'
-}
-
-const getLabelName = (category, label) => {
-  // Simplified mapping for activity sentences
-  const mapping = {
-    games: {
-      playing_now: 'Started playing',
-      completed: 'Completed',
-      dropped: 'Dropped',
-      on_hold: 'Put on hold',
-      plan_to_play: 'Added to Plan to Play',
-    },
-    tvshows: {
-      watching_now: 'Started watching',
-      watched_all: 'Watched all of',
-      dropped: 'Dropped',
-      on_hold: 'Put on hold',
-      plan_to_watch: 'Added to Plan to Watch',
-      watching_ongoing: 'Started watching ongoing',
-    },
-    anime: {
-      watching_now: 'Started watching',
-      watched_all: 'Watched all of',
-      dropped: 'Dropped',
-      on_hold: 'Put on hold',
-      plan_to_watch: 'Added to Plan to Watch',
-      watching_ongoing: 'Started watching ongoing',
-    },
-    films: {
-      watched: 'Watched',
-      dropped: 'Dropped',
-      plan_to_watch: 'Added to Plan to Watch',
-    },
-    manga: {
-      read_now: 'Started reading',
-      read: 'Read',
-      dropped: 'Dropped',
-      on_hold: 'Put on hold',
-      plan_to_read: 'Added to Plan to Read',
-      read_ongoing: 'Started reading ongoing',
-    },
-    books: {
-      read_now: 'Started reading',
-      read: 'Read',
-      dropped: 'Dropped',
-      on_hold: 'Put on hold',
-      plan_to_read: 'Added to Plan to Read',
-    },
-    music: {
-      listening_now: 'Started listening',
-      listened_all: 'Listened all of',
-      dropped: 'Dropped',
-      on_repeat: 'Listening on repeat',
-      plan_to_listen: 'Added to Plan to Listen',
-    }
-  }
-
-  return mapping[category]?.[label] || label
-}
-
 const formatActivity = (activity) => {
   const { action, entityName, category, metadata } = activity
-  const categoryLabel = categoryLabels[category] || category
+  const categoryLabel = category && te(`categories.${category}`) ? t(`categories.${category}`) : category
 
   switch (action) {
     case 'record_created':
       return {
-        prefix: 'Added',
+        keypath: 'timeline.actions.record_created',
         entity: entityName,
-        suffix: `to ${categoryLabel}`
+        category: categoryLabel
       }
     case 'record_status_updated':
-      const statusVerb = getLabelName(category, metadata.label)
+      const statusKey = `timeline.sentences.${metadata?.label}`
+      const statusVerb = te(statusKey) ? t(statusKey) : metadata?.label
       return {
-        prefix: statusVerb,
+        keypath: 'timeline.actions.record_status_updated',
+        status: statusVerb,
         entity: entityName
       }
     case 'record_score_updated':
       return {
-        prefix: 'Rated',
+        keypath: 'timeline.actions.record_score_updated',
         entity: entityName,
         type: 'rate',
-        value: Number(metadata.score)
+        value: Number(metadata?.score)
       }
     case 'record_liked':
       return {
-        prefix: 'Liked',
+        keypath: 'timeline.actions.record_liked',
         entity: entityName,
         type: 'like'
       }
     case 'record_unliked':
       return {
-        prefix: 'Unliked',
+        keypath: 'timeline.actions.record_unliked',
         entity: entityName
       }
     case 'record_deleted':
       return {
-        prefix: 'Deleted',
+        keypath: 'timeline.actions.record_deleted',
         entity: entityName,
-        suffix: `from ${categoryLabel}`
+        category: categoryLabel
       }
     case 'custom_list_created':
       return {
-        prefix: entityName ? 'Created a new list' : 'Created a new custom list',
+        keypath: entityName ? 'timeline.actions.custom_list_created' : 'timeline.actions.custom_list_created_empty',
         entity: entityName
       }
     case 'custom_list_renamed':
       return {
-        prefix: 'Renamed custom list as',
+        keypath: 'timeline.actions.custom_list_renamed',
         entity: entityName
       }
     case 'custom_list_deleted':
       return {
-        prefix: 'Deleted list',
+        keypath: 'timeline.actions.custom_list_deleted',
         entity: entityName
       }
     case 'custom_list_record_added':
       return {
-        prefix: 'Added',
+        keypath: 'timeline.actions.custom_list_record_added',
         entity: entityName,
-        suffix: 'to',
-        listName: metadata.listName
+        listName: metadata?.listName
       }
     case 'custom_list_record_deleted':
       return {
-        prefix: 'Removed',
+        keypath: 'timeline.actions.custom_list_record_deleted',
         entity: entityName,
-        suffix: 'from',
-        listName: metadata.listName
+        listName: metadata?.listName
       }
     case 'collection_imported':
       return {
-        prefix: 'Imported a collection with',
-        entity: `${metadata.count} items`
+        keypath: 'timeline.actions.collection_imported',
+        count: metadata?.count
       }
     default:
       return {
-        prefix: action
+        keypath: 'timeline.actions.default_action',
+        action: action
       }
   }
 }
 
-// Convert markdown-like bolding to HTML - No longer used but kept for compatibility if needed elsewhere
-// const renderSentence = (sentence) => {
-//   return sentence.replace(/\*\*(.*?)\*\*/g, '<b class="highlight">$1</b>')
-// }
+const formattedActivities = computed(() => {
+  // Read locale to trigger reactivity when language changes
+  const currentLocale = locale.value
+  moment.locale(currentLocale)
+  
+  return activities.value.map(activity => {
+    return {
+      ...activity,
+      timeAgo: moment(activity.createdAt).fromNow(),
+      formatted: formatActivity(activity)
+    }
+  })
+})
 </script>
 
 <template>
   <n-space vertical :size="16">
     <n-space justify="space-between" align="center">
-      <n-text depth="3" class="section-title">RECENT ACTIVITY</n-text>
+      <n-text depth="3" class="section-title">{{ t('timeline.title') }}</n-text>
     </n-space>
 
     <n-card :bordered="true">
@@ -196,35 +143,49 @@ const formatActivity = (activity) => {
         <n-spin size="large" />
       </div>
 
-      <n-empty v-else-if="activities.length === 0" description="No recent activity yet" class="py-8" />
+      <n-empty v-else-if="activities.length === 0" :description="t('timeline.empty')" class="py-8" />
 
       <n-timeline v-else>
         <n-timeline-item
-          v-for="activity in activities"
+          v-for="activity in formattedActivities"
           :key="activity.id"
           :type="activity.category === 'system' ? 'info' : 'default'"
           :color="getCategoryColor(activity.category)"
-          :time="moment(activity.createdAt).fromNow()"
+          :time="activity.timeAgo"
         >
           <template #default>
             <div class="activity-item">
-              <span class="activity-text">
-                {{ formatActivity(activity).prefix }}
-                <span class="highlight" v-if="formatActivity(activity).entity"> {{ formatActivity(activity).entity }}</span>
-                <span v-if="formatActivity(activity).suffix" class="ml-1"> {{ formatActivity(activity).suffix }}</span>
-                <span v-if="formatActivity(activity).listName" class="highlight ml-1"> {{ formatActivity(activity).listName }}</span>
-              </span>
+              <i18n-t :keypath="activity.formatted.keypath" tag="span" class="activity-text">
+                <template #entity>
+                  <span class="highlight" v-if="activity.formatted.entity">{{ activity.formatted.entity }}</span>
+                </template>
+                <template #category>
+                  <span v-if="activity.formatted.category">{{ activity.formatted.category }}</span>
+                </template>
+                <template #status>
+                  <span v-if="activity.formatted.status">{{ activity.formatted.status }}</span>
+                </template>
+                <template #listName>
+                  <span class="highlight" v-if="activity.formatted.listName">{{ activity.formatted.listName }}</span>
+                </template>
+                <template #count>
+                  <span v-if="activity.formatted.count">{{ activity.formatted.count }}</span>
+                </template>
+                <template #action>
+                  <span v-if="activity.formatted.action">{{ activity.formatted.action }}</span>
+                </template>
+              </i18n-t>
               
               <n-rate 
-                v-if="formatActivity(activity).type === 'rate'" 
+                v-if="activity.formatted.type === 'rate'" 
                 readonly 
                 size="small" 
-                :value="formatActivity(activity).value"
+                :value="activity.formatted.value"
                 class="activity-widget"
               />
               
               <n-button
-                v-if="formatActivity(activity).type === 'like'"
+                v-if="activity.formatted.type === 'like'"
                 quaternary
                 round
                 circle

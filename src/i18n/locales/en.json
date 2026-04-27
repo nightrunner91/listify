@@ -184,6 +184,45 @@
     "passwordRequired": "Please input your password",
     "confirmPasswordRequired": "Please confirm your password",
     "passwordMismatch": "Passwords do not match"
+  },
+  "timeline": {
+    "title": "RECENT ACTIVITY",
+    "empty": "No recent activity yet",
+    "actions": {
+      "record_created": "Added {entity} to {category}",
+      "record_status_updated": "{status} {entity}",
+      "record_score_updated": "Rated {entity}",
+      "record_liked": "Liked {entity}",
+      "record_unliked": "Unliked {entity}",
+      "record_deleted": "Deleted {entity} from {category}",
+      "custom_list_created": "Created a new list {entity}",
+      "custom_list_created_empty": "Created a new custom list",
+      "custom_list_renamed": "Renamed custom list as {entity}",
+      "custom_list_deleted": "Deleted list {entity}",
+      "custom_list_record_added": "Added {entity} to {listName}",
+      "custom_list_record_deleted": "Removed {entity} from {listName}",
+      "collection_imported": "Imported a collection with {count} items",
+      "default_action": "{action}"
+    },
+    "sentences": {
+      "playing_now": "Started playing",
+      "completed": "Completed",
+      "dropped": "Dropped",
+      "on_hold": "Put on hold",
+      "plan_to_play": "Added to Plan to Play",
+      "watching_now": "Started watching",
+      "watched_all": "Watched all of",
+      "plan_to_watch": "Added to Plan to Watch",
+      "watching_ongoing": "Started watching ongoing",
+      "watched": "Watched",
+      "read_now": "Started reading",
+      "read": "Read",
+      "plan_to_read": "Added to Plan to Read",
+      "read_ongoing": "Started reading ongoing",
+      "listening_now": "Started listening",
+      "listened_all": "Listened all of",
+      "on_repeat": "Listening on repeat",
+      "plan_to_listen": "Added to Plan to Listen"
+    }
   }
 }
-
