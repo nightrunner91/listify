@@ -33,16 +33,20 @@ Every output must satisfy **all four**:
 2. **System-First Thinking**
    Interfaces must be composed using NaiveUI components (`n-layout`, `n-card`, `n-data-table`, `n-form`, etc.), not custom structural replacements unless strictly necessary.
 
-3. **Production-Ready Vue 3 Code**
+3. **Avoid scoped / inline / custom CSS at all costs**
+   Do not use any custom CSS unless it's abolsutely necessary. Strictly follow build-in spacing system, color scheme, typography.
+
+4. **Production-Ready Vue 3 Code**
    Composition API, proper reactivity, clean props usage, no pseudo-code.
 
-4. **Thematic Consistency**
+5. **Thematic Consistency**
    If theming is applied, it must extend NaiveUI’s token system — never override styles ad hoc.
 
-5. **Internationalization (i18n) Compliance**
+6. **Internationalization (i18n) Compliance**
    All labels, placeholders, tooltips, and feedback messages must use translation keys via `$t()` or `t()`. No hardcoded strings. Ensure translations exist for English (en), Russian (ru), and Romanian (ro).
 
 ❌ No custom design systems layered on top
+❌ No custom CSS used, only NaiveUI approach
 ❌ No arbitrary typography systems
 ❌ No visual styles that conflict with NaiveUI philosophy
 ✅ Controlled customization via theme overrides only
@@ -80,7 +84,7 @@ NDII = (Alignment + Appropriateness + Theme + Maintainability) − Override Risk
 | 4–7   | Risky     | Reduce customization           |
 | ≤ 3   | Invalid   | Rework using system components |
 
-NDII must be **≥ 8**.
+NDII must be **≥ 12**.
 
 ---
 
@@ -137,6 +141,7 @@ List:
 ### Spacing
 
 * Use `n-space`, `n-grid`, and layout padding.
+* Do not use outdated `n-flex` - use `n-space` instead.
 * Avoid arbitrary margin stacking.
 * Maintain consistent rhythm aligned with component spacing logic.
 
@@ -179,8 +184,8 @@ List:
 
 ### Styling
 
-* Minimal custom CSS
-* Prefer inline system usage
+* Minimal custom CSS, avoid it at all costs
+* Prefer pre-defined classnames to set paddings and margins (e.g.: `p-2`, `mx-5`, `pt-3`)
 * If custom styles exist, isolate them and justify them
 
 Mismatch between design and system capabilities = failure.
@@ -193,7 +198,7 @@ When generating frontend work:
 
 ### 1. System Summary
 
-* Mode (Light/Dark/Custom)
+* Mode (Light/Dark/System)
 * NDII score
 * Theme adjustments (if any)
 
@@ -220,6 +225,7 @@ Explicitly state:
 ❌ Custom layout replacing `n-layout`
 ❌ Tailwind, ShadCN, Bootstrap patterns
 ❌ Hardcoded color palettes
+❌ Hardcoded custom CSS styles
 ❌ External typography systems
 ❌ Overriding component internals with deep selectors
 ❌ Rebuilding components that NaiveUI already provides
@@ -241,10 +247,10 @@ If it looks like a generic UI library mashup → redesign using pure NaiveUI.
 
 Before finalizing:
 
-* [ ] NDII ≥ 8
+* [ ] NDII ≥ 12
 * [ ] Only NaiveUI components used for structure
 * [ ] No hardcoded visual tokens
-* [ ] Minimal custom CSS
+* [ ] Minimal custom CSS (idealy avoid it completely)
 * [ ] Vue 3 Composition API used correctly
 * [ ] All UI strings use i18n translation keys
 * [ ] Translations provided for en, ru, and ro
