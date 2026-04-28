@@ -54,7 +54,7 @@ const currentThemeLabel = computed(() => {
 </script>
 
 <template>
-  <n-dropdown :options="themeOptions" :value="themeStore.themeMode" @select="handleSelect" trigger="click" placement="bottom-end">
+  <n-dropdown :options="themeOptions" :value="themeStore.themeMode" @select="handleSelect" trigger="click" placement="bottom-end" size="small">
     <n-button quaternary size="small">
       <template #icon>
         <n-icon :component="currentThemeIcon" :size="18" />

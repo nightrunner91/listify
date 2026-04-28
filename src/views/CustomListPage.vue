@@ -1,10 +1,10 @@
 <script setup>
-import { ref, watch, nextTick, onMounted, computed } from 'vue'
+import { ref, watch, nextTick, onMounted, onUnmounted, computed } from 'vue'
 import { NSpace, NList, NSpin, NEmpty, NText } from 'naive-ui'
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
-import { useRoute } from 'vue-router'
+import { useRoute, onBeforeRouteLeave } from 'vue-router'
 import LySearch from '@/components/ly-search/LySearch.vue'
 import LyCustomRecord from '@/components/ly-custom-record/LyCustomRecord.vue'
 import LyAddRecord from '@/components/ly-add-record/LyAddRecord.vue'
@@ -26,6 +26,12 @@ const sortedRecords = computed(() => {
   if (!recordsStore.isSearching || !recordsStore.searchQuery.trim()) return records
   const query = recordsStore.searchQuery.toLowerCase().trim()
   return records.filter(r => r.title.toLowerCase().includes(query))
+})
+
+// Detect if there's already an empty record (title blank or whitespace)
+const hasEmptyRecord = computed(() => {
+  if (!customList.value) return false
+  return customList.value.records.some(r => !r.title || !r.title.trim())
 })
 
 // Watch for search state changes to reinitialize display order when exiting search
@@ -70,6 +76,47 @@ function handleScrollBottom() {
     })
   })
 }
+
+// ── IntersectionObserver to show/hide floating button ────────────────────────
+
+const bottomButtonRef = ref(null)
+const isBottomButtonVisible = ref(false)
+let observer = null
+
+function setupObserver() {
+  if (observer) observer.disconnect()
+  observer = new IntersectionObserver(
+    ([entry]) => {
+      isBottomButtonVisible.value = entry.isIntersecting
+    },
+    { threshold: 0 }
+  )
+  if (bottomButtonRef.value) {
+    observer.observe(bottomButtonRef.value)
+  }
+}
+
+watch(bottomButtonRef, (el) => {
+  if (el) setupObserver()
+})
+
+onUnmounted(() => {
+  if (observer) observer.disconnect()
+})
+
+// ── Cleanup dangling empty record on route leave ──────────────────────────────
+
+onBeforeRouteLeave(async () => {
+  if (!customList.value) return
+  const emptyRecord = customList.value.records.find(r => !r.title || !r.title.trim())
+  if (emptyRecord) {
+    try {
+      await recordsStore.removeCustomRecord(customListId.value, emptyRecord.id)
+    } catch {
+      // Silently ignore — do not block navigation
+    }
+  }
+})
 </script>
 
 <template>
@@ -122,7 +169,7 @@ function handleScrollBottom() {
           </template>
           
           <template v-else>
-            <n-list hoverable :show-divider="!gridStore.screenLargerThen('m')" class="" style="padding-bottom: 56px;">
+            <n-list hoverable :show-divider="!gridStore.screenLargerThen('m')" style="padding-bottom: 8px;">
               <dynamic-scroller
                 :items="sortedRecords"
                 key-field="id"
@@ -136,12 +183,26 @@ function handleScrollBottom() {
                 </template>
               </dynamic-scroller>
             </n-list>
+
+            <!-- Inline bottom button below last record -->
+            <div
+              v-if="!recordsStore.isSearching"
+              ref="bottomButtonRef"
+              class="pt-1 pb-2">
+              <ly-add-record
+                variant="bottom"
+                :disabled="hasEmptyRecord"
+                @scroll-bottom="handleScrollBottom" />
+            </div>
+
+            <!-- Floating button: only visible when bottom button is off-screen -->
             <transition
               name="fade-up-down"
               mode="out-in">
               <ly-add-record 
-                v-if="!recordsStore.isSearching"
+                v-if="!recordsStore.isSearching && !isBottomButtonVisible"
                 variant="floating"
+                :disabled="hasEmptyRecord"
                 @scroll-bottom="handleScrollBottom" />
             </transition>
           </template>

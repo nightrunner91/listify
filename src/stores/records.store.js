@@ -473,6 +473,20 @@ export const useRecordsStore = defineStore('records', () => {
     return Promise.resolve(true)
   }
 
+  async function deleteRecordById(id, listType) {
+    try {
+      await api.delete(`/records/${id}`)
+      const index = records.value[listType].findIndex(r => r.id === id)
+      if (index > -1) {
+        records.value[listType].splice(index, 1)
+        removeFromDisplayOrder(id, listType)
+      }
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+
   /* ======================== */
   /* ======== Labels ======== */
   /* ======================== */
@@ -856,6 +870,7 @@ export const useRecordsStore = defineStore('records', () => {
     restoreRecords,
     deleteSelectedRecords,
     deleteAllRecords,
+    deleteRecordById,
 
     labels,
     getDefaultLabel,

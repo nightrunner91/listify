@@ -1,6 +1,6 @@
 <script setup>
 import { nextTick, toRefs, computed } from 'vue'
-import { NSpace, NButton } from 'naive-ui'
+import { NSpace, NButton, NTooltip } from 'naive-ui'
 import { 
   PhPlus as PlusIcon,
 } from 'phosphor-vue'
@@ -15,52 +15,17 @@ const recordsStore = useRecordsStore()
 
 const emit = defineEmits(['scrollBottom'])
 
-async function handleNewRecord() {
-  // Detect if current route is a custom list
-  const customList = recordsStore.customLists.find(list => list.id === route.params.id)
-  if (customList) {
-    // Add to custom list
-    recordsStore.addCustomRecord(customList.id, '')
-    .then(() => {
-      // Focus last input (new record)
-      const lastRecord = customList.records[customList.records.length - 1]
-      if (lastRecord) {
-        focusInput(lastRecord)
-      }
-      if (props.variant === 'floating') {
-        emit('scrollBottom')
-      }
-    })
-  } else {
-    // Add to prepared list
-    recordsStore
-      .addRecord({
-        listType: route.meta.tag,
-        saveLocal: true,
-      })
-      .then(record => { 
-        focusInput(record)
-        // Emit scroll event for floating button
-        if (props.variant === 'floating') {
-          emit('scrollBottom')
-        }
-      })
-  }
-}
-
-/* eslint-disable-next-line no-undef */
-async function focusInput(record) {
-  await nextTick()
-  document.querySelector(`#input-${record.id} input`).focus()
-}
-
 const props = defineProps({
   variant: {
     type: String,
     required: true,
     default: 'inline',
     validator: value =>
-      ['inline', 'floating'].includes(value),
+      ['inline', 'floating', 'bottom'].includes(value),
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 })
 
@@ -80,9 +45,49 @@ const addLabel = computed(() => {
   
   return t('addRecord.button', { thing: t(`things.${thingKey}`) })
 })
+
+async function handleNewRecord() {
+  // Detect if current route is a custom list
+  const customList = recordsStore.customLists.find(list => list.id === route.params.id)
+  if (customList) {
+    // Add to custom list
+    recordsStore.addCustomRecord(customList.id, '')
+    .then(() => {
+      // Focus last input (new record)
+      const lastRecord = customList.records[customList.records.length - 1]
+      if (lastRecord) {
+        focusInput(lastRecord)
+      }
+      if (props.variant === 'floating' || props.variant === 'bottom') {
+        emit('scrollBottom')
+      }
+    })
+  } else {
+    // Add to prepared list
+    recordsStore
+      .addRecord({
+        listType: route.meta.tag,
+        saveLocal: true,
+      })
+      .then(record => { 
+        focusInput(record)
+        // Emit scroll event for floating and bottom buttons
+        if (props.variant === 'floating' || props.variant === 'bottom') {
+          emit('scrollBottom')
+        }
+      })
+  }
+}
+
+/* eslint-disable-next-line no-undef */
+async function focusInput(record) {
+  await nextTick()
+  document.querySelector(`#input-${record.id} input`).focus()
+}
 </script>
 
 <template>
+  <!-- Inline variant: shown when list is empty -->
   <n-button
     v-if="variant == 'inline'"
     secondary
@@ -91,19 +96,35 @@ const addLabel = computed(() => {
     {{ addLabel }}
   </n-button>
 
+  <!-- Bottom variant: shown below last record -->
+  <n-button
+    v-else-if="variant == 'bottom'"
+    size="small"
+    :disabled="disabled"
+    :render-icon="renderIcon(PlusIcon)"
+    @click="handleNewRecord">
+    {{ addLabel }}
+  </n-button>
+
+  <!-- Floating variant: fixed bottom-right corner -->
   <n-space
     v-else-if="variant == 'floating'"
     vertical
     align="center"
     justify="center"
     class="position-fixed right-5 bottom-5 right-s-10 bottom-s-10">
-    <n-button
-      strong
-      circle
-      type="primary"
-      size="large"
-      :render-icon="renderIcon(PlusIcon)"
-      @click="handleNewRecord" />
+    <n-tooltip placement="left" trigger="hover">
+      <template #trigger>
+        <n-button
+          strong
+          circle
+          type="primary"
+          size="large"
+          :disabled="disabled"
+          :render-icon="renderIcon(PlusIcon)"
+          @click="handleNewRecord" />
+      </template>
+      {{ addLabel }}
+    </n-tooltip>
   </n-space>
 </template>
-

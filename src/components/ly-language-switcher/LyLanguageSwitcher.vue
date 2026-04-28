@@ -32,7 +32,7 @@ const handleSelect = (key) => {
 </script>
 
 <template>
-  <n-dropdown trigger="click" :options="options" @select="handleSelect" :value="locale">
+  <n-dropdown trigger="click" :options="options" @select="handleSelect" :value="locale" size="small">
     <n-button quaternary circle>
       <template #icon>
         <n-icon>
