@@ -12,7 +12,8 @@
     "export": "Export",
     "import": "Import",
     "light": "Light",
-    "dark": "Dark"
+    "dark": "Dark",
+    "system": "System"
   },
   "home": {
     "categories": "CATEGORIES"

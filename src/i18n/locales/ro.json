@@ -12,7 +12,8 @@
     "export": "Export",
     "import": "Import",
     "light": "Luminos",
-    "dark": "Întunecat"
+    "dark": "Întunecat",
+    "system": "Sistem"
   },
   "home": {
     "categories": "CATEGORII"

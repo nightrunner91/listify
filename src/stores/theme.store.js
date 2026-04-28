@@ -7,6 +7,7 @@ import { useAuthStore } from '@/stores/auth.store'
 
 export const useThemeStore = defineStore('theme', () => {
   const currentTheme = ref(null)
+  const themeMode = ref('system') // 'light', 'dark', 'system'
 
   const categoryColor = (tag) => (
     currentTheme.value
@@ -14,24 +15,48 @@ export const useThemeStore = defineStore('theme', () => {
       : lightThemeOverrides.Categories[`${tag}Color`]
   )
 
-  async function toggleTheme() {
-    currentTheme.value = currentTheme.value ? null : darkTheme
-    const themeString = currentTheme.value ? 'dark' : 'light'
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  
+  mediaQuery.addEventListener('change', () => {
+    if (themeMode.value === 'system') {
+      applyThemeMode('system', false)
+    }
+  })
+
+  function applyThemeMode(mode, save = true) {
+    themeMode.value = mode
+    
+    if (mode === 'dark') {
+      currentTheme.value = darkTheme
+    } else if (mode === 'light') {
+      currentTheme.value = null
+    } else if (mode === 'system') {
+      // Default to dark if prefers-color-scheme is not available or matches dark, or default to dark as fallback
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        currentTheme.value = null
+      } else {
+        currentTheme.value = darkTheme
+      }
+    }
+    
+    applyBodyClassname()
+  }
+
+  async function setTheme(mode) {
+    applyThemeMode(mode)
     
     // Save to local storage as fallback
-    localStorage.setItem('theme', themeString)
+    localStorage.setItem('theme', mode)
 
     // Save to API if authenticated
     const authStore = useAuthStore()
     if (authStore.user) {
       try {
-        await api.put('/settings', { theme: themeString })
+        await api.put('/settings', { theme: mode })
       } catch (e) {
         // ignore errors
       }
     }
-    
-    applyBodyClassname()
   }
 
   function applyBodyClassname() {
@@ -44,15 +69,14 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   async function restoreTheme() {
-    let savedTheme = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    let savedTheme = localStorage.getItem('theme') || 'system'
     
     // If authenticated, try to fetch from API
     const authStore = useAuthStore()
     if (authStore.user) {
       try {
         const settings = await api.get('/settings')
-        if (settings.theme !== 'system') {
+        if (settings.theme) {
           savedTheme = settings.theme
           localStorage.setItem('theme', savedTheme)
         }
@@ -61,23 +85,14 @@ export const useThemeStore = defineStore('theme', () => {
       }
     }
 
-    if (savedTheme === 'dark') {
-      currentTheme.value = darkTheme
-    } else if (savedTheme === 'light') {
-      currentTheme.value = null
-    } else if (prefersDark) {
-      currentTheme.value = darkTheme
-    } else {
-      currentTheme.value = null
-    }
-
-    applyBodyClassname()
+    applyThemeMode(savedTheme, false)
   }
 
   return {
     currentTheme,
+    themeMode,
     categoryColor,
-    toggleTheme,
+    setTheme,
     restoreTheme,
   }
 })
