@@ -87,7 +87,6 @@ async function focusInput(record) {
 </script>
 
 <template>
-  <!-- Inline variant: shown when list is empty -->
   <n-button
     v-if="variant == 'inline'"
     secondary
@@ -96,7 +95,6 @@ async function focusInput(record) {
     {{ addLabel }}
   </n-button>
 
-  <!-- Bottom variant: shown below last record -->
   <n-button
     v-else-if="variant == 'bottom'"
     size="small"
@@ -106,7 +104,6 @@ async function focusInput(record) {
     {{ addLabel }}
   </n-button>
 
-  <!-- Floating variant: fixed bottom-right corner -->
   <n-space
     v-else-if="variant == 'floating'"
     vertical
