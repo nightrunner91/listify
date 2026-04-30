@@ -81,16 +81,6 @@ watch(
 
 onMounted(() => setDefaultSortLabel)
 
-// Handle scroll to bottom when adding new record
-function handleScrollBottom() {
-  nextTick(() => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth'
-    })
-  })
-}
-
 // ── IntersectionObserver to show/hide floating button ────────────────────────
 
 const bottomButtonRef = ref(null)
@@ -204,11 +194,11 @@ onBeforeRouteLeave(async () => {
               ref="bottomButtonRef"
               class="pb-2"
               style="padding-left: 40px;">
-              <n-divider class="mt-2"></n-divider>
+              <n-divider class="mt-2 mb-4"></n-divider>
               <ly-add-record
                 variant="bottom"
                 :disabled="hasEmptyRecord"
-                @scroll-bottom="handleScrollBottom" />
+                @scroll-bottom="gridStore.handleScrollBottom" />
             </div>
 
             <!-- Floating button: only visible when bottom button is off-screen -->
@@ -219,7 +209,7 @@ onBeforeRouteLeave(async () => {
                 v-if="!recordsStore.isSearching && !isBottomButtonVisible"
                 variant="floating"
                 :disabled="hasEmptyRecord"
-                @scroll-bottom="handleScrollBottom" />
+                @scroll-bottom="gridStore.handleScrollBottom" />
             </transition>
           </template>
         </template>

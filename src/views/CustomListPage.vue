@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, nextTick, onMounted, onUnmounted, computed } from 'vue'
-import { NSpace, NList, NSpin, NEmpty, NText } from 'naive-ui'
+import { NSpace, NList, NSpin, NEmpty, NText, NDivider } from 'naive-ui'
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -66,16 +66,6 @@ watch(
 )
 
 onMounted(() => setDefaultSortLabel)
-
-// Handle scroll to bottom when adding new record
-function handleScrollBottom() {
-  nextTick(() => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth'
-    })
-  })
-}
 
 // ── IntersectionObserver to show/hide floating button ────────────────────────
 
@@ -169,7 +159,7 @@ onBeforeRouteLeave(async () => {
           </template>
           
           <template v-else>
-            <n-list hoverable :show-divider="!gridStore.screenLargerThen('m')" style="padding-bottom: 8px;">
+            <n-list hoverable :show-divider="!gridStore.screenLargerThen('m')">
               <dynamic-scroller
                 :items="sortedRecords"
                 key-field="id"
@@ -188,11 +178,13 @@ onBeforeRouteLeave(async () => {
             <div
               v-if="!recordsStore.isSearching"
               ref="bottomButtonRef"
-              class="pt-1 pb-2">
+              class="pb-2"
+              style="padding-left: 40px;">
+              <n-divider class="mt-2 mb-4"></n-divider>
               <ly-add-record
                 variant="bottom"
                 :disabled="hasEmptyRecord"
-                @scroll-bottom="handleScrollBottom" />
+                @scroll-bottom="gridStore.handleScrollBottom" />
             </div>
 
             <!-- Floating button: only visible when bottom button is off-screen -->
@@ -203,7 +195,7 @@ onBeforeRouteLeave(async () => {
                 v-if="!recordsStore.isSearching && !isBottomButtonVisible"
                 variant="floating"
                 :disabled="hasEmptyRecord"
-                @scroll-bottom="handleScrollBottom" />
+                @scroll-bottom="gridStore.handleScrollBottom" />
             </transition>
           </template>
         </template>

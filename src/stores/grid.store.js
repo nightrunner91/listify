@@ -3,12 +3,12 @@
  * @description This store is used to save, update and get grid parameters
  */
 
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { defineStore } from 'pinia'
 import { breakpoints } from '@/theme.config'
 
 export const useGridStore = defineStore('grid', () => {
-  
+
   /**
    * @constant windowSizes [mutable]
    * @type {Object}
@@ -97,6 +97,16 @@ export const useGridStore = defineStore('grid', () => {
   }
 
 
+  async function handleScrollBottom() {
+    await new Promise(resolve => setTimeout(resolve, 300))
+    nextTick(() => {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth'
+      })
+    })
+  }
+
   return {
     windowSizes,
     gridBreakpoints,
@@ -105,5 +115,6 @@ export const useGridStore = defineStore('grid', () => {
     showScroller,
     watchWindowSizes,
     screenLargerThen,
+    handleScrollBottom,
   }
 })

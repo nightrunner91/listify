@@ -71,10 +71,7 @@ async function handleNewRecord() {
       })
       .then(record => { 
         focusInput(record)
-        // Emit scroll event for floating and bottom buttons
-        if (props.variant === 'floating' || props.variant === 'bottom') {
-          emit('scrollBottom')
-        }
+        emit('scrollBottom')
       })
   }
 }
