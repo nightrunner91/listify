@@ -63,7 +63,7 @@ watch(
   >
     <n-space
       align="center"
-      class="w-100 h-100 pl-4 pl-s-18"
+      class="w-100 h-100"
       :wrap-item="false"
     >
       <n-grid
@@ -72,6 +72,7 @@ watch(
         :x-gap="12"
         :y-gap="8"
         :cols="6"
+        class="pr-4"
       >
         <n-grid-item
           span="6 s:4 l:4"
@@ -80,13 +81,14 @@ watch(
           <!-- begin::Selection Controls -->
           <n-space
             align="center"
+            justify="space-between"
             :wrap-item="false"
+            class="padding-right: 16px;"
           >
             <!-- begin::Toggle All -->
             <n-button
               secondary
               size="small"
-              class="mr-auto"
               :render-icon="
                 recordsStore.allRecordsSelected(route.meta.tag).value
                   ? renderIcon(DeselectAllIcon)
