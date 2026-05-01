@@ -17,7 +17,6 @@ import { PhTrashSimple as DeleteIcon } from 'phosphor-vue'
 import { renderIcon } from '@/utils/render-icon'
 import LyTitle from '@/components/ly-title/LyTitle.vue'
 import LyUserProfile from '@/components/ly-user-profile/LyUserProfile.vue'
-import LyImport from '@/components/ly-import/LyImport.vue'
 import LySort from '@/components/ly-sort/LySort.vue'
 import LyScroller from '@/components/ly-scroller/LyScroller.vue'
 import LyFooter from '@/components/ly-footer/LyFooter.vue'
@@ -86,6 +85,7 @@ function confirmDeleteList() {
       <n-grid-item
         span="6 s:4 l:4"
         offset="0 s:1 l:1"
+        class="ly-grid"
       >
         <!-- begin::Top Header (Profile or Title+Sort) -->
         <n-space
@@ -107,7 +107,6 @@ function confirmDeleteList() {
               v-else-if="route.meta.isCustom"
               secondary
               type="error"
-              size="small"
               :render-icon="renderIcon(DeleteIcon)"
               @click="confirmDeleteList"
             >
@@ -121,11 +120,6 @@ function confirmDeleteList() {
         <router-view />
         <!-- end::Main View -->
 
-        <ly-import
-          v-show="false"
-          ref="importRef"
-          variant="hidden"
-        />
         <ly-footer />
       </n-grid-item>
     </n-grid>
@@ -159,5 +153,10 @@ function confirmDeleteList() {
       background-color: rgba(0, 0, 0, 0.4);
     }
   }
+}
+
+.ly-grid {
+  display: flex;
+  flex-direction: column;
 }
 </style>

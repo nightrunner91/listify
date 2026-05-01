@@ -9,7 +9,7 @@ import LyVersion from '@/components/ly-version/LyVersion.vue'
 
 <template>
   <n-layout-footer
-    class="mt-10 px-4 h-56 border-1 rounded-t-base border-bottom-0"
+    class="mt-10 px-4 h-56 rounded-t-base border-bottom-0 border-top-1 border-left-1 border-right-1 mt-auto"
     :style="{ borderColor: 'var(--n-border-color)' }"
   >
     <n-space

@@ -52,6 +52,7 @@ const usedStuff = ref([
     item-responsive
     responsive="screen"
     :cols="6"
+    class="pb-8"
   >
     <n-grid-item span="12">
       <n-card content-class="w-100 w-l-75">

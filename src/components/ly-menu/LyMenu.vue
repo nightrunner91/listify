@@ -231,10 +231,6 @@ watch(route, () => {
 </template>
 
 <style lang="scss">
-.n-menu-divider {
-  margin: spacer(4);
-}
-
 .n-menu-item-content-header {
   display: flex;
 

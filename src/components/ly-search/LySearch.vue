@@ -67,7 +67,6 @@ const clearSearch = () => {
   <!-- begin::Search Input -->
   <n-input
     v-model:value="searchInput"
-    size="large"
     :placeholder="searchPlaceholder"
     class="ly-search mb-4"
   >
@@ -93,11 +92,3 @@ const clearSearch = () => {
   </n-input>
   <!-- end::Search Input -->
 </template>
-
-<style lang="scss">
-.ly-search {
-  .n-input__placeholder {
-    padding-top: 0.1rem !important;
-  }
-}
-</style>

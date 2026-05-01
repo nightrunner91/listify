@@ -17,7 +17,7 @@ const gridStore = useGridStore()
     :width="300"
     :show-trigger="gridStore.screenLargerThen('s')"
     :collapsed="menuStore.collapsed"
-    class="py-6 top-0 left-0 z-plus-2"
+    class="py-4 py-l-9 top-0 left-0 z-plus-2"
     @collapse="menuStore.closeMenu"
     @expand="menuStore.openMenu"
   >
