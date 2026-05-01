@@ -120,6 +120,12 @@ function confirmDeleteList() {
         <router-view />
         <!-- end::Main View -->
 
+        <ly-import
+          v-show="false"
+          ref="importRef"
+          variant="hidden"
+        />
+
         <ly-footer />
       </n-grid-item>
     </n-grid>

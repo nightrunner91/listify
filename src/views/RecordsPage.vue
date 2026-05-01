@@ -194,6 +194,7 @@ onBeforeRouteLeave(async () => {
                   :disabled="hasEmptyRecord"
                   @scroll-bottom="gridStore.handleScrollBottom"
                 />
+                <n-text depth="3">or</n-text>
                 <ly-import />
               </n-space>
             </template>

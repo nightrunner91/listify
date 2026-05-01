@@ -162,7 +162,7 @@ function getIconColor(key) {
         >
           <n-card
             size="medium"
-            class="category-card cursor-pointer transition-all-short"
+            class="category-card cursor-pointer transition-all-short no-select"
             @click="router.push({ name: cat.route })"
           >
             <n-space

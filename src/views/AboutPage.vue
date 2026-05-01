@@ -33,16 +33,16 @@ const usedStuff = ref([
     title: 'Vue 3',
   },
   {
+    icon: NaiveIcon,
+    title: 'Naive UI',
+  },
+  {
     icon: FastifyIcon,
     title: 'Fastify',
   },
   {
     icon: PostgresIcon,
     title: 'PostgreSQL',
-  },
-  {
-    icon: NaiveIcon,
-    title: 'Naive UI',
   },
 ])
 </script>

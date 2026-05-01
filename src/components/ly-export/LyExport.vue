@@ -94,7 +94,7 @@ defineExpose({showModal})
     <div class="mb-3">
       <n-text
         depth="3"
-        class="section-title"
+        class="fz-12 font-weight-600 letter-spacing-1"
       >
         {{ t('export.sectionCategories') }}
       </n-text>
@@ -161,7 +161,7 @@ defineExpose({showModal})
       <div class="mb-3">
         <n-text
           depth="3"
-          class="section-title"
+          class="fz-12 font-weight-600 letter-spacing-1"
         >
           {{ t('export.sectionCustomLists') }}
         </n-text>
@@ -197,7 +197,7 @@ defineExpose({showModal})
       <div class="mb-3">
         <n-text
           depth="3"
-          class="section-title"
+          class="fz-12 font-weight-600 letter-spacing-1"
         >
           {{ t('export.sectionFormat') }}
         </n-text>

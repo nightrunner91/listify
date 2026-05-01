@@ -129,7 +129,7 @@ function formatRelativeTime(dateString) {
         <n-list-item
           v-for="list in customLists"
           :key="list.id"
-          class="hover-bg-action"
+          class="hover-bg-action no-select"
           @click="handleListClick(list.id)"
         >
           <n-thing :title="list.name">
