@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { 
+import {
   PhUploadSimple as ExportIcon,
   PhFileCode as JsonIcon,
   PhTable as CsvIcon,
@@ -18,7 +18,7 @@ import {
   NP,
   NText,
   NButtonGroup,
-  NSpace,
+  NSpace
 } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -43,31 +43,21 @@ defineExpose({showModal})
 </script>
 
 <template>
-  <template
-    v-if="variant === 'minified'"
-  >
-    <n-tooltip
-      trigger="hover"
-    >
-      <template
-        #trigger
-      >
+  <template v-if="variant === 'minified'">
+    <n-tooltip trigger="hover">
+      <template #trigger>
         <n-button
           quaternary
           size="small"
           @click="showModal = true"
         >
-          <template
-            #icon
-          >
+          <template #icon>
             <n-icon
               :component="ExportIcon"
               :size="18"
             />
           </template>
-          <span
-            v-if="gridStore.screenLargerThen('s')"
-          >
+          <span v-if="gridStore.screenLargerThen('s')">
             {{ t('common.export') }}
           </span>
         </n-button>
@@ -94,9 +84,7 @@ defineExpose({showModal})
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'"
   >
-    <div
-      class="mb-3"
-    >
+    <div class="mb-3">
       <n-text
         depth="3"
         class="section-title"
@@ -115,57 +103,43 @@ defineExpose({showModal})
         :y-gap="8"
         :cols="2"
       >
-        <n-grid-item
-          span="2 s:1"
-        >
+        <n-grid-item span="2 s:1">
           <n-checkbox
             value="games"
             :label="t('categories.games')"
           />
         </n-grid-item>
-        <n-grid-item
-          span="2 s:1"
-        >
+        <n-grid-item span="2 s:1">
           <n-checkbox
             value="tvshows"
             :label="t('categories.tvshows')"
           />
         </n-grid-item>
-        <n-grid-item
-          span="2 s:1"
-        >
+        <n-grid-item span="2 s:1">
           <n-checkbox
             value="films"
             :label="t('categories.films')"
           />
         </n-grid-item>
-        <n-grid-item
-          span="2 s:1"
-        >
+        <n-grid-item span="2 s:1">
           <n-checkbox
             value="anime"
             :label="t('categories.anime')"
           />
         </n-grid-item>
-        <n-grid-item
-          span="2 s:1"
-        >
+        <n-grid-item span="2 s:1">
           <n-checkbox
             value="manga"
             :label="t('categories.manga')"
           />
         </n-grid-item>
-        <n-grid-item
-          span="2 s:1"
-        >
+        <n-grid-item span="2 s:1">
           <n-checkbox
             value="books"
             :label="t('categories.books')"
           />
         </n-grid-item>
-        <n-grid-item
-          span="2 s:1"
-        >
+        <n-grid-item span="2 s:1">
           <n-checkbox
             value="music"
             :label="t('categories.music')"
@@ -174,12 +148,8 @@ defineExpose({showModal})
       </n-grid>
     </n-checkbox-group>
 
-    <template
-      v-if="recordsStore.customLists.length > 0"
-    >
-      <div
-        class="mb-3"
-      >
+    <template v-if="recordsStore.customLists.length > 0">
+      <div class="mb-3">
         <n-text
           depth="3"
           class="section-title"
@@ -211,12 +181,8 @@ defineExpose({showModal})
         </n-grid>
       </n-checkbox-group>
     </template>
-    <template
-      #footer
-    >
-      <div
-        class="mb-3"
-      >
+    <template #footer>
+      <div class="mb-3">
         <n-text
           depth="3"
           class="section-title"
@@ -233,12 +199,8 @@ defineExpose({showModal})
           class="w-50"
           @click="recordsStore.exportCollection('json')"
         >
-          <template
-            #icon
-          >
-            <n-icon
-              :component="JsonIcon"
-            />
+          <template #icon>
+            <n-icon :component="JsonIcon" />
           </template>
           JSON
         </n-button>
@@ -247,12 +209,8 @@ defineExpose({showModal})
           class="w-50"
           @click="recordsStore.exportCollection('csv')"
         >
-          <template
-            #icon
-          >
-            <n-icon
-              :component="CsvIcon"
-            />
+          <template #icon>
+            <n-icon :component="CsvIcon" />
           </template>
           CSV
         </n-button>

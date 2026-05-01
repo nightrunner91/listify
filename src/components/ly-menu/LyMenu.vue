@@ -1,7 +1,19 @@
 <script setup>
-import { h, ref, watch, computed } from 'vue'
-import { NMenu, NBadge } from 'naive-ui'
-import { RouterLink, useRoute, useRouter } from 'vue-router'
+import {
+  h,
+  ref,
+  watch,
+  computed
+} from 'vue'
+import {
+  NMenu,
+  NBadge
+} from 'naive-ui'
+import {
+  RouterLink,
+  useRoute,
+  useRouter
+} from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import {
   PhGameController as GamesIcon,

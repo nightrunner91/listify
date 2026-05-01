@@ -1,6 +1,20 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { NGrid, NGridItem, NIcon, NCard, NSkeleton, NStatistic, NSpace, NNumberAnimation, NText } from 'naive-ui'
+import {
+  ref,
+  computed,
+  onMounted
+} from 'vue'
+import {
+  NGrid,
+  NGridItem,
+  NIcon,
+  NCard,
+  NSkeleton,
+  NStatistic,
+  NSpace,
+  NNumberAnimation,
+  NText
+} from 'naive-ui'
 import {
   PhGameController as GamesIcon,
   PhTelevision as TvShowsIcon,
@@ -8,7 +22,7 @@ import {
   PhSmileyWink as AnimeIcon,
   PhImageSquare as MangaIcon,
   PhBooks as BooksIcon,
-  PhMusicNotes as MusicIcon,
+  PhMusicNotes as MusicIcon
 } from 'phosphor-vue'
 import { useRouter } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
@@ -107,9 +121,7 @@ function getIconColor(key) {
       :x-gap="24"
       :y-gap="24"
     >
-      <template
-        v-if="isLoading"
-      >
+      <template v-if="isLoading">
         <n-grid-item
           v-for="n in 6"
           :key="n"
@@ -126,9 +138,7 @@ function getIconColor(key) {
         </n-grid-item>
       </template>
 
-      <template
-        v-else
-      >
+      <template v-else>
         <n-grid-item
           v-for="cat in categories"
           :key="cat.key"
@@ -143,9 +153,7 @@ function getIconColor(key) {
               :wrap="false"
               justify="space-between"
             >
-              <n-statistic
-                :label="cat.label"
-              >
+              <n-statistic :label="cat.label">
                 <n-number-animation
                   :to="getCount(cat.key).value"
                   class="font-weight-500"

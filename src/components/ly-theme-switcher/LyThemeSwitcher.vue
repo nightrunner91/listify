@@ -1,12 +1,19 @@
 <script setup>
-import { computed, h } from 'vue'
-import { 
+import {
+  computed,
+  h
+} from 'vue'
+import {
   PhSun as LightIcon,
   PhMoon as DarkIcon,
   PhMonitor as SystemIcon
 } from 'phosphor-vue'
 import { useThemeStore } from '@/stores/theme.store'
-import { NButton, NIcon, NDropdown } from 'naive-ui'
+import {
+  NButton,
+  NIcon,
+  NDropdown
+} from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useI18n } from 'vue-i18n'
 
@@ -66,17 +73,13 @@ const currentThemeLabel = computed(() => {
       quaternary
       size="small"
     >
-      <template
-        #icon
-      >
+      <template #icon>
         <n-icon
           :component="currentThemeIcon"
           :size="18"
         />
       </template>
-      <span
-        v-if="gridStore.screenLargerThen('s')"
-      >
+      <span v-if="gridStore.screenLargerThen('s')">
         {{ currentThemeLabel }}
       </span>
     </n-button>

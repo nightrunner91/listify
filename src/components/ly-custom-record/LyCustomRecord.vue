@@ -1,6 +1,17 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
-import { NListItem, NSpace, NInput, NButton, NIcon, NText } from 'naive-ui'
+import {
+  ref,
+  computed,
+  watch
+} from 'vue'
+import {
+  NListItem,
+  NSpace,
+  NInput,
+  NButton,
+  NIcon,
+  NText
+} from 'naive-ui'
 import { PhX as DeleteIcon } from 'phosphor-vue'
 import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
@@ -89,9 +100,7 @@ function handleDelete() {
         class="flex-shrink-0"
         @click="handleDelete"
       >
-        <template
-          #icon
-        >
+        <template #icon>
           <n-icon><DeleteIcon /></n-icon>
         </template>
       </n-button>

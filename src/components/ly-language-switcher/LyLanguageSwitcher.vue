@@ -1,6 +1,13 @@
 <script setup>
-import { computed, h } from 'vue'
-import { NDropdown, NButton, NIcon } from 'naive-ui'
+import {
+  computed,
+  h
+} from 'vue'
+import {
+  NDropdown,
+  NButton,
+  NIcon
+} from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import { setI18nLanguage } from '@/i18n'
 
@@ -53,13 +60,9 @@ const handleSelect = (key) => {
       quaternary
       circle
     >
-      <template
-        #icon
-      >
+      <template #icon>
         <n-icon>
-          <span
-            :class="['fi', `fi-${currentFlag}`, 'fis', 'rounded-circle', 'd-block']"
-          />
+          <span :class="['fi', `fi-${currentFlag}`, 'fis', 'rounded-circle', 'd-block']" />
         </n-icon>
       </template>
     </n-button>

@@ -2,7 +2,20 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useMessage, NCard, NForm, NFormItem, NInput, NButton, NSpace, NH3, NText, NLayout, NGrid, NGi } from 'naive-ui'
+import {
+  useMessage,
+  NCard,
+  NForm,
+  NFormItem,
+  NInput,
+  NButton,
+  NSpace,
+  NH3,
+  NText,
+  NLayout,
+  NGrid,
+  NGi
+} from 'naive-ui'
 import { useAuthStore } from '@/stores/auth.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useThemeStore } from '@/stores/theme.store'
@@ -58,18 +71,14 @@ async function handleLogin() {
 </script>
 
 <template>
-  <n-layout
-    position="absolute"
-  >
+  <n-layout position="absolute">
     <n-space
       vertical
       justify="center"
       align="center"
       class="h-100 p-4"
     >
-      <n-grid
-        :cols="24"
-      >
+      <n-grid :cols="24">
         <n-gi
           :span="24"
           :m="16"
@@ -92,14 +101,10 @@ async function handleLogin() {
                 align="center"
                 :size="2"
               >
-                <n-h3
-                  class="mb-0"
-                >
+                <n-h3 class="mb-0">
                   {{ $t('auth.login.title') }}
                 </n-h3>
-                <n-text
-                  depth="3"
-                >
+                <n-text depth="3">
                   {{ $t('auth.login.subtitle') }}
                 </n-text>
               </n-space>
@@ -133,9 +138,7 @@ async function handleLogin() {
                   />
                 </n-form-item>
 
-                <n-form-item
-                  :show-label="false"
-                >
+                <n-form-item :show-label="false">
                   <n-button
                     type="primary"
                     size="large"
@@ -154,9 +157,7 @@ async function handleLogin() {
                 align="center"
                 :size="2"
               >
-                <n-text
-                  depth="3"
-                >
+                <n-text depth="3">
                   {{ $t('auth.login.noAccount') }}
                 </n-text>
                 <n-button

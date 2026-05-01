@@ -1,6 +1,21 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { NTimeline, NTimelineItem, NCard, NSpace, NText, NEmpty, NSpin, NRate, NButton, NIcon } from 'naive-ui'
+import {
+  ref,
+  onMounted,
+  computed
+} from 'vue'
+import {
+  NTimeline,
+  NTimelineItem,
+  NCard,
+  NSpace,
+  NText,
+  NEmpty,
+  NSpin,
+  NRate,
+  NButton,
+  NIcon
+} from 'naive-ui'
 import { api } from '@/api/client'
 import moment from 'moment'
 import 'moment/locale/ru'
@@ -9,7 +24,9 @@ import { PhHeart as LikeIcon } from 'phosphor-vue'
 import { darkThemeOverrides } from '@/theme.config.js'
 import { useI18n } from 'vue-i18n'
 
-const { t, te, locale } = useI18n()
+const {
+  t, te, locale 
+} = useI18n()
 
 const activities = ref([])
 const loading = ref(true)
@@ -35,7 +52,9 @@ const getCategoryColor = (category) => {
 }
 
 const formatActivity = (activity) => {
-  const { action, entityName, category, metadata } = activity
+  const {
+    action, entityName, category, metadata 
+  } = activity
   const categoryLabel = category && te(`categories.${category}`) ? t(`categories.${category}`) : category
 
   switch (action) {
@@ -149,17 +168,13 @@ const formattedActivities = computed(() => {
       </n-text>
     </n-space>
 
-    <n-card
-      :bordered="true"
-    >
+    <n-card :bordered="true">
       <n-space
         v-if="loading"
         justify="center"
         class="py-8"
       >
-        <n-spin
-          size="large"
-        />
+        <n-spin size="large" />
       </n-space>
 
       <n-empty
@@ -168,9 +183,7 @@ const formattedActivities = computed(() => {
         class="py-8"
       />
 
-      <n-timeline
-        v-else
-      >
+      <n-timeline v-else>
         <n-timeline-item
           v-for="activity in formattedActivities"
           :key="activity.id"
@@ -178,9 +191,7 @@ const formattedActivities = computed(() => {
           :color="getCategoryColor(activity.category)"
           :time="activity.timeAgo"
         >
-          <template
-            #default
-          >
+          <template #default>
             <n-space
               align="center"
               :size="8"
@@ -191,49 +202,29 @@ const formattedActivities = computed(() => {
                 tag="span"
                 class="mr-1"
               >
-                <template
-                  #entity
-                >
+                <template #entity>
                   <span
                     v-if="activity.formatted.entity"
                     class="font-weight-500"
                   >{{ activity.formatted.entity }}</span>
                 </template>
-                <template
-                  #category
-                >
-                  <span
-                    v-if="activity.formatted.category"
-                  >{{ activity.formatted.category }}</span>
+                <template #category>
+                  <span v-if="activity.formatted.category">{{ activity.formatted.category }}</span>
                 </template>
-                <template
-                  #status
-                >
-                  <span
-                    v-if="activity.formatted.status"
-                  >{{ activity.formatted.status }}</span>
+                <template #status>
+                  <span v-if="activity.formatted.status">{{ activity.formatted.status }}</span>
                 </template>
-                <template
-                  #listName
-                >
+                <template #listName>
                   <span
                     v-if="activity.formatted.listName"
                     class="font-weight-500"
                   >{{ activity.formatted.listName }}</span>
                 </template>
-                <template
-                  #count
-                >
-                  <span
-                    v-if="activity.formatted.count"
-                  >{{ activity.formatted.count }}</span>
+                <template #count>
+                  <span v-if="activity.formatted.count">{{ activity.formatted.count }}</span>
                 </template>
-                <template
-                  #action
-                >
-                  <span
-                    v-if="activity.formatted.action"
-                  >{{ activity.formatted.action }}</span>
+                <template #action>
+                  <span v-if="activity.formatted.action">{{ activity.formatted.action }}</span>
                 </template>
               </i18n-t>
               
@@ -254,9 +245,7 @@ const formattedActivities = computed(() => {
                 size="small"
                 class="no-events cursor-default ml-n1 max-w-16 max-h-16"
               >
-                <template
-                  #icon
-                >
+                <template #icon>
                   <like-icon
                     weight="fill"
                     size="16"

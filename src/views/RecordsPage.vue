@@ -1,24 +1,50 @@
 <script setup>
-import { ref, watch, nextTick, onMounted, onUnmounted, computed } from 'vue'
-import { NSpace, NList, NSpin, NEmpty, NText, NDivider } from 'naive-ui'
-import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
+import {
+  ref,
+  watch,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  computed
+} from 'vue'
+import {
+  NSpace,
+  NList,
+  NSpin,
+  NEmpty,
+  NText,
+  NDivider
+} from 'naive-ui'
+import {
+  DynamicScroller,
+  DynamicScrollerItem
+} from 'vue-virtual-scroller'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
-import { useRoute, onBeforeRouteLeave } from 'vue-router'
+import {
+  useRoute,
+  onBeforeRouteLeave
+} from 'vue-router'
 import LySearch from '@/components/ly-search/LySearch.vue'
 import LyRecord from '@/components/ly-record/LyRecord.vue'
 import LyAddRecord from '@/components/ly-add-record/LyAddRecord.vue'
 import LyImport from '@/components/ly-import/LyImport.vue'
-
 import { useI18n } from 'vue-i18n'
 
+// Variable declarations
 const { t } = useI18n()
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
+let observer = null
+
+// Reactive state
 const routeLoading = ref(true)
 const scrollerKey = ref(0)
+const bottomButtonRef = ref(null)
+const isBottomButtonVisible = ref(false)
 
+// Computed properties
 const sortedRecords = computed(() => {
   // If searching, return filtered results
   if (recordsStore.isSearching) {
@@ -42,13 +68,12 @@ const sortedRecords = computed(() => {
     .filter(record => record !== undefined)
 })
 
-// Detect if there's already an empty record (title blank or whitespace)
 const hasEmptyRecord = computed(() => {
   const list = recordsStore.records[route.meta.tag] || []
   return list.some(r => !r.title || !r.title.trim())
 })
 
-// Watch for search state changes to reinitialize display order when exiting search
+// Watchers
 watch(() => recordsStore.isSearching, (isSearching) => {
   if (!isSearching) {
     // Reinitialize display order with current sort when exiting search
@@ -56,13 +81,6 @@ watch(() => recordsStore.isSearching, (isSearching) => {
     scrollerKey.value++ // Force scroller to re-render
   }
 })
-
-function setDefaultSortLabel() {
-  recordsStore.selectedSort = 'label'
-  // Initialize display order for the current category
-  recordsStore.initializeDisplayOrder(route.meta.tag)
-  scrollerKey.value++ // Force scroller to re-render
-}
 
 watch(
   route,
@@ -83,13 +101,17 @@ watch(
   }
 )
 
-onMounted(() => setDefaultSortLabel)
+watch(bottomButtonRef, (el) => {
+  if (el) setupObserver()
+})
 
-// ── IntersectionObserver to show/hide floating button ────────────────────────
-
-const bottomButtonRef = ref(null)
-const isBottomButtonVisible = ref(false)
-let observer = null
+// Functions
+function setDefaultSortLabel() {
+  recordsStore.selectedSort = 'label'
+  // Initialize display order for the current category
+  recordsStore.initializeDisplayOrder(route.meta.tag)
+  scrollerKey.value++ // Force scroller to re-render
+}
 
 function setupObserver() {
   if (observer) observer.disconnect()
@@ -104,15 +126,12 @@ function setupObserver() {
   }
 }
 
-watch(bottomButtonRef, (el) => {
-  if (el) setupObserver()
-})
+// Lifecycle hooks
+onMounted(() => setDefaultSortLabel)
 
 onUnmounted(() => {
   if (observer) observer.disconnect()
 })
-
-// ── Cleanup dangling empty record on route leave ──────────────────────────────
 
 onBeforeRouteLeave(async () => {
   const list = recordsStore.records[route.meta.tag] || []
@@ -127,42 +146,31 @@ onBeforeRouteLeave(async () => {
 })
 </script>
 
+
 <template>
   <n-space
     vertical
     size="large"
   >
-    <template
-      v-if="routeLoading || recordsStore.processingImport"
-    >
+    <template v-if="routeLoading || recordsStore.processingImport">
       <n-space
         class="w-100 h-250"
         justify="center"
         align="center"
       >
-        <n-spin
-          size="small"
-        />
+        <n-spin size="small" />
       </n-space>
     </template>
 
-    <template
-      v-else
-    >
-      <n-space
-        vertical
-      >
-        <template
-          v-if="recordsStore.recordsLength(route.meta.tag).value == 0"
-        >
+    <template v-else>
+      <n-space vertical>
+        <template v-if="recordsStore.recordsLength(route.meta.tag).value == 0">
           <n-empty
             size="large"
             :description="t('records.emptyDescription')"
             class="p-10"
           >
-            <template
-              #extra
-            >
+            <template #extra>
               <n-space
                 :size="gridStore.screenLargerThen('m') ? 'large' : 'medium'"
                 class="mt-6"
@@ -170,9 +178,7 @@ onBeforeRouteLeave(async () => {
                 :vertical="!gridStore.screenLargerThen('m')"
                 align="center"
               >
-                <ly-add-record
-                  variant="inline"
-                />
+                <ly-add-record variant="inline" />
                 <n-text
                   align="center"
                   depth="3"
@@ -180,22 +186,16 @@ onBeforeRouteLeave(async () => {
                 >
                   {{ t('records.or') }}
                 </n-text>
-                <ly-import
-                  variant="inline"
-                />
+                <ly-import variant="inline" />
               </n-space>
             </template>
           </n-empty>
         </template>
 
-        <template
-          v-else
-        >
+        <template v-else>
           <ly-search />
           
-          <template
-            v-if="recordsStore.isSearching && sortedRecords.length === 0"
-          >
+          <template v-if="recordsStore.isSearching && sortedRecords.length === 0">
             <n-empty
               size="large"
               :description="t('records.searchEmptyDescription')"
@@ -203,9 +203,7 @@ onBeforeRouteLeave(async () => {
             />
           </template>
           
-          <template
-            v-else
-          >
+          <template v-else>
             <n-list
               hoverable
               :show-divider="!gridStore.screenLargerThen('m')"
@@ -217,9 +215,7 @@ onBeforeRouteLeave(async () => {
                 :min-item-size="58"
                 watch-data
               >
-                <template
-                  #default="{ item, index, active }"
-                >
+                <template #default="{ item, index, active }">
                   <dynamic-scroller-item
                     :key="item.id"
                     :item="item"
@@ -241,9 +237,7 @@ onBeforeRouteLeave(async () => {
               ref="bottomButtonRef"
               class="pb-2 pl-10"
             >
-              <n-divider
-                class="mt-2 mb-4"
-              />
+              <n-divider class="mt-2 mb-4" />
               <ly-add-record
                 variant="bottom"
                 :disabled="hasEmptyRecord"

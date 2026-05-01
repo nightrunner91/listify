@@ -1,5 +1,10 @@
 <script setup>
-import { ref, watch, computed, reactive } from 'vue'
+import {
+  ref,
+  watch,
+  computed,
+  reactive
+} from 'vue'
 import {
   NModal,
   NSpace,
@@ -13,11 +18,11 @@ import {
   NGrid,
   NGridItem,
   NDivider,
-  NScrollbar,
+  NScrollbar
 } from 'naive-ui'
 import {
   PhDiceFive as RandomIcon,
-  PhArrowClockwise as ResetIcon,
+  PhArrowClockwise as ResetIcon
 } from 'phosphor-vue'
 import { renderIcon } from '@/utils/render-icon'
 import { useI18n } from 'vue-i18n'
@@ -285,9 +290,7 @@ function handleSave() {
                 vertical
                 :size="8"
               >
-                <n-text
-                  depth="3"
-                >
+                <n-text depth="3">
                   {{ t('avatarPicker.avatarStyle') }}
                 </n-text>
                 <n-select
@@ -302,9 +305,7 @@ function handleSave() {
                 vertical
                 :size="8"
               >
-                <n-text
-                  depth="3"
-                >
+                <n-text depth="3">
                   {{ t('avatarPicker.seed') }}
                 </n-text>
                 <n-input
@@ -326,9 +327,7 @@ function handleSave() {
                 vertical
                 :size="8"
               >
-                <n-text
-                  depth="3"
-                >
+                <n-text depth="3">
                   {{ t('avatarPicker.rotate', { degrees: options.rotate }) }}
                 </n-text>
                 <n-slider
@@ -344,9 +343,7 @@ function handleSave() {
                 vertical
                 :size="8"
               >
-                <n-text
-                  depth="3"
-                >
+                <n-text depth="3">
                   {{ t('avatarPicker.scale', { percent: options.scale }) }}
                 </n-text>
                 <n-slider
@@ -357,20 +354,14 @@ function handleSave() {
                 />
               </n-space>
             </n-grid-item>
-            <n-grid-item
-              :span="2"
-            >
+            <n-grid-item :span="2">
               <n-space
                 align="center"
                 justify=""
                 class="w-100"
               >
-                <n-switch
-                  v-model:value="options.flip"
-                />
-                <n-text
-                  depth="3"
-                >
+                <n-switch v-model:value="options.flip" />
+                <n-text depth="3">
                   {{ t('avatarPicker.flip') }}
                 </n-text>
               </n-space>

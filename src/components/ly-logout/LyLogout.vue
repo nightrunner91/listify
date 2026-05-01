@@ -1,5 +1,8 @@
 <script setup>
-import { NButton, NIcon } from 'naive-ui'
+import {
+  NButton,
+  NIcon
+} from 'naive-ui'
 import {PhSignOut as LogoutIcon} from 'phosphor-vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { useRouter } from 'vue-router'
@@ -23,9 +26,7 @@ async function handleLogout() {
     type="error"
     @click="handleLogout"
   >
-    <template
-      #icon
-    >
+    <template #icon>
       <n-icon
         :component="LogoutIcon"
         :size="18"

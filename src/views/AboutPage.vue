@@ -12,7 +12,7 @@ import {
   NListItem,
   NIcon,
   NSpace,
-  NText,
+  NText
 } from 'naive-ui'
 import {
   PhFileVue as VueIcon,
@@ -25,7 +25,7 @@ import {
   PhUserCircle as AccountIcon,
   PhDesktop as DevicesIcon,
   PhShieldCheck as PrivacyIcon,
-  PhGitBranch as OpenSourceIcon,
+  PhGitBranch as OpenSourceIcon
 } from 'phosphor-vue'
 
 const { t } = useI18n()
@@ -63,9 +63,7 @@ const usedStuff = ref([
     responsive="screen"
     :cols="6"
   >
-    <n-grid-item
-      span="12"
-    >
+    <n-grid-item span="12">
       <n-card>
         <n-p>
           {{ t('about.description') }}
@@ -123,9 +121,7 @@ const usedStuff = ref([
             keypath="about.dataDescription"
             tag="span"
           >
-            <template
-              #format1
-            >
+            <template #format1>
               <n-a
                 href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON"
                 target="_blank"
@@ -133,9 +129,7 @@ const usedStuff = ref([
                 JSON
               </n-a>
             </template>
-            <template
-              #format2
-            >
+            <template #format2>
               <n-a
                 href="https://en.wikipedia.org/wiki/Comma-separated_values"
                 target="_blank"
@@ -183,9 +177,7 @@ const usedStuff = ref([
             keypath="about.communityDescription"
             tag="span"
           >
-            <template
-              #link1
-            >
+            <template #link1>
               <n-a
                 href="https://t.me/nightrunner91"
                 target="_blank"
@@ -193,9 +185,7 @@ const usedStuff = ref([
                 {{ t('about.telegram') }}
               </n-a>
             </template>
-            <template
-              #link2
-            >
+            <template #link2>
               <n-a
                 href="https://github.com/nightrunner91/listify/issues"
                 target="_blank"
@@ -209,9 +199,7 @@ const usedStuff = ref([
         <n-p>{{ t('about.thankYou') }}</n-p>
 
         <n-h4>{{ t('about.techStack') }}</n-h4>
-        <n-list
-          :show-divider="false"
-        >
+        <n-list :show-divider="false">
           <n-list-item
             v-for="(item, index) in usedStuff"
             :key="`item-${index}`"

@@ -1,5 +1,9 @@
 <script setup>
-import { NButton, NIcon, NTooltip } from 'naive-ui'
+import {
+  NButton,
+  NIcon,
+  NTooltip
+} from 'naive-ui'
 import { PhGithubLogo as GithubIcon } from 'phosphor-vue'
 import { useGridStore } from '@/stores/grid.store'
 
@@ -11,28 +15,20 @@ function openGithub() {
 </script>
 
 <template>
-  <n-tooltip
-    trigger="hover"
-  >
-    <template
-      #trigger
-    >
+  <n-tooltip trigger="hover">
+    <template #trigger>
       <n-button
         quaternary
         size="small"
         @click="openGithub"
       >
-        <template
-          #icon
-        >
+        <template #icon>
           <n-icon
             :component="GithubIcon"
             :size="18"
           />
         </template>
-        <span
-          v-if="gridStore.screenLargerThen('s')"
-        >GitHub</span>
+        <span v-if="gridStore.screenLargerThen('s')">GitHub</span>
       </n-button>
     </template>
     Open GitHub Repository

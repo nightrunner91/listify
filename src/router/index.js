@@ -1,4 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHashHistory
+} from 'vue-router'
 import i18n from '@/i18n'
 import RecordsPage from '@/views/RecordsPage.vue'
 import StartingPage from '@/views/StartingPage.vue'

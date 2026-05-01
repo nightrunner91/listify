@@ -1,8 +1,21 @@
 <script setup>
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { NSpace, NText, NButton, NIcon, NEmpty, NList, NListItem, NThing, NCard } from 'naive-ui'
-import { PhArrowRight, PhPlus } from 'phosphor-vue'
+import {
+  NSpace,
+  NText,
+  NButton,
+  NIcon,
+  NEmpty,
+  NList,
+  NListItem,
+  NThing,
+  NCard
+} from 'naive-ui'
+import {
+  PhArrowRight,
+  PhPlus
+} from 'phosphor-vue'
 import { useRecordsStore } from '@/stores/records.store'
 import moment from 'moment'
 import { useI18n } from 'vue-i18n'
@@ -61,13 +74,9 @@ function formatRelativeTime(dateString) {
         class="fz-18"
         @click="handleCreateList"
       >
-        <template
-          #icon
-        >
+        <template #icon>
           <n-icon>
-            <ph-plus
-              weight="bold"
-            />
+            <ph-plus weight="bold" />
           </n-icon>
         </template>
       </n-button>
@@ -83,9 +92,7 @@ function formatRelativeTime(dateString) {
         :description="t('customLists.emptyDescription')"
         class="py-6"
       >
-        <template
-          #extra
-        >
+        <template #extra>
           <n-button
             primary
             @click="handleCreateList"
@@ -108,19 +115,13 @@ function formatRelativeTime(dateString) {
           class="hover-bg-action"
           @click="handleListClick(list.id)"
         >
-          <n-thing
-            :title="list.name"
-          >
-            <template
-              #description
-            >
+          <n-thing :title="list.name">
+            <template #description>
               <n-space
                 :size="8"
                 align="center"
               >
-                <n-text
-                  depth="3"
-                >
+                <n-text depth="3">
                   {{ list.records?.length || 0 }} {{ t('customLists.items') }}
                 </n-text>
                 <n-text

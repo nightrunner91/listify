@@ -1,5 +1,9 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import {
+  ref,
+  computed,
+  watch
+} from 'vue'
 import {
   NCard,
   NAvatar,
@@ -13,7 +17,7 @@ import {
   NGridItem,
   NIcon,
   NDropdown,
-  useMessage,
+  useMessage
 } from 'naive-ui'
 import {
   PhSignOut as LogoutIcon,
@@ -22,7 +26,7 @@ import {
   PhPencilSimple as EditIcon,
   PhCheck as SaveIcon,
   PhDiceFive as RandomIcon,
-  PhDotsThreeVertical as MenuIcon,
+  PhDotsThreeVertical as MenuIcon
 } from 'phosphor-vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -138,9 +142,7 @@ async function handleLogout() {
         class="h-60 cursor-pointer transition-opacity-shorter profile-cover-trigger"
         @update:value="updateBackgroundColor"
       >
-        <template
-          #label
-        />
+        <template #label />
       </n-color-picker>
 
       <n-space
@@ -215,9 +217,7 @@ async function handleLogout() {
               tertiary
               circle
             >
-              <template
-                #icon
-              >
+              <template #icon>
                 <n-icon
                   :component="MenuIcon"
                   size="24"

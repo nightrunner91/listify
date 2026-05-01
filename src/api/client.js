@@ -12,9 +12,9 @@ export class ApiError extends Error {
 
 async function handleResponse(response) {
   if (response.status === 204) return null
-  
+
   const data = await response.json().catch(() => null)
-  
+
   if (!response.ok) {
     throw new ApiError(
       response.status,
@@ -22,7 +22,7 @@ async function handleResponse(response) {
       data?.error || 'UNKNOWN_ERROR'
     )
   }
-  
+
   return data
 }
 
@@ -34,7 +34,7 @@ async function handleResponse(response) {
  */
 export async function apiClient(endpoint, options = {}) {
   const authStore = useAuthStore()
-  
+
   const url = `${API_BASE}${endpoint}`
   const headers = {
     ...(options.body !== undefined ? { 'Content-Type': 'application/json' } : {}),
@@ -62,7 +62,7 @@ export async function apiClient(endpoint, options = {}) {
         headers['Authorization'] = `Bearer ${authStore.accessToken}`
         response = await fetch(url, {
           ...fetchOptions,
-          headers 
+          headers
         })
       } else {
         // Refresh failed, user needs to log in again
@@ -82,27 +82,27 @@ export async function apiClient(endpoint, options = {}) {
 export const api = {
   get: (endpoint, options) => apiClient(endpoint, {
     ...options,
-    method: 'GET' 
+    method: 'GET'
   }),
   post: (endpoint, data, options) => apiClient(endpoint, {
     ...options,
     method: 'POST',
-    body: JSON.stringify(data) 
+    body: JSON.stringify(data)
   }),
   put: (endpoint, data, options) => apiClient(endpoint, {
     ...options,
     method: 'PUT',
-    body: JSON.stringify(data) 
+    body: JSON.stringify(data)
   }),
   patch: (endpoint, data, options) => apiClient(endpoint, {
     ...options,
     method: 'PATCH',
-    body: JSON.stringify(data) 
+    body: JSON.stringify(data)
   }),
   delete: (endpoint, data, options) => {
     const opts = {
       ...options,
-      method: 'DELETE' 
+      method: 'DELETE'
     }
     if (data) opts.body = JSON.stringify(data)
     return apiClient(endpoint, opts)

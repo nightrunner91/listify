@@ -2,11 +2,11 @@
 import {
   NButton,
   NH3,
-  NText,
+  NText
 } from 'naive-ui'
 import {
   PhList as OpenIcon,
-  PhCaretLeft as CloseIcon,
+  PhCaretLeft as CloseIcon
 } from 'phosphor-vue'
 import { useRoute } from 'vue-router'
 import { useMenuStore } from '@/stores/menu.store'
@@ -29,9 +29,7 @@ const themeStore = useThemeStore()
       :to="{ name: 'Start' }"
       style="text-decoration: none;"
     >
-      <span
-        class="ly-logo__container"
-      >
+      <span class="ly-logo__container">
         <n-text
           class="ly-logo__prefix"
           :style="{color: themeStore.categoryColor(route.meta.tag)}"
@@ -51,9 +49,7 @@ const themeStore = useThemeStore()
     class="mr-auto"
     @click="menuStore.toggleMenu"
   >
-    <template
-      #icon
-    >
+    <template #icon>
       <open-icon
         v-if="menuStore.collapsed"
         weight="bold"

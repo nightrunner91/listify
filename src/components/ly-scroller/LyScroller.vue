@@ -2,11 +2,11 @@
 import {
   NSpace,
   NButton,
-  NIcon,
+  NIcon
 } from 'naive-ui'
-import { 
+import {
   PhArrowLineUp as ToTopIcon,
-  PhArrowLineDown as ToBottomIcon,
+  PhArrowLineDown as ToBottomIcon
 } from 'phosphor-vue'
 import { useGridStore } from '@/stores/grid.store'
 
@@ -14,9 +14,7 @@ const gridStore = useGridStore()
 </script>
 
 <template>
-  <transition
-    name="scroll-buttons"
-  >
+  <transition name="scroll-buttons">
     <n-space
       v-if="gridStore.showScroller"
       vertical
@@ -30,12 +28,8 @@ const gridStore = useGridStore()
         circle
         @click.prevent="$emit('scrollTop')"
       >
-        <template
-          #icon
-        >
-          <n-icon
-            :component="ToTopIcon"
-          />
+        <template #icon>
+          <n-icon :component="ToTopIcon" />
         </template>
       </n-button>
       <n-button
@@ -43,12 +37,8 @@ const gridStore = useGridStore()
         circle
         @click.prevent="$emit('scrollBottom')"
       >
-        <template
-          #icon
-        >
-          <n-icon
-            :component="ToBottomIcon"
-          />
+        <template #icon>
+          <n-icon :component="ToBottomIcon" />
         </template>
       </n-button>
     </n-space>

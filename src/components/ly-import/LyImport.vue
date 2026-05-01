@@ -1,5 +1,8 @@
 <script setup>
-import { ref, toRefs } from 'vue'
+import {
+  ref,
+  toRefs
+} from 'vue'
 import {
   PhDownloadSimple as ImportIcon,
   PhArchiveBox as UploadIcon,
@@ -14,7 +17,7 @@ import {
   NUploadDragger,
   NP,
   NSpace,
-  NText,
+  NText
 } from 'naive-ui'
 import { renderIcon } from '@/utils/render-icon'
 import { useGridStore } from '@/stores/grid.store'
@@ -52,31 +55,21 @@ defineExpose({showModal})
     {{ t('userProfile.importCollection') }}
   </n-button>
 
-  <template
-    v-else-if="variant === 'minified'"
-  >
-    <n-tooltip
-      trigger="hover"
-    >
-      <template
-        #trigger
-      >
+  <template v-else-if="variant === 'minified'">
+    <n-tooltip trigger="hover">
+      <template #trigger>
         <n-button
           quaternary
           size="small"
           @click="showModal = true"
         >
-          <template
-            #icon
-          >
+          <template #icon>
             <n-icon
               :component="ImportIcon"
               :size="18"
             />
           </template>
-          <span
-            v-if="gridStore.screenLargerThen('s')"
-          >
+          <span v-if="gridStore.screenLargerThen('s')">
             {{ t('common.import') }}
           </span>
         </n-button>
@@ -105,9 +98,7 @@ defineExpose({showModal})
       @change="showModal = false"
     >
       <n-upload-dragger>
-        <div
-          class="mb-3"
-        >
+        <div class="mb-3">
           <n-icon
             :component="UploadIcon"
             size="48"

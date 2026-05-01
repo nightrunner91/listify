@@ -5,7 +5,7 @@ import {
   signRefreshToken,
   rotateRefreshToken,
   getUserById,
-  deleteUserRefreshTokens,
+  deleteUserRefreshTokens
 } from '../services/auth.service.js'
 import { authenticate } from '../middleware/authenticate.js'
 import { db } from '../db/index.js'
@@ -60,7 +60,9 @@ export default async function authRoutes(app) {
       },
     },
   }, async (request, reply) => {
-    const { email, password } = request.body
+    const {
+      email, password 
+    } = request.body
     const user = await createUser(email.toLowerCase().trim(), password)
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
@@ -105,7 +107,9 @@ export default async function authRoutes(app) {
       },
     },
   }, async (request, reply) => {
-    const { email, password } = request.body
+    const {
+      email, password 
+    } = request.body
     const user = await verifyCredentials(email.toLowerCase().trim(), password)
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
@@ -143,7 +147,9 @@ export default async function authRoutes(app) {
       })
     }
 
-    const { accessToken, refreshToken } = await rotateRefreshToken(rawToken, userId)
+    const {
+      accessToken, refreshToken 
+    } = await rotateRefreshToken(rawToken, userId)
     setRefreshCookie(reply, refreshToken)
     return reply.send({ accessToken })
   })

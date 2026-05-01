@@ -1,6 +1,12 @@
 import { db } from '../db/index.js'
-import { customLists, customListRecords } from '../db/schema.js'
-import { eq, and } from 'drizzle-orm'
+import {
+  customLists,
+  customListRecords
+} from '../db/schema.js'
+import {
+  eq,
+  and
+} from 'drizzle-orm'
 import { authenticate } from '../middleware/authenticate.js'
 import { logActivity } from '../services/activity.service.js'
 
@@ -296,7 +302,9 @@ export default async function customListsRoutes(app) {
       },
     },
   }, async (request, reply) => {
-    const { listId, recordId } = request.params
+    const {
+      listId, recordId 
+    } = request.params
     const { title } = request.body
     const userId = request.user.id
 
@@ -376,7 +384,9 @@ export default async function customListsRoutes(app) {
       },
     },
   }, async (request, reply) => {
-    const { listId, recordId } = request.params
+    const {
+      listId, recordId 
+    } = request.params
     const userId = request.user.id
 
     // Verify list ownership to get its name for the log

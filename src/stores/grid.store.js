@@ -3,7 +3,11 @@
  * @description This store is used to save, update and get grid parameters
  */
 
-import { ref, computed, nextTick } from 'vue'
+import {
+  ref,
+  computed,
+  nextTick
+} from 'vue'
 import { defineStore } from 'pinia'
 import { breakpoints } from '@/theme.config'
 

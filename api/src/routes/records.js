@@ -1,8 +1,18 @@
 import { db } from '../db/index.js'
-import { records, VALID_CATEGORIES } from '../db/schema.js'
-import { eq, and, inArray } from 'drizzle-orm'
+import {
+  records,
+  VALID_CATEGORIES
+} from '../db/schema.js'
+import {
+  eq,
+  and,
+  inArray
+} from 'drizzle-orm'
 import { authenticate } from '../middleware/authenticate.js'
-import { logActivity, logBatchActivities } from '../services/activity.service.js'
+import {
+  logActivity,
+  logBatchActivities
+} from '../services/activity.service.js'
 
 const CATEGORY_ENUM = { enum: VALID_CATEGORIES }
 
@@ -85,7 +95,9 @@ export default async function recordsRoutes(app) {
     },
   }, async (request, reply) => {
     const { category } = request.params
-    const { title, score = 0, liked = false, label } = request.body
+    const {
+      title, score = 0, liked = false, label 
+    } = request.body
     const userId = request.user.id
 
     const [record] = await db

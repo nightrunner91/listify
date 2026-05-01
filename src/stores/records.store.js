@@ -1,7 +1,7 @@
 import {
   ref,
   shallowRef,
-  computed,
+  computed
 } from 'vue'
 import { defineStore } from 'pinia'
 import { useNotificationsStore } from '@/stores/notifications.store'
@@ -22,7 +22,7 @@ import {
   PhTextAa as AlphabeticalIcon,
   PhStar as RatingIcon,
   PhHeart as FavouriteIcon,
-  PhList as StatusIcon,
+  PhList as StatusIcon
 } from 'phosphor-vue'
 import jsesc from 'jsesc'
 import moment from 'moment'
@@ -388,7 +388,9 @@ export const useRecordsStore = defineStore('records', () => {
     return record
   }
 
-  async function addRecord({ record, listType }) {
+  async function addRecord({
+    record, listType 
+  }) {
     try {
       const income = record || {
         category: listType,
@@ -408,7 +410,9 @@ export const useRecordsStore = defineStore('records', () => {
         records.value[listType].push(savedRecord)
         addToDisplayOrder(savedRecord.id, listType)
       } else {
-        const { id, category, userId, createdAt, updatedAt, selected, ...updates } = income
+        const {
+          id, category, userId, createdAt, updatedAt, selected, ...updates 
+        } = income
         savedRecord = await api.put(`/records/${income.id}`, updates)
         // Re-attach UI-only fields
         savedRecord.selected = income.selected
@@ -741,7 +745,9 @@ export const useRecordsStore = defineStore('records', () => {
     const filteredRecords = Object.entries(records.value)
       .reduce((acc, [category, records]) => {
         if (selectedCategories.value.includes(category)) {
-          acc[category] = records.map(({ selected, ...rest }) => rest)
+          acc[category] = records.map(({
+            selected, ...rest 
+          }) => rest)
         }
         return acc
       }, {})

@@ -1,13 +1,17 @@
 <script setup>
 import { ref } from 'vue'
-import { RouterView, useRoute, useRouter } from 'vue-router'
+import {
+  RouterView,
+  useRoute,
+  useRouter
+} from 'vue-router'
 import {
   NSpace,
   NLayoutContent,
   NGrid,
   NGridItem,
   NButton,
-  useDialog,
+  useDialog
 } from 'naive-ui'
 import { PhTrashSimple as DeleteIcon } from 'phosphor-vue'
 import { renderIcon } from '@/utils/render-icon'
@@ -79,21 +83,15 @@ function confirmDeleteList() {
           align="center"
           class="w-100 mb-6"
         >
-          <template
-            v-if="route.meta.tag === 'start'"
-          >
+          <template v-if="route.meta.tag === 'start'">
             <ly-user-profile
               class="w-100"
               @import="importRef.showModal = true"
             />
           </template>
-          <template
-            v-else
-          >
+          <template v-else>
             <ly-title />
-            <ly-sort
-              v-if="!route.meta.isCustom && route.meta.tag !== 'about'"
-            />
+            <ly-sort v-if="!route.meta.isCustom && route.meta.tag !== 'about'" />
             <n-button
               v-else-if="route.meta.isCustom"
               secondary

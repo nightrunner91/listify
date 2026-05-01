@@ -4,7 +4,7 @@ import {
   NMessageProvider,
   NLoadingBarProvider,
   NDialogProvider,
-  NGlobalStyle,
+  NGlobalStyle
 } from 'naive-ui'
 import {
   darkThemeOverrides,

@@ -1,5 +1,10 @@
 import { db } from '../db/index.js'
-import { records, customLists, customListRecords, userSettings } from '../db/schema.js'
+import {
+  records,
+  customLists,
+  customListRecords,
+  userSettings
+} from '../db/schema.js'
 import { VALID_CATEGORIES } from '../db/schema.js'
 import { eq } from 'drizzle-orm'
 import { authenticate } from '../middleware/authenticate.js'

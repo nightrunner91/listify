@@ -1,9 +1,20 @@
-import { SignJWT, jwtVerify } from 'jose'
+import {
+  SignJWT,
+  jwtVerify
+} from 'jose'
 import { nanoid } from 'nanoid'
 import bcrypt from 'bcrypt'
 import { db } from '../db/index.js'
-import { users, refreshTokens, userSettings } from '../db/schema.js'
-import { eq, and, gt } from 'drizzle-orm'
+import {
+  users,
+  refreshTokens,
+  userSettings
+} from '../db/schema.js'
+import {
+  eq,
+  and,
+  gt
+} from 'drizzle-orm'
 
 const BCRYPT_ROUNDS = 12
 

@@ -1,4 +1,7 @@
-import { fileURLToPath, URL } from 'node:url'
+import {
+  fileURLToPath,
+  URL
+} from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -8,9 +11,18 @@ export default defineConfig({
   plugins: [vue()],
   base: '/listify/',
   server: {
-    // host: '192.168.88.224',
     port: 5173,
   },
-  css: {preprocessorOptions: {scss: {additionalData: '@use "@/assets/styles/@core/globals.scss";'}}},
-  resolve: {alias: {'@': fileURLToPath(new URL('./src', import.meta.url))}}
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@use "@/assets/styles/@core/globals.scss";'
+      }
+    }
+  },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
 })

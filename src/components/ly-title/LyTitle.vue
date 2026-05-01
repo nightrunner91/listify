@@ -1,8 +1,16 @@
 <script setup>
-import { ref, watch, computed } from 'vue'
+import {
+  ref,
+  watch,
+  computed
+} from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { NH1, NBadge, NInput } from 'naive-ui'
+import {
+  NH1,
+  NBadge,
+  NInput
+} from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'
 import { useRecordsStore } from '@/stores/records.store'
 
@@ -86,12 +94,8 @@ watch(getTranslatedTitle, (newTitle) => {
 </script>
 
 <template>
-  <n-h1
-    class="position-relative mb-0 h-80"
-  >
-    <template
-      v-if="isCustomList"
-    >
+  <n-h1 class="position-relative mb-0 h-80">
+    <template v-if="isCustomList">
       <n-input
         v-model:value="listName"
         type="text"
@@ -101,9 +105,7 @@ watch(getTranslatedTitle, (newTitle) => {
       />
     </template>
 
-    <template
-      v-else
-    >
+    <template v-else>
       {{ getTranslatedTitle }}
     </template>
 

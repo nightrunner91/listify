@@ -1,7 +1,14 @@
 <script setup>
-import { ref, watch, computed } from 'vue'
+import {
+  ref,
+  watch,
+  computed
+} from 'vue'
 import { NInput } from 'naive-ui'
-import { PhMagnifyingGlass as SearchIcon, PhX as ClearIcon } from 'phosphor-vue'
+import {
+  PhMagnifyingGlass as SearchIcon,
+  PhX as ClearIcon
+} from 'phosphor-vue'
 import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
 import { useI18n } from 'vue-i18n'
@@ -55,14 +62,11 @@ const clearSearch = () => {
     :placeholder="searchPlaceholder"
     class="ly-search mb-4"
   >
-    <template
-      #prefix
-    >
+    <template #prefix>
       <search-icon
         weight="bold"
         size="16"
         class="opacity-5 mr-2 mb-1"
-
       />
     </template>
     <template

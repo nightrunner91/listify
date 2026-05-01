@@ -1,6 +1,12 @@
 import { db } from '../db/index.js'
 import { activities } from '../db/schema.js'
-import { eq, desc, and, gte, sql } from 'drizzle-orm'
+import {
+  eq,
+  desc,
+  and,
+  gte,
+  sql
+} from 'drizzle-orm'
 
 const MAX_ACTIVITIES_PER_USER = 100
 
@@ -15,7 +21,9 @@ const MAX_ACTIVITIES_PER_USER = 100
  * @param {string} [data.entityName] - Name of the item/list
  * @param {Object} [data.metadata] - Extra info (score, listName, etc.)
  */
-export async function logActivity(userId, { action, category, entityId, entityName, metadata }) {
+export async function logActivity(userId, {
+  action, category, entityId, entityName, metadata 
+}) {
   try {
     const now = new Date()
     const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000)

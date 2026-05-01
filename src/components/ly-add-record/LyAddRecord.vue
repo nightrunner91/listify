@@ -1,6 +1,14 @@
 <script setup>
-import { nextTick, toRefs, computed } from 'vue'
-import { NSpace, NButton, NTooltip } from 'naive-ui'
+import {
+  nextTick,
+  toRefs,
+  computed
+} from 'vue'
+import {
+  NSpace,
+  NButton,
+  NTooltip
+} from 'naive-ui'
 import {PhPlus as PlusIcon,} from 'phosphor-vue'
 import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
@@ -112,9 +120,7 @@ async function focusInput(record) {
       placement="left"
       trigger="hover"
     >
-      <template
-        #trigger
-      >
+      <template #trigger>
         <n-button
           strong
           circle

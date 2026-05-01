@@ -1,28 +1,29 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme } from 'naive-ui'
-import { darkThemeOverrides, lightThemeOverrides } from '@/theme.config'
+import {
+  darkThemeOverrides,
+  lightThemeOverrides
+} from '@/theme.config'
 import { api } from '@/api/client'
 import { useAuthStore } from '@/stores/auth.store'
 
 export const useThemeStore = defineStore('theme', () => {
+  // Variable declarations
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
+  // Reactive state
   const currentTheme = ref(null)
   const themeMode = ref('system') // 'light', 'dark', 'system'
 
+  // Computed properties / Methods acting as computed
   const categoryColor = (tag) => (
     currentTheme.value
       ? darkThemeOverrides.Categories[`${tag}Color`]
       : lightThemeOverrides.Categories[`${tag}Color`]
   )
 
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
-  mediaQuery.addEventListener('change', () => {
-    if (themeMode.value === 'system') {
-      applyThemeMode('system', false)
-    }
-  })
-
+  // Functions
   function applyThemeMode(mode, save = true) {
     themeMode.value = mode
 
@@ -87,6 +88,13 @@ export const useThemeStore = defineStore('theme', () => {
 
     applyThemeMode(savedTheme, false)
   }
+
+  // Side effects (Watchers / Event listeners)
+  mediaQuery.addEventListener('change', () => {
+    if (themeMode.value === 'system') {
+      applyThemeMode('system', false)
+    }
+  })
 
   return {
     currentTheme,

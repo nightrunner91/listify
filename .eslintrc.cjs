@@ -14,13 +14,14 @@ module.exports = {
   ],
   parserOptions: {ecmaVersion: 'latest'},
   rules: {
-    // 1. All attributes within HTML/Vue template tags must be placed on separate lines
+    // 1. Refactor component usage formatting
+    // Allow up to 3 attributes on a single line if they fit
     'vue/max-attributes-per-line': ['error', {
-      singleline: { max: 1 },
+      singleline: { max: 3 },
       multiline: { max: 1 }
     }],
     
-    // 2. Attributes should follow a consistent and logical ordering
+    // Attributes follow a consistent and logical ordering
     'vue/attributes-order': ['error', {
       order: [
         'DEFINITION',
@@ -38,9 +39,9 @@ module.exports = {
       alphabetical: false
     }],
     
-    // Ensure the first attribute breaks to a new line and the closing bracket does too
+    // Allow the first attribute to be on the same line as the tag for singleline
     'vue/first-attribute-linebreak': ['error', {
-      singleline: 'below',
+      singleline: 'beside',
       multiline: 'below'
     }],
     'vue/html-closing-bracket-newline': ['error', {
@@ -48,26 +49,73 @@ module.exports = {
       multiline: 'always'
     }],
     
-    // 3. Enforce consistent indentation using 2 spaces
-    'indent': ['error', 2, { SwitchCase: 1 }],
-    'vue/html-indent': ['error', 2],
-    
-    // 4. JS functions are written in human-readable format (Object properties on new lines)
+    // 2. Optimize import style
+    // All imported components must be listed on separate lines for readability if there are multiple
     'object-curly-newline': ['error', { 
       ObjectExpression: {
         multiline: true,
         minProperties: 2 
       },
-      ObjectPattern: { multiline: true },
-      ImportDeclaration: { multiline: true },
-      ExportDeclaration: { multiline: true }
+      ObjectPattern: {
+        multiline: true,
+        minProperties: 2 
+      },
+      ImportDeclaration: {
+        multiline: true,
+        minProperties: 2 
+      },
+      ExportDeclaration: {
+        multiline: true,
+        minProperties: 2 
+      }
     }],
-    'object-property-newline': ['error', {allowAllPropertiesOnSameLine: false}],
+    'object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],
     
-    // 5. Each file should have 1 empty line at the end by default
+    // 3. Enforce logical structure in Vue component files
+    'vue/order-in-components': ['error', {
+      'order': [
+        'el',
+        'name',
+        'key',
+        'parent',
+        'functional',
+        ['delimiters', 'comments'],
+        ['components', 'directives', 'filters'],
+        'extends',
+        'mixins',
+        ['provide', 'inject'],
+        'ROUTER_GUARDS',
+        'layout',
+        'middleware',
+        'validate',
+        'scrollToTop',
+        'transition',
+        'loading',
+        'inheritAttrs',
+        'model',
+        ['props', 'propsData'],
+        'emits',
+        'setup',
+        'asyncData',
+        'data',
+        'fetch',
+        'head',
+        'computed',
+        'watch',
+        'watchQuery',
+        'LIFECYCLE_HOOKS',
+        'methods',
+        ['template', 'render'],
+        'renderError'
+      ]
+    }],
+
+    // 4. Consistent indentation and line endings
+    'indent': ['error', 2, { SwitchCase: 1 }],
+    'vue/html-indent': ['error', 2],
     'eol-last': ['error', 'always'],
 
-    // Avoid throwing errors for components with multi-word names for simplicity unless desired
+    // Avoid throwing errors for components with multi-word names
     'vue/multi-word-component-names': 'off'
   }
 }

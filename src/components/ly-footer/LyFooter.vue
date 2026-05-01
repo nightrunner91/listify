@@ -1,5 +1,8 @@
 <script setup>
-import { NLayoutFooter, NSpace } from 'naive-ui'
+import {
+  NLayoutFooter,
+  NSpace
+} from 'naive-ui'
 import LyGithub from '@/components/ly-github/LyGithub.vue'
 import LyVersion from '@/components/ly-version/LyVersion.vue'
 </script>

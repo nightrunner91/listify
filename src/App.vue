@@ -1,5 +1,8 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue'
+import {
+  onBeforeMount,
+  ref
+} from 'vue'
 import { NLayout } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'
 import { useGridStore } from '@/stores/grid.store'
@@ -34,9 +37,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <app-provider
-    v-if="isReady"
-  >
+  <app-provider v-if="isReady">
     <n-layout
       v-if="route.meta.requiresAuth !== false"
       position="absolute"
@@ -53,9 +54,7 @@ onBeforeMount(async () => {
       </n-layout>
     </n-layout>
     
-    <router-view
-      v-else
-    />
+    <router-view v-else />
 
     <ly-notifications />
   </app-provider>

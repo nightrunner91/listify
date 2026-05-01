@@ -1,10 +1,30 @@
 <script setup>
-import { ref, watch, nextTick, onMounted, onUnmounted, computed } from 'vue'
-import { NSpace, NList, NSpin, NEmpty, NText, NDivider } from 'naive-ui'
-import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
+import {
+  ref,
+  watch,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  computed
+} from 'vue'
+import {
+  NSpace,
+  NList,
+  NSpin,
+  NEmpty,
+  NText,
+  NDivider
+} from 'naive-ui'
+import {
+  DynamicScroller,
+  DynamicScrollerItem
+} from 'vue-virtual-scroller'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
-import { useRoute, onBeforeRouteLeave } from 'vue-router'
+import {
+  useRoute,
+  onBeforeRouteLeave
+} from 'vue-router'
 import LySearch from '@/components/ly-search/LySearch.vue'
 import LyCustomRecord from '@/components/ly-custom-record/LyCustomRecord.vue'
 import LyAddRecord from '@/components/ly-add-record/LyAddRecord.vue'
@@ -118,37 +138,25 @@ onBeforeRouteLeave(async () => {
     vertical
     size="large"
   >
-    <template
-      v-if="routeLoading || recordsStore.processingImport"
-    >
+    <template v-if="routeLoading || recordsStore.processingImport">
       <n-space
         class="w-100 h-250"
         justify="center"
         align="center"
       >
-        <n-spin
-          size="small"
-        />
+        <n-spin size="small" />
       </n-space>
     </template>
 
-    <template
-      v-else
-    >
-      <n-space
-        vertical
-      >
-        <template
-          v-if="!customList || customList.records.length === 0"
-        >
+    <template v-else>
+      <n-space vertical>
+        <template v-if="!customList || customList.records.length === 0">
           <n-empty
             size="large"
             :description="t('records.emptyDescription')"
             class="p-10"
           >
-            <template
-              #extra
-            >
+            <template #extra>
               <n-space
                 :size="gridStore.screenLargerThen('m') ? 'large' : 'medium'"
                 class="mt-6"
@@ -156,9 +164,7 @@ onBeforeRouteLeave(async () => {
                 :vertical="!gridStore.screenLargerThen('m')"
                 align="center"
               >
-                <ly-add-record
-                  variant="inline"
-                />
+                <ly-add-record variant="inline" />
                 <n-text
                   align="center"
                   depth="3"
@@ -166,22 +172,16 @@ onBeforeRouteLeave(async () => {
                 >
                   {{ t('records.or') }}
                 </n-text>
-                <ly-import
-                  variant="inline"
-                />
+                <ly-import variant="inline" />
               </n-space>
             </template>
           </n-empty>
         </template>
 
-        <template
-          v-else
-        >
+        <template v-else>
           <ly-search />
           
-          <template
-            v-if="recordsStore.isSearching && sortedRecords.length === 0"
-          >
+          <template v-if="recordsStore.isSearching && sortedRecords.length === 0">
             <n-empty
               size="large"
               :description="t('records.searchEmptyDescription')"
@@ -189,9 +189,7 @@ onBeforeRouteLeave(async () => {
             />
           </template>
           
-          <template
-            v-else
-          >
+          <template v-else>
             <n-list
               hoverable
               :show-divider="!gridStore.screenLargerThen('m')"
@@ -203,9 +201,7 @@ onBeforeRouteLeave(async () => {
                 :min-item-size="58"
                 watch-data
               >
-                <template
-                  #default="{ item, index, active }"
-                >
+                <template #default="{ item, index, active }">
                   <dynamic-scroller-item
                     :key="item.id"
                     :item="item"
@@ -228,9 +224,7 @@ onBeforeRouteLeave(async () => {
               ref="bottomButtonRef"
               class="pb-2 pl-10"
             >
-              <n-divider
-                class="mt-2 mb-4"
-              />
+              <n-divider class="mt-2 mb-4" />
               <ly-add-record
                 variant="bottom"
                 :disabled="hasEmptyRecord"

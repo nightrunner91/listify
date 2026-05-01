@@ -6,7 +6,11 @@
  * @see {@link https://www.naiveui.com/en-US/os-theme/components/message}
  */
 
-import { computed, watch, toRaw } from 'vue'
+import {
+  computed,
+  watch,
+  toRaw
+} from 'vue'
 import { useNotificationsStore } from '@/stores/notifications.store'
 import { useMessage } from 'naive-ui'
 

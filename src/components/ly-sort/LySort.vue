@@ -1,10 +1,15 @@
 <script setup>
-import { h, ref, watch, nextTick } from 'vue'
+import {
+  h,
+  ref,
+  watch,
+  nextTick
+} from 'vue'
 import { useRoute } from 'vue-router'
 import {
   NDropdown,
   NButton,
-  NIcon,
+  NIcon
 } from 'naive-ui'
 import { PhFunnel as SortIcon } from 'phosphor-vue'
 import { useRecordsStore } from '@/stores/records.store'
@@ -54,9 +59,7 @@ watch(
       class="ml-auto"
       :disabled="recordsStore.isSearching || routeLoading || recordsStore.processingImport"
     >
-      <template
-        #icon
-      >
+      <template #icon>
         <n-icon
           depth="2"
           :component="SortIcon"

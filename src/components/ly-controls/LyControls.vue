@@ -1,5 +1,8 @@
 <script setup>
-import { watch, computed } from 'vue'
+import {
+  watch,
+  computed
+} from 'vue'
 import {
   NDrawer,
   NGrid,
@@ -7,12 +10,12 @@ import {
   NSpace,
   NButton,
   NPopconfirm,
-  NText,
+  NText
 } from 'naive-ui'
 import {
   PhTrashSimple as DeleteIcon,
   PhChecks as SelectAllIcon,
-  PhXSquare as DeselectAllIcon,
+  PhXSquare as DeselectAllIcon
 } from 'phosphor-vue'
 import { renderIcon } from '@/utils/render-icon'
 import { useRecordsStore } from '@/stores/records.store'
@@ -56,7 +59,7 @@ watch(
   >
     <n-space
       align="center"
-      class="w-100 h-100 px-4 px-sm-5"
+      class="w-100 h-100 pl-4 pl-s-18"
       :wrap-item="false"
     >
       <n-grid
@@ -65,7 +68,6 @@ watch(
         :x-gap="12"
         :y-gap="8"
         :cols="6"
-        class="pr-4"
       >
         <n-grid-item
           span="6 s:4 l:4"
@@ -86,24 +88,16 @@ watch(
               "
               @click="handleSelection"
             >
-              <n-text
-                v-if="recordsStore.allRecordsSelected(route.meta.tag).value"
-              >
+              <n-text v-if="recordsStore.allRecordsSelected(route.meta.tag).value">
                 {{ t('common.deselectAll') }}
               </n-text>
-              <n-text
-                v-else
-              >
+              <n-text v-else>
                 {{ t('common.selectAll') }}
               </n-text>
             </n-button>
 
-            <n-popconfirm
-              @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag)"
-            >
-              <template
-                #trigger
-              >
+            <n-popconfirm @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag)">
+              <template #trigger>
                 <n-button
                   type="error"
                   size="small"
@@ -128,3 +122,8 @@ watch(
   </n-drawer>
 </template>
 
+<style>
+.n-drawer.n-drawer--native-scrollbar .n-drawer-content-wrapper {
+  overflow-x: hidden !important;
+}
+</style>

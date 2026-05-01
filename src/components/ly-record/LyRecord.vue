@@ -1,5 +1,10 @@
 <script setup>
-import { h, ref, computed, watch } from 'vue'
+import {
+  h,
+  ref,
+  computed,
+  watch
+} from 'vue'
 import {
   NListItem,
   NSpace,
@@ -9,7 +14,7 @@ import {
   NIcon,
   NText,
   NRate,
-  NCheckbox,
+  NCheckbox
 } from 'naive-ui'
 import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
@@ -137,9 +142,7 @@ watch(record, (newVal) => {
           class="ml-4 ml-s-6 ml-l-10"
           @click="record.liked = !record.liked"
         >
-          <template
-            #icon
-          >
+          <template #icon>
             <like-icon
               :weight="record.liked ? 'fill' : 'regular'"
               :class="{ 'opacity-4' : !record.liked }"
@@ -160,9 +163,7 @@ watch(record, (newVal) => {
             size="small"
             class="ml-auto"
           >
-            <template
-              #icon
-            >
+            <template #icon>
               <n-icon
                 depth="2"
                 :component="recordsStore.getLabelIcon(tag, record.label)"
