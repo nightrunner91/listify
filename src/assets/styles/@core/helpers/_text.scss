@@ -1,0 +1,58 @@
+/// This code generates utility classnames for text based on maps in "Typography" section
+/// See variables.scss file for more details
+/// Each of this classnames supports breakpoints from $breakpoints map
+/// 
+/// @author nightrunner91
+/// 
+/// @link https://github.com/nightrunner91/nightvue/#typography
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/font-family
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/line-height
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/text-align
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/text-decoration
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/white-space
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/word-break
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/text-transform
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/font-weight
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/font-style
+/// @link https://developer.mozilla.org/ru/docs/Web/CSS/letter-spacing
+
+@mixin make-text($breakpoint:null) {
+  @each $family, $value in $font-families {
+    .font#{$breakpoint}-#{$family} { font-family: $value !important; }
+  }
+  @each $line-height, $value in $line-heights {
+    .line-height#{$breakpoint}-#{$line-height} { line-height: $value !important; }
+  }
+  @each $align, $value in $text-aligns {
+    .text#{$breakpoint}-#{$align} { text-align: $value !important; }
+  }
+  @each $decoration, $value in $text-decorations {
+    .text#{$breakpoint}-#{$decoration} { text-decoration: $value !important; }
+  }
+  @each $wrap, $value in $text-wraps {
+    .white-space#{$breakpoint}-#{$wrap} { white-space: $value !important; }
+  }
+  @each $break, $value in $word-brakes {
+    .word-break#{$breakpoint}-#{$break} { word-break: $value !important; }
+  }
+  @each $transform, $value in $text-transforms {
+    .text#{$breakpoint}-#{$transform} { text-transform: $value !important; }
+  }
+  @each $weight, $value in $font-weights {
+    .font-weight#{$breakpoint}-#{$weight} { font-weight: $value !important; }
+  }
+  @each $style, $value in $font-styles {
+    .font#{$breakpoint}-#{$style} { font-style: $value !important; }
+  }
+  @each $spacing, $value in $letter-spacings {
+    .spacing#{$breakpoint}-#{$spacing} { letter-spacing: $value !important; }
+  }
+}
+
+@include make-text();
+
+@each $breakpoint, $size in $breakpoints {
+  @media screen and (min-width: #{$size}) {
+    @include make-text('-' + $breakpoint);
+  }
+}
