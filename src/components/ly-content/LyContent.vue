@@ -16,6 +16,7 @@ import LyUserProfile from '@/components/ly-user-profile/LyUserProfile.vue'
 import LyImport from '@/components/ly-import/LyImport.vue'
 import LySort from '@/components/ly-sort/LySort.vue'
 import LyScroller from '@/components/ly-scroller/LyScroller.vue'
+import LyFooter from '@/components/ly-footer/LyFooter.vue'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -93,6 +94,7 @@ function confirmDeleteList() {
         </n-space>
         <router-view />
         <ly-import ref="importRef" variant="hidden" v-show="false" />
+        <ly-footer />
       </n-grid-item>
     </n-grid>
     <ly-scroller

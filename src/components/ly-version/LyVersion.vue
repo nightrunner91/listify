@@ -11,7 +11,5 @@ const version = computed(() => pkg.version)
 </script>
 
 <template>
-  <n-text depth="3">v{{ version }}</n-text>
+  <n-text depth="3" style="font-size: 14px;" class="pl-1">Listify v{{ version }}</n-text>
 </template>
-
-
