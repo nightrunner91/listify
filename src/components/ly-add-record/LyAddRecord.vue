@@ -1,9 +1,7 @@
 <script setup>
 import { nextTick, toRefs, computed } from 'vue'
 import { NSpace, NButton, NTooltip } from 'naive-ui'
-import { 
-  PhPlus as PlusIcon,
-} from 'phosphor-vue'
+import {PhPlus as PlusIcon,} from 'phosphor-vue'
 import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
 import { renderIcon } from '@/utils/render-icon'
@@ -52,16 +50,16 @@ async function handleNewRecord() {
   if (customList) {
     // Add to custom list
     recordsStore.addCustomRecord(customList.id, '')
-    .then(() => {
+      .then(() => {
       // Focus last input (new record)
-      const lastRecord = customList.records[customList.records.length - 1]
-      if (lastRecord) {
-        focusInput(lastRecord)
-      }
-      if (props.variant === 'floating' || props.variant === 'bottom') {
-        emit('scrollBottom')
-      }
-    })
+        const lastRecord = customList.records[customList.records.length - 1]
+        if (lastRecord) {
+          focusInput(lastRecord)
+        }
+        if (props.variant === 'floating' || props.variant === 'bottom') {
+          emit('scrollBottom')
+        }
+      })
   } else {
     // Add to prepared list
     recordsStore
@@ -88,7 +86,8 @@ async function focusInput(record) {
     v-if="variant == 'inline'"
     secondary
     :render-icon="renderIcon(PlusIcon)"
-    @click="handleNewRecord">
+    @click="handleNewRecord"
+  >
     {{ addLabel }}
   </n-button>
 
@@ -97,7 +96,8 @@ async function focusInput(record) {
     size="small"
     :disabled="disabled"
     :render-icon="renderIcon(PlusIcon)"
-    @click="handleNewRecord">
+    @click="handleNewRecord"
+  >
     {{ addLabel }}
   </n-button>
 
@@ -106,9 +106,15 @@ async function focusInput(record) {
     vertical
     align="center"
     justify="center"
-    class="position-fixed right-5 bottom-5 right-s-10 bottom-s-10">
-    <n-tooltip placement="left" trigger="hover">
-      <template #trigger>
+    class="position-fixed right-5 bottom-5 right-s-10 bottom-s-10"
+  >
+    <n-tooltip
+      placement="left"
+      trigger="hover"
+    >
+      <template
+        #trigger
+      >
         <n-button
           strong
           circle
@@ -116,7 +122,8 @@ async function focusInput(record) {
           size="large"
           :disabled="disabled"
           :render-icon="renderIcon(PlusIcon)"
-          @click="handleNewRecord" />
+          @click="handleNewRecord"
+        />
       </template>
       {{ addLabel }}
     </n-tooltip>

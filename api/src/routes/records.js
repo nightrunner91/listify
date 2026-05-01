@@ -9,10 +9,20 @@ const CATEGORY_ENUM = { enum: VALID_CATEGORIES }
 const RECORD_BODY_SCHEMA = {
   type: 'object',
   properties: {
-    title: { type: 'string', maxLength: 500 },
-    score: { type: 'integer', minimum: 0, maximum: 5 },
+    title: {
+      type: 'string',
+      maxLength: 500 
+    },
+    score: {
+      type: 'integer',
+      minimum: 0,
+      maximum: 5 
+    },
     liked: { type: 'boolean' },
-    label: { type: 'string', maxLength: 100 },
+    label: {
+      type: 'string',
+      maxLength: 100 
+    },
   },
   additionalProperties: false,
 }
@@ -80,7 +90,14 @@ export default async function recordsRoutes(app) {
 
     const [record] = await db
       .insert(records)
-      .values({ userId, category, title, score, liked, label })
+      .values({
+        userId,
+        category,
+        title,
+        score,
+        liked,
+        label 
+      })
       .returning()
 
     // Log activity only if title is not empty
@@ -103,7 +120,12 @@ export default async function recordsRoutes(app) {
       params: {
         type: 'object',
         required: ['id'],
-        properties: { id: { type: 'string', format: 'uuid' } },
+        properties: {
+          id: {
+            type: 'string',
+            format: 'uuid' 
+          } 
+        },
       },
       body: RECORD_BODY_SCHEMA,
     },
@@ -113,7 +135,10 @@ export default async function recordsRoutes(app) {
     const updates = request.body
 
     if (Object.keys(updates).length === 0) {
-      return reply.status(400).send({ error: 'VALIDATION_ERROR', message: 'No fields to update' })
+      return reply.status(400).send({
+        error: 'VALIDATION_ERROR',
+        message: 'No fields to update' 
+      })
     }
 
     // Fetch old record for activity comparison
@@ -124,7 +149,10 @@ export default async function recordsRoutes(app) {
       .limit(1)
 
     if (!old) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Record not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Record not found' 
+      })
     }
 
     // Add updatedAt
@@ -184,7 +212,12 @@ export default async function recordsRoutes(app) {
       params: {
         type: 'object',
         required: ['id'],
-        properties: { id: { type: 'string', format: 'uuid' } },
+        properties: {
+          id: {
+            type: 'string',
+            format: 'uuid' 
+          } 
+        },
       },
     },
   }, async (request, reply) => {
@@ -197,7 +230,10 @@ export default async function recordsRoutes(app) {
       .returning()
 
     if (!deleted) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Record not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Record not found' 
+      })
     }
 
     // Log activity
@@ -218,7 +254,14 @@ export default async function recordsRoutes(app) {
         type: 'object',
         required: ['ids'],
         properties: {
-          ids: { type: 'array', items: { type: 'string', format: 'uuid' }, minItems: 1 },
+          ids: {
+            type: 'array',
+            items: {
+              type: 'string',
+              format: 'uuid' 
+            },
+            minItems: 1 
+          },
         },
         additionalProperties: false,
       },

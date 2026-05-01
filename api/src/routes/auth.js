@@ -35,15 +35,26 @@ export default async function authRoutes(app) {
 
   app.post('/register', {
     config: {
-      rateLimit: { max: 10, timeWindow: '1 hour' },
+      rateLimit: {
+        max: 10,
+        timeWindow: '1 hour' 
+      },
     },
     schema: {
       body: {
         type: 'object',
         required: ['email', 'password'],
         properties: {
-          email:    { type: 'string', format: 'email', maxLength: 255 },
-          password: { type: 'string', minLength: 8, maxLength: 128 },
+          email:    {
+            type: 'string',
+            format: 'email',
+            maxLength: 255 
+          },
+          password: {
+            type: 'string',
+            minLength: 8,
+            maxLength: 128 
+          },
         },
         additionalProperties: false,
       },
@@ -54,23 +65,41 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), { path: '/', secure: true, sameSite: 'none' })
-    return reply.status(201).send({ user, accessToken })
+    reply.setCookie('listify_uid', String(user.id), {
+      path: '/',
+      secure: true,
+      sameSite: 'none' 
+    })
+    return reply.status(201).send({
+      user,
+      accessToken 
+    })
   })
 
   // ─── POST /api/auth/login ─────────────────────────────────────────────────
 
   app.post('/login', {
     config: {
-      rateLimit: { max: 20, timeWindow: '15 minutes' },
+      rateLimit: {
+        max: 20,
+        timeWindow: '15 minutes' 
+      },
     },
     schema: {
       body: {
         type: 'object',
         required: ['email', 'password'],
         properties: {
-          email:    { type: 'string', format: 'email', maxLength: 255 },
-          password: { type: 'string', minLength: 1, maxLength: 128 },
+          email:    {
+            type: 'string',
+            format: 'email',
+            maxLength: 255 
+          },
+          password: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 128 
+          },
         },
         additionalProperties: false,
       },
@@ -81,8 +110,15 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), { path: '/', secure: true, sameSite: 'none' })
-    return reply.send({ user, accessToken })
+    reply.setCookie('listify_uid', String(user.id), {
+      path: '/',
+      secure: true,
+      sameSite: 'none' 
+    })
+    return reply.send({
+      user,
+      accessToken 
+    })
   })
 
   // ─── POST /api/auth/refresh ───────────────────────────────────────────────
@@ -90,7 +126,10 @@ export default async function authRoutes(app) {
   app.post('/refresh', async (request, reply) => {
     const rawToken = request.cookies[COOKIE_NAME]
     if (!rawToken) {
-      return reply.status(401).send({ error: 'UNAUTHORIZED', message: 'No refresh token cookie found' })
+      return reply.status(401).send({
+        error: 'UNAUTHORIZED',
+        message: 'No refresh token cookie found' 
+      })
     }
 
     // We need the userId — decode without verify first to get sub, then verify signature in rotateRefreshToken
@@ -98,7 +137,10 @@ export default async function authRoutes(app) {
     // We store userId in a plain cookie for this purpose:
     const userId = request.cookies['listify_uid']
     if (!userId) {
-      return reply.status(401).send({ error: 'UNAUTHORIZED', message: 'Session information missing' })
+      return reply.status(401).send({
+        error: 'UNAUTHORIZED',
+        message: 'Session information missing' 
+      })
     }
 
     const { accessToken, refreshToken } = await rotateRefreshToken(rawToken, userId)
@@ -108,9 +150,7 @@ export default async function authRoutes(app) {
 
   // ─── POST /api/auth/logout ────────────────────────────────────────────────
 
-  app.post('/logout', {
-    preHandler: authenticate,
-  }, async (request, reply) => {
+  app.post('/logout', {preHandler: authenticate,}, async (request, reply) => {
     await deleteUserRefreshTokens(request.user.id)
     clearRefreshCookie(reply)
     reply.clearCookie('listify_uid', { path: '/' })
@@ -119,12 +159,13 @@ export default async function authRoutes(app) {
 
   // ─── GET /api/auth/me ─────────────────────────────────────────────────────
 
-  app.get('/me', {
-    preHandler: authenticate,
-  }, async (request, reply) => {
+  app.get('/me', {preHandler: authenticate,}, async (request, reply) => {
     const user = await getUserById(request.user.id)
     if (!user) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'User not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'User not found' 
+      })
     }
     return reply.send(user)
   })

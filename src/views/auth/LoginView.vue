@@ -58,20 +58,50 @@ async function handleLogin() {
 </script>
 
 <template>
-  <n-layout position="absolute">
+  <n-layout
+    position="absolute"
+  >
     <n-space
       vertical
       justify="center"
       align="center"
       style="height: 100%; padding: 16px;"
     >
-      <n-grid :cols="24">
-        <n-gi :span="24" :m="16" :l="10" :offset="0" :m-offset="4" :l-offset="7">
-          <n-card size="huge" hoverable content-style="padding: 56px;">
-            <n-space vertical :size="32">
-              <n-space vertical align="center" :size="2">
-                <n-h3 class="mb-0">{{ $t('auth.login.title') }}</n-h3>
-                <n-text depth="3">{{ $t('auth.login.subtitle') }}</n-text>
+      <n-grid
+        :cols="24"
+      >
+        <n-gi
+          :span="24"
+          :m="16"
+          :l="10"
+          :offset="0"
+          :m-offset="4"
+          :l-offset="7"
+        >
+          <n-card
+            size="huge"
+            hoverable
+            content-style="padding: 56px;"
+          >
+            <n-space
+              vertical
+              :size="32"
+            >
+              <n-space
+                vertical
+                align="center"
+                :size="2"
+              >
+                <n-h3
+                  class="mb-0"
+                >
+                  {{ $t('auth.login.title') }}
+                </n-h3>
+                <n-text
+                  depth="3"
+                >
+                  {{ $t('auth.login.subtitle') }}
+                </n-text>
               </n-space>
 
               <n-form
@@ -81,11 +111,20 @@ async function handleLogin() {
                 size="large"
                 @keyup.enter="handleLogin"
               >
-                <n-form-item path="email" :label="$t('auth.login.emailLabel')">
-                  <n-input v-model:value="formModel.email" :placeholder="$t('auth.login.emailPlaceholder')" />
+                <n-form-item
+                  path="email"
+                  :label="$t('auth.login.emailLabel')"
+                >
+                  <n-input
+                    v-model:value="formModel.email"
+                    :placeholder="$t('auth.login.emailPlaceholder')"
+                  />
                 </n-form-item>
                 
-                <n-form-item path="password" :label="$t('auth.login.passwordLabel')">
+                <n-form-item
+                  path="password"
+                  :label="$t('auth.login.passwordLabel')"
+                >
                   <n-input
                     v-model:value="formModel.password"
                     type="password"
@@ -94,7 +133,9 @@ async function handleLogin() {
                   />
                 </n-form-item>
 
-                <n-form-item :show-label="false">
+                <n-form-item
+                  :show-label="false"
+                >
                   <n-button
                     type="primary"
                     size="large"
@@ -107,9 +148,22 @@ async function handleLogin() {
                 </n-form-item>
               </n-form>
 
-              <n-space vertical justify="center" align="center" :size="2">
-                <n-text depth="3">{{ $t('auth.login.noAccount') }}</n-text>
-                <n-button text type="primary" @click="router.push('/register')">
+              <n-space
+                vertical
+                justify="center"
+                align="center"
+                :size="2"
+              >
+                <n-text
+                  depth="3"
+                >
+                  {{ $t('auth.login.noAccount') }}
+                </n-text>
+                <n-button
+                  text
+                  type="primary"
+                  @click="router.push('/register')"
+                >
                   {{ $t('auth.login.registerLink') }}
                 </n-button>
               </n-space>

@@ -431,7 +431,10 @@ export const useRecordsStore = defineStore('records', () => {
       const defaultCategories = ['games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music']
       const newRecords = {}
       defaultCategories.forEach(cat => {
-        newRecords[cat] = (data[cat] || []).map(r => ({ ...r, selected: false }))
+        newRecords[cat] = (data[cat] || []).map(r => ({
+          ...r,
+          selected: false 
+        }))
       })
       records.value = newRecords
 
@@ -493,60 +496,211 @@ export const useRecordsStore = defineStore('records', () => {
 
   const labels = computed(() => ({
     games: [
-      { key: 'playing_now', label: i18n.global.t('store.labels.playing_now'), icon: InProgressIcon, default: true },
-      { key: 'plan_to_play', label: i18n.global.t('store.labels.plan_to_play'), icon: PlanIcon },
-      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
-      { key: 'completed', label: i18n.global.t('store.labels.completed'), icon: CompletedIcon },
-      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
+      {
+        key: 'playing_now',
+        label: i18n.global.t('store.labels.playing_now'),
+        icon: InProgressIcon,
+        default: true 
+      },
+      {
+        key: 'plan_to_play',
+        label: i18n.global.t('store.labels.plan_to_play'),
+        icon: PlanIcon 
+      },
+      {
+        key: 'on_hold',
+        label: i18n.global.t('store.labels.on_hold'),
+        icon: OnHoldIcon 
+      },
+      {
+        key: 'completed',
+        label: i18n.global.t('store.labels.completed'),
+        icon: CompletedIcon 
+      },
+      {
+        key: 'dropped',
+        label: i18n.global.t('store.labels.dropped'),
+        icon: DroppedIcon 
+      },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     tvshows: [
-      { key: 'watching_ongoing', label: i18n.global.t('store.labels.watching_ongoing'), icon: WatchingIcon, default: true },
-      { key: 'watching_now', label: i18n.global.t('store.labels.watching_now'), icon: WatchingNowIcon },
-      { key: 'plan_to_watch', label: i18n.global.t('store.labels.plan_to_watch'), icon: PlanIcon },
-      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
-      { key: 'watched_all', label: i18n.global.t('store.labels.watched_all'), icon: CompletedIcon },
-      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
+      {
+        key: 'watching_ongoing',
+        label: i18n.global.t('store.labels.watching_ongoing'),
+        icon: WatchingIcon,
+        default: true 
+      },
+      {
+        key: 'watching_now',
+        label: i18n.global.t('store.labels.watching_now'),
+        icon: WatchingNowIcon 
+      },
+      {
+        key: 'plan_to_watch',
+        label: i18n.global.t('store.labels.plan_to_watch'),
+        icon: PlanIcon 
+      },
+      {
+        key: 'on_hold',
+        label: i18n.global.t('store.labels.on_hold'),
+        icon: OnHoldIcon 
+      },
+      {
+        key: 'watched_all',
+        label: i18n.global.t('store.labels.watched_all'),
+        icon: CompletedIcon 
+      },
+      {
+        key: 'dropped',
+        label: i18n.global.t('store.labels.dropped'),
+        icon: DroppedIcon 
+      },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     films: [
-      { key: 'plan_to_watch', label: i18n.global.t('store.labels.plan_to_watch'), icon: PlanIcon, default: true },
-      { key: 'watched', label: i18n.global.t('store.labels.watched'), icon: CompletedIcon },
-      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
+      {
+        key: 'plan_to_watch',
+        label: i18n.global.t('store.labels.plan_to_watch'),
+        icon: PlanIcon,
+        default: true 
+      },
+      {
+        key: 'watched',
+        label: i18n.global.t('store.labels.watched'),
+        icon: CompletedIcon 
+      },
+      {
+        key: 'dropped',
+        label: i18n.global.t('store.labels.dropped'),
+        icon: DroppedIcon 
+      },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     anime: [
-      { key: 'watching_ongoing', label: i18n.global.t('store.labels.watching_ongoing'), icon: WatchingIcon, default: true },
-      { key: 'watching_now', label: i18n.global.t('store.labels.watching_now'), icon: WatchingNowIcon },
-      { key: 'plan_to_watch', label: i18n.global.t('store.labels.plan_to_watch'), icon: PlanIcon },
-      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
-      { key: 'watched_all', label: i18n.global.t('store.labels.watched_all'), icon: CompletedIcon },
-      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
+      {
+        key: 'watching_ongoing',
+        label: i18n.global.t('store.labels.watching_ongoing'),
+        icon: WatchingIcon,
+        default: true 
+      },
+      {
+        key: 'watching_now',
+        label: i18n.global.t('store.labels.watching_now'),
+        icon: WatchingNowIcon 
+      },
+      {
+        key: 'plan_to_watch',
+        label: i18n.global.t('store.labels.plan_to_watch'),
+        icon: PlanIcon 
+      },
+      {
+        key: 'on_hold',
+        label: i18n.global.t('store.labels.on_hold'),
+        icon: OnHoldIcon 
+      },
+      {
+        key: 'watched_all',
+        label: i18n.global.t('store.labels.watched_all'),
+        icon: CompletedIcon 
+      },
+      {
+        key: 'dropped',
+        label: i18n.global.t('store.labels.dropped'),
+        icon: DroppedIcon 
+      },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     manga: [
-      { key: 'read_ongoing', label: i18n.global.t('store.labels.read_ongoing'), icon: ReadingIcon, default: true },
-      { key: 'read_now', label: i18n.global.t('store.labels.read_now'), icon: ReadingIcon },
-      { key: 'plan_to_read', label: i18n.global.t('store.labels.plan_to_read'), icon: PlanIcon },
-      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
-      { key: 'read', label: i18n.global.t('store.labels.read'), icon: ReadIcon },
-      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
+      {
+        key: 'read_ongoing',
+        label: i18n.global.t('store.labels.read_ongoing'),
+        icon: ReadingIcon,
+        default: true 
+      },
+      {
+        key: 'read_now',
+        label: i18n.global.t('store.labels.read_now'),
+        icon: ReadingIcon 
+      },
+      {
+        key: 'plan_to_read',
+        label: i18n.global.t('store.labels.plan_to_read'),
+        icon: PlanIcon 
+      },
+      {
+        key: 'on_hold',
+        label: i18n.global.t('store.labels.on_hold'),
+        icon: OnHoldIcon 
+      },
+      {
+        key: 'read',
+        label: i18n.global.t('store.labels.read'),
+        icon: ReadIcon 
+      },
+      {
+        key: 'dropped',
+        label: i18n.global.t('store.labels.dropped'),
+        icon: DroppedIcon 
+      },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     books: [
-      { key: 'read_now', label: i18n.global.t('store.labels.read_now'), icon: ReadingIcon, default: true },
-      { key: 'plan_to_read', label: i18n.global.t('store.labels.plan_to_read'), icon: PlanIcon },
-      { key: 'on_hold', label: i18n.global.t('store.labels.on_hold'), icon: OnHoldIcon },
-      { key: 'read', label: i18n.global.t('store.labels.read'), icon: ReadIcon },
-      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
+      {
+        key: 'read_now',
+        label: i18n.global.t('store.labels.read_now'),
+        icon: ReadingIcon,
+        default: true 
+      },
+      {
+        key: 'plan_to_read',
+        label: i18n.global.t('store.labels.plan_to_read'),
+        icon: PlanIcon 
+      },
+      {
+        key: 'on_hold',
+        label: i18n.global.t('store.labels.on_hold'),
+        icon: OnHoldIcon 
+      },
+      {
+        key: 'read',
+        label: i18n.global.t('store.labels.read'),
+        icon: ReadIcon 
+      },
+      {
+        key: 'dropped',
+        label: i18n.global.t('store.labels.dropped'),
+        icon: DroppedIcon 
+      },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
     music: [
-      { key: 'listening_now', label: i18n.global.t('store.labels.listening_now'), icon: ListeningIcon, default: true },
-      { key: 'on_repeat', label: i18n.global.t('store.labels.on_repeat'), icon: MusicIcon },
-      { key: 'plan_to_listen', label: i18n.global.t('store.labels.plan_to_listen'), icon: PlanIcon },
-      { key: 'listened_all', label: i18n.global.t('store.labels.listened_all'), icon: CompletedIcon },
-      { key: 'dropped', label: i18n.global.t('store.labels.dropped'), icon: DroppedIcon },
+      {
+        key: 'listening_now',
+        label: i18n.global.t('store.labels.listening_now'),
+        icon: ListeningIcon,
+        default: true 
+      },
+      {
+        key: 'on_repeat',
+        label: i18n.global.t('store.labels.on_repeat'),
+        icon: MusicIcon 
+      },
+      {
+        key: 'plan_to_listen',
+        label: i18n.global.t('store.labels.plan_to_listen'),
+        icon: PlanIcon 
+      },
+      {
+        key: 'listened_all',
+        label: i18n.global.t('store.labels.listened_all'),
+        icon: CompletedIcon 
+      },
+      {
+        key: 'dropped',
+        label: i18n.global.t('store.labels.dropped'),
+        icon: DroppedIcon 
+      },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
   }))
 
@@ -696,7 +850,10 @@ export const useRecordsStore = defineStore('records', () => {
         await api.post('/import', importData)
         await restoreRecords() // Reload everything from server
         processingImport.value = false
-        useNotificationsStore().pushNotification({ message: i18n.global.t('store.notifications.importSuccess'), type: 'success' })
+        useNotificationsStore().pushNotification({
+          message: i18n.global.t('store.notifications.importSuccess'),
+          type: 'success' 
+        })
       } catch (err) {
         console.error(err)
         processingImport.value = false
@@ -710,9 +867,18 @@ export const useRecordsStore = defineStore('records', () => {
   }
 
   async function parseCSVToCollection(csvText) {
-    const { data } = Papa.parse(csvText, { header: true, skipEmptyLines: true })
+    const { data } = Papa.parse(csvText, {
+      header: true,
+      skipEmptyLines: true 
+    })
     const collection = {
-      games: [], tvshows: [], films: [], anime: [], manga: [], books: [], music: [],
+      games: [],
+      tvshows: [],
+      films: [],
+      anime: [],
+      manga: [],
+      books: [],
+      music: [],
       customLists: []
     }
 
@@ -770,7 +936,10 @@ export const useRecordsStore = defineStore('records', () => {
       const extraCategories = categories.filter(c => !validCategories.includes(c) && c !== 'customLists')
 
       if (extraCategories.length > 0) {
-        errors.push({ type: 'unexpected_categories', details: extraCategories })
+        errors.push({
+          type: 'unexpected_categories',
+          details: extraCategories 
+        })
       }
 
       // Validate each category payload and collect precise record errors
@@ -778,18 +947,31 @@ export const useRecordsStore = defineStore('records', () => {
         if (category === 'customLists') continue
         const records = obj[category]
         if (!validCategories.includes(category)) {
-          errors.push({ type: 'unexpected_category', category })
+          errors.push({
+            type: 'unexpected_category',
+            category 
+          })
           continue
         }
         if (!Array.isArray(records)) {
-          errors.push({ type: 'invalid_category_payload', category, message: 'Category must be an array of records' })
+          errors.push({
+            type: 'invalid_category_payload',
+            category,
+            message: 'Category must be an array of records' 
+          })
           continue
         }
         for (let index = 0; index < records.length; index++) {
           const record = records[index]
           const recordErrors = getRecordValidationErrors(record, category)
           if (recordErrors.length > 0) {
-            errors.push({ type: 'invalid_record', category, index, id: record && record.id, errors: recordErrors })
+            errors.push({
+              type: 'invalid_record',
+              category,
+              index,
+              id: record && record.id,
+              errors: recordErrors 
+            })
           }
         }
       }
@@ -798,17 +980,35 @@ export const useRecordsStore = defineStore('records', () => {
       if (Array.isArray(obj.customLists)) {
         for (const list of obj.customLists) {
           if (typeof list.id !== 'string' || typeof list.name !== 'string') {
-            errors.push({ type: 'invalid_custom_list', list })
+            errors.push({
+              type: 'invalid_custom_list',
+              list 
+            })
             continue
           }
           if (!Array.isArray(list.records)) {
-            errors.push({ type: 'invalid_custom_list_records', list })
+            errors.push({
+              type: 'invalid_custom_list_records',
+              list 
+            })
             continue
           }
           for (const r of list.records) {
-            if (typeof r.id !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'id' })
-            if (typeof r.title !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'title' })
-            if (typeof r.createdAt !== 'string') errors.push({ type: 'invalid_custom_record', r, error: 'createdAt' })
+            if (typeof r.id !== 'string') errors.push({
+              type: 'invalid_custom_record',
+              r,
+              error: 'id' 
+            })
+            if (typeof r.title !== 'string') errors.push({
+              type: 'invalid_custom_record',
+              r,
+              error: 'title' 
+            })
+            if (typeof r.createdAt !== 'string') errors.push({
+              type: 'invalid_custom_record',
+              r,
+              error: 'createdAt' 
+            })
             // No score, liked, label fields required
           }
         }

@@ -19,7 +19,13 @@ export async function buildApp() {
     logger: {
       level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
       transport: process.env.NODE_ENV !== 'production'
-        ? { target: 'pino-pretty', options: { colorize: true, ignore: 'pid,hostname' } }
+        ? {
+          target: 'pino-pretty',
+          options: {
+            colorize: true,
+            ignore: 'pid,hostname' 
+          } 
+        }
         : undefined,
     },
   })
@@ -71,7 +77,10 @@ export async function buildApp() {
 
   app.get('/health', async () => {
     await checkDbConnection()
-    return { status: 'ok', timestamp: new Date().toISOString() }
+    return {
+      status: 'ok',
+      timestamp: new Date().toISOString() 
+    }
   })
 
   // ─── Global error handler ──────────────────────────────────────────────────

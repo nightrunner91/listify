@@ -14,28 +14,41 @@ const gridStore = useGridStore()
 </script>
 
 <template>
-  <transition name="scroll-buttons">
+  <transition
+    name="scroll-buttons"
+  >
     <n-space
       v-if="gridStore.showScroller"
       vertical
       align="center"
       justify="center"
       class="position-absolute right-10 top-0 bottom-0 m-auto"
-      style="height: fit-content; width: 40px;">
+      style="height: fit-content; width: 40px;"
+    >
       <n-button
         secondary
         circle
-        @click.prevent="$emit('scrollTop')">
-        <template #icon>
-          <n-icon :component="ToTopIcon" />
+        @click.prevent="$emit('scrollTop')"
+      >
+        <template
+          #icon
+        >
+          <n-icon
+            :component="ToTopIcon"
+          />
         </template>
       </n-button>
       <n-button
         secondary
         circle
-        @click.prevent="$emit('scrollBottom')">
-        <template #icon>
-          <n-icon :component="ToBottomIcon" />
+        @click.prevent="$emit('scrollBottom')"
+      >
+        <template
+          #icon
+        >
+          <n-icon
+            :component="ToBottomIcon"
+          />
         </template>
       </n-button>
     </n-space>

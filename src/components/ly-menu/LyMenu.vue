@@ -140,7 +140,12 @@ const menuOptions = computed(() => {
     label: () =>
       h(
         RouterLink,
-        { to: { name: 'CustomList', params: { id: list.id } } },
+        {
+          to: {
+            name: 'CustomList',
+            params: { id: list.id } 
+          } 
+        },
         { default: () => list.name }
       ),
     key: `custom-${list.id}`,
@@ -174,7 +179,10 @@ const menuOptions = computed(() => {
     },
     ...customListOptions,
     createOption,
-    { key: 'divider-about', type: 'divider' },
+    {
+      key: 'divider-about',
+      type: 'divider' 
+    },
     aboutOption,
   ]
 })
@@ -182,7 +190,10 @@ const menuOptions = computed(() => {
 async function handleMenuUpdate(key) {
   if (key === 'create-new') {
     const id = await recordsStore.createCustomList()
-    router.push({ name: 'CustomList', params: { id } })
+    router.push({
+      name: 'CustomList',
+      params: { id } 
+    })
     return
   }
   menuStore.closeMenu(key)
@@ -190,7 +201,11 @@ async function handleMenuUpdate(key) {
 
 watch(route, () => {
   activeKey.value = route.meta.tag
-}, { flush: 'pre', immediate: true, deep: true })
+}, {
+  flush: 'pre',
+  immediate: true,
+  deep: true 
+})
 </script>
 
 <template>
@@ -199,7 +214,8 @@ watch(route, () => {
     :collapsed="menuStore.collapsed"
     :collapsed-width="gridStore.screenLargerThen('s') ? 64 : 0"
     :options="menuOptions"
-    @update:value="handleMenuUpdate" />
+    @update:value="handleMenuUpdate"
+  />
 </template>
 
 <style lang="scss">

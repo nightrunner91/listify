@@ -6,9 +6,18 @@ import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
 
 const props = defineProps({
-  id: { type: String, required: true },
-  listId: { type: String, required: true },
-  index: { type: Number, required: true },
+  id: {
+    type: String,
+    required: true 
+  },
+  listId: {
+    type: String,
+    required: true 
+  },
+  index: {
+    type: Number,
+    required: true 
+  },
 })
 
 const recordsStore = useRecordsStore()
@@ -45,18 +54,20 @@ function handleDelete() {
 <template>
   <n-list-item
     class="px-4 px-sm-5"
-    :style="gridStore.screenLargerThen('l') ? '' : 'border-radius: 0;'">
+    :style="gridStore.screenLargerThen('l') ? '' : 'border-radius: 0;'"
+  >
     <n-space
       :wrap-item="false"
       :wrap="false"
       align="center"
       size="small"
-      class="">
-
+      class=""
+    >
       <n-text
         align="center"
         style="width: 16px; font-size: 12px; line-height: 1; flex-shrink: 0;"
-        depth="3">
+        depth="3"
+      >
         {{ index + 1 }}
       </n-text>
 
@@ -66,7 +77,8 @@ function handleDelete() {
         type="text"
         :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
         :placeholder="$t('records.titlePlaceholder')"
-        class="record-input" />
+        class="record-input"
+      />
 
       <n-button
         quaternary
@@ -75,12 +87,14 @@ function handleDelete() {
         type="error"
         size="small"
         style="flex-shrink: 0;"
-        @click="handleDelete">
-        <template #icon>
+        @click="handleDelete"
+      >
+        <template
+          #icon
+        >
           <n-icon><DeleteIcon /></n-icon>
         </template>
       </n-button>
-
     </n-space>
   </n-list-item>
 </template>

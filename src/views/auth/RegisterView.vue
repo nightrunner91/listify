@@ -69,20 +69,50 @@ async function handleRegister() {
 </script>
 
 <template>
-  <n-layout position="absolute">
+  <n-layout
+    position="absolute"
+  >
     <n-space
       vertical
       justify="center"
       align="center"
       style="height: 100%; padding: 16px;"
     >
-      <n-grid :cols="24">
-        <n-gi :span="24" :m="16" :l="10" :offset="0" :m-offset="4" :l-offset="7">
-          <n-card size="huge" hoverable  content-style="padding: 56px;">
-            <n-space vertical :size="32">
-              <n-space vertical align="center" :size="2">
-                <n-h3 class="mb-0">{{ $t('auth.register.title') }}</n-h3>
-                <n-text depth="3">{{ $t('auth.register.subtitle') }}</n-text>
+      <n-grid
+        :cols="24"
+      >
+        <n-gi
+          :span="24"
+          :m="16"
+          :l="10"
+          :offset="0"
+          :m-offset="4"
+          :l-offset="7"
+        >
+          <n-card
+            size="huge"
+            hoverable
+            content-style="padding: 56px;"
+          >
+            <n-space
+              vertical
+              :size="32"
+            >
+              <n-space
+                vertical
+                align="center"
+                :size="2"
+              >
+                <n-h3
+                  class="mb-0"
+                >
+                  {{ $t('auth.register.title') }}
+                </n-h3>
+                <n-text
+                  depth="3"
+                >
+                  {{ $t('auth.register.subtitle') }}
+                </n-text>
               </n-space>
 
               <n-form
@@ -92,11 +122,20 @@ async function handleRegister() {
                 size="large"
                 @keyup.enter="handleRegister"
               >
-                <n-form-item path="email" :label="$t('auth.login.emailLabel')">
-                  <n-input v-model:value="formModel.email" :placeholder="$t('auth.login.emailPlaceholder')" />
+                <n-form-item
+                  path="email"
+                  :label="$t('auth.login.emailLabel')"
+                >
+                  <n-input
+                    v-model:value="formModel.email"
+                    :placeholder="$t('auth.login.emailPlaceholder')"
+                  />
                 </n-form-item>
                 
-                <n-form-item path="password" :label="$t('auth.login.passwordLabel')">
+                <n-form-item
+                  path="password"
+                  :label="$t('auth.login.passwordLabel')"
+                >
                   <n-input
                     v-model:value="formModel.password"
                     type="password"
@@ -105,7 +144,10 @@ async function handleRegister() {
                   />
                 </n-form-item>
 
-                <n-form-item path="confirmPassword" :label="$t('auth.register.confirmPasswordLabel')">
+                <n-form-item
+                  path="confirmPassword"
+                  :label="$t('auth.register.confirmPasswordLabel')"
+                >
                   <n-input
                     v-model:value="formModel.confirmPassword"
                     type="password"
@@ -114,7 +156,9 @@ async function handleRegister() {
                   />
                 </n-form-item>
 
-                <n-form-item :show-label="false">
+                <n-form-item
+                  :show-label="false"
+                >
                   <n-button
                     type="primary"
                     size="large"
@@ -127,9 +171,22 @@ async function handleRegister() {
                 </n-form-item>
               </n-form>
 
-              <n-space justify="center" align="center" :size="2" vertical>
-                <n-text depth="3">{{ $t('auth.register.haveAccount') }}</n-text>
-                <n-button text type="primary" @click="router.push('/login')">
+              <n-space
+                justify="center"
+                align="center"
+                :size="2"
+                vertical
+              >
+                <n-text
+                  depth="3"
+                >
+                  {{ $t('auth.register.haveAccount') }}
+                </n-text>
+                <n-button
+                  text
+                  type="primary"
+                  @click="router.push('/login')"
+                >
                   {{ $t('auth.register.loginLink') }}
                 </n-button>
               </n-space>

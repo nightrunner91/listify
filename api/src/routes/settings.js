@@ -20,7 +20,10 @@ export default async function settingsRoutes(app) {
       .where(eq(userSettings.userId, userId))
       .limit(1)
 
-    return settings ?? { userId, theme: 'system' }
+    return settings ?? {
+      userId,
+      theme: 'system' 
+    }
   })
 
   // ─── PUT /api/settings ────────────────────────────────────────────────────
@@ -31,7 +34,10 @@ export default async function settingsRoutes(app) {
         type: 'object',
         required: ['theme'],
         properties: {
-          theme: { type: 'string', enum: VALID_THEMES },
+          theme: {
+            type: 'string',
+            enum: VALID_THEMES 
+          },
         },
         additionalProperties: false,
       },
@@ -42,10 +48,16 @@ export default async function settingsRoutes(app) {
 
     const [updated] = await db
       .insert(userSettings)
-      .values({ userId, theme })
+      .values({
+        userId,
+        theme 
+      })
       .onConflictDoUpdate({
         target: userSettings.userId,
-        set: { theme, updatedAt: new Date() },
+        set: {
+          theme,
+          updatedAt: new Date() 
+        },
       })
       .returning()
 

@@ -53,17 +53,29 @@ const clearSearch = () => {
     v-model:value="searchInput"
     size="large"
     :placeholder="searchPlaceholder"
-    class="ly-search mb-4">
-    <template #prefix>
-      <search-icon weight="bold" size="16" class="opacity-5 mr-2" style="margin-bottom: 0.1rem;"/>
+    class="ly-search mb-4"
+  >
+    <template
+      #prefix
+    >
+      <search-icon
+        weight="bold"
+        size="16"
+        class="opacity-5 mr-2"
+        style="margin-bottom: 0.1rem;"
+      />
     </template>
-    <template #suffix v-if="searchInput">
+    <template
+      v-if="searchInput"
+      #suffix
+    >
       <clear-icon 
         weight="bold" 
         size="16" 
         class="opacity-5 cursor-pointer hover:opacity-7 transition-opacity"
+        style="margin-bottom: 0.1rem;"
         @click="clearSearch"
-        style="margin-bottom: 0.1rem;"/>
+      />
     </template>
   </n-input>
 </template>

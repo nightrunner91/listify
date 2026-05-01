@@ -76,7 +76,11 @@ watch(
     recordsStore.clearSearch()
     setDefaultSortLabel()
   },
-  { flush: 'pre', immediate: true, deep: true }
+  {
+    flush: 'pre',
+    immediate: true,
+    deep: true 
+  }
 )
 
 onMounted(() => setDefaultSortLabel)
@@ -126,63 +130,107 @@ onBeforeRouteLeave(async () => {
 <template>
   <n-space
     vertical
-    size="large">
-
-    <template v-if="routeLoading || recordsStore.processingImport">
+    size="large"
+  >
+    <template
+      v-if="routeLoading || recordsStore.processingImport"
+    >
       <n-space
         class="w-100"
         justify="center"
         align="center"
-        style="height: 250px;">
-        <n-spin size="small" />
+        style="height: 250px;"
+      >
+        <n-spin
+          size="small"
+        />
       </n-space>
     </template>
 
-    <template v-else>
-      <n-space vertical>
-
-        <template v-if="recordsStore.recordsLength(route.meta.tag).value == 0">
+    <template
+      v-else
+    >
+      <n-space
+        vertical
+      >
+        <template
+          v-if="recordsStore.recordsLength(route.meta.tag).value == 0"
+        >
           <n-empty
             size="large"
             :description="t('records.emptyDescription')"
-            class="p-10">
-            <template #extra>
+            class="p-10"
+          >
+            <template
+              #extra
+            >
               <n-space
                 :size="gridStore.screenLargerThen('m') ? 'large' : 'medium'"
                 class="mt-6"
                 :wrap-item="false"
                 :vertical="!gridStore.screenLargerThen('m')"
-                align="center">
-                <ly-add-record variant="inline" />
-                <n-text align="center" depth="3" style="font-size: 14px;">{{ t('records.or') }}</n-text>
-                <ly-import variant="inline" />
+                align="center"
+              >
+                <ly-add-record
+                  variant="inline"
+                />
+                <n-text
+                  align="center"
+                  depth="3"
+                  style="font-size: 14px;"
+                >
+                  {{ t('records.or') }}
+                </n-text>
+                <ly-import
+                  variant="inline"
+                />
               </n-space>
             </template>
           </n-empty>
         </template>
 
-        <template v-else>
+        <template
+          v-else
+        >
           <ly-search />
           
-          <template v-if="recordsStore.isSearching && sortedRecords.length === 0">
+          <template
+            v-if="recordsStore.isSearching && sortedRecords.length === 0"
+          >
             <n-empty
               size="large"
               :description="t('records.searchEmptyDescription')"
-              class="p-10">
-            </n-empty>
+              class="p-10"
+            />
           </template>
           
-          <template v-else>
-            <n-list hoverable :show-divider="!gridStore.screenLargerThen('m')">
+          <template
+            v-else
+          >
+            <n-list
+              hoverable
+              :show-divider="!gridStore.screenLargerThen('m')"
+            >
               <dynamic-scroller
+                :key="scrollerKey"
                 :items="sortedRecords"
                 key-field="id"
                 :min-item-size="58"
-                :key="scrollerKey"
-                watch-data>
-                <template #default="{ item, index, active }">
-                  <dynamic-scroller-item :item="item" :active="active" :data-index="index" :key="item.id">
-                    <ly-record :id="item.id" :index="index" />
+                watch-data
+              >
+                <template
+                  #default="{ item, index, active }"
+                >
+                  <dynamic-scroller-item
+                    :key="item.id"
+                    :item="item"
+                    :active="active"
+                    :data-index="index"
+                  >
+                    <ly-record
+                      :id="item.id"
+                      :index="index"
+                    />
                   </dynamic-scroller-item>
                 </template>
               </dynamic-scroller>
@@ -193,30 +241,34 @@ onBeforeRouteLeave(async () => {
               v-if="!recordsStore.isSearching"
               ref="bottomButtonRef"
               class="pb-2"
-              style="padding-left: 40px;">
-              <n-divider class="mt-2 mb-4"></n-divider>
+              style="padding-left: 40px;"
+            >
+              <n-divider
+                class="mt-2 mb-4"
+              />
               <ly-add-record
                 variant="bottom"
                 :disabled="hasEmptyRecord"
-                @scroll-bottom="gridStore.handleScrollBottom" />
+                @scroll-bottom="gridStore.handleScrollBottom"
+              />
             </div>
 
             <!-- Floating button: only visible when bottom button is off-screen -->
             <transition
               name="fade-up-down"
-              mode="out-in">
+              mode="out-in"
+            >
               <ly-add-record 
                 v-if="!recordsStore.isSearching && !isBottomButtonVisible"
                 variant="floating"
                 :disabled="hasEmptyRecord"
-                @scroll-bottom="gridStore.handleScrollBottom" />
+                @scroll-bottom="gridStore.handleScrollBottom"
+              />
             </transition>
           </template>
         </template>
-
       </n-space>
     </template>
-
   </n-space>
 </template>
 

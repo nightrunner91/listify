@@ -12,15 +12,19 @@ import LyLanguageSwitcher from '@/components/ly-language-switcher/LyLanguageSwit
     embedded
     style="height: 56px;"
     class="px-3"
-    bordered>
+    bordered
+  >
     <n-space
       :wrap-item="false"
       align="center"
-      class="w-100 h-100">
+      class="w-100 h-100"
+    >
       <ly-logo />
       <ly-theme-switcher />
       <ly-language-switcher />
-      <n-divider vertical />
+      <n-divider
+        vertical
+      />
       <ly-logout />
     </n-space>
   </n-layout-header>

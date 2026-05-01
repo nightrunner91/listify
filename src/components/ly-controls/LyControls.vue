@@ -40,7 +40,10 @@ watch(
   () => {
     recordsStore.deselectAllRecords(route.meta.tag)
   },
-  { immediate: true, deep: true }
+  {
+    immediate: true,
+    deep: true 
+  }
 )
 </script>
 
@@ -64,8 +67,14 @@ watch(
         :cols="6"
         class="pr-4"
       >
-        <n-grid-item span="6 s:4 l:4" offset="0 s:1 l:1">
-          <n-space align="center" :wrap-item="false">
+        <n-grid-item
+          span="6 s:4 l:4"
+          offset="0 s:1 l:1"
+        >
+          <n-space
+            align="center"
+            :wrap-item="false"
+          >
             <n-button
               secondary
               size="small"
@@ -77,10 +86,14 @@ watch(
               "
               @click="handleSelection"
             >
-              <n-text v-if="recordsStore.allRecordsSelected(route.meta.tag).value">
+              <n-text
+                v-if="recordsStore.allRecordsSelected(route.meta.tag).value"
+              >
                 {{ t('common.deselectAll') }}
               </n-text>
-              <n-text v-else>
+              <n-text
+                v-else
+              >
                 {{ t('common.selectAll') }}
               </n-text>
             </n-button>
@@ -88,7 +101,9 @@ watch(
             <n-popconfirm
               @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag)"
             >
-              <template #trigger>
+              <template
+                #trigger
+              >
                 <n-button
                   type="error"
                   size="small"

@@ -20,11 +20,12 @@ const themeStore = useThemeStore()
   <n-config-provider
     :theme="themeStore.currentTheme"
     :theme-overrides="themeStore.currentTheme ? darkThemeOverrides : lightThemeOverrides"
-    :breakpoints="breakpoints">
+    :breakpoints="breakpoints"
+  >
     <n-loading-bar-provider>
       <n-message-provider>
         <n-dialog-provider>
-          <slot></slot>
+          <slot />
         </n-dialog-provider>
       </n-message-provider>
     </n-loading-bar-provider>

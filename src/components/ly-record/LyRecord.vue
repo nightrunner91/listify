@@ -50,7 +50,10 @@ watch(record, (newVal) => {
     clearTimeout(updateTimeout)
     updateTimeout = setTimeout(() => {
       lastSavedString = currentString
-      recordsStore.addRecord({ record: { ...newVal }, listType: tag })
+      recordsStore.addRecord({
+        record: { ...newVal },
+        listType: tag 
+      })
         .catch(err => {
           console.error('Failed to update record:', err)
           lastSavedString = null
@@ -62,37 +65,42 @@ watch(record, (newVal) => {
 
 <template>
   <n-list-item
+    class="px-4 px-sm-5"
+    :style="gridStore.screenLargerThen('l') ? '' : 'border-radius: 0;'"
     @mouseover="showCheckbox = true"
     @mouseleave="showCheckbox = false"
-    class="px-4 px-sm-5"
-    :style="gridStore.screenLargerThen('l') ? '' : 'border-radius: 0;'">
+  >
     <n-space
       :wrap-item="false"
       align="center"
       :wrap="!gridStore.screenLargerThen('l')"
       :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
-      class="py-2 py-m-0">
-
+      class="py-2 py-m-0"
+    >
       <n-space
         :wrap-item="false"
         :wrap="false"
         align="center"
         size="small"
-        class="w-100 w-l-50">
+        class="w-100 w-l-50"
+      >
         <n-space
           :wrap-item="false"
           align="center"
           justify="center"
-          :size="0">
+          :size="0"
+        >
           <n-checkbox
             v-show="showCheckbox || record.selected"
-            v-model:checked="record.selected" />
+            v-model:checked="record.selected"
+          />
 
           <n-text
             v-show="!showCheckbox && !record.selected"
             align="center"
             style="width: 16px; font-size: 12px; line-height: 1"
-            depth="3">
+            depth="3"
+          >
             {{ index + 1 }}
           </n-text>
         </n-space>
@@ -103,7 +111,8 @@ watch(record, (newVal) => {
           type="text"
           :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
           :placeholder="$t('records.titlePlaceholder')"
-          class="w-100 w-l-75 record-input" />
+          class="w-100 w-l-75 record-input"
+        />
       </n-space>
 
       <n-space
@@ -111,11 +120,13 @@ watch(record, (newVal) => {
         align="center"
         justify="center"
         size="small"
-        class="w-100 w-l-50">
+        class="w-100 w-l-50"
+      >
         <n-rate
           v-model:value="record.score"
           clearable
-          class="mr-0 mr-s-4 mr-l-7" />
+          class="mr-0 mr-s-4 mr-l-7"
+        />
           
         <n-button
           quaternary
@@ -124,11 +135,15 @@ watch(record, (newVal) => {
           type="error"
           size="small"
           class="ml-4 ml-s-6 ml-l-10"
-          @click="record.liked = !record.liked">
-          <template #icon>
+          @click="record.liked = !record.liked"
+        >
+          <template
+            #icon
+          >
             <like-icon
               :weight="record.liked ? 'fill' : 'regular'"
-              :class="{ 'opacity-4' : !record.liked }" />
+              :class="{ 'opacity-4' : !record.liked }"
+            />
           </template>
         </n-button>
 
@@ -138,22 +153,25 @@ watch(record, (newVal) => {
           placement="bottom-end"
           :options="recordsStore.labels[tag]"
           :render-icon="renderDropdownIcon"
-          @select="key => record.label = key">
+          @select="key => record.label = key"
+        >
           <n-button
             quaternary
             size="small"
-            class="ml-auto">
-            <template #icon>
+            class="ml-auto"
+          >
+            <template
+              #icon
+            >
               <n-icon
                 depth="2"
-                :component="recordsStore.getLabelIcon(tag, record.label)" />
+                :component="recordsStore.getLabelIcon(tag, record.label)"
+              />
             </template>
             {{ recordsStore.getLabelName(tag, record.label) }}
           </n-button>
         </n-dropdown>
-
       </n-space>
-
     </n-space>
   </n-list-item>
 </template>

@@ -32,7 +32,10 @@ watch(
     await new Promise((resolve) => setTimeout(resolve, 500))
     routeLoading.value = false
   },
-  { flush: 'pre', deep: true }
+  {
+    flush: 'pre',
+    deep: true 
+  }
 )
 </script>
 
@@ -44,17 +47,22 @@ watch(
     :options="recordsStore.sortOptions"
     :render-icon="renderDropdownIcon"
     :disabled="recordsStore.isSearching || routeLoading || recordsStore.processingImport"
-    @select="handleSortChange">
+    @select="handleSortChange"
+  >
     <n-button
       secondary
       class="ml-auto"
-      :disabled="recordsStore.isSearching || routeLoading || recordsStore.processingImport">
-      <template #icon>
+      :disabled="recordsStore.isSearching || routeLoading || recordsStore.processingImport"
+    >
+      <template
+        #icon
+      >
         <n-icon
           depth="2"
-          :component="SortIcon" />
+          :component="SortIcon"
+        />
       </template>
       {{ recordsStore.getSortOption(recordsStore.selectedSort).value.label }}
     </n-button>
-    </n-dropdown>
+  </n-dropdown>
 </template>

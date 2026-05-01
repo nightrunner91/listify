@@ -23,13 +23,23 @@ const themeStore = useThemeStore()
   <n-h3
     v-if="gridStore.screenLargerThen('s')"
     class="m-0 mr-auto pl-2 no-select ly-logo"
-    @click="menuStore.closeMenu">
+    @click="menuStore.closeMenu"
+  >
     <router-link
       :to="{ name: 'Start' }"
-      style="text-decoration: none;">
-      <span class="ly-logo__container">
-        <n-text class="ly-logo__prefix" :style="{color: themeStore.categoryColor(route.meta.tag)}">Li</n-text>
-        <n-text class="ly-logo__suffix" depth="2">stify</n-text>
+      style="text-decoration: none;"
+    >
+      <span
+        class="ly-logo__container"
+      >
+        <n-text
+          class="ly-logo__prefix"
+          :style="{color: themeStore.categoryColor(route.meta.tag)}"
+        >Li</n-text>
+        <n-text
+          class="ly-logo__suffix"
+          depth="2"
+        >stify</n-text>
       </span>
     </router-link>
   </n-h3>
@@ -38,11 +48,20 @@ const themeStore = useThemeStore()
     quaternary
     circle
     size="large"
+    class="mr-auto"
     @click="menuStore.toggleMenu"
-    class="mr-auto">
-    <template #icon>
-      <open-icon v-if="menuStore.collapsed" weight="bold" />
-      <close-icon v-else weight="bold" />
+  >
+    <template
+      #icon
+    >
+      <open-icon
+        v-if="menuStore.collapsed"
+        weight="bold"
+      />
+      <close-icon
+        v-else
+        weight="bold"
+      />
     </template>
   </n-button>
 </template>

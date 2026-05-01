@@ -27,5 +27,5 @@ watch(piniaMessages, newValue => {
 </script>
 
 <template>
-  <div></div>
+  <div />
 </template>

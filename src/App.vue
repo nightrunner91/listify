@@ -34,20 +34,28 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <app-provider v-if="isReady">
-    <n-layout position="absolute" v-if="route.meta.requiresAuth !== false">
+  <app-provider
+    v-if="isReady"
+  >
+    <n-layout
+      v-if="route.meta.requiresAuth !== false"
+      position="absolute"
+    >
       <ly-header />
       <n-layout
         has-sider
         position="absolute"
-        style="top: 56px;">
+        style="top: 56px;"
+      >
         <ly-sider />
         <ly-content />
         <ly-controls />
       </n-layout>
     </n-layout>
     
-    <router-view v-else />
+    <router-view
+      v-else
+    />
 
     <ly-notifications />
   </app-provider>

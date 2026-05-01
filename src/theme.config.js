@@ -26,18 +26,10 @@ const globalOverrides = {
     padding: '10px 14px',
     borderRadius: '6px',
   },
-  Card: {
-    borderRadius: '6px',
-  },
-  Upload: {
-    borderRadius: '6px',
-  },
-  Menu: {
-    borderRadius: '6px',
-  },
-  List: {
-    borderRadius: '6px',
-  },
+  Card: {borderRadius: '6px',},
+  Upload: {borderRadius: '6px',},
+  Menu: {borderRadius: '6px',},
+  List: {borderRadius: '6px',},
   Button: {
     borderRadiusSmall: '4px',
     borderRadiusMedium: '5px',
@@ -47,9 +39,7 @@ const globalOverrides = {
     borderRadius: '6px',
     lineHeight: 1,
   },
-  Drawer: {
-    boxShadow: 'none',
-  },
+  Drawer: {boxShadow: 'none',},
   Popconfirm: {
     fontSize: '14px',
     iconSize: '18px',
@@ -81,12 +71,8 @@ export const lightThemeOverrides = {
     siderColorInverted: 'rgb(252, 252, 254)',
     siderBorderColorInverted: 'rgb(239, 239, 245)',
   },
-  Badge: {
-    color: 'rgb(255, 89, 122)',
-  },
-  Drawer: {
-    headerBorderBottom: 'rgb(239, 239, 245)',
-  },
+  Badge: {color: 'rgb(255, 89, 122)',},
+  Drawer: {headerBorderBottom: 'rgb(239, 239, 245)',},
 }
 
 export const darkThemeOverrides = {
@@ -103,15 +89,9 @@ export const darkThemeOverrides = {
     customColor: '#A1A8B2',
     aboutColor: '#0AC0C0',
   },
-  Layout: {
-    siderColorInverted: 'rgb(28, 28, 32)',
-  },
-  Badge: {
-    color: 'rgb(215, 69, 98)',
-  },
-  Drawer: {
-    headerBorderBottom: 'rgba(255, 255, 255, 0.09)',
-  },
+  Layout: {siderColorInverted: 'rgb(28, 28, 32)',},
+  Badge: {color: 'rgb(215, 69, 98)',},
+  Drawer: {headerBorderBottom: 'rgba(255, 255, 255, 0.09)',},
 }
 
 export const breakpoints = {

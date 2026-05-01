@@ -54,52 +54,71 @@ function confirmDeleteList() {
   <n-layout-content
     ref="contentRef"
     has-sider
-    @click="menuStore.closeMenu"
     :class="{ 'ly-content--dimmed' : !menuStore.collapsed }"
     :native-scrollbar="true"
     :scrollbar-props="{ trigger: 'none' }"
+    class="pl-4 pl-s-18 ly-content"
+    @click="menuStore.closeMenu"
     @scroll="updateScroll($event)"
-    class="pl-4 pl-s-18 ly-content">
+  >
     <n-grid
       item-responsive
       responsive="screen"
       :x-gap="12"
       :y-gap="8"
       :cols="6"
-      class="pt-2 pt-s-10 pr-4 pb-4 pb-s-10">
+      class="pt-2 pt-s-10 pr-4 pb-4 pb-s-10"
+    >
       <n-grid-item
         span="6 s:4 l:4"
-        offset="0 s:1 l:1">
+        offset="0 s:1 l:1"
+      >
         <n-space
           justify="space-between"
           :wrap-item="false"
           align="center"
-          class="w-100 mb-6">
-          <template v-if="route.meta.tag === 'start'">
-            <ly-user-profile class="w-100" @import="importRef.showModal = true" />
+          class="w-100 mb-6"
+        >
+          <template
+            v-if="route.meta.tag === 'start'"
+          >
+            <ly-user-profile
+              class="w-100"
+              @import="importRef.showModal = true"
+            />
           </template>
-          <template v-else>
+          <template
+            v-else
+          >
             <ly-title />
-            <ly-sort v-if="!route.meta.isCustom && route.meta.tag !== 'about'" />
+            <ly-sort
+              v-if="!route.meta.isCustom && route.meta.tag !== 'about'"
+            />
             <n-button
               v-else-if="route.meta.isCustom"
               secondary
               type="error"
               size="small"
               :render-icon="renderIcon(DeleteIcon)"
-              @click="confirmDeleteList">
+              @click="confirmDeleteList"
+            >
               Delete
             </n-button>
           </template>
         </n-space>
         <router-view />
-        <ly-import ref="importRef" variant="hidden" v-show="false" />
+        <ly-import
+          v-show="false"
+          ref="importRef"
+          variant="hidden"
+        />
         <ly-footer />
       </n-grid-item>
     </n-grid>
     <ly-scroller
       @scrollTop="contentRef?.scrollTo({ top: 0, behavior: 'smooth' })"
-      @scrollBottom="contentRef?.scrollTo({ top: 999999999, behavior: 'smooth' })" />
+      @scrollBottom="contentRef?.scrollTo({ top: 999999999, behavior: 'smooth' })"
+    />
   </n-layout-content>
 </template>
 

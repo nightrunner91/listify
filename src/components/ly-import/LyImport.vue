@@ -37,32 +37,44 @@ const props = defineProps({
 
 const { variant } = toRefs(props)
 
-defineExpose({
-  showModal
-})
+defineExpose({showModal})
 </script>
 
 <template>
   <n-button
-    secondary
     v-if="variant === 'inline'"
+    secondary
     :render-icon="renderIcon(ImportIcon)"
-    @click="showModal = true">
+    @click="showModal = true"
+  >
     {{ t('userProfile.importCollection') }}
   </n-button>
 
-  <template v-else-if="variant === 'minified'">
+  <template
+    v-else-if="variant === 'minified'"
+  >
     <n-tooltip
-      trigger="hover">
-      <template #trigger>
+      trigger="hover"
+    >
+      <template
+        #trigger
+      >
         <n-button
           quaternary
           size="small"
-          @click="showModal = true">
-          <template #icon>
-            <n-icon :component="ImportIcon" :size="18" />
+          @click="showModal = true"
+        >
+          <template
+            #icon
+          >
+            <n-icon
+              :component="ImportIcon"
+              :size="18"
+            />
           </template>
-          <span v-if="gridStore.screenLargerThen('s')">
+          <span
+            v-if="gridStore.screenLargerThen('s')"
+          >
             {{ t('common.import') }}
           </span>
         </n-button>
@@ -78,8 +90,8 @@ defineExpose({
     transform-origin="center"
     to="body"
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
-    :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
-
+    :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'"
+  >
     <n-upload
       id="import-collection"
       directory-dnd
@@ -88,20 +100,25 @@ defineExpose({
       :show-file-list="false"
       :default-upload="true"
       @before-upload="recordsStore.importCollection"
-      @change="showModal = false">
+      @change="showModal = false"
+    >
       <n-upload-dragger>
-        <div style="margin-bottom: 12px">
+        <div
+          style="margin-bottom: 12px"
+        >
           <n-icon
             :component="UploadIcon"
             size="48"
-            :depth="4" />
+            :depth="4"
+          />
         </div>
         <n-p>
           {{ t('import.draggerText') }}
         </n-p>
         <n-p
           depth="3"
-          style="font-size: 14px; display: flex; align-items: flex-start; gap: 8px;">
+          style="font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"
+        >
           <span>
             {{ t('import.draggerInfo') }}
           </span>

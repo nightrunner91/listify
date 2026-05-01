@@ -38,23 +38,35 @@ const props = defineProps({
   },
 })
 
-defineExpose({
-  showModal
-})
+defineExpose({showModal})
 </script>
 
 <template>
-  <template v-if="variant === 'minified'">
-    <n-tooltip trigger="hover">
-      <template #trigger>
+  <template
+    v-if="variant === 'minified'"
+  >
+    <n-tooltip
+      trigger="hover"
+    >
+      <template
+        #trigger
+      >
         <n-button
           quaternary
           size="small"
-          @click="showModal = true">
-          <template #icon>
-            <n-icon :component="ExportIcon" :size="18" />
+          @click="showModal = true"
+        >
+          <template
+            #icon
+          >
+            <n-icon
+              :component="ExportIcon"
+              :size="18"
+            />
           </template>
-          <span v-if="gridStore.screenLargerThen('s')">
+          <span
+            v-if="gridStore.screenLargerThen('s')"
+          >
             {{ t('common.export') }}
           </span>
         </n-button>
@@ -64,10 +76,11 @@ defineExpose({
   </template>
 
   <n-button
-    secondary
     v-else-if="variant === 'inline'"
+    secondary
     :render-icon="renderIcon(ExportIcon)"
-    @click="showModal = true">
+    @click="showModal = true"
+  >
     {{ t('userProfile.exportCollection') }}
   </n-button>
 
@@ -78,96 +91,180 @@ defineExpose({
     transform-origin="center"
     to="body"
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
-    :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'">
-    <div class="mb-3">
-      <n-text depth="3" class="section-title">
+    :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'"
+  >
+    <div
+      class="mb-3"
+    >
+      <n-text
+        depth="3"
+        class="section-title"
+      >
         {{ t('export.sectionCategories') }}
       </n-text>
     </div>
     <n-checkbox-group
       v-model:value="recordsStore.selectedCategories"
-      class="mb-6">
+      class="mb-6"
+    >
       <n-grid
         item-responsive
         responsive="screen"
         :x-gap="12"
         :y-gap="8"
-        :cols="2">
-        <n-grid-item span="2 s:1">
-          <n-checkbox value="games" :label="t('categories.games')" />
+        :cols="2"
+      >
+        <n-grid-item
+          span="2 s:1"
+        >
+          <n-checkbox
+            value="games"
+            :label="t('categories.games')"
+          />
         </n-grid-item>
-        <n-grid-item span="2 s:1">
-          <n-checkbox value="tvshows" :label="t('categories.tvshows')" />
+        <n-grid-item
+          span="2 s:1"
+        >
+          <n-checkbox
+            value="tvshows"
+            :label="t('categories.tvshows')"
+          />
         </n-grid-item>
-        <n-grid-item span="2 s:1">
-          <n-checkbox value="films" :label="t('categories.films')" />
+        <n-grid-item
+          span="2 s:1"
+        >
+          <n-checkbox
+            value="films"
+            :label="t('categories.films')"
+          />
         </n-grid-item>
-        <n-grid-item span="2 s:1">
-          <n-checkbox value="anime" :label="t('categories.anime')" />
+        <n-grid-item
+          span="2 s:1"
+        >
+          <n-checkbox
+            value="anime"
+            :label="t('categories.anime')"
+          />
         </n-grid-item>
-        <n-grid-item span="2 s:1">
-          <n-checkbox value="manga" :label="t('categories.manga')" />
+        <n-grid-item
+          span="2 s:1"
+        >
+          <n-checkbox
+            value="manga"
+            :label="t('categories.manga')"
+          />
         </n-grid-item>
-        <n-grid-item span="2 s:1">
-          <n-checkbox value="books" :label="t('categories.books')" />
+        <n-grid-item
+          span="2 s:1"
+        >
+          <n-checkbox
+            value="books"
+            :label="t('categories.books')"
+          />
         </n-grid-item>
-        <n-grid-item span="2 s:1">
-          <n-checkbox value="music" :label="t('categories.music')" />
+        <n-grid-item
+          span="2 s:1"
+        >
+          <n-checkbox
+            value="music"
+            :label="t('categories.music')"
+          />
         </n-grid-item>
       </n-grid>
     </n-checkbox-group>
 
-    <template v-if="recordsStore.customLists.length > 0">
-      <div class="mb-3">
-        <n-text depth="3" class="section-title">
+    <template
+      v-if="recordsStore.customLists.length > 0"
+    >
+      <div
+        class="mb-3"
+      >
+        <n-text
+          depth="3"
+          class="section-title"
+        >
           {{ t('export.sectionCustomLists') }}
         </n-text>
       </div>
       <n-checkbox-group
         v-model:value="recordsStore.selectedCustomLists"
-        class="">
+        class=""
+      >
         <n-grid
           item-responsive
           responsive="screen"
           :x-gap="12"
           :y-gap="8"
-          :cols="1">
-          <n-grid-item span="2 s:1" v-for="list in recordsStore.customLists" :key="list.id">
-            <n-checkbox :value="list.id" :label="list.name" />
+          :cols="1"
+        >
+          <n-grid-item
+            v-for="list in recordsStore.customLists"
+            :key="list.id"
+            span="2 s:1"
+          >
+            <n-checkbox
+              :value="list.id"
+              :label="list.name"
+            />
           </n-grid-item>
         </n-grid>
       </n-checkbox-group>
     </template>
-    <template #footer>
-      <div class="mb-3">
-        <n-text depth="3" class="section-title">
+    <template
+      #footer
+    >
+      <div
+        class="mb-3"
+      >
+        <n-text
+          depth="3"
+          class="section-title"
+        >
           {{ t('export.sectionFormat') }}
         </n-text>
       </div>
-      <n-button-group block class="w-100 mb-5">
+      <n-button-group
+        block
+        class="w-100 mb-5"
+      >
         <n-button
           primary
           class="w-50"
-          @click="recordsStore.exportCollection('json')">
-          <template #icon>
-            <n-icon :component="JsonIcon" />
+          @click="recordsStore.exportCollection('json')"
+        >
+          <template
+            #icon
+          >
+            <n-icon
+              :component="JsonIcon"
+            />
           </template>
           JSON
         </n-button>
         <n-button
           primary
           class="w-50"
-          @click="recordsStore.exportCollection('csv')">
-          <template #icon>
-            <n-icon :component="CsvIcon" />
+          @click="recordsStore.exportCollection('csv')"
+        >
+          <template
+            #icon
+          >
+            <n-icon
+              :component="CsvIcon"
+            />
           </template>
           CSV
         </n-button>
       </n-button-group>
       <n-p
         depth="3"
-        style="font-size: 13px; display: flex; align-items: flex-start; gap: 8px;">
-        <n-icon :component="InfoIcon" :size="16" style="margin-top: 2px" />
+        style="font-size: 13px; display: flex; align-items: flex-start; gap: 8px;"
+      >
+        <n-icon
+          :component="InfoIcon"
+          :size="16"
+          style="margin-top: 2px"
+        />
         <span>
           {{ t('export.footerInfo') }}
         </span>

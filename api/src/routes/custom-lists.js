@@ -33,7 +33,11 @@ export default async function customListsRoutes(app) {
     const recordsByList = {}
     for (const r of recordRows) {
       if (!recordsByList[r.listId]) recordsByList[r.listId] = []
-      recordsByList[r.listId].push({ id: r.id, title: r.title, createdAt: r.createdAt })
+      recordsByList[r.listId].push({
+        id: r.id,
+        title: r.title,
+        createdAt: r.createdAt 
+      })
     }
 
     return lists.map(list => ({
@@ -62,7 +66,10 @@ export default async function customListsRoutes(app) {
 
     const [list] = await db
       .insert(customLists)
-      .values({ userId, name })
+      .values({
+        userId,
+        name 
+      })
       .returning()
 
     // Log generic creation activity
@@ -73,7 +80,10 @@ export default async function customListsRoutes(app) {
       entityName: null, // Triggers "Created a new custom list" in frontend
     })
 
-    return reply.status(201).send({ ...list, records: [] })
+    return reply.status(201).send({
+      ...list,
+      records: [] 
+    })
   })
 
   // ─── PATCH /api/custom-lists/:id ──────────────────────────────────────────
@@ -83,12 +93,23 @@ export default async function customListsRoutes(app) {
       params: {
         type: 'object',
         required: ['id'],
-        properties: { id: { type: 'string', format: 'uuid' } },
+        properties: {
+          id: {
+            type: 'string',
+            format: 'uuid' 
+          } 
+        },
       },
       body: {
         type: 'object',
         required: ['name'],
-        properties: { name: { type: 'string', minLength: 1, maxLength: 255 } },
+        properties: {
+          name: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 255 
+          } 
+        },
         additionalProperties: false,
       },
     },
@@ -99,12 +120,18 @@ export default async function customListsRoutes(app) {
 
     const [updated] = await db
       .update(customLists)
-      .set({ name, updatedAt: new Date() })
+      .set({
+        name,
+        updatedAt: new Date() 
+      })
       .where(and(eq(customLists.id, id), eq(customLists.userId, userId)))
       .returning()
 
     if (!updated) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Custom list not found' 
+      })
     }
 
     // Log activity when list is renamed
@@ -127,7 +154,12 @@ export default async function customListsRoutes(app) {
       params: {
         type: 'object',
         required: ['id'],
-        properties: { id: { type: 'string', format: 'uuid' } },
+        properties: {
+          id: {
+            type: 'string',
+            format: 'uuid' 
+          } 
+        },
       },
     },
   }, async (request, reply) => {
@@ -140,7 +172,10 @@ export default async function customListsRoutes(app) {
       .returning()
 
     if (!deleted) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Custom list not found' 
+      })
     }
 
     // Log activity
@@ -160,12 +195,22 @@ export default async function customListsRoutes(app) {
       params: {
         type: 'object',
         required: ['listId'],
-        properties: { listId: { type: 'string', format: 'uuid' } },
+        properties: {
+          listId: {
+            type: 'string',
+            format: 'uuid' 
+          } 
+        },
       },
       body: {
         type: 'object',
         required: ['title'],
-        properties: { title: { type: 'string', maxLength: 500 } },
+        properties: {
+          title: {
+            type: 'string',
+            maxLength: 500 
+          } 
+        },
         additionalProperties: false,
       },
     },
@@ -176,18 +221,28 @@ export default async function customListsRoutes(app) {
 
     // Verify list belongs to user
     const [list] = await db
-      .select({ id: customLists.id, name: customLists.name })
+      .select({
+        id: customLists.id,
+        name: customLists.name 
+      })
       .from(customLists)
       .where(and(eq(customLists.id, listId), eq(customLists.userId, userId)))
       .limit(1)
 
     if (!list) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Custom list not found' 
+      })
     }
 
     const [record] = await db
       .insert(customListRecords)
-      .values({ listId, userId, title })
+      .values({
+        listId,
+        userId,
+        title 
+      })
       .returning()
 
     // Touch the list updatedAt
@@ -218,14 +273,25 @@ export default async function customListsRoutes(app) {
         type: 'object',
         required: ['listId', 'recordId'],
         properties: {
-          listId:   { type: 'string', format: 'uuid' },
-          recordId: { type: 'string', format: 'uuid' },
+          listId:   {
+            type: 'string',
+            format: 'uuid' 
+          },
+          recordId: {
+            type: 'string',
+            format: 'uuid' 
+          },
         },
       },
       body: {
         type: 'object',
         required: ['title'],
-        properties: { title: { type: 'string', maxLength: 500 } },
+        properties: {
+          title: {
+            type: 'string',
+            maxLength: 500 
+          } 
+        },
         additionalProperties: false,
       },
     },
@@ -236,13 +302,19 @@ export default async function customListsRoutes(app) {
 
     // Verify list ownership and get name for log
     const [list] = await db
-      .select({ id: customLists.id, name: customLists.name })
+      .select({
+        id: customLists.id,
+        name: customLists.name 
+      })
       .from(customLists)
       .where(and(eq(customLists.id, listId), eq(customLists.userId, userId)))
       .limit(1)
 
     if (!list) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Custom list not found' 
+      })
     }
 
     const [updated] = await db
@@ -258,7 +330,10 @@ export default async function customListsRoutes(app) {
       .returning()
 
     if (!updated) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Record not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Record not found' 
+      })
     }
 
     // Log activity if title becomes non-empty or changes
@@ -289,8 +364,14 @@ export default async function customListsRoutes(app) {
         type: 'object',
         required: ['listId', 'recordId'],
         properties: {
-          listId:   { type: 'string', format: 'uuid' },
-          recordId: { type: 'string', format: 'uuid' },
+          listId:   {
+            type: 'string',
+            format: 'uuid' 
+          },
+          recordId: {
+            type: 'string',
+            format: 'uuid' 
+          },
         },
       },
     },
@@ -300,13 +381,19 @@ export default async function customListsRoutes(app) {
 
     // Verify list ownership to get its name for the log
     const [list] = await db
-      .select({ id: customLists.id, name: customLists.name })
+      .select({
+        id: customLists.id,
+        name: customLists.name 
+      })
       .from(customLists)
       .where(and(eq(customLists.id, listId), eq(customLists.userId, userId)))
       .limit(1)
 
     if (!list) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Custom list not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Custom list not found' 
+      })
     }
 
     const [deleted] = await db
@@ -321,7 +408,10 @@ export default async function customListsRoutes(app) {
       .returning()
 
     if (!deleted) {
-      return reply.status(404).send({ error: 'NOT_FOUND', message: 'Record not found' })
+      return reply.status(404).send({
+        error: 'NOT_FOUND',
+        message: 'Record not found' 
+      })
     }
 
     // Touch the list updatedAt

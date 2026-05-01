@@ -28,7 +28,10 @@ export default async function importRoutes(app) {
   app.post('/import', {
     preHandler: authenticate,
     config: {
-      rateLimit: { max: 5, timeWindow: '1 hour' },
+      rateLimit: {
+        max: 5,
+        timeWindow: '1 hour' 
+      },
     },
     schema: {
       body: {

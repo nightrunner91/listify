@@ -13,15 +13,25 @@ const flagMap = {
 }
 
 const renderFlag = (countryCode) => {
-  return () => h(NIcon, null, { 
-    default: () => h('span', { class: `fi fi-${countryCode} fis ly-flag` }) 
-  })
+  return () => h(NIcon, null, {default: () => h('span', { class: `fi fi-${countryCode} fis ly-flag` })})
 }
 
 const options = [
-  { label: 'English', key: 'en', icon: renderFlag(flagMap.en) },
-  { label: 'Русский', key: 'ru', icon: renderFlag(flagMap.ru) },
-  { label: 'Română', key: 'ro', icon: renderFlag(flagMap.ro) }
+  {
+    label: 'English',
+    key: 'en',
+    icon: renderFlag(flagMap.en) 
+  },
+  {
+    label: 'Русский',
+    key: 'ru',
+    icon: renderFlag(flagMap.ru) 
+  },
+  {
+    label: 'Română',
+    key: 'ro',
+    icon: renderFlag(flagMap.ro) 
+  }
 ]
 
 const currentFlag = computed(() => flagMap[locale.value] || flagMap.en)
@@ -32,11 +42,24 @@ const handleSelect = (key) => {
 </script>
 
 <template>
-  <n-dropdown trigger="click" :options="options" @select="handleSelect" :value="locale" size="small">
-    <n-button quaternary circle>
-      <template #icon>
+  <n-dropdown
+    trigger="click"
+    :options="options"
+    :value="locale"
+    size="small"
+    @select="handleSelect"
+  >
+    <n-button
+      quaternary
+      circle
+    >
+      <template
+        #icon
+      >
         <n-icon>
-          <span :class="['fi', `fi-${currentFlag}`, 'fis', 'ly-flag']"></span>
+          <span
+            :class="['fi', `fi-${currentFlag}`, 'fis', 'ly-flag']"
+          />
         </n-icon>
       </template>
     </n-button>

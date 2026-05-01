@@ -60,11 +60,17 @@ export async function rotateRefreshToken(rawToken, userId) {
       // Issue new pair
       const accessToken = await signAccessToken(userId)
       const refreshToken = await signRefreshToken(userId)
-      return { accessToken, refreshToken }
+      return {
+        accessToken,
+        refreshToken 
+      }
     }
   }
 
-  throw Object.assign(new Error('Invalid or expired refresh token'), { statusCode: 401, code: 'INVALID_REFRESH_TOKEN' })
+  throw Object.assign(new Error('Invalid or expired refresh token'), {
+    statusCode: 401,
+    code: 'INVALID_REFRESH_TOKEN' 
+  })
 }
 
 // ─── User operations ──────────────────────────────────────────────────────────
@@ -72,7 +78,10 @@ export async function rotateRefreshToken(rawToken, userId) {
 export async function createUser(email, password) {
   const existing = await db.select().from(users).where(eq(users.email, email)).limit(1)
   if (existing.length > 0) {
-    throw Object.assign(new Error('Email already registered'), { statusCode: 409, code: 'EMAIL_TAKEN' })
+    throw Object.assign(new Error('Email already registered'), {
+      statusCode: 409,
+      code: 'EMAIL_TAKEN' 
+    })
   }
 
   const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS)
@@ -110,7 +119,10 @@ export async function verifyCredentials(email, password) {
   const match = await bcrypt.compare(password, hash)
 
   if (!user || !match) {
-    throw Object.assign(new Error('Invalid email or password'), { statusCode: 401, code: 'INVALID_CREDENTIALS' })
+    throw Object.assign(new Error('Invalid email or password'), {
+      statusCode: 401,
+      code: 'INVALID_CREDENTIALS' 
+    })
   }
 
   return { 

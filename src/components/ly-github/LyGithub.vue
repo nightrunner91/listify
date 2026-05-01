@@ -11,16 +11,28 @@ function openGithub() {
 </script>
 
 <template>
-  <n-tooltip trigger="hover">
-    <template #trigger>
+  <n-tooltip
+    trigger="hover"
+  >
+    <template
+      #trigger
+    >
       <n-button
         quaternary
         size="small"
-        @click="openGithub">
-        <template #icon>
-          <n-icon :component="GithubIcon" :size="18" />
+        @click="openGithub"
+      >
+        <template
+          #icon
+        >
+          <n-icon
+            :component="GithubIcon"
+            :size="18"
+          />
         </template>
-        <span v-if="gridStore.screenLargerThen('s')">GitHub</span>
+        <span
+          v-if="gridStore.screenLargerThen('s')"
+        >GitHub</span>
       </n-button>
     </template>
     Open GitHub Repository

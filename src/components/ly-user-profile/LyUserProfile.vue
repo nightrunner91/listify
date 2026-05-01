@@ -120,8 +120,16 @@ async function handleLogout() {
 </script>
 
 <template>
-  <n-card v-if="user" class="ly-user-profile no-overflow mb-5" content-class="p-0">
-    <n-space vertical :wrap-item="false" :size="0">
+  <n-card
+    v-if="user"
+    class="ly-user-profile no-overflow mb-5"
+    content-class="p-0"
+  >
+    <n-space
+      vertical
+      :wrap-item="false"
+      :size="0"
+    >
       <!-- Background Strip -->
       <n-color-picker
         v-model:value="user.backgroundColor"
@@ -130,37 +138,68 @@ async function handleLogout() {
         class="profile-cover"
         @update:value="updateBackgroundColor"
       >
-        <template #label></template>
+        <template
+          #label
+        />
       </n-color-picker>
 
-      <n-space align="center" :wrap-item="false" size="large" class="profile-content px-5 py-4">
+      <n-space
+        align="center"
+        :wrap-item="false"
+        size="large"
+        class="profile-content px-5 py-4"
+      >
         <!-- Avatar -->
-        <div class="avatar-container" @click="showAvatarPicker = true">
+        <div
+          class="avatar-container"
+          @click="showAvatarPicker = true"
+        >
           <n-avatar
             round
             :size="80"
             :src="avatarUrl"
             class="profile-avatar"
           />
-          <div class="avatar-overlay">
-            <n-icon :component="EditIcon" />
+          <div
+            class="avatar-overlay"
+          >
+            <n-icon
+              :component="EditIcon"
+            />
           </div>
         </div>
 
         <!-- Info -->
-        <n-space justify="space-between" align="center" :wrap-item="false" class="w-100">
-          <n-space vertical :size="4" :wrap-item="false">
-            <n-space :size="0" vertical>
+        <n-space
+          justify="space-between"
+          align="center"
+          :wrap-item="false"
+          class="w-100"
+        >
+          <n-space
+            vertical
+            :size="4"
+            :wrap-item="false"
+          >
+            <n-space
+              :size="0"
+              vertical
+            >
               <n-input
                 v-model:value="editableUsername"
                 size="small"
                 :placeholder="t('userProfile.usernamePlaceholder')"
-                @blur="toggleEditUsername"
-                @keyup.enter="toggleEditUsername"
                 style="width: 200px"
                 class="profile-name"
+                @blur="toggleEditUsername"
+                @keyup.enter="toggleEditUsername"
               />
-              <n-text depth="3" class="profile-email">{{ user?.email }}</n-text>
+              <n-text
+                depth="3"
+                class="profile-email"
+              >
+                {{ user?.email }}
+              </n-text>
             </n-space>
           </n-space>
 
@@ -170,17 +209,31 @@ async function handleLogout() {
             :options="dropdownOptions"
             @select="handleSelect"
           >
-            <n-button tertiary circle>
-              <template #icon>
-                <n-icon :component="MenuIcon" size="24" />
+            <n-button
+              tertiary
+              circle
+            >
+              <template
+                #icon
+              >
+                <n-icon
+                  :component="MenuIcon"
+                  size="24"
+                />
               </template>
             </n-button>
           </n-dropdown>
         </n-space>
       </n-space>
 
-      <ly-import ref="importRef" variant="hidden" />
-      <ly-export ref="exportRef" variant="hidden" />
+      <ly-import
+        ref="importRef"
+        variant="hidden"
+      />
+      <ly-export
+        ref="exportRef"
+        variant="hidden"
+      />
 
       <ly-avatar-picker
         v-model:show="showAvatarPicker"

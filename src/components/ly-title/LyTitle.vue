@@ -49,7 +49,10 @@ watch(
       document.title = `${getTranslatedTitle.value} - Listify`
     }
   },
-  { immediate: true, deep: true }
+  {
+    immediate: true,
+    deep: true 
+  }
 )
 
 // Sync listName if the store updates the name externally (e.g. initial data load)
@@ -83,17 +86,25 @@ watch(getTranslatedTitle, (newTitle) => {
 </script>
 
 <template>
-  <n-h1 class="position-relative mb-0" style="height: 80px;">
-    <template v-if="isCustomList">
+  <n-h1
+    class="position-relative mb-0"
+    style="height: 80px;"
+  >
+    <template
+      v-if="isCustomList"
+    >
       <n-input
         v-model:value="listName"
         type="text"
         maxlength="50"
         :placeholder="t('customLists.createList')"
-        class="title-input" />
+        class="title-input"
+      />
     </template>
 
-    <template v-else>
+    <template
+      v-else
+    >
       {{ getTranslatedTitle }}
     </template>
 
@@ -101,7 +112,8 @@ watch(getTranslatedTitle, (newTitle) => {
       v-if="route.meta.tag !== 'start' && route.meta.tag !== 'about' && !isCustomList"
       :value="recordsStore.recordsLength(route.meta.tag).value"
       :show-zero="true"
-      class="ml-4 z-0" />
+      class="ml-4 z-0"
+    />
 
     <div
       class="position-absolute bottom-0 left-0"
@@ -112,7 +124,8 @@ watch(getTranslatedTitle, (newTitle) => {
         borderRadius: barSize,
         transitionDuration: barSpeed + 'ms',
         transitionTimingFunction: 'cubic-bezier(0.0, 0, 0.2, 1)',
-      }" />
+      }"
+    />
   </n-h1>
 </template>
 

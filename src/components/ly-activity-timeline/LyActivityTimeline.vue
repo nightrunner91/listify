@@ -133,19 +133,43 @@ const formattedActivities = computed(() => {
 </script>
 
 <template>
-  <n-space vertical :size="16">
-    <n-space justify="space-between" align="center">
-      <n-text depth="3" class="section-title">{{ t('timeline.title') }}</n-text>
+  <n-space
+    vertical
+    :size="16"
+  >
+    <n-space
+      justify="space-between"
+      align="center"
+    >
+      <n-text
+        depth="3"
+        class="section-title"
+      >
+        {{ t('timeline.title') }}
+      </n-text>
     </n-space>
 
-    <n-card :bordered="true">
-      <div v-if="loading" class="flex justify-center py-8">
-        <n-spin size="large" />
+    <n-card
+      :bordered="true"
+    >
+      <div
+        v-if="loading"
+        class="flex justify-center py-8"
+      >
+        <n-spin
+          size="large"
+        />
       </div>
 
-      <n-empty v-else-if="activities.length === 0" :description="t('timeline.empty')" class="py-8" />
+      <n-empty
+        v-else-if="activities.length === 0"
+        :description="t('timeline.empty')"
+        class="py-8"
+      />
 
-      <n-timeline v-else>
+      <n-timeline
+        v-else
+      >
         <n-timeline-item
           v-for="activity in formattedActivities"
           :key="activity.id"
@@ -153,26 +177,60 @@ const formattedActivities = computed(() => {
           :color="getCategoryColor(activity.category)"
           :time="activity.timeAgo"
         >
-          <template #default>
-            <div class="activity-item">
-              <i18n-t :keypath="activity.formatted.keypath" tag="span" class="activity-text">
-                <template #entity>
-                  <span class="highlight" v-if="activity.formatted.entity">{{ activity.formatted.entity }}</span>
+          <template
+            #default
+          >
+            <div
+              class="activity-item"
+            >
+              <i18n-t
+                :keypath="activity.formatted.keypath"
+                tag="span"
+                class="activity-text"
+              >
+                <template
+                  #entity
+                >
+                  <span
+                    v-if="activity.formatted.entity"
+                    class="highlight"
+                  >{{ activity.formatted.entity }}</span>
                 </template>
-                <template #category>
-                  <span v-if="activity.formatted.category">{{ activity.formatted.category }}</span>
+                <template
+                  #category
+                >
+                  <span
+                    v-if="activity.formatted.category"
+                  >{{ activity.formatted.category }}</span>
                 </template>
-                <template #status>
-                  <span v-if="activity.formatted.status">{{ activity.formatted.status }}</span>
+                <template
+                  #status
+                >
+                  <span
+                    v-if="activity.formatted.status"
+                  >{{ activity.formatted.status }}</span>
                 </template>
-                <template #listName>
-                  <span class="highlight" v-if="activity.formatted.listName">{{ activity.formatted.listName }}</span>
+                <template
+                  #listName
+                >
+                  <span
+                    v-if="activity.formatted.listName"
+                    class="highlight"
+                  >{{ activity.formatted.listName }}</span>
                 </template>
-                <template #count>
-                  <span v-if="activity.formatted.count">{{ activity.formatted.count }}</span>
+                <template
+                  #count
+                >
+                  <span
+                    v-if="activity.formatted.count"
+                  >{{ activity.formatted.count }}</span>
                 </template>
-                <template #action>
-                  <span v-if="activity.formatted.action">{{ activity.formatted.action }}</span>
+                <template
+                  #action
+                >
+                  <span
+                    v-if="activity.formatted.action"
+                  >{{ activity.formatted.action }}</span>
                 </template>
               </i18n-t>
               
@@ -193,8 +251,13 @@ const formattedActivities = computed(() => {
                 size="small"
                 class="activity-widget liked-widget"
               >
-                <template #icon>
-                  <like-icon weight="fill" size="16" />
+                <template
+                  #icon
+                >
+                  <like-icon
+                    weight="fill"
+                    size="16"
+                  />
                 </template>
               </n-button>
             </div>

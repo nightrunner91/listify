@@ -6,9 +6,7 @@ import path from 'path'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-await migrate(db, {
-  migrationsFolder: path.join(__dirname, '../../drizzle'),
-})
+await migrate(db, {migrationsFolder: path.join(__dirname, '../../drizzle'),})
 
 console.log('✅ Migrations applied successfully')
 process.exit(0)

@@ -60,7 +60,10 @@ export async function apiClient(endpoint, options = {}) {
       if (refreshed) {
         // Retry original request with new token
         headers['Authorization'] = `Bearer ${authStore.accessToken}`
-        response = await fetch(url, { ...fetchOptions, headers })
+        response = await fetch(url, {
+          ...fetchOptions,
+          headers 
+        })
       } else {
         // Refresh failed, user needs to log in again
         authStore.logoutLocally()
@@ -77,12 +80,30 @@ export async function apiClient(endpoint, options = {}) {
 
 // Convenience methods
 export const api = {
-  get: (endpoint, options) => apiClient(endpoint, { ...options, method: 'GET' }),
-  post: (endpoint, data, options) => apiClient(endpoint, { ...options, method: 'POST', body: JSON.stringify(data) }),
-  put: (endpoint, data, options) => apiClient(endpoint, { ...options, method: 'PUT', body: JSON.stringify(data) }),
-  patch: (endpoint, data, options) => apiClient(endpoint, { ...options, method: 'PATCH', body: JSON.stringify(data) }),
+  get: (endpoint, options) => apiClient(endpoint, {
+    ...options,
+    method: 'GET' 
+  }),
+  post: (endpoint, data, options) => apiClient(endpoint, {
+    ...options,
+    method: 'POST',
+    body: JSON.stringify(data) 
+  }),
+  put: (endpoint, data, options) => apiClient(endpoint, {
+    ...options,
+    method: 'PUT',
+    body: JSON.stringify(data) 
+  }),
+  patch: (endpoint, data, options) => apiClient(endpoint, {
+    ...options,
+    method: 'PATCH',
+    body: JSON.stringify(data) 
+  }),
   delete: (endpoint, data, options) => {
-    const opts = { ...options, method: 'DELETE' }
+    const opts = {
+      ...options,
+      method: 'DELETE' 
+    }
     if (data) opts.body = JSON.stringify(data)
     return apiClient(endpoint, opts)
   }

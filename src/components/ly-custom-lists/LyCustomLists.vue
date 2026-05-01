@@ -17,14 +17,20 @@ const customLists = computed(() => recordsStore.customLists)
 async function handleCreateList() {
   try {
     const listId = await recordsStore.createCustomList()
-    router.push({ name: 'CustomList', params: { id: listId } })
+    router.push({
+      name: 'CustomList',
+      params: { id: listId } 
+    })
   } catch (error) {
     console.error('Failed to create custom list:', error)
   }
 }
 
 function handleListClick(listId) {
-  router.push({ name: 'CustomList', params: { id: listId } })
+  router.push({
+    name: 'CustomList',
+    params: { id: listId } 
+  })
 }
 
 function formatRelativeTime(dateString) {
@@ -34,39 +40,98 @@ function formatRelativeTime(dateString) {
 </script>
 
 <template>
-  <n-space vertical :size="16">
-    <n-space justify="space-between" align="center">
-      <n-text depth="3" class="section-title">{{ t('customLists.title') }}</n-text>
-      <n-button v-if="customLists.length > 0" tertiary circle @click="handleCreateList" style="font-size: 18px;">
-        <template #icon>
-          <n-icon><ph-plus weight="bold" /></n-icon>
+  <n-space
+    vertical
+    :size="16"
+  >
+    <n-space
+      justify="space-between"
+      align="center"
+    >
+      <n-text
+        depth="3"
+        class="section-title"
+      >
+        {{ t('customLists.title') }}
+      </n-text>
+      <n-button
+        v-if="customLists.length > 0"
+        tertiary
+        circle
+        style="font-size: 18px;"
+        @click="handleCreateList"
+      >
+        <template
+          #icon
+        >
+          <n-icon>
+            <ph-plus
+              weight="bold"
+            />
+          </n-icon>
         </template>
       </n-button>
     </n-space>
 
-    <n-card :bordered="true" content-style="padding: 0;">
+    <n-card
+      :bordered="true"
+      content-style="padding: 0;"
+    >
       <!-- Empty State -->
       <n-empty 
         v-if="customLists.length === 0" 
         :description="t('customLists.emptyDescription')"
         style="padding: 24px 0"
       >
-        <template #extra>
-          <n-button primary @click="handleCreateList">
+        <template
+          #extra
+        >
+          <n-button
+            primary
+            @click="handleCreateList"
+          >
             {{ t('customLists.createList') }}
           </n-button>
         </template>
       </n-empty>
 
       <!-- List -->
-      <n-list v-else hoverable clickable style="background: transparent;">
-        <n-list-item v-for="list in customLists" :key="list.id" @click="handleListClick(list.id)">
-          <n-thing :title="list.name">
-            <template #description>
-              <n-space :size="8" align="center">
-                <n-text depth="3">{{ list.records?.length || 0 }} {{ t('customLists.items') }}</n-text>
-                <n-text v-if="list.updatedAt || list.createdAt" depth="3">&bull;</n-text>
-                <n-text v-if="list.updatedAt || list.createdAt" depth="3">
+      <n-list
+        v-else
+        hoverable
+        clickable
+        style="background: transparent;"
+      >
+        <n-list-item
+          v-for="list in customLists"
+          :key="list.id"
+          @click="handleListClick(list.id)"
+        >
+          <n-thing
+            :title="list.name"
+          >
+            <template
+              #description
+            >
+              <n-space
+                :size="8"
+                align="center"
+              >
+                <n-text
+                  depth="3"
+                >
+                  {{ list.records?.length || 0 }} {{ t('customLists.items') }}
+                </n-text>
+                <n-text
+                  v-if="list.updatedAt || list.createdAt"
+                  depth="3"
+                >
+                  &bull;
+                </n-text>
+                <n-text
+                  v-if="list.updatedAt || list.createdAt"
+                  depth="3"
+                >
                   {{ t('customLists.updated', { time: formatRelativeTime(list.updatedAt || list.createdAt) }) }}
                 </n-text>
               </n-space>
