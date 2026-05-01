@@ -25,16 +25,28 @@
 $zindex-start: -1;
 $zindex-end: 12;
 
-@mixin make-zindex($breakpoint:null) {
+@mixin make-zindex($breakpoint: null) {
   $i: $zindex-start;
-  @while $i <= $zindex-end {
+
+  @while $i <=$zindex-end {
     @if ($i > 0) {
-      .z#{$breakpoint}-plus-#{$i} { z-index: $i !important }
-    } @else if ($i == 0 ){
-      .z#{$breakpoint}-#{$i} { z-index: $i !important }
-    } @else if ($i < 0 ){
-      .z#{$breakpoint}-minus#{$i} { z-index: $i !important }
+      .z#{$breakpoint}-plus-#{$i} {
+        z-index: $i !important
+      }
     }
+
+    @else if ($i ==0) {
+      .z#{$breakpoint}-#{$i} {
+        z-index: $i !important
+      }
+    }
+
+    @else if ($i < 0) {
+      .z#{$breakpoint}-minus#{$i} {
+        z-index: $i !important
+      }
+    }
+
     $i: $i + 1;
   }
 }
@@ -45,4 +57,6 @@ $zindex-end: 12;
   @media screen and (min-width: #{$size}) {
     @include make-zindex('-' + $breakpoint)
   }
-};
+}
+
+;

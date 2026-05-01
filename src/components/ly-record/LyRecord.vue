@@ -98,7 +98,7 @@ watch(record, (newVal) => {
           <n-text
             v-show="!showCheckbox && !record.selected"
             align="center"
-            style="width: 16px; font-size: 12px; line-height: 1"
+            class="w-16 fz-12 lh-1"
             depth="3"
           >
             {{ index + 1 }}

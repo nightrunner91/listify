@@ -50,7 +50,7 @@ function formatRelativeTime(dateString) {
     >
       <n-text
         depth="3"
-        class="section-title"
+        class="fz-12 font-weight-600 letter-spacing-1"
       >
         {{ t('customLists.title') }}
       </n-text>
@@ -58,7 +58,7 @@ function formatRelativeTime(dateString) {
         v-if="customLists.length > 0"
         tertiary
         circle
-        style="font-size: 18px;"
+        class="fz-18"
         @click="handleCreateList"
       >
         <template
@@ -75,13 +75,13 @@ function formatRelativeTime(dateString) {
 
     <n-card
       :bordered="true"
-      content-style="padding: 0;"
+      content-class="p-0"
     >
       <!-- Empty State -->
       <n-empty 
         v-if="customLists.length === 0" 
         :description="t('customLists.emptyDescription')"
-        style="padding: 24px 0"
+        class="py-6"
       >
         <template
           #extra
@@ -100,11 +100,12 @@ function formatRelativeTime(dateString) {
         v-else
         hoverable
         clickable
-        style="background: transparent;"
+        class="bg-transparent"
       >
         <n-list-item
           v-for="list in customLists"
           :key="list.id"
+          class="hover-bg-action"
           @click="handleListClick(list.id)"
         >
           <n-thing
@@ -144,12 +145,7 @@ function formatRelativeTime(dateString) {
 </template>
 
 <style scoped>
-.section-title {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
+/* Keep internal NaiveUI overrides if they can't be utility-first */
 .n-list {
   .n-list-item {
     &:not(:first-child):not(:last-child) {
@@ -164,10 +160,6 @@ function formatRelativeTime(dateString) {
     &:last-child {
       border-top-left-radius: 0 !important;
       border-top-right-radius: 0 !important;
-    }
-
-    &:hover {
-      background-color: var(--n-action-color) !important;
     }
   }
 }

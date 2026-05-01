@@ -16,36 +16,71 @@
 /// @link https://developer.mozilla.org/ru/docs/Web/CSS/font-style
 /// @link https://developer.mozilla.org/ru/docs/Web/CSS/letter-spacing
 
-@mixin make-text($breakpoint:null) {
+@mixin make-text($breakpoint: null) {
   @each $family, $value in $font-families {
-    .font#{$breakpoint}-#{$family} { font-family: $value !important; }
+    .font#{$breakpoint}-#{$family} {
+      font-family: $value !important;
+    }
   }
+
+  @each $size, $value in $font-sizes {
+    .fz#{$breakpoint}-#{$size} {
+      font-size: $value !important;
+    }
+  }
+
   @each $line-height, $value in $line-heights {
-    .line-height#{$breakpoint}-#{$line-height} { line-height: $value !important; }
+    .line-height#{$breakpoint}-#{$line-height} {
+      line-height: $value !important;
+    }
   }
+
   @each $align, $value in $text-aligns {
-    .text#{$breakpoint}-#{$align} { text-align: $value !important; }
+    .text#{$breakpoint}-#{$align} {
+      text-align: $value !important;
+    }
   }
+
   @each $decoration, $value in $text-decorations {
-    .text#{$breakpoint}-#{$decoration} { text-decoration: $value !important; }
+    .text#{$breakpoint}-#{$decoration} {
+      text-decoration: $value !important;
+    }
   }
+
   @each $wrap, $value in $text-wraps {
-    .white-space#{$breakpoint}-#{$wrap} { white-space: $value !important; }
+    .white-space#{$breakpoint}-#{$wrap} {
+      white-space: $value !important;
+    }
   }
+
   @each $break, $value in $word-brakes {
-    .word-break#{$breakpoint}-#{$break} { word-break: $value !important; }
+    .word-break#{$breakpoint}-#{$break} {
+      word-break: $value !important;
+    }
   }
+
   @each $transform, $value in $text-transforms {
-    .text#{$breakpoint}-#{$transform} { text-transform: $value !important; }
+    .text#{$breakpoint}-#{$transform} {
+      text-transform: $value !important;
+    }
   }
+
   @each $weight, $value in $font-weights {
-    .font-weight#{$breakpoint}-#{$weight} { font-weight: $value !important; }
+    .font-weight#{$breakpoint}-#{$weight} {
+      font-weight: $value !important;
+    }
   }
+
   @each $style, $value in $font-styles {
-    .font#{$breakpoint}-#{$style} { font-style: $value !important; }
+    .font#{$breakpoint}-#{$style} {
+      font-style: $value !important;
+    }
   }
+
   @each $spacing, $value in $letter-spacings {
-    .spacing#{$breakpoint}-#{$spacing} { letter-spacing: $value !important; }
+    .spacing#{$breakpoint}-#{$spacing} {
+      letter-spacing: $value !important;
+    }
   }
 }
 

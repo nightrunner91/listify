@@ -65,7 +65,7 @@ async function handleLogin() {
       vertical
       justify="center"
       align="center"
-      style="height: 100%; padding: 16px;"
+      class="h-100 p-4"
     >
       <n-grid
         :cols="24"
@@ -81,7 +81,7 @@ async function handleLogin() {
           <n-card
             size="huge"
             hoverable
-            content-style="padding: 56px;"
+            content-class="p-14"
           >
             <n-space
               vertical

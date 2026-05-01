@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { NGrid, NGridItem, NIcon, NCard, NSkeleton, NStatistic, NSpace, NNumberAnimation } from 'naive-ui'
+import { NGrid, NGridItem, NIcon, NCard, NSkeleton, NStatistic, NSpace, NNumberAnimation, NText } from 'naive-ui'
 import {
   PhGameController as GamesIcon,
   PhTelevision as TvShowsIcon,
@@ -17,7 +17,6 @@ import { useThemeStore } from '@/stores/theme.store'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-
 
 const router = useRouter()
 const recordsStore = useRecordsStore()
@@ -93,81 +92,79 @@ function getIconColor(key) {
 </script>
 
 <template>
-  <n-grid
-    :cols="gridCols"
-    :x-gap="24"
-    :y-gap="24"
+  <n-space
+    vertical
+    :size="16"
   >
-    <template
-      v-if="isLoading"
+    <n-text
+      depth="3"
+      class="fz-12 font-weight-600 letter-spacing-1"
     >
-      <n-grid-item
-        v-for="n in 6"
-        :key="n"
-      >
-        <n-card
-          size="small"
-          style="height: 90px; border-radius: 12px;"
-        >
-          <n-skeleton
-            text
-            :repeat="2"
-          />
-        </n-card>
-      </n-grid-item>
-    </template>
-
-    <template
-      v-else
+      {{ $t('home.categories') }}
+    </n-text>
+    <n-grid
+      :cols="gridCols"
+      :x-gap="24"
+      :y-gap="24"
     >
-      <n-grid-item
-        v-for="cat in categories"
-        :key="cat.key"
+      <template
+        v-if="isLoading"
       >
-        <n-card
-          size="medium"
-          class="category-card"
-          @click="router.push({ name: cat.route })"
+        <n-grid-item
+          v-for="n in 6"
+          :key="n"
         >
-          <n-space
-            align="center"
-            :wrap="false"
-            justify="space-between"
+          <n-card
+            size="small"
+            class="h-90 rounded-base"
           >
-            <n-statistic
-              :label="cat.label"
-            >
-              <n-number-animation
-                :to="getCount(cat.key).value"
-                class="category-number"
-              />
-            </n-statistic>
-            <n-icon
-              :size="28"
-              :color="getIconColor(cat.key)"
-              class="category-icon"
-            >
-              <component
-                :is="cat.icon"
-                weight="duotone"
-              />
-            </n-icon>
-          </n-space>
-        </n-card>
-      </n-grid-item>
-    </template>
-  </n-grid>
-</template>
+            <n-skeleton
+              text
+              :repeat="2"
+            />
+          </n-card>
+        </n-grid-item>
+      </template>
 
-<style scoped>
-.category-card {
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-.category-card:hover {
-  background-color: var(--n-action-color);
-}
-.category-icon {
-  opacity: 0.85;
-}
-</style>
+      <template
+        v-else
+      >
+        <n-grid-item
+          v-for="cat in categories"
+          :key="cat.key"
+        >
+          <n-card
+            size="medium"
+            class="cursor-pointer transition-all-short hover-bg-action"
+            @click="router.push({ name: cat.route })"
+          >
+            <n-space
+              align="center"
+              :wrap="false"
+              justify="space-between"
+            >
+              <n-statistic
+                :label="cat.label"
+              >
+                <n-number-animation
+                  :to="getCount(cat.key).value"
+                  class="font-weight-500"
+                />
+              </n-statistic>
+              <n-icon
+                :size="28"
+                :color="getIconColor(cat.key)"
+                class="opacity-8"
+              >
+                <component
+                  :is="cat.icon"
+                  weight="duotone"
+                />
+              </n-icon>
+            </n-space>
+          </n-card>
+        </n-grid-item>
+      </template>
+    </n-grid>
+  </n-space>
+</template>

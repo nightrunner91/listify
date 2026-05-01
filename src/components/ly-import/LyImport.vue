@@ -13,6 +13,8 @@ import {
   NUpload,
   NUploadDragger,
   NP,
+  NSpace,
+  NText,
 } from 'naive-ui'
 import { renderIcon } from '@/utils/render-icon'
 import { useGridStore } from '@/stores/grid.store'
@@ -104,7 +106,7 @@ defineExpose({showModal})
     >
       <n-upload-dragger>
         <div
-          style="margin-bottom: 12px"
+          class="mb-3"
         >
           <n-icon
             :component="UploadIcon"
@@ -115,16 +117,17 @@ defineExpose({showModal})
         <n-p>
           {{ t('import.draggerText') }}
         </n-p>
-        <n-p
-          depth="3"
-          style="font-size: 14px; display: flex; align-items: flex-start; gap: 8px;"
+        <n-space
+          align="start"
+          :size="8"
+          :wrap-item="false"
+          class="fz-14"
         >
-          <span>
+          <n-text depth="3">
             {{ t('import.draggerInfo') }}
-          </span>
-        </n-p>
+          </n-text>
+        </n-space>
       </n-upload-dragger>
     </n-upload>
   </n-modal>
 </template>
-

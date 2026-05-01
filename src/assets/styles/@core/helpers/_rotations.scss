@@ -20,11 +20,21 @@
 $rotations: -270, -180, -90, 0, 90, 180, 270, 360;
 
 @each $rotation in $rotations {
-  @if $rotation > 0 {
-    .rotate-plus-#{$rotation} { transform: rotate($rotation + deg) !important;  }
-  } @else if $rotation < 0 {
-    .rotate-minus#{$rotation} { transform: rotate($rotation + deg) !important; }
-  } @else {
-    .rotate-0 { transform: rotate(0deg) !important; }
+  @if $rotation >0 {
+    .rotate-plus-#{$rotation} {
+      transform: rotate($rotation + deg) !important;
+    }
+  }
+
+  @else if $rotation < 0 {
+    .rotate-minus#{$rotation} {
+      transform: rotate($rotation + deg) !important;
+    }
+  }
+
+  @else {
+    .rotate-0 {
+      transform: rotate(0deg) !important;
+    }
   }
 }

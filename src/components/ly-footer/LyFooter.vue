@@ -6,7 +6,8 @@ import LyVersion from '@/components/ly-version/LyVersion.vue'
 
 <template>
   <n-layout-footer
-    class="app-footer mt-10 px-4"
+    class="mt-10 px-4 h-56 border-1 rounded-t-base border-bottom-0"
+    :style="{ borderColor: 'var(--n-border-color)' }"
   >
     <n-space
       :wrap-item="false"
@@ -21,11 +22,4 @@ import LyVersion from '@/components/ly-version/LyVersion.vue'
 </template>
 
 <style scoped>
-.app-footer {
-  height: 56px;
-  border: solid 1px var(--n-border-color);
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  border-bottom: none;
-}
 </style>

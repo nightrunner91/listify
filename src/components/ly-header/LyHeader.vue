@@ -1,6 +1,5 @@
 <script setup>
 import { NLayoutHeader, NSpace, NDivider } from 'naive-ui'
-
 import LyLogo from '@/components/ly-logo/LyLogo.vue'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
 import LyLogout from '@/components/ly-logout/LyLogout.vue'
@@ -10,8 +9,7 @@ import LyLanguageSwitcher from '@/components/ly-language-switcher/LyLanguageSwit
 <template>
   <n-layout-header
     embedded
-    style="height: 56px;"
-    class="px-3"
+    class="w-100 d-flex justify-content-between align-items-center h-56 px-3"
     bordered
   >
     <n-space

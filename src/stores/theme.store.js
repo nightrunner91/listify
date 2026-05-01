@@ -16,7 +16,7 @@ export const useThemeStore = defineStore('theme', () => {
   )
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  
+
   mediaQuery.addEventListener('change', () => {
     if (themeMode.value === 'system') {
       applyThemeMode('system', false)
@@ -25,7 +25,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   function applyThemeMode(mode, save = true) {
     themeMode.value = mode
-    
+
     if (mode === 'dark') {
       currentTheme.value = darkTheme
     } else if (mode === 'light') {
@@ -38,13 +38,13 @@ export const useThemeStore = defineStore('theme', () => {
         currentTheme.value = darkTheme
       }
     }
-    
+
     applyBodyClassname()
   }
 
   async function setTheme(mode) {
     applyThemeMode(mode)
-    
+
     // Save to local storage as fallback
     localStorage.setItem('theme', mode)
 
@@ -70,7 +70,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   async function restoreTheme() {
     let savedTheme = localStorage.getItem('theme') || 'system'
-    
+
     // If authenticated, try to fetch from API
     const authStore = useAuthStore()
     if (authStore.user) {

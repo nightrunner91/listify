@@ -135,7 +135,7 @@ async function handleLogout() {
         v-model:value="user.backgroundColor"
         :show-alpha="false"
         placement="bottom-end"
-        class="profile-cover"
+        class="h-60 cursor-pointer transition-opacity-shorter profile-cover-trigger"
         @update:value="updateBackgroundColor"
       >
         <template
@@ -147,24 +147,26 @@ async function handleLogout() {
         align="center"
         :wrap-item="false"
         size="large"
-        class="profile-content px-5 py-4"
+        class="px-5 py-4"
       >
         <!-- Avatar -->
         <div
-          class="avatar-container"
+          class="position-relative cursor-pointer d-flex border-3 rounded-circle mt-n15"
+          :style="{ borderColor: 'var(--n-color)' }"
           @click="showAvatarPicker = true"
         >
           <n-avatar
             round
             :size="80"
             :src="avatarUrl"
-            class="profile-avatar"
           />
           <div
-            class="avatar-overlay"
+            class="position-absolute w-100 h-100 top-0 left-0 right-0 bottom-0 rounded-circle d-flex align-items-center justify-content-center text-white opacity-0 transition-opacity-shorter avatar-overlay"
+            :style="{ background: 'rgba(0,0,0,0.25)' }"
           >
             <n-icon
               :component="EditIcon"
+              :size="20"
             />
           </div>
         </div>
@@ -189,14 +191,14 @@ async function handleLogout() {
                 v-model:value="editableUsername"
                 size="small"
                 :placeholder="t('userProfile.usernamePlaceholder')"
-                style="width: 200px"
-                class="profile-name"
+                class="profile-name w-200"
+
                 @blur="toggleEditUsername"
                 @keyup.enter="toggleEditUsername"
               />
               <n-text
                 depth="3"
-                class="profile-email"
+                class="fz-12 line-height-1"
               >
                 {{ user?.email }}
               </n-text>
@@ -247,18 +249,7 @@ async function handleLogout() {
 </template>
 
 <style lang="scss" scoped>
-.ly-user-profile {
-}
-
-.profile-cover {
-  height: 60px;
-  cursor: pointer;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.9;
-  }
-
+.profile-cover-trigger {
   :deep(.n-color-picker-trigger) {
     border: none;
     height: 100%;
@@ -305,40 +296,9 @@ async function handleLogout() {
   }
 }
 
-.profile-email {
-  font-size: 12px;
-  line-height: 16px;
-}
-
 .avatar-container {
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  border: 3px solid var(--n-color);
-  border-radius: 50%;
-  margin-top: -60px;
-
   &:hover .avatar-overlay {
     opacity: 1;
   }
-}
-
-.avatar-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  background: rgba(0,0,0,0.25);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  opacity: 0;
-  transition: opacity 0.2s;
-  font-size: 20px;
 }
 </style>

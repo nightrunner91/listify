@@ -22,5 +22,7 @@
 ///   }
 
 @each $gradient, $value in $gradients {
-  .gradient-#{$gradient} { @include linear-gradient(nth($gradient, 1)); }
+  .gradient-#{$gradient} {
+    @include linear-gradient(nth($gradient, 1));
+  }
 }

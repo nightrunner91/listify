@@ -18,6 +18,7 @@ import {
   NP,
   NText,
   NButtonGroup,
+  NSpace,
 } from 'naive-ui'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -256,19 +257,16 @@ defineExpose({showModal})
           CSV
         </n-button>
       </n-button-group>
-      <n-p
-        depth="3"
-        style="font-size: 13px; display: flex; align-items: flex-start; gap: 8px;"
+      <n-space
+        align="start"
+        :size="8"
+        :wrap-item="false"
+        class="fz-13"
       >
-        <n-icon
-          :component="InfoIcon"
-          :size="16"
-          style="margin-top: 2px"
-        />
-        <span>
+        <n-text depth="3">
           {{ t('export.footerInfo') }}
-        </span>
-      </n-p>
+        </n-text>
+      </n-space>
     </template>
   </n-modal>
 </template>

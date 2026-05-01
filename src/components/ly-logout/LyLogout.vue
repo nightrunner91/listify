@@ -34,4 +34,3 @@ async function handleLogout() {
     <span>{{ t('userProfile.logout') }}</span>
   </n-button>
 </template>
-

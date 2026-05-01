@@ -65,7 +65,7 @@ function handleDelete() {
     >
       <n-text
         align="center"
-        style="width: 16px; font-size: 12px; line-height: 1; flex-shrink: 0;"
+        class="w-16 fz-12 lh-1 flex-shrink-0"
         depth="3"
       >
         {{ index + 1 }}
@@ -86,7 +86,7 @@ function handleDelete() {
         circle
         type="error"
         size="small"
-        style="flex-shrink: 0;"
+        class="flex-shrink-0"
         @click="handleDelete"
       >
         <template

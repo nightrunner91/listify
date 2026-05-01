@@ -27,9 +27,11 @@ $positions: (
   static
 );
 
-@mixin make-position($breakpoint:null) {
+@mixin make-position($breakpoint: null) {
   @each $position in $positions {
-    .position#{$breakpoint}-#{$position} { position: $position !important; }
+    .position#{$breakpoint}-#{$position} {
+      position: $position !important;
+    }
   }
 }
 
@@ -39,4 +41,6 @@ $positions: (
   @media screen and (min-width: #{$size}) {
     @include make-position('-' + $breakpoint)
   }
-};
+}
+
+;

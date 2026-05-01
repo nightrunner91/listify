@@ -13,8 +13,7 @@ const version = computed(() => pkg.version)
 <template>
   <n-text
     depth="3"
-    style="font-size: 14px;"
-    class="pl-1"
+    class="pl-1 fz-14"
   >
     Listify v{{ version }}
   </n-text>

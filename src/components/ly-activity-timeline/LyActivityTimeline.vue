@@ -143,7 +143,7 @@ const formattedActivities = computed(() => {
     >
       <n-text
         depth="3"
-        class="section-title"
+        class="fz-12 font-weight-600 letter-spacing-1"
       >
         {{ t('timeline.title') }}
       </n-text>
@@ -152,14 +152,15 @@ const formattedActivities = computed(() => {
     <n-card
       :bordered="true"
     >
-      <div
+      <n-space
         v-if="loading"
-        class="flex justify-center py-8"
+        justify="center"
+        class="py-8"
       >
         <n-spin
           size="large"
         />
-      </div>
+      </n-space>
 
       <n-empty
         v-else-if="activities.length === 0"
@@ -180,20 +181,22 @@ const formattedActivities = computed(() => {
           <template
             #default
           >
-            <div
-              class="activity-item"
+            <n-space
+              align="center"
+              :size="8"
+              class="line-height-1"
             >
               <i18n-t
                 :keypath="activity.formatted.keypath"
                 tag="span"
-                class="activity-text"
+                class="mr-1"
               >
                 <template
                   #entity
                 >
                   <span
                     v-if="activity.formatted.entity"
-                    class="highlight"
+                    class="font-weight-500"
                   >{{ activity.formatted.entity }}</span>
                 </template>
                 <template
@@ -215,7 +218,7 @@ const formattedActivities = computed(() => {
                 >
                   <span
                     v-if="activity.formatted.listName"
-                    class="highlight"
+                    class="font-weight-500"
                   >{{ activity.formatted.listName }}</span>
                 </template>
                 <template
@@ -239,7 +242,7 @@ const formattedActivities = computed(() => {
                 readonly 
                 size="small" 
                 :value="activity.formatted.value"
-                class="activity-widget"
+                class="d-inline-flex align-items-center"
               />
               
               <n-button
@@ -249,7 +252,7 @@ const formattedActivities = computed(() => {
                 circle
                 type="error"
                 size="small"
-                class="activity-widget liked-widget"
+                class="no-events cursor-default ml-n1 max-w-16 max-h-16"
               >
                 <template
                   #icon
@@ -260,7 +263,7 @@ const formattedActivities = computed(() => {
                   />
                 </template>
               </n-button>
-            </div>
+            </n-space>
           </template>
         </n-timeline-item>
       </n-timeline>
@@ -268,39 +271,8 @@ const formattedActivities = computed(() => {
   </n-space>
 </template>
 
-<style scoped>
-:deep(.highlight) {
-  color: var(--n-text-color);
-  font-weight: 500;
-}
-
-.activity-item {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  line-height: 1;
-  gap: 0.5rem;
-  max-height: 24px;
-}
-
-.activity-text {
-  margin-right: 4px;
-}
-
-.activity-widget {
-  display: inline-flex;
-  vertical-align: middle;
-}
-
-.liked-widget {
-  pointer-events: none;
-  cursor: default;
-  margin-left: -4px; /* Adjust for circle button padding */
-  max-width: 16px;
-  max-height: 16px;
-}
-
-:deep(.n-timeline-item-content__time) {
+<style lang="scss">
+.n-timeline-item-content__time {
   font-size: 12px;
   margin-top: 4px;
 }

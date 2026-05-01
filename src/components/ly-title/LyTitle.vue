@@ -87,8 +87,7 @@ watch(getTranslatedTitle, (newTitle) => {
 
 <template>
   <n-h1
-    class="position-relative mb-0"
-    style="height: 80px;"
+    class="position-relative mb-0 h-80"
   >
     <template
       v-if="isCustomList"

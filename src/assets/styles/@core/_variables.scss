@@ -103,6 +103,22 @@ $sizings: (
   auto: auto // auto
 );
 
+$common-sizes: (
+  16: 16px,
+  24: 24px,
+  40: 40px,
+  56: 56px,
+  60: 60px,
+  80: 80px,
+  90: 90px,
+  200: 200px,
+  250: 250px,
+  300: 300px,
+  400: 400px,
+  500: 500px,
+  530: 530px
+);
+
 
 // ====================== //
 // ===== Typography ===== //
@@ -112,6 +128,17 @@ $font-families: (
   base: ("Onest", sans-serif),
   headings: ("Onest", sans-serif),
   displays: ("Onest", sans-serif),
+);
+
+$font-sizes: (
+  10: 10px,
+  12: 12px,
+  13: 13px,
+  14: 14px,
+  16: 16px,
+  18: 18px,
+  20: 20px,
+  24: 24px,
 );
 
 $line-heights: (

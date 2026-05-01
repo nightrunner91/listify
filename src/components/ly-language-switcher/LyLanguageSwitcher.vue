@@ -13,7 +13,7 @@ const flagMap = {
 }
 
 const renderFlag = (countryCode) => {
-  return () => h(NIcon, null, {default: () => h('span', { class: `fi fi-${countryCode} fis ly-flag` })})
+  return () => h(NIcon, null, {default: () => h('span', { class: `fi fi-${countryCode} fis rounded-circle d-block` })})
 }
 
 const options = [
@@ -58,7 +58,7 @@ const handleSelect = (key) => {
       >
         <n-icon>
           <span
-            :class="['fi', `fi-${currentFlag}`, 'fis', 'ly-flag']"
+            :class="['fi', `fi-${currentFlag}`, 'fis', 'rounded-circle', 'd-block']"
           />
         </n-icon>
       </template>
@@ -67,10 +67,4 @@ const handleSelect = (key) => {
 </template>
 
 <style scoped>
-.ly-flag {
-  border-radius: 50%;
-  width: 1em;
-  height: 1em;
-  display: block;
-}
 </style>

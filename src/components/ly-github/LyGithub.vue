@@ -38,5 +38,3 @@ function openGithub() {
     Open GitHub Repository
   </n-tooltip>
 </template>
-
-

@@ -209,9 +209,8 @@ function handleSave() {
   <n-modal
     :show="show"
     preset="card"
-    style="width: 500px"
     :title="t('avatarPicker.modalTitle')"
-    class="avatar-picker-modal"
+    class="avatar-picker-modal w-500"
     @update:show="emit('update:show', $event)"
   >
     <n-space
@@ -219,19 +218,24 @@ function handleSave() {
       :size="24"
     >
       <!-- Preview Section -->
-      <div
-        class="preview-section"
+      <n-space
+        vertical
+        :size="0"
+        class="pb-3 rounded-base"
+        :style="{ background: 'var(--n-modal-color)' }"
       >
-        <div
-          class="preview-container"
+        <n-space
+          justify="center"
+          class="py-2"
         >
           <n-avatar
             round
             :size="140"
             :src="previewUrl"
-            class="preview-avatar"
+            class="bg-white border-4 shadow-level-1"
+            :style="{ borderColor: 'var(--n-border-color)' }"
           />
-        </div>
+        </n-space>
         <n-space
           justify="center"
           class="mt-2"
@@ -253,17 +257,17 @@ function handleSave() {
             {{ t('avatarPicker.resetOptions') }}
           </n-button>
         </n-space>
-      </div>
+      </n-space>
 
       <n-divider
         title-placement="left"
-        style="margin: 0"
+        class="m-0"
       >
         {{ t('avatarPicker.configuration') }}
       </n-divider>
 
       <n-scrollbar
-        style="max-height: 400px"
+        class="max-h-400"
         trigger="none"
       >
         <n-space
@@ -386,28 +390,3 @@ function handleSave() {
     </n-space>
   </n-modal>
 </template>
-
-
-<style scoped>
-.preview-section {
-  background: var(--n-modal-color);
-  padding-bottom: 12px;
-  border-radius: var(--n-border-radius);
-}
-.preview-container {
-  display: flex;
-  justify-content: center;
-  padding: 10px 0;
-}
-.preview-avatar {
-  background: white;
-  border: 4px solid var(--n-border-color);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.mt-2 {
-  margin-top: 8px;
-}
-.pr-3 {
-  padding-right: 12px;
-}
-</style>

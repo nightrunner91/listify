@@ -61,8 +61,8 @@ const clearSearch = () => {
       <search-icon
         weight="bold"
         size="16"
-        class="opacity-5 mr-2"
-        style="margin-bottom: 0.1rem;"
+        class="opacity-5 mr-2 mb-1"
+
       />
     </template>
     <template
@@ -72,8 +72,8 @@ const clearSearch = () => {
       <clear-icon 
         weight="bold" 
         size="16" 
-        class="opacity-5 cursor-pointer hover:opacity-7 transition-opacity"
-        style="margin-bottom: 0.1rem;"
+        class="opacity-5 cursor-pointer hover:opacity-7 transition-opacity mb-1"
+
         @click="clearSearch"
       />
     </template>

@@ -32,29 +32,108 @@
 ///      }
 ///   }
 
-@mixin make-sizing($breakpoint:null) {
+@mixin make-sizing($breakpoint: null) {
   @each $name, $sizing in $sizings {
-    @if $name != 'auto' {
-      .w#{$breakpoint}-#{$name} { width: unquote($sizing + '%') !important }
-      .max-w#{$breakpoint}-#{$name} { max-width: unquote($sizing + '%') !important }
-      .min-w#{$breakpoint}-#{$name} { min-width: unquote($sizing + '%') !important }
-      .h#{$breakpoint}-#{$name} { height: unquote($sizing + '%') !important }
-      .max-h#{$breakpoint}-#{$name} { max-height: unquote($sizing + '%') !important }
-      .min-h#{$breakpoint}-#{$name} { min-height: unquote($sizing + '%') !important }
+    @if $name !='auto' {
+      .w#{$breakpoint}-#{$name} {
+        width: unquote($sizing + '%') !important
+      }
 
-      .vw#{$breakpoint}-#{$name} { width: unquote($sizing + 'vw') !important }
-      .max-vw#{$breakpoint}-#{$name} { max-width: unquote($sizing + 'vw') !important }
-      .min-vw#{$breakpoint}-#{$name} { min-width: unquote($sizing + 'vw') !important }
-      .vh#{$breakpoint}-#{$name} { height: unquote($sizing + 'vh') !important }
-      .max-vh#{$breakpoint}-#{$name} { max-height: unquote($sizing + 'vh') !important }
-      .min-vh#{$breakpoint}-#{$name} { min-height: unquote($sizing + 'vh') !important }
-    } @else {
-      .w#{$breakpoint}-#{$name} { width: $sizing !important }
-      .max-w#{$breakpoint}-#{$name} { max-width: $sizing !important }
-      .min-w#{$breakpoint}-#{$name} { min-width: $sizing !important }
-      .h#{$breakpoint}-#{$name} { height: $sizing !important }
-      .max-h#{$breakpoint}-#{$name} { max-height: $sizing !important }
-      .min-h#{$breakpoint}-#{$name} { min-height: $sizing !important }
+      .max-w#{$breakpoint}-#{$name} {
+        max-width: unquote($sizing + '%') !important
+      }
+
+      .min-w#{$breakpoint}-#{$name} {
+        min-width: unquote($sizing + '%') !important
+      }
+
+      .h#{$breakpoint}-#{$name} {
+        height: unquote($sizing + '%') !important
+      }
+
+      .max-h#{$breakpoint}-#{$name} {
+        max-height: unquote($sizing + '%') !important
+      }
+
+      .min-h#{$breakpoint}-#{$name} {
+        min-height: unquote($sizing + '%') !important
+      }
+
+      .vw#{$breakpoint}-#{$name} {
+        width: unquote($sizing + 'vw') !important
+      }
+
+      .max-vw#{$breakpoint}-#{$name} {
+        max-width: unquote($sizing + 'vw') !important
+      }
+
+      .min-vw#{$breakpoint}-#{$name} {
+        min-width: unquote($sizing + 'vw') !important
+      }
+
+      .vh#{$breakpoint}-#{$name} {
+        height: unquote($sizing + 'vh') !important
+      }
+
+      .max-vh#{$breakpoint}-#{$name} {
+        max-height: unquote($sizing + 'vh') !important
+      }
+
+      .min-vh#{$breakpoint}-#{$name} {
+        min-height: unquote($sizing + 'vh') !important
+      }
+    }
+
+    @else {
+      .w#{$breakpoint}-#{$name} {
+        width: $sizing !important
+      }
+
+      .max-w#{$breakpoint}-#{$name} {
+        max-width: $sizing !important
+      }
+
+      .min-w#{$breakpoint}-#{$name} {
+        min-width: $sizing !important
+      }
+
+      .h#{$breakpoint}-#{$name} {
+        height: $sizing !important
+      }
+
+      .max-h#{$breakpoint}-#{$name} {
+        max-height: $sizing !important
+      }
+
+      .min-h#{$breakpoint}-#{$name} {
+        min-height: $sizing !important
+      }
+    }
+  }
+
+  @each $name, $sizing in $common-sizes {
+    .w#{$breakpoint}-#{$name} {
+      width: $sizing !important
+    }
+
+    .max-w#{$breakpoint}-#{$name} {
+      max-width: $sizing !important
+    }
+
+    .min-w#{$breakpoint}-#{$name} {
+      min-width: $sizing !important
+    }
+
+    .h#{$breakpoint}-#{$name} {
+      height: $sizing !important
+    }
+
+    .max-h#{$breakpoint}-#{$name} {
+      max-height: $sizing !important
+    }
+
+    .min-h#{$breakpoint}-#{$name} {
+      min-height: $sizing !important
     }
   }
 }
@@ -65,4 +144,6 @@
   @media screen and (min-width: #{$size}) {
     @include make-sizing('-' + $breakpoint)
   }
-};
+}
+
+;

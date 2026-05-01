@@ -19,18 +19,7 @@ import LyActivityTimeline from '@/components/ly-activity-timeline/LyActivityTime
       <n-grid-item
         span="24"
       >
-        <n-space
-          vertical
-          :size="16"
-        >
-          <n-text
-            depth="3"
-            class="section-title"
-          >
-            {{ $t('home.categories') }}
-          </n-text>
-          <ly-categories />
-        </n-space>
+        <ly-categories />
       </n-grid-item>
       
       <n-grid-item
@@ -47,6 +36,3 @@ import LyActivityTimeline from '@/components/ly-activity-timeline/LyActivityTime
     </n-grid>
   </div>
 </template>
-
-<style scoped>
-</style>

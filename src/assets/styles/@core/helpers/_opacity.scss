@@ -20,9 +20,11 @@
 ///     }
 ///   }
 
-@mixin make-opacity($breakpoint:null) {
+@mixin make-opacity($breakpoint: null) {
   @each $opacity, $value in $opacities {
-    .opacity#{$breakpoint}-#{$opacity} { opacity: opacity($opacity) !important }
+    .opacity#{$breakpoint}-#{$opacity} {
+      opacity: opacity($opacity) !important
+    }
   }
 }
 
@@ -32,4 +34,6 @@
   @media screen and (min-width: #{$size}) {
     @include make-opacity('-' + $breakpoint)
   }
-};
+}
+
+;

@@ -91,7 +91,7 @@ export const useRecordsStore = defineStore('records', () => {
       displayOrder.value[listType] = []
       return
     }
-    
+
     // Apply current sort when initializing
     syncDisplayOrderWithSort(listType)
   }
@@ -175,7 +175,7 @@ export const useRecordsStore = defineStore('records', () => {
     searchQuery.value = query
     const wasSearching = isSearching.value
     isSearching.value = query.length > 0
-    
+
     // If exiting search mode, apply default sorting
     if (wasSearching && !isSearching.value) {
       selectedSort.value = 'label' // Default sort by status
@@ -196,8 +196,8 @@ export const useRecordsStore = defineStore('records', () => {
 
     const query = searchQuery.value.toLowerCase().trim()
     const list = records.value[listType] || []
-    
-    return list.filter(record => 
+
+    return list.filter(record =>
       record.title.toLowerCase().includes(query)
     )
   }
@@ -347,7 +347,7 @@ export const useRecordsStore = defineStore('records', () => {
       return list?.some((record) => record.selected)
     })
   }
-  
+
   const allRecordsSelected = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
@@ -373,7 +373,7 @@ export const useRecordsStore = defineStore('records', () => {
     const { [listType]: list = [] } = records.value
     return list?.filter((record) => record.selected = true)
   }
-  
+
   function deselectAllRecords(listType) {
     const { [listType]: list = [] } = records.value
     return list?.filter((record) => record.selected = false)
@@ -397,9 +397,9 @@ export const useRecordsStore = defineStore('records', () => {
         liked: false,
         label: getDefaultLabel(listType).key,
       }
-      
+
       const isNewRecord = !checkRecordExist(income, listType)
-      
+
       let savedRecord
       if (isNewRecord) {
         savedRecord = await api.post(`/records/${listType}`, income)
@@ -415,7 +415,7 @@ export const useRecordsStore = defineStore('records', () => {
         const index = records.value[listType].findIndex((i) => i.id === income.id)
         records.value[listType].splice(index, 1, savedRecord)
       }
-  
+
       return savedRecord
     } catch (err) {
       console.error(err)
@@ -426,14 +426,14 @@ export const useRecordsStore = defineStore('records', () => {
   async function restoreRecords() {
     try {
       const data = await api.get('/records')
-      
+
       // Merge with default shape and add selected property
       const defaultCategories = ['games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music']
       const newRecords = {}
       defaultCategories.forEach(cat => {
         newRecords[cat] = (data[cat] || []).map(r => ({
           ...r,
-          selected: false 
+          selected: false
         }))
       })
       records.value = newRecords
@@ -444,7 +444,7 @@ export const useRecordsStore = defineStore('records', () => {
           initializeDisplayOrder(category)
         }
       })
-      
+
       customLists.value = await api.get('/custom-lists')
       selectedCustomLists.value = customLists.value.map(l => l.id)
     } catch (err) {
@@ -500,27 +500,27 @@ export const useRecordsStore = defineStore('records', () => {
         key: 'playing_now',
         label: i18n.global.t('store.labels.playing_now'),
         icon: InProgressIcon,
-        default: true 
+        default: true
       },
       {
         key: 'plan_to_play',
         label: i18n.global.t('store.labels.plan_to_play'),
-        icon: PlanIcon 
+        icon: PlanIcon
       },
       {
         key: 'on_hold',
         label: i18n.global.t('store.labels.on_hold'),
-        icon: OnHoldIcon 
+        icon: OnHoldIcon
       },
       {
         key: 'completed',
         label: i18n.global.t('store.labels.completed'),
-        icon: CompletedIcon 
+        icon: CompletedIcon
       },
       {
         key: 'dropped',
         label: i18n.global.t('store.labels.dropped'),
-        icon: DroppedIcon 
+        icon: DroppedIcon
       },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
@@ -529,32 +529,32 @@ export const useRecordsStore = defineStore('records', () => {
         key: 'watching_ongoing',
         label: i18n.global.t('store.labels.watching_ongoing'),
         icon: WatchingIcon,
-        default: true 
+        default: true
       },
       {
         key: 'watching_now',
         label: i18n.global.t('store.labels.watching_now'),
-        icon: WatchingNowIcon 
+        icon: WatchingNowIcon
       },
       {
         key: 'plan_to_watch',
         label: i18n.global.t('store.labels.plan_to_watch'),
-        icon: PlanIcon 
+        icon: PlanIcon
       },
       {
         key: 'on_hold',
         label: i18n.global.t('store.labels.on_hold'),
-        icon: OnHoldIcon 
+        icon: OnHoldIcon
       },
       {
         key: 'watched_all',
         label: i18n.global.t('store.labels.watched_all'),
-        icon: CompletedIcon 
+        icon: CompletedIcon
       },
       {
         key: 'dropped',
         label: i18n.global.t('store.labels.dropped'),
-        icon: DroppedIcon 
+        icon: DroppedIcon
       },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
@@ -563,17 +563,17 @@ export const useRecordsStore = defineStore('records', () => {
         key: 'plan_to_watch',
         label: i18n.global.t('store.labels.plan_to_watch'),
         icon: PlanIcon,
-        default: true 
+        default: true
       },
       {
         key: 'watched',
         label: i18n.global.t('store.labels.watched'),
-        icon: CompletedIcon 
+        icon: CompletedIcon
       },
       {
         key: 'dropped',
         label: i18n.global.t('store.labels.dropped'),
-        icon: DroppedIcon 
+        icon: DroppedIcon
       },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
@@ -582,32 +582,32 @@ export const useRecordsStore = defineStore('records', () => {
         key: 'watching_ongoing',
         label: i18n.global.t('store.labels.watching_ongoing'),
         icon: WatchingIcon,
-        default: true 
+        default: true
       },
       {
         key: 'watching_now',
         label: i18n.global.t('store.labels.watching_now'),
-        icon: WatchingNowIcon 
+        icon: WatchingNowIcon
       },
       {
         key: 'plan_to_watch',
         label: i18n.global.t('store.labels.plan_to_watch'),
-        icon: PlanIcon 
+        icon: PlanIcon
       },
       {
         key: 'on_hold',
         label: i18n.global.t('store.labels.on_hold'),
-        icon: OnHoldIcon 
+        icon: OnHoldIcon
       },
       {
         key: 'watched_all',
         label: i18n.global.t('store.labels.watched_all'),
-        icon: CompletedIcon 
+        icon: CompletedIcon
       },
       {
         key: 'dropped',
         label: i18n.global.t('store.labels.dropped'),
-        icon: DroppedIcon 
+        icon: DroppedIcon
       },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
@@ -616,32 +616,32 @@ export const useRecordsStore = defineStore('records', () => {
         key: 'read_ongoing',
         label: i18n.global.t('store.labels.read_ongoing'),
         icon: ReadingIcon,
-        default: true 
+        default: true
       },
       {
         key: 'read_now',
         label: i18n.global.t('store.labels.read_now'),
-        icon: ReadingIcon 
+        icon: ReadingIcon
       },
       {
         key: 'plan_to_read',
         label: i18n.global.t('store.labels.plan_to_read'),
-        icon: PlanIcon 
+        icon: PlanIcon
       },
       {
         key: 'on_hold',
         label: i18n.global.t('store.labels.on_hold'),
-        icon: OnHoldIcon 
+        icon: OnHoldIcon
       },
       {
         key: 'read',
         label: i18n.global.t('store.labels.read'),
-        icon: ReadIcon 
+        icon: ReadIcon
       },
       {
         key: 'dropped',
         label: i18n.global.t('store.labels.dropped'),
-        icon: DroppedIcon 
+        icon: DroppedIcon
       },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
@@ -650,27 +650,27 @@ export const useRecordsStore = defineStore('records', () => {
         key: 'read_now',
         label: i18n.global.t('store.labels.read_now'),
         icon: ReadingIcon,
-        default: true 
+        default: true
       },
       {
         key: 'plan_to_read',
         label: i18n.global.t('store.labels.plan_to_read'),
-        icon: PlanIcon 
+        icon: PlanIcon
       },
       {
         key: 'on_hold',
         label: i18n.global.t('store.labels.on_hold'),
-        icon: OnHoldIcon 
+        icon: OnHoldIcon
       },
       {
         key: 'read',
         label: i18n.global.t('store.labels.read'),
-        icon: ReadIcon 
+        icon: ReadIcon
       },
       {
         key: 'dropped',
         label: i18n.global.t('store.labels.dropped'),
-        icon: DroppedIcon 
+        icon: DroppedIcon
       },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
 
@@ -679,37 +679,37 @@ export const useRecordsStore = defineStore('records', () => {
         key: 'listening_now',
         label: i18n.global.t('store.labels.listening_now'),
         icon: ListeningIcon,
-        default: true 
+        default: true
       },
       {
         key: 'on_repeat',
         label: i18n.global.t('store.labels.on_repeat'),
-        icon: MusicIcon 
+        icon: MusicIcon
       },
       {
         key: 'plan_to_listen',
         label: i18n.global.t('store.labels.plan_to_listen'),
-        icon: PlanIcon 
+        icon: PlanIcon
       },
       {
         key: 'listened_all',
         label: i18n.global.t('store.labels.listened_all'),
-        icon: CompletedIcon 
+        icon: CompletedIcon
       },
       {
         key: 'dropped',
         label: i18n.global.t('store.labels.dropped'),
-        icon: DroppedIcon 
+        icon: DroppedIcon
       },
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
   }))
 
   function getDefaultLabel(listType) {
     return labels.value[listType].find((i) => i.default) || labels.value[listType][0]
-  }  
+  }
 
   function getLabel(listType, key) {
-    const targetItem = labels.value[listType].filter((i) => {return i.key === key })[0]
+    const targetItem = labels.value[listType].filter((i) => { return i.key === key })[0]
     return targetItem ? targetItem : getDefaultLabel(listType)
   }
 
@@ -741,7 +741,7 @@ export const useRecordsStore = defineStore('records', () => {
     const filteredRecords = Object.entries(records.value)
       .reduce((acc, [category, records]) => {
         if (selectedCategories.value.includes(category)) {
-          acc[category] = records.map(({selected, ...rest}) => rest)
+          acc[category] = records.map(({ selected, ...rest }) => rest)
         }
         return acc
       }, {})
@@ -767,7 +767,7 @@ export const useRecordsStore = defineStore('records', () => {
 
     if (format === 'csv') {
       const csvRows = []
-      
+
       // Standard categories
       Object.entries(filteredRecords).forEach(([category, items]) => {
         if (category === 'customLists') return
@@ -804,7 +804,7 @@ export const useRecordsStore = defineStore('records', () => {
       /**
        * Sanitize resulting object with jsesc
        * @see {@link https://github.com/mathiasbynens/jsesc}
-       */ 
+       */
       content = jsesc(filteredRecords, { json: true })
       mimeType = 'application/json'
       extension = 'json'
@@ -828,38 +828,38 @@ export const useRecordsStore = defineStore('records', () => {
     processingImport.value = true
     const file = data.file.file
     const isCSV = file.name.endsWith('.csv')
-    
+
     const reader = new FileReader()
     reader.onload = async () => {
       try {
         const fileContents = reader.result
         let importData
-        
+
         if (isCSV) {
           importData = await parseCSVToCollection(fileContents)
         } else {
           importData = JSON.parse(fileContents)
         }
-        
+
         const isValid = await validateJSON(importData)
         if (!isValid) {
           processingImport.value = false
           return
         }
-        
+
         await api.post('/import', importData)
         await restoreRecords() // Reload everything from server
         processingImport.value = false
         useNotificationsStore().pushNotification({
           message: i18n.global.t('store.notifications.importSuccess'),
-          type: 'success' 
+          type: 'success'
         })
       } catch (err) {
         console.error(err)
         processingImport.value = false
-        useNotificationsStore().pushNotification({ 
-          message: isCSV ? i18n.global.t('store.notifications.importErrorCSV') : i18n.global.t('store.notifications.importErrorJSON'), 
-          type: 'error' 
+        useNotificationsStore().pushNotification({
+          message: isCSV ? i18n.global.t('store.notifications.importErrorCSV') : i18n.global.t('store.notifications.importErrorJSON'),
+          type: 'error'
         })
       }
     }
@@ -869,7 +869,7 @@ export const useRecordsStore = defineStore('records', () => {
   async function parseCSVToCollection(csvText) {
     const { data } = Papa.parse(csvText, {
       header: true,
-      skipEmptyLines: true 
+      skipEmptyLines: true
     })
     const collection = {
       games: [],
@@ -938,7 +938,7 @@ export const useRecordsStore = defineStore('records', () => {
       if (extraCategories.length > 0) {
         errors.push({
           type: 'unexpected_categories',
-          details: extraCategories 
+          details: extraCategories
         })
       }
 
@@ -949,7 +949,7 @@ export const useRecordsStore = defineStore('records', () => {
         if (!validCategories.includes(category)) {
           errors.push({
             type: 'unexpected_category',
-            category 
+            category
           })
           continue
         }
@@ -957,7 +957,7 @@ export const useRecordsStore = defineStore('records', () => {
           errors.push({
             type: 'invalid_category_payload',
             category,
-            message: 'Category must be an array of records' 
+            message: 'Category must be an array of records'
           })
           continue
         }
@@ -970,7 +970,7 @@ export const useRecordsStore = defineStore('records', () => {
               category,
               index,
               id: record && record.id,
-              errors: recordErrors 
+              errors: recordErrors
             })
           }
         }
@@ -982,14 +982,14 @@ export const useRecordsStore = defineStore('records', () => {
           if (typeof list.id !== 'string' || typeof list.name !== 'string') {
             errors.push({
               type: 'invalid_custom_list',
-              list 
+              list
             })
             continue
           }
           if (!Array.isArray(list.records)) {
             errors.push({
               type: 'invalid_custom_list_records',
-              list 
+              list
             })
             continue
           }
@@ -997,17 +997,17 @@ export const useRecordsStore = defineStore('records', () => {
             if (typeof r.id !== 'string') errors.push({
               type: 'invalid_custom_record',
               r,
-              error: 'id' 
+              error: 'id'
             })
             if (typeof r.title !== 'string') errors.push({
               type: 'invalid_custom_record',
               r,
-              error: 'title' 
+              error: 'title'
             })
             if (typeof r.createdAt !== 'string') errors.push({
               type: 'invalid_custom_record',
               r,
-              error: 'createdAt' 
+              error: 'createdAt'
             })
             // No score, liked, label fields required
           }

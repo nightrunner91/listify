@@ -36,41 +36,117 @@
 
 @mixin make-spacers($breakpoint: null) {
   @each $name, $indent in $spacers {
-    @if $name != 'auto' {
-      .p#{$breakpoint}-#{$name} { padding: $indent !important }
-      .pt#{$breakpoint}-#{$name} { padding-top: $indent !important }
-      .pl#{$breakpoint}-#{$name} { padding-left: $indent !important }
-      .pb#{$breakpoint}-#{$name} { padding-bottom: $indent !important }
-      .pr#{$breakpoint}-#{$name} { padding-right: $indent !important }
+    @if $name !='auto' {
+      .p#{$breakpoint}-#{$name} {
+        padding: $indent !important
+      }
+
+      .pt#{$breakpoint}-#{$name} {
+        padding-top: $indent !important
+      }
+
+      .pl#{$breakpoint}-#{$name} {
+        padding-left: $indent !important
+      }
+
+      .pb#{$breakpoint}-#{$name} {
+        padding-bottom: $indent !important
+      }
+
+      .pr#{$breakpoint}-#{$name} {
+        padding-right: $indent !important
+      }
+
       .px#{$breakpoint}-#{$name} {
         padding-left: $indent !important;
         padding-right: $indent !important
       }
+
       .py#{$breakpoint}-#{$name} {
         padding-top: $indent !important;
         padding-bottom: $indent !important
       }
-      .gap#{$breakpoint}-#{$name} { gap: $indent !important }
+
+      .gap#{$breakpoint}-#{$name} {
+        gap: $indent !important
+      }
     }
 
-    .m#{$breakpoint}-#{$name} { margin: $indent !important }
-    .mt#{$breakpoint}-#{$name} { margin-top: $indent !important }
-    .ml#{$breakpoint}-#{$name} { margin-left: $indent !important }
-    .mb#{$breakpoint}-#{$name} { margin-bottom: $indent !important }
-    .mr#{$breakpoint}-#{$name} { margin-right: $indent !important }
+    .m#{$breakpoint}-#{$name} {
+      margin: $indent !important
+    }
+
+    .mt#{$breakpoint}-#{$name} {
+      margin-top: $indent !important
+    }
+
+    .ml#{$breakpoint}-#{$name} {
+      margin-left: $indent !important
+    }
+
+    .mb#{$breakpoint}-#{$name} {
+      margin-bottom: $indent !important
+    }
+
+    .mr#{$breakpoint}-#{$name} {
+      margin-right: $indent !important
+    }
+
     .mx#{$breakpoint}-#{$name} {
       margin-left: $indent !important;
       margin-right: $indent !important
     }
+
     .my#{$breakpoint}-#{$name} {
       margin-top: $indent !important;
       margin-bottom: $indent !important
     }
 
-    .top#{$breakpoint}-#{$name} { top: $indent !important }
-    .right#{$breakpoint}-#{$name} { right: $indent !important }
-    .bottom#{$breakpoint}-#{$name} { bottom: $indent !important }
-    .left#{$breakpoint}-#{$name} { left: $indent !important }
+    .top#{$breakpoint}-#{$name} {
+      top: $indent !important
+    }
+
+    .right#{$breakpoint}-#{$name} {
+      right: $indent !important
+    }
+
+    .bottom#{$breakpoint}-#{$name} {
+      bottom: $indent !important
+    }
+
+    .left#{$breakpoint}-#{$name} {
+      left: $indent !important
+    }
+  }
+
+  @each $name, $indent in $spacers {
+    @if $name !=0 and $name !='auto' {
+      .mt#{$breakpoint}-n#{$name} {
+        margin-top: -$indent !important
+      }
+
+      .mb#{$breakpoint}-n#{$name} {
+        margin-bottom: -$indent !important
+      }
+
+      .ml#{$breakpoint}-n#{$name} {
+        margin-left: -$indent !important
+      }
+
+      .mr#{$breakpoint}-n#{$name} {
+        margin-right: -$indent !important
+      }
+
+      .mx#{$breakpoint}-n#{$name} {
+        margin-left: -$indent !important;
+        margin-right: -$indent !important
+      }
+
+      .my#{$breakpoint}-n#{$name} {
+        margin-top: -$indent !important;
+        margin-bottom: -$indent !important
+      }
+    }
   }
 }
 

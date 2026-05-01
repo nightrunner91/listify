@@ -122,10 +122,9 @@ onBeforeRouteLeave(async () => {
       v-if="routeLoading || recordsStore.processingImport"
     >
       <n-space
-        class="w-100"
+        class="w-100 h-250"
         justify="center"
         align="center"
-        style="height: 250px;"
       >
         <n-spin
           size="small"
@@ -163,7 +162,7 @@ onBeforeRouteLeave(async () => {
                 <n-text
                   align="center"
                   depth="3"
-                  style="font-size: 14px;"
+                  class="fz-14"
                 >
                   {{ t('records.or') }}
                 </n-text>
@@ -227,8 +226,7 @@ onBeforeRouteLeave(async () => {
             <div
               v-if="!recordsStore.isSearching"
               ref="bottomButtonRef"
-              class="pb-2"
-              style="padding-left: 40px;"
+              class="pb-2 pl-10"
             >
               <n-divider
                 class="mt-2 mb-4"

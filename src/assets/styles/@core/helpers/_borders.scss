@@ -1,0 +1,50 @@
+/// This code generates classnames for border properties
+/// Each classname supports $breakpoints
+/// 
+/// @author nightrunner91
+/// 
+/// @output
+///   .border-0 { border-width: 0 }
+///   .border-1 { border-width: 1px }
+///
+
+@mixin make-borders($breakpoint: null) {
+  @for $i from 0 through 4 {
+    .border#{$breakpoint}-#{$i} {
+      border-width: #{$i}px !important;
+      border-style: solid !important;
+    }
+
+    .border-top#{$breakpoint}-#{$i} {
+      border-top-width: #{$i}px !important;
+      border-top-style: solid !important;
+    }
+
+    .border-right#{$breakpoint}-#{$i} {
+      border-right-width: #{$i}px !important;
+      border-right-style: solid !important;
+    }
+
+    .border-bottom#{$breakpoint}-#{$i} {
+      border-bottom-width: #{$i}px !important;
+      border-bottom-style: solid !important;
+    }
+
+    .border-left#{$breakpoint}-#{$i} {
+      border-left-width: #{$i}px !important;
+      border-left-style: solid !important;
+    }
+  }
+
+  .border#{$breakpoint}-none {
+    border: none !important;
+  }
+}
+
+@include make-borders();
+
+@each $breakpoint, $size in $breakpoints {
+  @media screen and (min-width: #{$size}) {
+    @include make-borders('-' + $breakpoint);
+  }
+}
