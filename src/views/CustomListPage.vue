@@ -63,6 +63,10 @@ watch(() => recordsStore.isSearching, (isSearching) => {
   }
 })
 
+/**
+ * @function setDefaultSortLabel
+ * @description Sets the default sorting method to 'label' (status) and initializes the display order
+ */
 function setDefaultSortLabel() {
   recordsStore.selectedSort = 'label'
   // Initialize display order for the current category
@@ -97,6 +101,10 @@ const bottomButtonRef = ref(null)
 const isBottomButtonVisible = ref(false)
 let observer = null
 
+/**
+ * @function setupObserver
+ * @description Initializes an IntersectionObserver to detect if the bottom "Add" button is in view
+ */
 function setupObserver() {
   if (observer) observer.disconnect()
   observer = new IntersectionObserver(
@@ -138,6 +146,7 @@ onBeforeRouteLeave(async () => {
     vertical
     size="large"
   >
+    <!-- begin::Loading State -->
     <template v-if="routeLoading || recordsStore.processingImport">
       <n-space
         class="w-100 h-250"
@@ -147,9 +156,11 @@ onBeforeRouteLeave(async () => {
         <n-spin size="small" />
       </n-space>
     </template>
+    <!-- end::Loading State -->
 
     <template v-else>
       <n-space vertical>
+        <!-- begin::Empty State -->
         <template v-if="!customList || customList.records.length === 0">
           <n-empty
             size="large"
@@ -164,22 +175,23 @@ onBeforeRouteLeave(async () => {
                 :vertical="!gridStore.screenLargerThen('m')"
                 align="center"
               >
-                <ly-add-record variant="inline" />
-                <n-text
-                  align="center"
-                  depth="3"
-                  class="fz-14"
-                >
-                  {{ t('records.or') }}
-                </n-text>
-                <ly-import variant="inline" />
+                <ly-add-record
+                  variant="inline"
+                  :disabled="hasEmptyRecord"
+                  @scroll-bottom="gridStore.handleScrollBottom"
+                />
+                <ly-import />
               </n-space>
             </template>
           </n-empty>
         </template>
+        <!-- end::Empty State -->
 
+        <!-- begin::List View -->
         <template v-else>
+          <!-- begin::Search Area -->
           <ly-search />
+          <!-- end::Search Area -->
           
           <template v-if="recordsStore.isSearching && sortedRecords.length === 0">
             <n-empty
@@ -190,6 +202,7 @@ onBeforeRouteLeave(async () => {
           </template>
           
           <template v-else>
+            <!-- begin::Records List -->
             <n-list
               hoverable
               :show-divider="!gridStore.screenLargerThen('m')"
@@ -217,7 +230,9 @@ onBeforeRouteLeave(async () => {
                 </template>
               </dynamic-scroller>
             </n-list>
+            <!-- end::Records List -->
 
+            <!-- begin::Action Buttons -->
             <!-- Inline bottom button below last record -->
             <div
               v-if="!recordsStore.isSearching"
@@ -244,8 +259,10 @@ onBeforeRouteLeave(async () => {
                 @scroll-bottom="gridStore.handleScrollBottom"
               />
             </transition>
+            <!-- end::Action Buttons -->
           </template>
         </template>
+        <!-- end::List View -->
       </n-space>
     </template>
   </n-space>

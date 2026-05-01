@@ -1,12 +1,10 @@
 <script setup>
 import {
   NLayoutHeader,
-  NSpace,
-  NDivider
+  NSpace
 } from 'naive-ui'
 import LyLogo from '@/components/ly-logo/LyLogo.vue'
 import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
-import LyLogout from '@/components/ly-logout/LyLogout.vue'
 import LyLanguageSwitcher from '@/components/ly-language-switcher/LyLanguageSwitcher.vue'
 </script>
 
@@ -24,8 +22,6 @@ import LyLanguageSwitcher from '@/components/ly-language-switcher/LyLanguageSwit
       <ly-logo />
       <ly-theme-switcher />
       <ly-language-switcher />
-      <n-divider vertical />
-      <ly-logout />
     </n-space>
   </n-layout-header>
 </template>

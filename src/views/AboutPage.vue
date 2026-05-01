@@ -17,8 +17,6 @@ import {
 import {
   PhFileVue as VueIcon,
   PhLayout as NaiveIcon,
-  PhTextAa as FontIcon,
-  PhPhosphorLogo as PhosphorIcon,
   PhDatabase as PostgresIcon,
   PhHardDrive as FastifyIcon,
   PhListPlus as SyncIcon,
@@ -46,14 +44,6 @@ const usedStuff = ref([
     icon: NaiveIcon,
     title: 'Naive UI',
   },
-  {
-    icon: FontIcon,
-    title: 'Onest Font',
-  },
-  {
-    icon: PhosphorIcon,
-    title: 'Phosphor Icons',
-  },
 ])
 </script>
 
@@ -64,11 +54,14 @@ const usedStuff = ref([
     :cols="6"
   >
     <n-grid-item span="12">
-      <n-card>
+      <n-card content-class="w-100 w-l-75">
+        <!-- begin::Main Description -->
         <n-p>
           {{ t('about.description') }}
         </n-p>
+        <!-- end::Main Description -->
 
+        <!-- begin::Features Section -->
         <n-h4>{{ t('about.howItWorks') }}</n-h4>
         <n-list
           :show-divider="false"
@@ -114,7 +107,9 @@ const usedStuff = ref([
             </n-space>
           </n-list-item>
         </n-list>
+        <!-- end::Features Section -->
 
+        <!-- begin::Data & Privacy -->
         <n-h4>{{ t('about.dataTitle') }}</n-h4>
         <n-p>
           <i18n-t
@@ -170,7 +165,9 @@ const usedStuff = ref([
             </n-space>
           </n-list-item>
         </n-list>
+        <!-- end::Data & Privacy -->
 
+        <!-- begin::Community -->
         <n-h4>{{ t('about.communityTitle') }}</n-h4>
         <n-p>
           <i18n-t
@@ -197,7 +194,9 @@ const usedStuff = ref([
         </n-p>
 
         <n-p>{{ t('about.thankYou') }}</n-p>
+        <!-- end::Community -->
 
+        <!-- begin::Tech Stack -->
         <n-h4>{{ t('about.techStack') }}</n-h4>
         <n-list :show-divider="false">
           <n-list-item
@@ -216,6 +215,7 @@ const usedStuff = ref([
             </n-space>
           </n-list-item>
         </n-list>
+        <!-- end::Tech Stack -->
       </n-card>
     </n-grid-item>
   </n-grid>

@@ -35,10 +35,19 @@ const dialog = useDialog()
 const contentRef = ref(null)
 const importRef = ref(null)
 
+/**
+ * @function updateScroll
+ * @description Updates the global scroll position in the grid store
+ * @param {Event} event - Scroll event
+ */
 function updateScroll(event) {
   gridStore.scrollPosition = (event.target).scrollTop
 }
 
+/**
+ * @function confirmDeleteList
+ * @description Shows a confirmation dialog before deleting a custom list
+ */
 function confirmDeleteList() {
   const list = recordsStore.getCustomList(route.params.id)
   dialog.warning({
@@ -65,6 +74,7 @@ function confirmDeleteList() {
     @click="menuStore.closeMenu"
     @scroll="updateScroll($event)"
   >
+    <!-- begin::Content Layout -->
     <n-grid
       item-responsive
       responsive="screen"
@@ -77,6 +87,7 @@ function confirmDeleteList() {
         span="6 s:4 l:4"
         offset="0 s:1 l:1"
       >
+        <!-- begin::Top Header (Profile or Title+Sort) -->
         <n-space
           justify="space-between"
           :wrap-item="false"
@@ -104,7 +115,12 @@ function confirmDeleteList() {
             </n-button>
           </template>
         </n-space>
+        <!-- end::Top Header -->
+
+        <!-- begin::Main View -->
         <router-view />
+        <!-- end::Main View -->
+
         <ly-import
           v-show="false"
           ref="importRef"
@@ -113,6 +129,8 @@ function confirmDeleteList() {
         <ly-footer />
       </n-grid-item>
     </n-grid>
+    <!-- end::Content Layout -->
+
     <ly-scroller
       @scrollTop="contentRef?.scrollTo({ top: 0, behavior: 'smooth' })"
       @scrollBottom="contentRef?.scrollTo({ top: 999999999, behavior: 'smooth' })"

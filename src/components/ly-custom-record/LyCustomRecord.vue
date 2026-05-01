@@ -36,11 +36,17 @@ const gridStore = useGridStore()
 
 const record = computed(() => recordsStore.getCustomRecord(props.listId, props.id) || {})
 
-// Debounced rename — only fires when title actually changes
+/**
+ * @function getComparableTitle
+ * @description Returns the record's title for comparison to detect changes
+ * @param {Object} r - Record object
+ * @returns {string|null}
+ */
 const getComparableTitle = (r) => (r && r.id ? r.title : null)
 let renameTimeout = null
 let lastSavedTitle = getComparableTitle(record.value)
 
+// Watch for title changes to trigger auto-save (debounced)
 watch(record, (newVal) => {
   if (!newVal || !newVal.id) return
   const currentTitle = getComparableTitle(newVal)
@@ -57,6 +63,10 @@ watch(record, (newVal) => {
   }, 500)
 }, { deep: true })
 
+/**
+ * @function handleDelete
+ * @description Removes the custom record from the list
+ */
 function handleDelete() {
   recordsStore.removeCustomRecord(props.listId, props.id)
 }
@@ -74,6 +84,7 @@ function handleDelete() {
       size="small"
       class=""
     >
+      <!-- begin::Identity -->
       <n-text
         align="center"
         class="w-16 fz-12 lh-1 flex-shrink-0"
@@ -81,7 +92,9 @@ function handleDelete() {
       >
         {{ index + 1 }}
       </n-text>
+      <!-- end::Identity -->
 
+      <!-- begin::Record Title -->
       <n-input
         :id="`input-${record.id}`"
         v-model:value="record.title"
@@ -90,7 +103,9 @@ function handleDelete() {
         :placeholder="$t('records.titlePlaceholder')"
         class="record-input"
       />
+      <!-- end::Record Title -->
 
+      <!-- begin::Actions -->
       <n-button
         quaternary
         round
@@ -104,6 +119,7 @@ function handleDelete() {
           <n-icon><DeleteIcon /></n-icon>
         </template>
       </n-button>
+      <!-- end::Actions -->
     </n-space>
   </n-list-item>
 </template>

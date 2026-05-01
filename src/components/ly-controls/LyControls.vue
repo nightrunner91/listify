@@ -30,6 +30,10 @@ const selectedCount = computed(() =>
   recordsStore.selectedRecordsLength(route.meta.tag).value
 )
 
+/**
+ * @function handleSelection
+ * @description Toggles between selecting all records and deselecting all records for the current list
+ */
 function handleSelection() {
   if (recordsStore.allRecordsSelected(route.meta.tag).value) {
     recordsStore.deselectAllRecords(route.meta.tag)
@@ -73,10 +77,12 @@ watch(
           span="6 s:4 l:4"
           offset="0 s:1 l:1"
         >
+          <!-- begin::Selection Controls -->
           <n-space
             align="center"
             :wrap-item="false"
           >
+            <!-- begin::Toggle All -->
             <n-button
               secondary
               size="small"
@@ -95,7 +101,9 @@ watch(
                 {{ t('common.selectAll') }}
               </n-text>
             </n-button>
+            <!-- end::Toggle All -->
 
+            <!-- begin::Bulk Actions -->
             <n-popconfirm @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag)">
               <template #trigger>
                 <n-button
@@ -115,7 +123,9 @@ watch(
                 }}
               </n-text>
             </n-popconfirm>
+            <!-- end::Bulk Actions -->
           </n-space>
+          <!-- end::Selection Controls -->
         </n-grid-item>
       </n-grid>
     </n-space>

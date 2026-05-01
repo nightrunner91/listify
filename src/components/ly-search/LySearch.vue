@@ -20,6 +20,7 @@ const recordsStore = useRecordsStore()
 const searchInput = ref('')
 let searchTimeout = null
 
+/** @type {import('vue').ComputedRef<string>} */
 const searchPlaceholder = computed(() => {
   let name = ''
   if (route.meta.isCustom && route.params.id) {
@@ -31,7 +32,11 @@ const searchPlaceholder = computed(() => {
   return t('search.placeholder', { name })
 })
 
-// Debounced search function
+/**
+ * @function performSearch
+ * @description Debounces the search query and updates the records store
+ * @param {string} query - The search string
+ */
 const performSearch = (query) => {
   if (searchTimeout) {
     clearTimeout(searchTimeout)
@@ -42,12 +47,15 @@ const performSearch = (query) => {
   }, 300) // 300ms debounce
 }
 
-// Watch for input changes
+// Watch for input changes to trigger debounced search
 watch(searchInput, (newValue) => {
   performSearch(newValue)
 })
 
-// Clear search function
+/**
+ * @function clearSearch
+ * @description Clears the search input and resets the search query in the store
+ */
 const clearSearch = () => {
   searchInput.value = ''
   recordsStore.clearSearch()
@@ -56,6 +64,7 @@ const clearSearch = () => {
 
 
 <template>
+  <!-- begin::Search Input -->
   <n-input
     v-model:value="searchInput"
     size="large"
@@ -82,6 +91,7 @@ const clearSearch = () => {
       />
     </template>
   </n-input>
+  <!-- end::Search Input -->
 </template>
 
 <style lang="scss">

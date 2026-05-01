@@ -20,6 +20,7 @@ import {
   NButtonGroup,
   NSpace
 } from 'naive-ui'
+import { renderIcon } from '@/utils/render-icon'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useI18n } from 'vue-i18n'
@@ -43,6 +44,7 @@ defineExpose({showModal})
 </script>
 
 <template>
+  <!-- begin::Export Trigger (Minified) -->
   <template v-if="variant === 'minified'">
     <n-tooltip trigger="hover">
       <template #trigger>
@@ -65,7 +67,9 @@ defineExpose({showModal})
       {{ t('userProfile.exportCollection') }}
     </n-tooltip>
   </template>
+  <!-- end::Export Trigger (Minified) -->
 
+  <!-- begin::Export Trigger (Inline) -->
   <n-button
     v-else-if="variant === 'inline'"
     secondary
@@ -74,7 +78,9 @@ defineExpose({showModal})
   >
     {{ t('userProfile.exportCollection') }}
   </n-button>
+  <!-- end::Export Trigger (Inline) -->
 
+  <!-- begin::Export Modal -->
   <n-modal
     v-model:show="showModal"
     preset="card"
@@ -84,6 +90,7 @@ defineExpose({showModal})
     :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
     :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'"
   >
+    <!-- begin::Category Selection -->
     <div class="mb-3">
       <n-text
         depth="3"
@@ -147,7 +154,9 @@ defineExpose({showModal})
         </n-grid-item>
       </n-grid>
     </n-checkbox-group>
+    <!-- end::Category Selection -->
 
+    <!-- begin::Custom List Selection -->
     <template v-if="recordsStore.customLists.length > 0">
       <div class="mb-3">
         <n-text
@@ -181,6 +190,9 @@ defineExpose({showModal})
         </n-grid>
       </n-checkbox-group>
     </template>
+    <!-- end::Custom List Selection -->
+
+    <!-- begin::Modal Footer (Actions) -->
     <template #footer>
       <div class="mb-3">
         <n-text
@@ -226,6 +238,7 @@ defineExpose({showModal})
         </n-text>
       </n-space>
     </template>
+    <!-- end::Modal Footer -->
   </n-modal>
+  <!-- end::Export Modal -->
 </template>
-

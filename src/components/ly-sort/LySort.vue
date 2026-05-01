@@ -19,16 +19,27 @@ const recordsStore = useRecordsStore()
 
 const routeLoading = ref(false)
 
+/**
+ * @function renderDropdownIcon
+ * @description Renders the icon for sort dropdown options
+ * @param {Object} option
+ */
 const renderDropdownIcon = (option) => {
   return h(option.icon, { size: 16 })
 }
 
+/**
+ * @function handleSortChange
+ * @description Updates the global sort key and synchronizes the record display order
+ * @param {string} key - The selected sort key
+ */
 function handleSortChange(key) {
   recordsStore.selectedSort = key
   // Sync display order with new sort when user manually changes sorting
   recordsStore.syncDisplayOrderWithSort(route.meta.tag)
 }
 
+// Watch for route changes to reset local loading state (simulates transition)
 watch(
   route,
   async () => {
@@ -39,12 +50,13 @@ watch(
   },
   {
     flush: 'pre',
-    deep: true 
+    deep: true
   }
 )
 </script>
 
 <template>
+  <!-- begin::Sort Dropdown -->
   <n-dropdown
     v-if="route.meta.tag !== 'start'"
     trigger="click"
@@ -68,4 +80,5 @@ watch(
       {{ recordsStore.getSortOption(recordsStore.selectedSort).value.label }}
     </n-button>
   </n-dropdown>
+  <!-- end::Sort Dropdown -->
 </template>

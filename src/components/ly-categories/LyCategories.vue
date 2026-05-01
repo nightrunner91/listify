@@ -43,6 +43,7 @@ onMounted(() => {
   isLoading.value = false
 })
 
+/** @type {import('vue').ComputedRef<Array>} */
 const categories = computed(() => [
   {
     key: 'games',
@@ -88,6 +89,7 @@ const categories = computed(() => [
   },
 ])
 
+/** @type {import('vue').ComputedRef<number>} */
 const gridCols = computed(() => {
   const bp = gridStore.currentBreakpoint
   if (bp === 'xs') return 1
@@ -96,10 +98,22 @@ const gridCols = computed(() => {
   return 4
 })
 
+/**
+ * @function getCount
+ * @description Retrieves the number of records in a specific category
+ * @param {string} key - Category key
+ * @returns {import('vue').ComputedRef<number>}
+ */
 function getCount(key) {
   return recordsStore.recordsLength(key)
 }
 
+/**
+ * @function getIconColor
+ * @description Retrieves the themed color for a category's icon
+ * @param {string} key - Category key
+ * @returns {string}
+ */
 function getIconColor(key) {
   return themeStore.categoryColor(key) || 'var(--n-text-color)'
 }
@@ -121,6 +135,7 @@ function getIconColor(key) {
       :x-gap="24"
       :y-gap="24"
     >
+      <!-- begin::Loading State -->
       <template v-if="isLoading">
         <n-grid-item
           v-for="n in 6"
@@ -137,7 +152,9 @@ function getIconColor(key) {
           </n-card>
         </n-grid-item>
       </template>
+      <!-- end::Loading State -->
 
+      <!-- begin::Category Cards -->
       <template v-else>
         <n-grid-item
           v-for="cat in categories"
@@ -145,7 +162,7 @@ function getIconColor(key) {
         >
           <n-card
             size="medium"
-            class="cursor-pointer transition-all-short hover-bg-action"
+            class="category-card cursor-pointer transition-all-short"
             @click="router.push({ name: cat.route })"
           >
             <n-space
@@ -173,6 +190,13 @@ function getIconColor(key) {
           </n-card>
         </n-grid-item>
       </template>
+      <!-- end::Category Cards -->
     </n-grid>
   </n-space>
 </template>
+
+<style scoped>
+.category-card:hover {
+  background-color: var(--n-action-color);
+}
+</style>

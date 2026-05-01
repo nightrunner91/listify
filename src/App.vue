@@ -38,6 +38,7 @@ onBeforeMount(async () => {
 
 <template>
   <app-provider v-if="isReady">
+    <!-- begin::Authenticated Layout -->
     <n-layout
       v-if="route.meta.requiresAuth !== false"
       position="absolute"
@@ -53,8 +54,11 @@ onBeforeMount(async () => {
         <ly-controls />
       </n-layout>
     </n-layout>
+    <!-- end::Authenticated Layout -->
     
+    <!-- begin::Public Layout -->
     <router-view v-else />
+    <!-- end::Public Layout -->
 
     <ly-notifications />
   </app-provider>

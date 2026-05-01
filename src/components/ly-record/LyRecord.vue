@@ -33,10 +33,21 @@ const record = computed(() => {
   return recordsStore.getRecord(props.id, tag) || {}
 })
 
+/**
+ * @function renderDropdownIcon
+ * @description Renders the icon for status dropdown options
+ * @param {Object} option
+ */
 const renderDropdownIcon = (option) => {
   return h(option.icon, { size: 16 })
 }
 
+/**
+ * @function getComparableString
+ * @description Generates a JSON string of the record's main properties for comparison
+ * @param {Object} r - Record object
+ * @returns {string|null}
+ */
 const getComparableString = (r) => r && r.id ? JSON.stringify({
   title: r.title,
   score: r.score,
@@ -47,6 +58,7 @@ const getComparableString = (r) => r && r.id ? JSON.stringify({
 let updateTimeout = null
 let lastSavedString = getComparableString(record.value)
 
+// Watch for record changes to trigger auto-save
 watch(record, (newVal) => {
   if (newVal && newVal.id) {
     const currentString = getComparableString(newVal)
@@ -82,6 +94,7 @@ watch(record, (newVal) => {
       :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
       class="py-2 py-m-0"
     >
+      <!-- begin::Record Identity & Title -->
       <n-space
         :wrap-item="false"
         :wrap="false"
@@ -119,7 +132,9 @@ watch(record, (newVal) => {
           class="w-100 w-l-75 record-input"
         />
       </n-space>
+      <!-- end::Record Identity & Title -->
 
+      <!-- begin::Record Attributes (Score, Liked, Status) -->
       <n-space
         :wrap-item="false"
         align="center"
@@ -173,6 +188,7 @@ watch(record, (newVal) => {
           </n-button>
         </n-dropdown>
       </n-space>
+      <!-- end::Record Attributes (Score, Liked, Status) -->
     </n-space>
   </n-list-item>
 </template>

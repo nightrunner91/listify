@@ -27,6 +27,11 @@ const recordsStore = useRecordsStore()
 
 const customLists = computed(() => recordsStore.customLists)
 
+/**
+ * @function handleCreateList
+ * @async
+ * @description Triggers the creation of a new custom list and navigates to its page
+ */
 async function handleCreateList() {
   try {
     const listId = await recordsStore.createCustomList()
@@ -39,6 +44,11 @@ async function handleCreateList() {
   }
 }
 
+/**
+ * @function handleListClick
+ * @description Navigates to a specific custom list page
+ * @param {string} listId
+ */
 function handleListClick(listId) {
   router.push({
     name: 'CustomList',
@@ -46,6 +56,12 @@ function handleListClick(listId) {
   })
 }
 
+/**
+ * @function formatRelativeTime
+ * @description Returns a relative time string (e.g. "2 hours ago")
+ * @param {string} dateString
+ * @returns {string}
+ */
 function formatRelativeTime(dateString) {
   if (!dateString) return ''
   return moment(dateString).fromNow()
@@ -86,7 +102,7 @@ function formatRelativeTime(dateString) {
       :bordered="true"
       content-class="p-0"
     >
-      <!-- Empty State -->
+      <!-- begin::Empty State -->
       <n-empty 
         v-if="customLists.length === 0" 
         :description="t('customLists.emptyDescription')"
@@ -101,8 +117,9 @@ function formatRelativeTime(dateString) {
           </n-button>
         </template>
       </n-empty>
+      <!-- end::Empty State -->
 
-      <!-- List -->
+      <!-- begin::Lists Content -->
       <n-list
         v-else
         hoverable
@@ -134,13 +151,16 @@ function formatRelativeTime(dateString) {
                   v-if="list.updatedAt || list.createdAt"
                   depth="3"
                 >
-                  {{ t('customLists.updated', { time: formatRelativeTime(list.updatedAt || list.createdAt) }) }}
+                  {{ t('customLists.updated', {
+                    time: formatRelativeTime(list.updatedAt || list.createdAt)
+                  }) }}
                 </n-text>
               </n-space>
             </template>
           </n-thing>
         </n-list-item>
       </n-list>
+      <!-- end::Lists Content -->
     </n-card>
   </n-space>
 </template>

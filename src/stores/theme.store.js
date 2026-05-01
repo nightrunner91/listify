@@ -1,3 +1,8 @@
+/**
+ * @module useThemeStore
+ * @description This store manages the application's theme state, supporting light, dark, and system modes.
+ */
+
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme } from 'naive-ui'
@@ -9,21 +14,36 @@ import { api } from '@/api/client'
 import { useAuthStore } from '@/stores/auth.store'
 
 export const useThemeStore = defineStore('theme', () => {
-  // Variable declarations
+  /** @description Media query to watch for system color scheme changes */
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
-  // Reactive state
+  /** @type {import('vue').Ref<Object|null>} */
   const currentTheme = ref(null)
-  const themeMode = ref('system') // 'light', 'dark', 'system'
+  
+  /** 
+   * @type {import('vue').Ref<string>} 
+   * @description Current theme mode: 'light', 'dark', or 'system'
+   */
+  const themeMode = ref('system')
 
-  // Computed properties / Methods acting as computed
+  /**
+   * @function categoryColor
+   * @description Returns the themed color for a specific category tag
+   * @param {string} tag - Category tag
+   * @returns {string} Hex color
+   */
   const categoryColor = (tag) => (
     currentTheme.value
       ? darkThemeOverrides.Categories[`${tag}Color`]
       : lightThemeOverrides.Categories[`${tag}Color`]
   )
 
-  // Functions
+  /**
+   * @function applyThemeMode
+   * @description Internal logic to apply a theme mode and update the body class
+   * @param {string} mode - 'light', 'dark', or 'system'
+   * @param {boolean} [save=true] - Whether to trigger side effects
+   */
   function applyThemeMode(mode, save = true) {
     themeMode.value = mode
 
@@ -43,6 +63,12 @@ export const useThemeStore = defineStore('theme', () => {
     applyBodyClassname()
   }
 
+  /**
+   * @function setTheme
+   * @async
+   * @description Public method to change the theme mode, persisting it to localStorage and the API
+   * @param {string} mode - 'light', 'dark', or 'system'
+   */
   async function setTheme(mode) {
     applyThemeMode(mode)
 
@@ -60,6 +86,10 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
+  /**
+   * @function applyBodyClassname
+   * @description Adds or removes the 'dark' class from the body element
+   */
   function applyBodyClassname() {
     const body = document.querySelector('body')
     if (currentTheme.value) {
@@ -69,6 +99,11 @@ export const useThemeStore = defineStore('theme', () => {
     }
   }
 
+  /**
+   * @function restoreTheme
+   * @async
+   * @description Restores the saved theme mode from API or localStorage on app startup
+   */
   async function restoreTheme() {
     let savedTheme = localStorage.getItem('theme') || 'system'
 

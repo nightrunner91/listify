@@ -31,6 +31,11 @@ const {
 const activities = ref([])
 const loading = ref(true)
 
+/**
+ * @function fetchActivities
+ * @async
+ * @description Fetches recent user activities from the API
+ */
 const fetchActivities = async () => {
   try {
     const data = await api.get('/activities')
@@ -46,11 +51,23 @@ onMounted(() => {
   fetchActivities()
 })
 
+/**
+ * @function getCategoryColor
+ * @description Returns the themed color for a specific activity category
+ * @param {string} category
+ * @returns {string}
+ */
 const getCategoryColor = (category) => {
   const colors = darkThemeOverrides.Categories
   return colors[`${category}Color`] || colors.customColor
 }
 
+/**
+ * @function formatActivity
+ * @description Translates raw activity data into a format suitable for the i18n-t component
+ * @param {Object} activity - The raw activity object
+ * @returns {Object}
+ */
 const formatActivity = (activity) => {
   const {
     action, entityName, category, metadata 
@@ -136,6 +153,7 @@ const formatActivity = (activity) => {
   }
 }
 
+/** @type {import('vue').ComputedRef<Array>} */
 const formattedActivities = computed(() => {
   // Read locale to trigger reactivity when language changes
   const currentLocale = locale.value
@@ -156,6 +174,7 @@ const formattedActivities = computed(() => {
     vertical
     :size="16"
   >
+    <!-- begin::Timeline Header -->
     <n-space
       justify="space-between"
       align="center"
@@ -167,8 +186,10 @@ const formattedActivities = computed(() => {
         {{ t('timeline.title') }}
       </n-text>
     </n-space>
+    <!-- end::Timeline Header -->
 
     <n-card :bordered="true">
+      <!-- begin::Loading State -->
       <n-space
         v-if="loading"
         justify="center"
@@ -176,13 +197,17 @@ const formattedActivities = computed(() => {
       >
         <n-spin size="large" />
       </n-space>
+      <!-- end::Loading State -->
 
+      <!-- begin::Empty State -->
       <n-empty
         v-else-if="activities.length === 0"
         :description="t('timeline.empty')"
         class="py-8"
       />
+      <!-- end::Empty State -->
 
+      <!-- begin::Timeline Items -->
       <n-timeline v-else>
         <n-timeline-item
           v-for="activity in formattedActivities"
@@ -197,6 +222,7 @@ const formattedActivities = computed(() => {
               :size="8"
               class="line-height-1"
             >
+              <!-- begin::Activity Message -->
               <i18n-t
                 :keypath="activity.formatted.keypath"
                 tag="span"
@@ -227,7 +253,9 @@ const formattedActivities = computed(() => {
                   <span v-if="activity.formatted.action">{{ activity.formatted.action }}</span>
                 </template>
               </i18n-t>
+              <!-- end::Activity Message -->
               
+              <!-- begin::Score Indicator -->
               <n-rate 
                 v-if="activity.formatted.type === 'rate'" 
                 readonly 
@@ -235,7 +263,9 @@ const formattedActivities = computed(() => {
                 :value="activity.formatted.value"
                 class="d-inline-flex align-items-center"
               />
+              <!-- end::Score Indicator -->
               
+              <!-- begin::Like Indicator -->
               <n-button
                 v-if="activity.formatted.type === 'like'"
                 quaternary
@@ -252,10 +282,12 @@ const formattedActivities = computed(() => {
                   />
                 </template>
               </n-button>
+              <!-- end::Like Indicator -->
             </n-space>
           </template>
         </n-timeline-item>
       </n-timeline>
+      <!-- end::Timeline Items -->
     </n-card>
   </n-space>
 </template>

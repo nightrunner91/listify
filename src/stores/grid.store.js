@@ -16,7 +16,7 @@ export const useGridStore = defineStore('grid', () => {
   /**
    * @constant windowSizes [mutable]
    * @type {Object}
-   * @description Variable containing reatlime window width and height
+   * @description Variable containing realtime window width and height
    * @param {Number} width - window width in px
    * @param {Number} height - window width in px
    */
@@ -59,9 +59,19 @@ export const useGridStore = defineStore('grid', () => {
   })
 
 
+  /**
+   * @constant scrollPosition [mutable]
+   * @type {Number}
+   * @description Current window scroll position in px
+   */
   const scrollPosition = ref(0)
 
 
+  /**
+   * @constant showScroller [computable]
+   * @type {Boolean}
+   * @description Controls visibility of the scroll-to-top button
+   */
   const showScroller = computed(() => {
     return scrollPosition.value >= windowSizes.value.height / 2 && screenLargerThen('l')
   })
@@ -101,6 +111,11 @@ export const useGridStore = defineStore('grid', () => {
   }
 
 
+  /**
+   * @function handleScrollBottom
+   * @async
+   * @description Smoothly scrolls the window to the bottom after a short delay
+   */
   async function handleScrollBottom() {
     await new Promise(resolve => setTimeout(resolve, 300))
     nextTick(() => {

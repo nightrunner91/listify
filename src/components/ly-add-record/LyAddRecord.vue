@@ -37,6 +37,7 @@ const props = defineProps({
 
 const { variant } = toRefs(props)
 
+/** @type {import('vue').ComputedRef<string>} */
 const addLabel = computed(() => {
   const tag = route.meta.tag
   let thingKey = 'item'
@@ -52,6 +53,11 @@ const addLabel = computed(() => {
   return t('addRecord.button', { thing: t(`things.${thingKey}`) })
 })
 
+/**
+ * @function handleNewRecord
+ * @async
+ * @description Creates a new record in the current list and triggers focus/scroll side effects
+ */
 async function handleNewRecord() {
   // Detect if current route is a custom list
   const customList = recordsStore.customLists.find(list => list.id === route.params.id)
@@ -82,7 +88,12 @@ async function handleNewRecord() {
   }
 }
 
-/* eslint-disable-next-line no-undef */
+/**
+ * @function focusInput
+ * @async
+ * @description Programmatically focuses the title input of a specific record
+ * @param {Object} record - The record object to focus
+ */
 async function focusInput(record) {
   await nextTick()
   document.querySelector(`#input-${record.id} input`).focus()
@@ -90,6 +101,7 @@ async function focusInput(record) {
 </script>
 
 <template>
+  <!-- begin::Inline Variant -->
   <n-button
     v-if="variant == 'inline'"
     secondary
@@ -98,7 +110,9 @@ async function focusInput(record) {
   >
     {{ addLabel }}
   </n-button>
+  <!-- end::Inline Variant -->
 
+  <!-- begin::Bottom Variant (List End) -->
   <n-button
     v-else-if="variant == 'bottom'"
     size="small"
@@ -108,7 +122,9 @@ async function focusInput(record) {
   >
     {{ addLabel }}
   </n-button>
+  <!-- end::Bottom Variant -->
 
+  <!-- begin::Floating Variant -->
   <n-space
     v-else-if="variant == 'floating'"
     vertical
@@ -134,4 +150,5 @@ async function focusInput(record) {
       {{ addLabel }}
     </n-tooltip>
   </n-space>
+  <!-- end::Floating Variant -->
 </template>

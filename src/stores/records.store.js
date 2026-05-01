@@ -1,3 +1,9 @@
+/**
+ * @module useRecordsStore
+ * @description This is the core store of the application. It manages all records
+ * (games, films, etc.), custom lists, sorting, searching, and collection export/import.
+ */
+
 import {
   ref,
   shallowRef,
@@ -33,10 +39,16 @@ const RECORDS_KEY = 'rec_'
 
 export const useRecordsStore = defineStore('records', () => {
 
-  /* =================== */
-  /* ===== Sorting ===== */
-  /* =================== */
+  /**
+   * @section Sorting
+   * @description Configuration and state for record sorting
+   */
 
+  /**
+   * @constant sortOptions [computable]
+   * @type {import('vue').ComputedRef<Array>}
+   * @description Available sorting methods for record lists
+   */
   const sortOptions = computed(() => [
     {
       key: 'label',
@@ -61,13 +73,24 @@ export const useRecordsStore = defineStore('records', () => {
     },
   ])
 
+  /** @type {import('vue').Ref<string>} */
   const selectedSort = ref('label')
 
-  // Search functionality
+  /**
+   * @section Searching
+   * @description State and methods for record filtering
+   */
+
+  /** @type {import('vue').Ref<string>} */
   const searchQuery = ref('')
+  /** @type {import('vue').Ref<boolean>} */
   const isSearching = ref(false)
 
-  // Display order for each category - maintains stable positions during editing
+  /**
+   * @constant displayOrder [mutable]
+   * @type {import('vue').Ref<Object>}
+   * @description Maintains stable record positions for each category during editing
+   */
   const displayOrder = ref({
     games: [],
     tvshows: [],
@@ -78,13 +101,23 @@ export const useRecordsStore = defineStore('records', () => {
     music: [],
   })
 
+  /**
+   * @function getSortOption
+   * @description Retrieves a specific sort option configuration by its key
+   * @param {string} key - The sort option key
+   * @returns {import('vue').ComputedRef<Object|undefined>}
+   */
   const getSortOption = (key) => {
     return computed(() => {
       return sortOptions.value.find(option => option.key === key)
     })
   }
 
-  // Initialize display order for a category
+  /**
+   * @function initializeDisplayOrder
+   * @description Initializes the stable display order for a specific category
+   * @param {string} listType - Category tag
+   */
   function initializeDisplayOrder(listType) {
     const list = records.value[listType] || []
     if (list.length === 0) {
@@ -96,6 +129,11 @@ export const useRecordsStore = defineStore('records', () => {
     syncDisplayOrderWithSort(listType)
   }
 
+  /**
+   * @constant labelPriority [declarable]
+   * @type {Object<string, number>}
+   * @description Sorting priority for different record status labels
+   */
   const labelPriority = {
     // 1. Ongoing
     'watching_ongoing': 1,
@@ -127,7 +165,11 @@ export const useRecordsStore = defineStore('records', () => {
     'dropped': 6,
   }
 
-  // Sync display order with current sort
+  /**
+   * @function syncDisplayOrderWithSort
+   * @description Synchronizes the stable display order with the currently selected sorting method
+   * @param {string} listType - Category tag
+   */
   function syncDisplayOrderWithSort(listType) {
     const list = records.value[listType] || []
     const key = selectedSort.value
@@ -155,14 +197,24 @@ export const useRecordsStore = defineStore('records', () => {
     displayOrder.value[listType] = sortedIds
   }
 
-  // Add new record to display order (at the end)
+  /**
+   * @function addToDisplayOrder
+   * @description Adds a record ID to the stable display order
+   * @param {string} recordId
+   * @param {string} listType
+   */
   function addToDisplayOrder(recordId, listType) {
     if (!displayOrder.value[listType].includes(recordId)) {
       displayOrder.value[listType].push(recordId)
     }
   }
 
-  // Remove record from display order
+  /**
+   * @function removeFromDisplayOrder
+   * @description Removes a record ID from the stable display order
+   * @param {string} recordId
+   * @param {string} listType
+   */
   function removeFromDisplayOrder(recordId, listType) {
     const index = displayOrder.value[listType].indexOf(recordId)
     if (index > -1) {
@@ -170,7 +222,11 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
-  // Search functionality
+  /**
+   * @function setSearchQuery
+   * @description Updates the current search query and toggles search mode
+   * @param {string} query
+   */
   function setSearchQuery(query) {
     searchQuery.value = query
     const wasSearching = isSearching.value
@@ -182,6 +238,10 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+  /**
+   * @function clearSearch
+   * @description Clears the current search query and resets sorting
+   */
   function clearSearch() {
     searchQuery.value = ''
     isSearching.value = false
@@ -189,6 +249,12 @@ export const useRecordsStore = defineStore('records', () => {
     selectedSort.value = 'label' // Default sort by status
   }
 
+  /**
+   * @function searchRecords
+   * @description Filters records based on the current search query
+   * @param {string} listType - Category tag
+   * @returns {Array} Filtered list of records
+   */
   function searchRecords(listType) {
     if (!isSearching.value || !searchQuery.value.trim()) {
       return records.value[listType] || []
@@ -202,12 +268,12 @@ export const useRecordsStore = defineStore('records', () => {
     )
   }
 
-  /* ========================= */
-  /* ======== Records ======== */
-  /* ========================= */
+  /**
+   * @section Records
+   * @description Core record data and custom list management
+   */
 
-
-  // Standard categories
+  /** @type {import('vue').Ref<Object>} */
   const records = ref({
     games: [],
     tvshows: [],
@@ -218,10 +284,14 @@ export const useRecordsStore = defineStore('records', () => {
     music: [],
   })
 
-  // Custom lists
+  /** @type {import('vue').Ref<Array>} */
   const customLists = ref([])
 
-  // Helper to generate default custom list name
+  /**
+   * @function getNextCustomListName
+   * @description Generates a default name for a new custom list
+   * @returns {string}
+   */
   function getNextCustomListName() {
     const base = 'Custom List'
     let maxNum = 0
@@ -234,7 +304,12 @@ export const useRecordsStore = defineStore('records', () => {
     return `${i18n.global.t('store.customListName')} #${maxNum + 1}`
   }
 
-  // Create a new custom list
+  /**
+   * @function createCustomList
+   * @async
+   * @description Creates a new empty custom list on the server
+   * @returns {Promise<string>} The ID of the created list
+   */
   async function createCustomList() {
     const list = await api.post('/custom-lists')
     customLists.value.push(list)
@@ -242,7 +317,13 @@ export const useRecordsStore = defineStore('records', () => {
     return list.id
   }
 
-  // Add a record to a custom list
+  /**
+   * @function addCustomRecord
+   * @async
+   * @description Adds a new record to a specific custom list
+   * @param {string} listId
+   * @param {string} title
+   */
   async function addCustomRecord(listId, title) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
@@ -251,7 +332,13 @@ export const useRecordsStore = defineStore('records', () => {
     list.updatedAt = new Date().toISOString()
   }
 
-  // Rename a custom list
+  /**
+   * @function renameCustomList
+   * @async
+   * @description Renames an existing custom list
+   * @param {string} listId
+   * @param {string} newName
+   */
   async function renameCustomList(listId, newName) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
@@ -260,14 +347,24 @@ export const useRecordsStore = defineStore('records', () => {
     list.updatedAt = new Date().toISOString()
   }
 
-  // Update custom list's updatedAt when a record is deleted/renamed
+  /**
+   * @function updateCustomListTimestamp
+   * @description Updates the updatedAt timestamp of a custom list
+   * @param {string} listId
+   */
   function updateCustomListTimestamp(listId) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
     list.updatedAt = new Date().toISOString()
   }
 
-  // Remove a record from a custom list
+  /**
+   * @function removeCustomRecord
+   * @async
+   * @description Removes a record from a specific custom list
+   * @param {string} listId
+   * @param {string} recordId
+   */
   async function removeCustomRecord(listId, recordId) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
@@ -276,7 +373,14 @@ export const useRecordsStore = defineStore('records', () => {
     list.updatedAt = new Date().toISOString()
   }
 
-  // Rename a record within a custom list
+  /**
+   * @function renameCustomRecord
+   * @async
+   * @description Renames a record within a custom list
+   * @param {string} listId
+   * @param {string} recordId
+   * @param {string} newTitle
+   */
   async function renameCustomRecord(listId, recordId, newTitle) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return
@@ -287,7 +391,12 @@ export const useRecordsStore = defineStore('records', () => {
     list.updatedAt = new Date().toISOString()
   }
 
-  // Delete an entire custom list
+  /**
+   * @function deleteCustomList
+   * @async
+   * @description Deletes an entire custom list and removes it from state
+   * @param {string} listId
+   */
   async function deleteCustomList(listId) {
     await api.delete(`/custom-lists/${listId}`)
     const index = customLists.value.findIndex(l => l.id === listId)
@@ -300,7 +409,13 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
-  // Sorting for custom lists
+  /**
+   * @function sortCustomRecords
+   * @description Returns a sorted copy of records from a custom list
+   * @param {string} listId
+   * @param {string} [sortKey='initial'] - 'az' or 'initial'
+   * @returns {Array}
+   */
   function sortCustomRecords(listId, sortKey = 'initial') {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return []
@@ -311,18 +426,35 @@ export const useRecordsStore = defineStore('records', () => {
     return [...list.records].sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
   }
 
-  // Get custom list by id
+  /**
+   * @function getCustomList
+   * @description Retrieves a custom list by its ID
+   * @param {string} listId
+   * @returns {Object|undefined}
+   */
   function getCustomList(listId) {
     return customLists.value.find(l => l.id === listId)
   }
 
-  // Get custom record by id
+  /**
+   * @function getCustomRecord
+   * @description Retrieves a record from a specific custom list
+   * @param {string} listId
+   * @param {string} recordId
+   * @returns {Object|null}
+   */
   function getCustomRecord(listId, recordId) {
     const list = customLists.value.find(l => l.id === listId)
     if (!list) return null
     return list.records.find(r => r.id === recordId)
   }
 
+  /**
+   * @function recordsLength
+   * @description Computed property returning the length of a specific category
+   * @param {string} listType
+   * @returns {import('vue').ComputedRef<number>}
+   */
   const recordsLength = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
@@ -330,6 +462,11 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
+  /**
+   * @function allRecordsLength
+   * @description Computed property returning the total length across all standard categories
+   * @returns {import('vue').ComputedRef<number>}
+   */
   const allRecordsLength = () => {
     return computed(() => {
       const categories = Object.keys(records.value)
@@ -341,6 +478,12 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
+  /**
+   * @function someRecordsSelected
+   * @description Checks if at least one record is selected in a category
+   * @param {string} listType
+   * @returns {import('vue').ComputedRef<boolean>}
+   */
   const someRecordsSelected = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
@@ -348,6 +491,12 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
+  /**
+   * @function allRecordsSelected
+   * @description Checks if all records are selected in a category
+   * @param {string} listType
+   * @returns {import('vue').ComputedRef<boolean>}
+   */
   const allRecordsSelected = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
@@ -355,6 +504,12 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
+  /**
+   * @function selectedRecords
+   * @description Retrieves selected records for a category
+   * @param {string} listType
+   * @returns {import('vue').ComputedRef<Array>}
+   */
   const selectedRecords = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
@@ -362,6 +517,12 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
+  /**
+   * @function selectedRecordsLength
+   * @description Retrieves the number of selected records for a category
+   * @param {string} listType
+   * @returns {import('vue').ComputedRef<number>}
+   */
   const selectedRecordsLength = (listType) => {
     return computed(() => {
       const { [listType]: list = [] } = records.value
@@ -369,27 +530,60 @@ export const useRecordsStore = defineStore('records', () => {
     })
   }
 
+  /**
+   * @function selectAllRecords
+   * @description Selects all records in a category
+   * @param {string} listType
+   */
   function selectAllRecords(listType) {
     const { [listType]: list = [] } = records.value
     return list?.filter((record) => record.selected = true)
   }
 
+  /**
+   * @function deselectAllRecords
+   * @description Deselects all records in a category
+   * @param {string} listType
+   */
   function deselectAllRecords(listType) {
     const { [listType]: list = [] } = records.value
     return list?.filter((record) => record.selected = false)
   }
 
+  /**
+   * @function checkRecordExist
+   * @description Checks if a record exists in a specific category by ID
+   * @param {Object} item
+   * @param {string} listType
+   * @returns {boolean}
+   */
   function checkRecordExist(item, listType) {
     return records.value[listType].some((i) => i.id === item.id)
   }
 
+  /**
+   * @function getRecord
+   * @description Retrieves a record from a specific category by ID
+   * @param {string} id
+   * @param {string} listType
+   * @returns {Object|undefined}
+   */
   function getRecord(id, listType) {
     const record = records.value[listType].find((i) => i.id === id)
     return record
   }
 
+  /**
+   * @function addRecord
+   * @async
+   * @description Creates or updates a record in a standard category
+   * @param {Object} params
+   * @param {Object} params.record - Record data
+   * @param {string} params.listType - Category tag
+   * @returns {Promise<Object>} The saved record
+   */
   async function addRecord({
-    record, listType 
+    record, listType
   }) {
     try {
       const income = record || {
@@ -411,7 +605,7 @@ export const useRecordsStore = defineStore('records', () => {
         addToDisplayOrder(savedRecord.id, listType)
       } else {
         const {
-          id, category, userId, createdAt, updatedAt, selected, ...updates 
+          id, category, userId, createdAt, updatedAt, selected, ...updates
         } = income
         savedRecord = await api.put(`/records/${income.id}`, updates)
         // Re-attach UI-only fields
@@ -427,6 +621,11 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+  /**
+   * @function restoreRecords
+   * @async
+   * @description Fetches and restores all records and custom lists from the API
+   */
   async function restoreRecords() {
     try {
       const data = await api.get('/records')
@@ -456,6 +655,13 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+  /**
+   * @function deleteSelectedRecords
+   * @async
+   * @description Deletes all records currently selected in a category
+   * @param {string} listType
+   * @returns {Promise<Array>} The deleted records
+   */
   async function deleteSelectedRecords(listType) {
     const selected = selectedRecords(listType).value
     try {
@@ -475,11 +681,23 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+  /**
+   * @function deleteAllRecords
+   * @async
+   * @description Placeholder for deleting all records (typically handled by backend during import)
+   */
   async function deleteAllRecords() {
     // Handled by the import route on the backend
     return Promise.resolve(true)
   }
 
+  /**
+   * @function deleteRecordById
+   * @async
+   * @description Deletes a single record by its ID
+   * @param {string} id
+   * @param {string} listType
+   */
   async function deleteRecordById(id, listType) {
     try {
       await api.delete(`/records/${id}`)
@@ -494,10 +712,15 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
-  /* ======================== */
-  /* ======== Labels ======== */
-  /* ======================== */
+  /**
+   * @section Labels
+   * @description Configuration for record status labels per category
+   */
 
+  /** 
+   * @constant labels [computable]
+   * @type {import('vue').ComputedRef<Object>} 
+   */
   const labels = computed(() => ({
     games: [
       {
@@ -708,45 +931,81 @@ export const useRecordsStore = defineStore('records', () => {
     ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
   }))
 
+  /**
+   * @function getDefaultLabel
+   * @description Retrieves the default status label for a category
+   * @param {string} listType
+   * @returns {Object}
+   */
   function getDefaultLabel(listType) {
     return labels.value[listType].find((i) => i.default) || labels.value[listType][0]
   }
 
+  /**
+   * @function getLabel
+   * @description Retrieves a status label configuration by key
+   * @param {string} listType
+   * @param {string} key
+   * @returns {Object}
+   */
   function getLabel(listType, key) {
     const targetItem = labels.value[listType].filter((i) => { return i.key === key })[0]
     return targetItem ? targetItem : getDefaultLabel(listType)
   }
 
+  /**
+   * @function getLabelName
+   * @description Returns the translated name of a status label
+   * @param {string} listType
+   * @param {string} key
+   * @returns {string}
+   */
   function getLabelName(listType, key) {
     return i18n.global.t(`store.labels.${key}`)
   }
 
+  /**
+   * @function getLabelIcon
+   * @description Returns the icon component for a status label
+   * @param {string} listType
+   * @param {string} key
+   * @returns {Object}
+   */
   function getLabelIcon(listType, key) {
     return getLabel(listType, key).icon
   }
 
+  /**
+   * @section Export & Import
+   * @description Configuration and methods for collection data portability
+   */
 
-  /* =========================== */
-  /* ===== Export & Import ===== */
-  /* =========================== */
-
+  /** @type {import('vue').Ref<Array>} */
   const selectedCategories = ref([
     'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music'
   ])
 
+  /** @type {import('vue').Ref<Array>} */
   const selectedCustomLists = ref([])
 
+  /** @type {Array<string>} */
   const validCategories = Object.keys(records.value)
 
+  /** @type {import('vue').Ref<boolean>} */
   const processingImport = ref(false)
 
+  /**
+   * @function exportCollection
+   * @description Generates and downloads a JSON or CSV export of the current collection
+   * @param {string} [format='json'] - 'json' or 'csv'
+   */
   function exportCollection(format = 'json') {
     // Filter records based on selected categories
     const filteredRecords = Object.entries(records.value)
       .reduce((acc, [category, records]) => {
         if (selectedCategories.value.includes(category)) {
           acc[category] = records.map(({
-            selected, ...rest 
+            selected, ...rest
           }) => rest)
         }
         return acc
@@ -830,6 +1089,12 @@ export const useRecordsStore = defineStore('records', () => {
     URL.revokeObjectURL(url)
   }
 
+  /**
+   * @function importCollection
+   * @async
+   * @description Parses and uploads a collection file (JSON or CSV) to the server
+   * @param {Object} data - Upload event data containing the file
+   */
   async function importCollection(data) {
     processingImport.value = true
     const file = data.file.file
@@ -872,6 +1137,13 @@ export const useRecordsStore = defineStore('records', () => {
     reader.readAsText(file)
   }
 
+  /**
+   * @function parseCSVToCollection
+   * @async
+   * @description Converts raw CSV text into a collection object
+   * @param {string} csvText
+   * @returns {Promise<Object>}
+   */
   async function parseCSVToCollection(csvText) {
     const { data } = Papa.parse(csvText, {
       header: true,
@@ -930,6 +1202,12 @@ export const useRecordsStore = defineStore('records', () => {
     return collection
   }
 
+  /**
+   * @function validateJSON
+   * @description Validates the structure and content of an imported collection object
+   * @param {Object} obj - The object to validate
+   * @returns {Promise<boolean>}
+   */
   function validateJSON(obj) {
     const notificationsStore = useNotificationsStore()
     try {
@@ -1036,6 +1314,13 @@ export const useRecordsStore = defineStore('records', () => {
     }
   }
 
+  /**
+   * @function getRecordValidationErrors
+   * @description Performs detailed validation on a single record object
+   * @param {Object} record
+   * @param {string} category
+   * @returns {Array<string>} List of validation error messages
+   */
   function getRecordValidationErrors(record, category) {
     const errors = []
     const validLabels = (labels.value[category] || []).map(l => l.key)
