@@ -81,6 +81,7 @@ const handleSelect = (key) => {
 <template>
   <n-dropdown
     trigger="click"
+    placement="bottom-end"
     :options="options"
     :value="locale"
     size="small"
@@ -98,6 +99,3 @@ const handleSelect = (key) => {
     </n-button>
   </n-dropdown>
 </template>
-
-<style scoped>
-</style>

@@ -100,8 +100,8 @@ async function handleRegister() {
         >
           <n-card
             size="huge"
-            hoverable
             content-class="p-14"
+            class="min-w-500"
           >
             <n-space
               vertical

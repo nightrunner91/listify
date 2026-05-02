@@ -89,7 +89,7 @@ async function handleLogin() {
         >
           <n-card
             size="huge"
-            hoverable
+            class="min-w-500"
             content-class="p-14"
           >
             <n-space

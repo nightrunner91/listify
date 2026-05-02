@@ -16,11 +16,9 @@ import {
 import { PhTrashSimple as DeleteIcon } from 'phosphor-vue'
 import { renderIcon } from '@/utils/render-icon'
 import LyTitle from '@/components/base/ly-title/LyTitle.vue'
-import LyUserProfile from '@/features/start/components/ly-user-profile/LyUserProfile.vue'
 import LySort from '@/features/records/components/ly-sort/LySort.vue'
 import LyScroller from '@/components/base/ly-scroller/LyScroller.vue'
 import LyFooter from '@/components/layout/ly-footer/LyFooter.vue'
-import LyImport from '@/features/records/components/ly-import/LyImport.vue'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -35,7 +33,6 @@ const router = useRouter()
 const dialog = useDialog()
 
 const contentRef = ref(null)
-const importRef = ref(null)
 
 /**
  * @function updateScroll
@@ -90,32 +87,24 @@ function confirmDeleteList() {
         offset="0 s:1 l:1"
         class="ly-grid"
       >
-        <!-- begin::Top Header (Profile or Title+Sort) -->
+        <!-- begin::Top Header (Title+Sort) -->
         <n-space
           justify="space-between"
           :wrap-item="false"
           align="center"
           class="w-100 mb-6"
         >
-          <template v-if="route.meta.tag === 'start'">
-            <ly-user-profile
-              class="w-100"
-              @import="importRef.showModal = true"
-            />
-          </template>
-          <template v-else>
-            <ly-title />
-            <ly-sort v-if="!route.meta.isCustom && route.meta.tag !== 'about'" />
-            <n-button
-              v-else-if="route.meta.isCustom"
-              secondary
-              type="error"
-              :render-icon="renderIcon(DeleteIcon)"
-              @click="confirmDeleteList"
-            >
-              {{ t('common.delete') }}
-            </n-button>
-          </template>
+          <ly-title />
+          <ly-sort v-if="!route.meta.isCustom && route.meta.tag !== 'about' && route.meta.tag !== 'start'" />
+          <n-button
+            v-else-if="route.meta.isCustom"
+            secondary
+            type="error"
+            :render-icon="renderIcon(DeleteIcon)"
+            @click="confirmDeleteList"
+          >
+            {{ t('common.delete') }}
+          </n-button>
         </n-space>
         <!-- end::Top Header -->
 
@@ -123,11 +112,6 @@ function confirmDeleteList() {
         <router-view />
         <!-- end::Main View -->
 
-        <ly-import
-          v-show="false"
-          ref="importRef"
-          variant="hidden"
-        />
 
         <ly-footer />
       </n-grid-item>

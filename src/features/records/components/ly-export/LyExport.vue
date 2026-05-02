@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import {
-  PhUploadSimple as ExportIcon,
+  PhExport as ExportIcon,
   PhFileCode as JsonIcon,
   PhTable as CsvIcon,
   PhInfo as InfoIcon
