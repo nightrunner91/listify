@@ -93,7 +93,7 @@ watch(
   }
 )
 
-onMounted(() => setDefaultSortLabel)
+onMounted(setDefaultSortLabel)
 
 // ── IntersectionObserver to show/hide floating button ────────────────────────
 
@@ -101,25 +101,33 @@ const bottomButtonRef = ref(null)
 const isBottomButtonVisible = ref(false)
 let observer = null
 
-/**
- * @function setupObserver
- * @description Initializes an IntersectionObserver to detect if the bottom "Add" button is in view
- */
 function setupObserver() {
   if (observer) observer.disconnect()
+  
   observer = new IntersectionObserver(
     ([entry]) => {
       isBottomButtonVisible.value = entry.isIntersecting
     },
-    { threshold: 0 }
+    { 
+      threshold: 0,
+      // Add a small rootMargin to ensure the intersection is triggered 
+      // even if the element is at the very edge of the scroll container
+      rootMargin: '0px 0px 8px 0px'
+    }
   )
+
   if (bottomButtonRef.value) {
     observer.observe(bottomButtonRef.value)
   }
 }
 
 watch(bottomButtonRef, (el) => {
-  if (el) setupObserver()
+  if (el) {
+    setupObserver()
+  } else {
+    isBottomButtonVisible.value = false
+    if (observer) observer.disconnect()
+  }
 })
 
 onUnmounted(() => {
@@ -251,7 +259,6 @@ onBeforeRouteLeave(async () => {
             <!-- Floating button: only visible when bottom button is off-screen -->
             <transition
               name="fade-up-down"
-              mode="out-in"
             >
               <ly-add-record 
                 v-if="!recordsStore.isSearching && !isBottomButtonVisible"

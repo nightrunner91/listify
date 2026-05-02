@@ -200,7 +200,7 @@ async function handleLogout() {
               />
               <n-text
                 depth="3"
-                class="fz-12 line-height-1"
+                class="fz-14 line-height-1"
               >
                 {{ user?.email }}
               </n-text>

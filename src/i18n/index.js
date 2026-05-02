@@ -1,4 +1,7 @@
 import { createI18n } from 'vue-i18n'
+import moment from 'moment'
+import 'moment/dist/locale/ru'
+import 'moment/dist/locale/ro'
 import en from './locales/en.json'
 import ru from './locales/ru.json'
 import ro from './locales/ro.json'
@@ -36,6 +39,9 @@ const getStartingLocale = () => {
 
 const startingLocale = getStartingLocale()
 
+// Initialize moment locale
+moment.locale(startingLocale)
+
 const i18n = createI18n({
   legacy: false, // use Composition API
   locale: startingLocale,
@@ -54,6 +60,10 @@ export const setI18nLanguage = (locale) => {
   } else {
     i18n.global.locale.value = locale
   }
+
+  // Update moment locale
+  moment.locale(locale)
+
   try {
     localStorage.setItem('ly_i18n_locale', locale)
   } catch (e) {
@@ -62,3 +72,4 @@ export const setI18nLanguage = (locale) => {
 }
 
 export default i18n
+

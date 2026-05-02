@@ -13,7 +13,8 @@
     "import": "Импорт",
     "light": "Светлая",
     "dark": "Тёмная",
-    "system": "Системная"
+    "system": "Системная",
+    "confirmAction": "Подтвердите действие"
   },
   "home": {
     "categories": "КАТЕГОРИИ"
@@ -34,7 +35,8 @@
     "emptyDescription": "Вы еще не создали ни одного списка.",
     "createList": "Создать новый список",
     "items": "элементов",
-    "updated": "Обновлено {time}"
+    "updated": "Обновлено {time}",
+    "deleteConfirm": "Удалить \"{name}\"? Это действие нельзя отменить."
   },
   "userProfile": {
     "importCollection": "Импорт коллекции",
@@ -133,13 +135,16 @@
     "randomSeed": "Случайный сид",
     "resetOptions": "Сбросить настройки",
     "configuration": "Конфигурация",
-    "styleLabel": "Стиль аватара",
-    "seedLabel": "Сид",
+    "avatarStyle": "Стиль аватара",
+    "seed": "Сид",
     "seedPlaceholder": "Любая строка...",
-    "rotationLabel": "Поворот ({angle}°)",
-    "scaleLabel": "Масштаб ({percent}%)",
-    "flipLabel": "Отразить по горизонтали",
-    "confirmButton": "Подтвердить конфигурацию"
+    "rotate": "Поворот ({degrees}°)",
+    "scale": "Масштаб ({percent}%)",
+    "flip": "Отразить по горизонтали",
+    "confirm": "Подтвердить конфигурацию"
+  },
+  "github": {
+    "openRepo": "Открыть репозиторий GitHub"
   },
   "things": {
     "game": "игру",

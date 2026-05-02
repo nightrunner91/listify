@@ -13,7 +13,8 @@
     "import": "Import",
     "light": "Light",
     "dark": "Dark",
-    "system": "System"
+    "system": "System",
+    "confirmAction": "Confirm action"
   },
   "home": {
     "categories": "CATEGORIES"
@@ -34,7 +35,8 @@
     "emptyDescription": "You haven't created any custom lists yet.",
     "createList": "Create new list",
     "items": "items",
-    "updated": "Updated {time}"
+    "updated": "Updated {time}",
+    "deleteConfirm": "Delete \"{name}\"? This cannot be undone."
   },
   "userProfile": {
     "importCollection": "Import collection",
@@ -133,13 +135,16 @@
     "randomSeed": "Random Seed",
     "resetOptions": "Reset Options",
     "configuration": "Configuration",
-    "styleLabel": "Avatar Style",
-    "seedLabel": "Seed",
+    "avatarStyle": "Avatar Style",
+    "seed": "Seed",
     "seedPlaceholder": "Any string...",
-    "rotationLabel": "Rotation ({angle}°)",
-    "scaleLabel": "Scale ({percent}%)",
-    "flipLabel": "Flip Horizontally",
-    "confirmButton": "Confirm configuration"
+    "rotate": "Rotation ({degrees}°)",
+    "scale": "Scale ({percent}%)",
+    "flip": "Flip Horizontally",
+    "confirm": "Confirm configuration"
+  },
+  "github": {
+    "openRepo": "Open GitHub Repository"
   },
   "things": {
     "game": "Game",

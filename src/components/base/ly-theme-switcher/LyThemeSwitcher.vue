@@ -14,12 +14,10 @@ import {
   NIcon,
   NDropdown
 } from 'naive-ui'
-import { useGridStore } from '@/stores/grid.store'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const themeStore = useThemeStore()
-const gridStore = useGridStore()
 
 const renderIcon = (icon) => {
   return () => h(NIcon, null, { default: () => h(icon) })
@@ -52,12 +50,6 @@ const currentThemeIcon = computed(() => {
   if (themeStore.themeMode === 'dark') return DarkIcon
   return SystemIcon
 })
-
-const currentThemeLabel = computed(() => {
-  if (themeStore.themeMode === 'light') return t('common.light')
-  if (themeStore.themeMode === 'dark') return t('common.dark')
-  return t('common.system')
-})
 </script>
 
 <template>
@@ -71,7 +63,7 @@ const currentThemeLabel = computed(() => {
   >
     <n-button
       quaternary
-      size="small"
+      circle
     >
       <template #icon>
         <n-icon
@@ -79,9 +71,6 @@ const currentThemeLabel = computed(() => {
           :size="18"
         />
       </template>
-      <span v-if="gridStore.screenLargerThen('s')">
-        {{ currentThemeLabel }}
-      </span>
     </n-button>
   </n-dropdown>
 </template>

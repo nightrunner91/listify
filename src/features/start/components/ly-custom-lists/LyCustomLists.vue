@@ -137,6 +137,7 @@ function formatRelativeTime(dateString) {
               <n-space
                 :size="8"
                 align="center"
+                class="fz-14"
               >
                 <n-text depth="3">
                   {{ list.records?.length || 0 }} {{ t('customLists.items') }}

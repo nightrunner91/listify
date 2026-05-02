@@ -24,7 +24,9 @@ import LyImport from '@/features/records/components/ly-import/LyImport.vue'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const menuStore = useMenuStore()
 const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
@@ -51,10 +53,10 @@ function updateScroll(event) {
 function confirmDeleteList() {
   const list = recordsStore.getCustomList(route.params.id)
   dialog.warning({
-    title: 'Confirm action',
-    content: `Delete "${list?.name}"? This cannot be undone.`,
-    positiveText: 'Delete',
-    negativeText: 'Cancel',
+    title: t('common.confirmAction'),
+    content: t('customLists.deleteConfirm', { name: list?.name }),
+    positiveText: t('common.delete'),
+    negativeText: t('common.cancel'),
     onPositiveClick: async () => {
       await recordsStore.deleteCustomList(route.params.id)
       router.push('/start')
@@ -111,7 +113,7 @@ function confirmDeleteList() {
               :render-icon="renderIcon(DeleteIcon)"
               @click="confirmDeleteList"
             >
-              Delete
+              {{ t('common.delete') }}
             </n-button>
           </template>
         </n-space>

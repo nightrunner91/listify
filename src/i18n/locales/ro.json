@@ -13,7 +13,8 @@
     "import": "Import",
     "light": "Luminos",
     "dark": "Întunecat",
-    "system": "Sistem"
+    "system": "Sistem",
+    "confirmAction": "Confirmă acțiunea"
   },
   "home": {
     "categories": "CATEGORII"
@@ -34,7 +35,8 @@
     "emptyDescription": "Nu ați creat nicio listă personalizată încă.",
     "createList": "Creează listă nouă",
     "items": "elemente",
-    "updated": "Actualizat {time}"
+    "updated": "Actualizat {time}",
+    "deleteConfirm": "Ștergeți \"{name}\"? Această acțiune nu poate fi anulată."
   },
   "userProfile": {
     "importCollection": "Importă colecția",
@@ -133,13 +135,16 @@
     "randomSeed": "Seed aleatoriu",
     "resetOptions": "Resetează opțiunile",
     "configuration": "Configurație",
-    "styleLabel": "Stil avatar",
-    "seedLabel": "Seed",
+    "avatarStyle": "Stil avatar",
+    "seed": "Seed",
     "seedPlaceholder": "Orice șir...",
-    "rotationLabel": "Rotație ({angle}°)",
-    "scaleLabel": "Scară ({percent}%)",
-    "flipLabel": "Întoarce orizontal",
-    "confirmButton": "Confirmă configurația"
+    "rotate": "Rotație ({degrees}°)",
+    "scale": "Scară ({percent}%)",
+    "flip": "Întoarce orizontal",
+    "confirm": "Confirmă configurația"
+  },
+  "github": {
+    "openRepo": "Deschide depozitul GitHub"
   },
   "things": {
     "game": "un joc",

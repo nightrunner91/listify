@@ -6,7 +6,9 @@ import {
 } from 'naive-ui'
 import { PhGithubLogo as GithubIcon } from 'phosphor-vue'
 import { useGridStore } from '@/stores/grid.store'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const gridStore = useGridStore()
 
 function openGithub() {
@@ -31,6 +33,6 @@ function openGithub() {
         <span v-if="gridStore.screenLargerThen('s')">GitHub</span>
       </n-button>
     </template>
-    Open GitHub Repository
+    {{ t('github.openRepo') }}
   </n-tooltip>
 </template>
