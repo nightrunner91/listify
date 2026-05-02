@@ -25,10 +25,10 @@ import {
   useRoute,
   onBeforeRouteLeave
 } from 'vue-router'
-import LySearch from '@/components/ly-search/LySearch.vue'
-import LyRecord from '@/components/ly-record/LyRecord.vue'
-import LyAddRecord from '@/components/ly-add-record/LyAddRecord.vue'
-import LyImport from '@/components/ly-import/LyImport.vue'
+import LySearch from '@/features/records/components/ly-search/LySearch.vue'
+import LyRecord from '@/features/records/components/ly-record/LyRecord.vue'
+import LyAddRecord from '@/features/records/components/ly-add-record/LyAddRecord.vue'
+import LyImport from '@/features/records/components/ly-import/LyImport.vue'
 import { useI18n } from 'vue-i18n'
 
 // Variable declarations

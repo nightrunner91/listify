@@ -3,8 +3,8 @@ import {
   NLayoutFooter,
   NSpace
 } from 'naive-ui'
-import LyGithub from '@/components/ly-github/LyGithub.vue'
-import LyVersion from '@/components/ly-version/LyVersion.vue'
+import LyGithub from '@/components/base/ly-github/LyGithub.vue'
+import LyVersion from '@/components/base/ly-version/LyVersion.vue'
 </script>
 
 <template>

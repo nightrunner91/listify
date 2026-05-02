@@ -3,9 +3,9 @@ import {
   NGrid,
   NGridItem
 } from 'naive-ui'
-import LyCategories from '@/components/ly-categories/LyCategories.vue'
-import LyCustomLists from '@/components/ly-custom-lists/LyCustomLists.vue'
-import LyActivityTimeline from '@/components/ly-activity-timeline/LyActivityTimeline.vue'
+import LyCategories from '@/features/start/components/ly-categories/LyCategories.vue'
+import LyCustomLists from '@/features/start/components/ly-custom-lists/LyCustomLists.vue'
+import LyActivityTimeline from '@/features/start/components/ly-activity-timeline/LyActivityTimeline.vue'
 </script>
 
 <template>

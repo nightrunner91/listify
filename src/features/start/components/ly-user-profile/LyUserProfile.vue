@@ -33,8 +33,8 @@ import { useRecordsStore } from '@/stores/records.store'
 import { useRouter } from 'vue-router'
 import { renderIcon } from '@/utils/render-icon'
 import LyAvatarPicker from './LyAvatarPicker.vue'
-import LyImport from '@/components/ly-import/LyImport.vue'
-import LyExport from '@/components/ly-export/LyExport.vue'
+import LyImport from '@/features/records/components/ly-import/LyImport.vue'
+import LyExport from '@/features/records/components/ly-export/LyExport.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()

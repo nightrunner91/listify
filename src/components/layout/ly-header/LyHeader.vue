@@ -3,9 +3,9 @@ import {
   NLayoutHeader,
   NSpace
 } from 'naive-ui'
-import LyLogo from '@/components/ly-logo/LyLogo.vue'
-import LyThemeSwitcher from '@/components/ly-theme-switcher/LyThemeSwitcher.vue'
-import LyLanguageSwitcher from '@/components/ly-language-switcher/LyLanguageSwitcher.vue'
+import LyLogo from '@/components/base/ly-logo/LyLogo.vue'
+import LyThemeSwitcher from '@/components/base/ly-theme-switcher/LyThemeSwitcher.vue'
+import LyLanguageSwitcher from '@/components/base/ly-language-switcher/LyLanguageSwitcher.vue'
 </script>
 
 <template>
