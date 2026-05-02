@@ -42,7 +42,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:show', 'update'])
 
-const selectedStyle = ref(props.currentStyle || 'adventurer')
+const selectedStyle = ref(props.currentStyle || 'adventurer-neutral')
 const selectedSeed = ref(props.currentSeed || 'default')
 const options = reactive({
   flip: false,
@@ -53,44 +53,20 @@ const options = reactive({
 
 const styleOptions = computed(() => [
   {
-    label: t('avatarPicker.styles.adventurer'),
-    value: 'adventurer' 
-  },
-  {
     label: t('avatarPicker.styles.adventurerNeutral'),
     value: 'adventurer-neutral' 
-  },
-  {
-    label: t('avatarPicker.styles.avataaars'),
-    value: 'avataaars' 
   },
   {
     label: t('avatarPicker.styles.avataaarsNeutral'),
     value: 'avataaars-neutral' 
   },
   {
-    label: t('avatarPicker.styles.bigEars'),
-    value: 'big-ears' 
-  },
-  {
     label: t('avatarPicker.styles.bigEarsNeutral'),
     value: 'big-ears-neutral' 
   },
   {
-    label: t('avatarPicker.styles.bigSmile'),
-    value: 'big-smile' 
-  },
-  {
-    label: t('avatarPicker.styles.bottts'),
-    value: 'bottts' 
-  },
-  {
     label: t('avatarPicker.styles.botttsNeutral'),
     value: 'bottts-neutral' 
-  },
-  {
-    label: t('avatarPicker.styles.croodles'),
-    value: 'croodles' 
   },
   {
     label: t('avatarPicker.styles.croodlesNeutral'),
@@ -113,36 +89,8 @@ const styleOptions = computed(() => [
     value: 'initials' 
   },
   {
-    label: t('avatarPicker.styles.lorelei'),
-    value: 'lorelei' 
-  },
-  {
     label: t('avatarPicker.styles.loreleiNeutral'),
     value: 'lorelei-neutral' 
-  },
-  {
-    label: t('avatarPicker.styles.micah'),
-    value: 'micah' 
-  },
-  {
-    label: t('avatarPicker.styles.miniavs'),
-    value: 'miniavs' 
-  },
-  {
-    label: t('avatarPicker.styles.notionists'),
-    value: 'notionists' 
-  },
-  {
-    label: t('avatarPicker.styles.openPeeps'),
-    value: 'open-peeps' 
-  },
-  {
-    label: t('avatarPicker.styles.personas'),
-    value: 'personas' 
-  },
-  {
-    label: t('avatarPicker.styles.pixelArt'),
-    value: 'pixel-art' 
   },
   {
     label: t('avatarPicker.styles.pixelArtNeutral'),
@@ -164,7 +112,7 @@ const styleOptions = computed(() => [
 
 watch(() => props.show, (newVal) => {
   if (newVal) {
-    selectedStyle.value = props.currentStyle || 'adventurer'
+    selectedStyle.value = props.currentStyle || 'adventurer-neutral'
     selectedSeed.value = props.currentSeed || 'default'
     Object.assign(options, {
       flip: false,

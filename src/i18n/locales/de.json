@@ -141,7 +141,23 @@
     "rotate": "Drehung ({degrees}°)",
     "scale": "Skalierung ({percent}%)",
     "flip": "Horizontal spiegeln",
-    "confirm": "Konfiguration bestätigen"
+    "confirm": "Konfiguration bestätigen",
+    "styles": {
+      "adventurerNeutral": "Abenteurer",
+      "avataaarsNeutral": "Avataaars",
+      "bigEarsNeutral": "Große Ohren",
+      "botttsNeutral": "Bots",
+      "croodlesNeutral": "Croodles",
+      "funEmoji": "Lustige Emojis",
+      "icons": "Icons",
+      "identicon": "Identicon",
+      "initials": "Initialen",
+      "loreleiNeutral": "Lorelei",
+      "pixelArtNeutral": "Pixel Art",
+      "rings": "Ringe",
+      "shapes": "Formen",
+      "thumbs": "Daumen"
+    }
   },
   "github": {
     "openRepo": "GitHub-Repository öffnen"

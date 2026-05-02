@@ -141,7 +141,23 @@
     "rotate": "Поворот ({degrees}°)",
     "scale": "Масштаб ({percent}%)",
     "flip": "Віддзеркалити горизонтально",
-    "confirm": "Підтвердити конфігурацію"
+    "confirm": "Підтвердити конфігурацію",
+    "styles": {
+      "adventurerNeutral": "Авантюрист",
+      "avataaarsNeutral": "Аватари",
+      "bigEarsNeutral": "Великі вуха",
+      "botttsNeutral": "Роботи",
+      "croodlesNeutral": "Крудли",
+      "funEmoji": "Веселі емодзі",
+      "icons": "Іконки",
+      "identicon": "Ідентикон",
+      "initials": "Ініціали",
+      "loreleiNeutral": "Лорелей",
+      "pixelArtNeutral": "Піксель-арт",
+      "rings": "Кільця",
+      "shapes": "Фігури",
+      "thumbs": "Великі пальці"
+    }
   },
   "github": {
     "openRepo": "Відкрити репозиторій на GitHub"

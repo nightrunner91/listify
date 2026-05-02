@@ -141,7 +141,23 @@
     "rotate": "Поворот ({degrees}°)",
     "scale": "Масштаб ({percent}%)",
     "flip": "Отразить по горизонтали",
-    "confirm": "Подтвердить конфигурацию"
+    "confirm": "Подтвердить конфигурацию",
+    "styles": {
+      "adventurerNeutral": "Авантюрист",
+      "avataaarsNeutral": "Аватары",
+      "bigEarsNeutral": "Большие уши",
+      "botttsNeutral": "Роботы",
+      "croodlesNeutral": "Крудлы",
+      "funEmoji": "Веселые эмодзи",
+      "icons": "Иконки",
+      "identicon": "Идентикон",
+      "initials": "Инициалы",
+      "loreleiNeutral": "Лорелей",
+      "pixelArtNeutral": "Пиксель-арт",
+      "rings": "Кольца",
+      "shapes": "Фигуры",
+      "thumbs": "Большие пальцы"
+    }
   },
   "github": {
     "openRepo": "Открыть репозиторий GitHub"

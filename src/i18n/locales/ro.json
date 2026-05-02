@@ -141,7 +141,23 @@
     "rotate": "Rotație ({degrees}°)",
     "scale": "Scară ({percent}%)",
     "flip": "Întoarce orizontal",
-    "confirm": "Confirmă configurația"
+    "confirm": "Confirmă configurația",
+    "styles": {
+      "adventurerNeutral": "Aventurier",
+      "avataaarsNeutral": "Avataaars",
+      "bigEarsNeutral": "Urechi Mari",
+      "botttsNeutral": "Bots",
+      "croodlesNeutral": "Croodles",
+      "funEmoji": "Emoji-uri Amuzante",
+      "icons": "Iconițe",
+      "identicon": "Identicon",
+      "initials": "Inițiale",
+      "loreleiNeutral": "Lorelei",
+      "pixelArtNeutral": "Pixel Art",
+      "rings": "Inele",
+      "shapes": "Forme",
+      "thumbs": "Degete"
+    }
   },
   "github": {
     "openRepo": "Deschide depozitul GitHub"
