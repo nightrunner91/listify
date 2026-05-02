@@ -2,9 +2,19 @@ import { createI18n } from 'vue-i18n'
 import moment from 'moment'
 import 'moment/dist/locale/ru'
 import 'moment/dist/locale/ro'
+import 'moment/dist/locale/uk'
+import 'moment/dist/locale/pl'
+import 'moment/dist/locale/fr'
+import 'moment/dist/locale/es'
+import 'moment/dist/locale/de'
 import en from './locales/en.json'
 import ru from './locales/ru.json'
 import ro from './locales/ro.json'
+import uk from './locales/uk.json'
+import pl from './locales/pl.json'
+import fr from './locales/fr.json'
+import es from './locales/es.json'
+import de from './locales/de.json'
 
 // Try to get saved language from localStorage
 const getSavedLocale = () => {
@@ -27,11 +37,12 @@ const getBrowserLocale = () => {
 
 const getStartingLocale = () => {
   const saved = getSavedLocale()
-  if (saved && ['en', 'ru', 'ro'].includes(saved)) {
+  const allowedLocales = ['en', 'ru', 'ro', 'uk', 'pl', 'fr', 'es', 'de']
+  if (saved && allowedLocales.includes(saved)) {
     return saved
   }
   const browser = getBrowserLocale()
-  if (['en', 'ru', 'ro'].includes(browser)) {
+  if (allowedLocales.includes(browser)) {
     return browser
   }
   return 'en'
@@ -49,7 +60,12 @@ const i18n = createI18n({
   messages: {
     en,
     ru,
-    ro
+    ro,
+    uk,
+    pl,
+    fr,
+    es,
+    de
   }
 })
 

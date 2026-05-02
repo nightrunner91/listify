@@ -14,9 +14,14 @@ import { setI18nLanguage } from '@/i18n'
 const { locale } = useI18n()
 
 const flagMap = {
-  en: 'gb',
-  ru: 'ru',
-  ro: 'ro'
+  en: 'gb', // English
+  es: 'es', // Spanish
+  fr: 'fr', // French
+  ru: 'ru', // Russian
+  de: 'de', // German
+  pl: 'pl', // Polish
+  uk: 'ua', // Ukrainian
+  ro: 'ro', // Romanian
 }
 
 const renderFlag = (countryCode) => {
@@ -30,9 +35,34 @@ const options = [
     icon: renderFlag(flagMap.en) 
   },
   {
+    label: 'Español',
+    key: 'es',
+    icon: renderFlag(flagMap.es) 
+  },
+  {
+    label: 'Français',
+    key: 'fr',
+    icon: renderFlag(flagMap.fr) 
+  },
+  {
     label: 'Русский',
     key: 'ru',
     icon: renderFlag(flagMap.ru) 
+  },
+  {
+    label: 'Deutsch',
+    key: 'de',
+    icon: renderFlag(flagMap.de) 
+  },
+  {
+    label: 'Polski',
+    key: 'pl',
+    icon: renderFlag(flagMap.pl) 
+  },
+  {
+    label: 'Українська',
+    key: 'uk',
+    icon: renderFlag(flagMap.uk) 
   },
   {
     label: 'Română',

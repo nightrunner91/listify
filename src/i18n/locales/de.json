@@ -1,0 +1,234 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "close": "Schließen",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System",
+    "confirmAction": "Aktion bestätigen"
+  },
+  "home": {
+    "categories": "KATEGORIEN"
+  },
+  "categories": {
+    "start": "Meine Sammlung",
+    "games": "Spiele",
+    "tvshows": "Serien",
+    "films": "Filme",
+    "anime": "Anime",
+    "manga": "Manga",
+    "books": "Bücher",
+    "music": "Musik",
+    "about": "Über Listify"
+  },
+  "customLists": {
+    "title": "EIGENE LISTEN",
+    "emptyDescription": "Du hast noch keine eigenen Listen erstellt.",
+    "createList": "Neue Liste erstellen",
+    "items": "Einträge",
+    "updated": "Aktualisiert {time}",
+    "deleteConfirm": "\"{name}\" löschen? Dies kann nicht rückgängig gemacht werden."
+  },
+  "userProfile": {
+    "importCollection": "Sammlung importieren",
+    "exportCollection": "Sammlung exportieren",
+    "logout": "Abmelden",
+    "usernamePlaceholder": "Benutzername"
+  },
+  "records": {
+    "emptyDescription": "Deine Liste scheint leer zu sein.",
+    "searchEmptyDescription": "Keine Einträge für deine Suche gefunden.",
+    "or": "oder",
+    "titlePlaceholder": "Name des Eintrags"
+  },
+  "about": {
+    "description": "Listify ist ein persönlicher Medien-Tracker, der um eine Idee herum entwickelt wurde: Deine Sammlung sollte einfach zu pflegen, immer zugänglich und ganz dein Eigen sein. Egal ob du Spiele loggst, die du beendet hast, Filme auf deiner Merkliste, Bücher, die du gerade liest, oder alles dazwischen — Listify hält alles organisiert, ohne im Weg zu stehen.",
+    "howItWorks": "Wie funktioniert es?",
+    "step1": "Registriere dich und erstelle dein persönliches Listify-Konto.",
+    "step2": "Füge Einträge von jedem Gerät aus hinzu und verwalte sie — egal ob Desktop oder mobil.",
+    "step3": "Nutze integrierte Kategorien oder erstelle eigene Listen für alles, was nicht in die Standardkategorien passt.",
+    "dataTitle": "Deine Daten, deine Regeln",
+    "dataDescription": "Deine Sammlung lebt auf unseren Servern, aber sie gehört dir. Listify unterstützt volle Datenportabilität — exportiere deine gesamte Sammlung jederzeit als {format1}- oder {format2}-Datei. Nutze sie für Backups, Migrationen oder um einfach eine lokale Kopie in deiner bevorzugten Tabellenkalkulation zu haben.",
+    "privacy": "Kein Tracking, keine Werbung, keine Datenweitergabe an Dritte.",
+    "openSource": "Open-Source — inspiziere, forke oder hoste das gesamte Projekt selbst.",
+    "communityTitle": "Community & Beiträge",
+    "communityDescription": "Listify ist ein aktiv entwickeltes Open-Source-Projekt. Neue Funktionen, Kategorien und Verbesserungen werden regelmäßig hinzugefügt. Wenn du eine Idee hast, einen Bug gefunden hast oder einfach nur Hallo sagen möchtest — melde dich über {link1} oder {link2}. Beiträge sind immer willkommen.",
+    "telegram": "Telegram",
+    "githubIssue": "ein Ticket auf GitHub eröffnen",
+    "thankYou": "Vielen Dank, dass du Listify benutzt — und Teil dessen bist, was daraus wird.",
+    "techStack": "Tech Stack"
+  },
+  "store": {
+    "sorting": {
+      "status": "Status",
+      "rating": "Bewertung",
+      "favourite": "Favorit",
+      "az": "A → Z"
+    },
+    "labels": {
+      "playing_now": "Spielt jetzt",
+      "plan_to_play": "Geplant",
+      "on_hold": "Pausiert",
+      "completed": "Abgeschlossen",
+      "dropped": "Abgebrochen",
+      "watching_ongoing": "Schaut laufend",
+      "watching_now": "Schaut jetzt",
+      "plan_to_watch": "Geplant",
+      "watched_all": "Alles gesehen",
+      "watched": "Gesehen",
+      "read_ongoing": "Liest laufend",
+      "read_now": "Liest jetzt",
+      "plan_to_read": "Geplant",
+      "read": "Gelesen",
+      "playing": "Spielt",
+      "reading": "Liest",
+      "watching": "Schaut",
+      "listening_now": "Hört jetzt",
+      "on_repeat": "In Dauerschleife",
+      "plan_to_listen": "Geplant",
+      "listened_all": "Abgeschlossen"
+    },
+    "notifications": {
+      "importSuccess": "Import erfolgreich!",
+      "importErrorCSV": "CSV-Datei konnte nicht verarbeitet werden.",
+      "importErrorJSON": "JSON-Datei konnte nicht verarbeitet werden."
+    },
+    "customListName": "Eigene Liste"
+  },
+  "controls": {
+    "deleteConfirm": "Möchtest du {count} {record} wirklich löschen?",
+    "record": "Eintrag | Einträge"
+  },
+  "menu": {
+    "home": "Startseite",
+    "createList": "Neue Liste erstellen"
+  },
+  "export": {
+    "modalTitle": "Sammlung exportieren",
+    "sectionCategories": "KATEGORIEN",
+    "sectionCustomLists": "EIGENE LISTEN",
+    "sectionFormat": "FORMAT",
+    "footerInfo": "Exportiere deine Sammlung für Backup, Migration oder Portabilität. Deine Daten sind sicher auf dem Server gespeichert, aber eine lokale Kopie schadet nie."
+  },
+  "import": {
+    "modalTitle": "Sammlung importieren",
+    "draggerText": "Klicke oder ziehe deine Sammlung hierher",
+    "draggerInfo": "Die importierte Datei wird mit deiner serverseitigen Sammlung zusammengeführt. Bestehende Einträge bleiben erhalten. Erstelle bei Bedarf zuerst ein Backup."
+  },
+  "search": {
+    "placeholder": "Suche in {name}..."
+  },
+  "addRecord": {
+    "button": "Neues {thing} hinzufügen"
+  },
+  "avatarPicker": {
+    "modalTitle": "Avatar anpassen",
+    "randomSeed": "Zufälliger Seed",
+    "resetOptions": "Optionen zurücksetzen",
+    "configuration": "Konfiguration",
+    "avatarStyle": "Avatar-Stil",
+    "seed": "Seed",
+    "seedPlaceholder": "Beliebiger Text...",
+    "rotate": "Drehung ({degrees}°)",
+    "scale": "Skalierung ({percent}%)",
+    "flip": "Horizontal spiegeln",
+    "confirm": "Konfiguration bestätigen"
+  },
+  "github": {
+    "openRepo": "GitHub-Repository öffnen"
+  },
+  "things": {
+    "game": "Spiel",
+    "tvshow": "Serie",
+    "film": "Film",
+    "anime": "Anime",
+    "manga": "Manga",
+    "book": "Buch",
+    "music": "Musik",
+    "item": "Eintrag"
+  },
+  "auth": {
+    "login": {
+      "title": "Bei Listify anmelden",
+      "subtitle": "Willkommen zurück!",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "example{'@'}email.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "Dein Passwort",
+      "loginButton": "Anmelden",
+      "tabTitle": "Login",
+      "noAccount": "Noch kein Konto?",
+      "registerLink": "Hier registrieren",
+      "successMessage": "Erfolgreich angemeldet!",
+      "errorMessage": "Anmeldung fehlgeschlagen"
+    },
+    "register": {
+      "title": "Konto erstellen",
+      "subtitle": "Tritt Listify heute bei",
+      "confirmPasswordLabel": "Passwort bestätigen",
+      "confirmPasswordPlaceholder": "Passwort wiederholen",
+      "passwordPlaceholder": "Mindestens 8 Zeichen",
+      "registerButton": "Registrieren",
+      "tabTitle": "Registrieren",
+      "haveAccount": "Bereits ein Konto?",
+      "loginLink": "Hier anmelden",
+      "successMessage": "Konto erfolgreich erstellt!",
+      "errorMessage": "Registrierung fehlgeschlagen"
+    }
+  },
+  "validation": {
+    "emailRequired": "Bitte gib deine E-Mail-Adresse ein",
+    "passwordRequired": "Bitte gib dein Passwort ein",
+    "confirmPasswordRequired": "Bitte bestätige dein Passwort",
+    "passwordMismatch": "Passwörter stimmen nicht überein"
+  },
+  "timeline": {
+    "title": "LETZTE AKTIVITÄT",
+    "empty": "Noch keine Aktivitäten",
+    "actions": {
+      "record_created": "{entity} zu {category} hinzugefügt",
+      "record_status_updated": "{status} {entity}",
+      "record_score_updated": "{entity} bewertet",
+      "record_liked": "{entity} gefällt mir",
+      "record_unliked": "{entity} gefällt mir nicht mehr",
+      "record_deleted": "{entity} aus {category} gelöscht",
+      "custom_list_created": "Neue Liste {entity} erstellt",
+      "custom_list_created_empty": "Neue eigene Liste erstellt",
+      "custom_list_renamed": "Eigene Liste in {entity} umbenannt",
+      "custom_list_deleted": "Liste {entity} gelöscht",
+      "custom_list_record_added": "{entity} zu {listName} hinzugefügt",
+      "custom_list_record_deleted": "{entity} aus {listName} entfernt",
+      "collection_imported": "Eine Sammlung mit {count} Einträgen importiert",
+      "default_action": "{action}"
+    },
+    "sentences": {
+      "playing_now": "Hat angefangen zu spielen",
+      "completed": "Abgeschlossen",
+      "dropped": "Abgebrochen",
+      "on_hold": "Pausiert",
+      "plan_to_play": "Zu Geplant hinzugefügt",
+      "watching_now": "Hat angefangen zu schauen",
+      "watched_all": "Alles gesehen von",
+      "plan_to_watch": "Zu Geplant hinzugefügt",
+      "watching_ongoing": "Hat angefangen laufend zu schauen",
+      "watched": "Gesehen",
+      "read_now": "Hat angefangen zu lesen",
+      "read": "Gelesen",
+      "plan_to_read": "Zu Geplant hinzugefügt",
+      "read_ongoing": "Hat angefangen laufend zu lesen",
+      "listening_now": "Hat angefangen zu hören",
+      "listened_all": "Alles gehört von",
+      "on_repeat": "Hört in Dauerschleife",
+      "plan_to_listen": "Zu Geplant hinzugefügt"
+    }
+  }
+}

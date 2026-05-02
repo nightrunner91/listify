@@ -1,0 +1,234 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "close": "Cerrar",
+    "selectAll": "Seleccionar todo",
+    "deselectAll": "Deseleccionar todo",
+    "export": "Exportar",
+    "import": "Importar",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "confirmAction": "Confirmar acción"
+  },
+  "home": {
+    "categories": "CATEGORÍAS"
+  },
+  "categories": {
+    "start": "Mi Colección",
+    "games": "Juegos",
+    "tvshows": "Series",
+    "films": "Películas",
+    "anime": "Anime",
+    "manga": "Manga",
+    "books": "Libros",
+    "music": "Música",
+    "about": "Sobre Listify"
+  },
+  "customLists": {
+    "title": "LISTAS PERSONALIZADAS",
+    "emptyDescription": "Aún no has creado ninguna lista personalizada.",
+    "createList": "Crear nueva lista",
+    "items": "elementos",
+    "updated": "Actualizado {time}",
+    "deleteConfirm": "¿Eliminar \"{name}\"? Esto no se puede deshacer."
+  },
+  "userProfile": {
+    "importCollection": "Importar colección",
+    "exportCollection": "Exportar colección",
+    "logout": "Cerrar sesión",
+    "usernamePlaceholder": "Nombre de usuario"
+  },
+  "records": {
+    "emptyDescription": "Parece que tu lista está vacía.",
+    "searchEmptyDescription": "No se encontraron registros que coincidan con tu búsqueda.",
+    "or": "o",
+    "titlePlaceholder": "Nombre del registro"
+  },
+  "about": {
+    "description": "Listify es un rastreador personal de medios construido en torno a una idea: tu colección debe ser sencilla de mantener, siempre accesible y enteramente tuya. Ya sea que estés registrando juegos que has terminado, películas en tu lista de seguimiento, libros que estás leyendo o cualquier cosa intermedia — Listify lo mantiene organizado sin estorbar.",
+    "howItWorks": "¿Cómo funciona?",
+    "step1": "Regístrate y crea tu cuenta personal de Listify.",
+    "step2": "Añade y gestiona registros desde cualquier dispositivo — escritorio o móvil.",
+    "step3": "Usa las categorías integradas o crea listas personalizadas para cualquier cosa que no encaje en los valores predeterminados.",
+    "dataTitle": "Tus datos, tus reglas",
+    "dataDescription": "Tu colección vive en nuestros servidores, pero te pertenece. Listify admite la portabilidad total de los datos — exporta toda tu colección como un archivo {format1} o {format2} en cualquier momento. Úsalo para copias de seguridad, migración o simplemente para tener una copia local en tu software de hojas de cálculo favorito.",
+    "privacy": "Sin rastreo, sin anuncios, sin compartir datos con terceros.",
+    "openSource": "Código abierto — inspecciona, haz un fork o auto-hospeda todo el proyecto.",
+    "communityTitle": "Comunidad y Contribuciones",
+    "communityDescription": "Listify es un proyecto de código abierto en desarrollo activo. Se añaden regularmente nuevas funciones, categorías y mejoras de calidad de vida. Si tienes una idea, encontraste un error o simplemente quieres decir hola — contáctanos vía {link1} o {link2}. Las contribuciones son siempre bienvenidas.",
+    "telegram": "Telegram",
+    "githubIssue": "abrir un problema en GitHub",
+    "thankYou": "Gracias por usar Listify — y por ser parte de en lo que se está convirtiendo.",
+    "techStack": "Pila tecnológica"
+  },
+  "store": {
+    "sorting": {
+      "status": "Estado",
+      "rating": "Calificación",
+      "favourite": "Favorito",
+      "az": "A → Z"
+    },
+    "labels": {
+      "playing_now": "Jugando ahora",
+      "plan_to_play": "Planeando jugar",
+      "on_hold": "En espera",
+      "completed": "Completado",
+      "dropped": "Abandonado",
+      "watching_ongoing": "Viendo en emisión",
+      "watching_now": "Viendo ahora",
+      "plan_to_watch": "Planeando ver",
+      "watched_all": "Visto todo",
+      "watched": "Visto",
+      "read_ongoing": "Leyendo en emisión",
+      "read_now": "Leyendo ahora",
+      "plan_to_read": "Planeando leer",
+      "read": "Leído",
+      "playing": "Jugando",
+      "reading": "Leyendo",
+      "watching": "Viendo",
+      "listening_now": "Escuchando ahora",
+      "on_repeat": "En bucle",
+      "plan_to_listen": "Planeando escuchar",
+      "listened_all": "Completado"
+    },
+    "notifications": {
+      "importSuccess": "¡Importación exitosa!",
+      "importErrorCSV": "Error al analizar el archivo CSV.",
+      "importErrorJSON": "Error al analizar el archivo JSON."
+    },
+    "customListName": "Lista personalizada"
+  },
+  "controls": {
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar {count} {record}?",
+    "record": "registro | registros"
+  },
+  "menu": {
+    "home": "Inicio",
+    "createList": "Crear una nueva lista"
+  },
+  "export": {
+    "modalTitle": "Exportar colección",
+    "sectionCategories": "CATEGORÍAS",
+    "sectionCustomLists": "LISTAS PERSONALIZADAS",
+    "sectionFormat": "FORMATO",
+    "footerInfo": "Exporta tu colección para copia de seguridad, migración o portabilidad. Tus datos están almacenados de forma segura en el servidor, pero una copia local nunca viene mal."
+  },
+  "import": {
+    "modalTitle": "Importar colección",
+    "draggerText": "Haz clic o arrastra tu colección aquí",
+    "draggerInfo": "El archivo importado se fusionará con tu colección en el servidor. Se conservarán los elementos existentes. Asegúrate de exportar una copia de seguridad primero si es necesario."
+  },
+  "search": {
+    "placeholder": "Buscar en {name}..."
+  },
+  "addRecord": {
+    "button": "Añadir {thing}"
+  },
+  "avatarPicker": {
+    "modalTitle": "Personalizar avatar",
+    "randomSeed": "Semilla aleatoria",
+    "resetOptions": "Restablecer opciones",
+    "configuration": "Configuración",
+    "avatarStyle": "Estilo de avatar",
+    "seed": "Semilla",
+    "seedPlaceholder": "Cualquier cadena...",
+    "rotate": "Rotación ({degrees}°)",
+    "scale": "Escala ({percent}%)",
+    "flip": "Voltear horizontalmente",
+    "confirm": "Confirmar configuración"
+  },
+  "github": {
+    "openRepo": "Abrir repositorio de GitHub"
+  },
+  "things": {
+    "game": "Juego",
+    "tvshow": "Serie",
+    "film": "Película",
+    "anime": "Anime",
+    "manga": "Manga",
+    "book": "Libro",
+    "music": "Música",
+    "item": "Elemento"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar sesión en Listify",
+      "subtitle": "¡Bienvenido de nuevo!",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "example{'@'}email.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Tu contraseña",
+      "loginButton": "Entrar",
+      "tabTitle": "Login",
+      "noAccount": "¿No tienes una cuenta?",
+      "registerLink": "Regístrate aquí",
+      "successMessage": "¡Sesión iniciada con éxito!",
+      "errorMessage": "Error al iniciar sesión"
+    },
+    "register": {
+      "title": "Crear una cuenta",
+      "subtitle": "Únete a Listify hoy",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "confirmPasswordPlaceholder": "Repite tu contraseña",
+      "passwordPlaceholder": "Al menos 8 caracteres",
+      "registerButton": "Registrarse",
+      "tabTitle": "Registro",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "loginLink": "Inicia sesión aquí",
+      "successMessage": "¡Cuenta creada con éxito!",
+      "errorMessage": "Error al registrarse"
+    }
+  },
+  "validation": {
+    "emailRequired": "Por favor, introduce tu correo",
+    "passwordRequired": "Por favor, introduce tu contraseña",
+    "confirmPasswordRequired": "Por favor, confirma tu contraseña",
+    "passwordMismatch": "Las contraseñas no coinciden"
+  },
+  "timeline": {
+    "title": "ACTIVIDAD RECIENTE",
+    "empty": "Aún no hay actividad reciente",
+    "actions": {
+      "record_created": "Añadió {entity} a {category}",
+      "record_status_updated": "{status} {entity}",
+      "record_score_updated": "Calificó {entity}",
+      "record_liked": "Le gustó {entity}",
+      "record_unliked": "Ya no le gusta {entity}",
+      "record_deleted": "Eliminó {entity} de {category}",
+      "custom_list_created": "Creó una nueva lista {entity}",
+      "custom_list_created_empty": "Creó una nueva lista personalizada",
+      "custom_list_renamed": "Renombró la lista personalizada como {entity}",
+      "custom_list_deleted": "Eliminó la lista {entity}",
+      "custom_list_record_added": "Añadió {entity} a {listName}",
+      "custom_list_record_deleted": "Eliminó {entity} de {listName}",
+      "collection_imported": "Importó una colección con {count} elementos",
+      "default_action": "{action}"
+    },
+    "sentences": {
+      "playing_now": "Empezó a jugar",
+      "completed": "Completó",
+      "dropped": "Abandonó",
+      "on_hold": "Puso en espera",
+      "plan_to_play": "Añadido a Planeando jugar",
+      "watching_now": "Empezó a ver",
+      "watched_all": "Vio todo de",
+      "plan_to_watch": "Añadido a Planeando ver",
+      "watching_ongoing": "Empezó a ver en emisión",
+      "watched": "Vio",
+      "read_now": "Empezó a leer",
+      "read": "Leyó",
+      "plan_to_read": "Añadido a Planeando leer",
+      "read_ongoing": "Empezó a leer en emisión",
+      "listening_now": "Empezó a escuchar",
+      "listened_all": "Escuchó todo de",
+      "on_repeat": "Escuchando en bucle",
+      "plan_to_listen": "Añadido a Planeando escuchar"
+    }
+  }
+}

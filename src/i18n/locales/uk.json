@@ -1,0 +1,234 @@
+{
+  "common": {
+    "loading": "Завантаження...",
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "delete": "Видалити",
+    "edit": "Редагувати",
+    "add": "Додати",
+    "close": "Закрити",
+    "selectAll": "Вибрати все",
+    "deselectAll": "Скасувати вибір",
+    "export": "Експорт",
+    "import": "Імпорт",
+    "light": "Світла",
+    "dark": "Темна",
+    "system": "Системна",
+    "confirmAction": "Підтвердіть дію"
+  },
+  "home": {
+    "categories": "КАТЕГОРІЇ"
+  },
+  "categories": {
+    "start": "Моя Колекція",
+    "games": "Ігри",
+    "tvshows": "Серіали",
+    "films": "Фільми",
+    "anime": "Аніме",
+    "manga": "Манґа",
+    "books": "Книги",
+    "music": "Музика",
+    "about": "Про Listify"
+  },
+  "customLists": {
+    "title": "ВЛАСНІ СПИСКИ",
+    "emptyDescription": "Ви ще не створили жодного списку.",
+    "createList": "Створити новий список",
+    "items": "елементів",
+    "updated": "Оновлено {time}",
+    "deleteConfirm": "Видалити \"{name}\"? Цю дію неможливо скасувати."
+  },
+  "userProfile": {
+    "importCollection": "Імпортувати колекцію",
+    "exportCollection": "Експортувати колекцію",
+    "logout": "Вийти",
+    "usernamePlaceholder": "Ім'я користувача"
+  },
+  "records": {
+    "emptyDescription": "Здається, ваш список порожній.",
+    "searchEmptyDescription": "За вашим запитом нічого не знайдено.",
+    "or": "або",
+    "titlePlaceholder": "Назва запису"
+  },
+  "about": {
+    "description": "Listify — це персональний медіа-трекер, побудований навколо однієї ідеї: ваша колекція має бути простою в управлінні, завжди доступною та повністю належати вам. Незалежно від того, чи ви реєструєте ігри, які пройшли, фільми у вашому списку перегляду, книги, які ви читаєте, або щось інше — Listify тримає все організованим, не заважаючи вам.",
+    "howItWorks": "Як це працює?",
+    "step1": "Зареєструйтеся та створіть свій особистий обліковий запис Listify.",
+    "step2": "Додавайте та керуйте записами з будь-якого пристрою — комп'ютера чи мобільного.",
+    "step3": "Використовуйте вбудовані категорії або створюйте власні списки для всього, що не підходить під стандарти.",
+    "dataTitle": "Ваші дані, ваші правила",
+    "dataDescription": "Ваша колекція живе на наших серверах, але вона належить вам. Listify підтримує повну переносимість даних — експортуйте всю свою колекцію у форматі {format1} або {format2} у будь-який час. Використовуйте це для резервного копіювання, міграції або просто зберігання локальної копії у вашому улюбленому табличному редакторі.",
+    "privacy": "Без відстеження, без реклами, без передачі даних третім особам.",
+    "openSource": "Open-source — переглядайте код, робіть форки або хостіть весь проект самостійно.",
+    "communityTitle": "Спільнота та внески",
+    "communityDescription": "Listify — це активний open-source проект. Нові функції, категорії та покращення додаються регулярно. Якщо у вас є ідея, ви знайшли баг або просто хочете привітатися — зв'яжіться через {link1} або {link2}. Внески завжди вітаються.",
+    "telegram": "Telegram",
+    "githubIssue": "відкрити тикет на GitHub",
+    "thankYou": "Дякуємо за використання Listify — і за те, що ви є частиною його розвитку.",
+    "techStack": "Технологічний стек"
+  },
+  "store": {
+    "sorting": {
+      "status": "Статус",
+      "rating": "Рейтинг",
+      "favourite": "Улюблене",
+      "az": "А → Я"
+    },
+    "labels": {
+      "playing_now": "Граю зараз",
+      "plan_to_play": "У планах",
+      "on_hold": "Відкладено",
+      "completed": "Завершено",
+      "dropped": "Кинуто",
+      "watching_ongoing": "Дивлюсь онгоінг",
+      "watching_now": "Дивлюсь зараз",
+      "plan_to_watch": "У планах",
+      "watched_all": "Переглянуто повністю",
+      "watched": "Переглянуто",
+      "read_ongoing": "Читаю онгоінг",
+      "read_now": "Читаю зараз",
+      "plan_to_read": "У планах",
+      "read": "Прочитано",
+      "playing": "Граю",
+      "reading": "Читаю",
+      "watching": "Дивлюсь",
+      "listening_now": "Слухаю зараз",
+      "on_repeat": "На повторі",
+      "plan_to_listen": "У планах",
+      "listened_all": "Завершено"
+    },
+    "notifications": {
+      "importSuccess": "Імпорт успішний!",
+      "importErrorCSV": "Не вдалося розібрати CSV-файл.",
+      "importErrorJSON": "Не вдалося розібрати JSON-файл."
+    },
+    "customListName": "Власний список"
+  },
+  "controls": {
+    "deleteConfirm": "Ви впевнені, що хочете видалити {count} {record}?",
+    "record": "запис | записи | записів"
+  },
+  "menu": {
+    "home": "Головна",
+    "createList": "Створити новий список"
+  },
+  "export": {
+    "modalTitle": "Експорт колекції",
+    "sectionCategories": "КАТЕГОРІЇ",
+    "sectionCustomLists": "ВЛАСНІ СПИСКИ",
+    "sectionFormat": "ФОРМАТ",
+    "footerInfo": "Експортуйте свою колекцію для резервного копіювання, міграції або переносимості. Ваші дані надійно зберігаються на сервері, але локальна копія ніколи не завадить."
+  },
+  "import": {
+    "modalTitle": "Імпорт колекції",
+    "draggerText": "Натисніть або перетягніть вашу колекцію сюди",
+    "draggerInfo": "Імпортований файл буде об'єднано з вашою колекцією на сервері. Існуючі елементи будуть збережені. Обов'язково зробіть резервну копію перед імпортом, якщо це необхідно."
+  },
+  "search": {
+    "placeholder": "Пошук у {name}..."
+  },
+  "addRecord": {
+    "button": "Додати {thing}"
+  },
+  "avatarPicker": {
+    "modalTitle": "Налаштування аватара",
+    "randomSeed": "Випадковий сід",
+    "resetOptions": "Скинути налаштування",
+    "configuration": "Конфігурація",
+    "avatarStyle": "Стиль аватара",
+    "seed": "Сід",
+    "seedPlaceholder": "Будь-який рядок...",
+    "rotate": "Поворот ({degrees}°)",
+    "scale": "Масштаб ({percent}%)",
+    "flip": "Віддзеркалити горизонтально",
+    "confirm": "Підтвердити конфігурацію"
+  },
+  "github": {
+    "openRepo": "Відкрити репозиторій на GitHub"
+  },
+  "things": {
+    "game": "Гру",
+    "tvshow": "Серіал",
+    "film": "Фільм",
+    "anime": "Аніме",
+    "manga": "Манґу",
+    "book": "Книгу",
+    "music": "Музику",
+    "item": "Елемент"
+  },
+  "auth": {
+    "login": {
+      "title": "Вхід у Listify",
+      "subtitle": "З поверненням!",
+      "emailLabel": "Email",
+      "emailPlaceholder": "example{'@'}email.com",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "Ваш пароль",
+      "loginButton": "Увійти",
+      "tabTitle": "Вхід",
+      "noAccount": "Немає облікового запису?",
+      "registerLink": "Зареєструватися",
+      "successMessage": "Вхід виконано успішно!",
+      "errorMessage": "Помилка входу"
+    },
+    "register": {
+      "title": "Створення облікового запису",
+      "subtitle": "Приєднуйтесь до Listify сьогодні",
+      "confirmPasswordLabel": "Підтвердьте пароль",
+      "confirmPasswordPlaceholder": "Повторіть ваш пароль",
+      "passwordPlaceholder": "Принаймні 8 символів",
+      "registerButton": "Зареєструватися",
+      "tabTitle": "Реєстрація",
+      "haveAccount": "Вже є обліковий запис?",
+      "loginLink": "Увійти тут",
+      "successMessage": "Обліковий запис створено успішно!",
+      "errorMessage": "Помилка реєстрації"
+    }
+  },
+  "validation": {
+    "emailRequired": "Будь ласка, введіть ваш email",
+    "passwordRequired": "Будь ласка, введіть ваш пароль",
+    "confirmPasswordRequired": "Будь ласка, підтвердіть ваш пароль",
+    "passwordMismatch": "Паролі не збігаються"
+  },
+  "timeline": {
+    "title": "ОСТАННЯ АКТИВНІСТЬ",
+    "empty": "Поки що немає активності",
+    "actions": {
+      "record_created": "Додано {entity} до {category}",
+      "record_status_updated": "{status} {entity}",
+      "record_score_updated": "Оцінено {entity}",
+      "record_liked": "Сподобалося {entity}",
+      "record_unliked": "Більше не подобається {entity}",
+      "record_deleted": "Видалено {entity} з {category}",
+      "custom_list_created": "Створено новий список {entity}",
+      "custom_list_created_empty": "Створено новий власний список",
+      "custom_list_renamed": "Список перейменовано на {entity}",
+      "custom_list_deleted": "Видалено список {entity}",
+      "custom_list_record_added": "Додано {entity} до {listName}",
+      "custom_list_record_deleted": "Вилучено {entity} з {listName}",
+      "collection_imported": "Імпортовано колекцію з {count} елементів",
+      "default_action": "{action}"
+    },
+    "sentences": {
+      "playing_now": "Почав грати",
+      "completed": "Завершив",
+      "dropped": "Кинув",
+      "on_hold": "Відклав",
+      "plan_to_play": "Додав до планів",
+      "watching_now": "Почав дивитися",
+      "watched_all": "Переглянув повністю",
+      "plan_to_watch": "Додав до планів",
+      "watching_ongoing": "Почав дивитися онгоінг",
+      "watched": "Переглянув",
+      "read_now": "Почав читати",
+      "read": "Прочитав",
+      "plan_to_read": "Додав до планів",
+      "read_ongoing": "Почав читати онгоінг",
+      "listening_now": "Почав слухати",
+      "listened_all": "Прослухав повністю",
+      "on_repeat": "Слухає на повторі",
+      "plan_to_listen": "Додав до планів"
+    }
+  }
+}

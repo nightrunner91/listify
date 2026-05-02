@@ -1,0 +1,234 @@
+{
+  "common": {
+    "loading": "Ładowanie...",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "add": "Dodaj",
+    "close": "Zamknij",
+    "selectAll": "Zaznacz wszystko",
+    "deselectAll": "Odznacz wszystko",
+    "export": "Eksportuj",
+    "import": "Importuj",
+    "light": "Jasny",
+    "dark": "Ciemny",
+    "system": "Systemowy",
+    "confirmAction": "Potwierdź działanie"
+  },
+  "home": {
+    "categories": "KATEGORIE"
+  },
+  "categories": {
+    "start": "Moja kolekcja",
+    "games": "Gry",
+    "tvshows": "Seriale",
+    "films": "Filmy",
+    "anime": "Anime",
+    "manga": "Manga",
+    "books": "Książki",
+    "music": "Muzyka",
+    "about": "O Listify"
+  },
+  "customLists": {
+    "title": "WŁASNE LISTY",
+    "emptyDescription": "Nie utworzyłeś jeszcze żadnych własnych list.",
+    "createList": "Utwórz nową listę",
+    "items": "elementy",
+    "updated": "Zaktualizowano {time}",
+    "deleteConfirm": "Usunąć \"{name}\"? Tej operacji nie można cofnąć."
+  },
+  "userProfile": {
+    "importCollection": "Importuj kolekcję",
+    "exportCollection": "Eksportuj kolekcję",
+    "logout": "Wyloguj się",
+    "usernamePlaceholder": "Nazwa użytkownika"
+  },
+  "records": {
+    "emptyDescription": "Wygląda na to, że Twoja lista jest pusta.",
+    "searchEmptyDescription": "Nie znaleziono rekordów pasujących do Twojego wyszukiwania.",
+    "or": "lub",
+    "titlePlaceholder": "Nazwa rekordu"
+  },
+  "about": {
+    "description": "Listify to osobisty śledzik mediów zbudowany wokół jednej idei: Twoja kolekcja powinna być prosta w utrzymaniu, zawsze dostępna i w całości Twoja. Niezależnie od tego, czy logujesz gry, które skończyłeś, filmy na liście do obejrzenia, książki, które czytasz, czy cokolwiek innego — Listify utrzymuje to w porządku, nie wchodząc Ci w drogę.",
+    "howItWorks": "Jak to działa?",
+    "step1": "Zarejestruj się i utwórz swoje osobiste konto Listify.",
+    "step2": "Dodawaj i zarządzaj rekordami z dowolnego urządzenia — komputera lub telefonu.",
+    "step3": "Korzystaj z wbudowanych kategorii lub twórz własne listy dla wszystkiego, co nie pasuje do domyślnych.",
+    "dataTitle": "Twoje dane, Twoje zasady",
+    "dataDescription": "Twoja kolekcja żyje na naszych serwerach, ale należy do Ciebie. Listify wspiera pełną przenośność danych — wyeksportuj całą swoją kolekcję jako plik {format1} lub {format2} w dowolnym momencie. Używaj go do kopii zapasowych, migracji lub po prostu trzymania lokalnej kopii w swoim ulubionym arkuszu kalkulacyjnym.",
+    "privacy": "Bez śledzenia, bez reklam, bez udostępniania danych osobom trzecim.",
+    "openSource": "Open-source — przeglądaj, forkuj lub hostuj cały projekt samodzielnie.",
+    "communityTitle": "Społeczność i wkład",
+    "communityDescription": "Listify to aktywnie rozwijany projekt open-source. Nowe funkcje, kategorie i poprawki jakości życia są dodawane regularnie. Jeśli masz pomysł, znalazłeś błąd lub po prostu chcesz się przywitać — skontaktuj się przez {link1} lub {link2}. Wkład jest zawsze mile widziany.",
+    "telegram": "Telegram",
+    "githubIssue": "otwórz zgłoszenie na GitHubie",
+    "thankYou": "Dziękujemy za korzystanie z Listify — i za bycie częścią tego, czym się staje.",
+    "techStack": "Stos technologiczny"
+  },
+  "store": {
+    "sorting": {
+      "status": "Status",
+      "rating": "Ocena",
+      "favourite": "Ulubione",
+      "az": "A → Z"
+    },
+    "labels": {
+      "playing_now": "Gram teraz",
+      "plan_to_play": "Planuję zagrać",
+      "on_hold": "Wstrzymane",
+      "completed": "Ukończone",
+      "dropped": "Porzucone",
+      "watching_ongoing": "Oglądam na bieżąco",
+      "watching_now": "Oglądam teraz",
+      "plan_to_watch": "Planuję obejrzeć",
+      "watched_all": "Obejrzane wszystko",
+      "watched": "Obejrzane",
+      "read_ongoing": "Czytam na bieżąco",
+      "read_now": "Czytam teraz",
+      "plan_to_read": "Planuję przeczytać",
+      "read": "Przeczytane",
+      "playing": "Gram",
+      "reading": "Czytam",
+      "watching": "Oglądam",
+      "listening_now": "Słucham teraz",
+      "on_repeat": "Zapętlone",
+      "plan_to_listen": "Planuję posłuchać",
+      "listened_all": "Ukończone"
+    },
+    "notifications": {
+      "importSuccess": "Import zakończony sukcesem!",
+      "importErrorCSV": "Nie udało się sparsować pliku CSV.",
+      "importErrorJSON": "Nie udało się sparsować pliku JSON."
+    },
+    "customListName": "Własna lista"
+  },
+  "controls": {
+    "deleteConfirm": "Czy na pewno chcesz usunąć {count} {record}?",
+    "record": "rekord | rekordy | rekordów"
+  },
+  "menu": {
+    "home": "Strona główna",
+    "createList": "Utwórz nową listę"
+  },
+  "export": {
+    "modalTitle": "Eksportuj kolekcję",
+    "sectionCategories": "KATEGORIE",
+    "sectionCustomLists": "WŁASNE LISTY",
+    "sectionFormat": "FORMAT",
+    "footerInfo": "Wyeksportuj swoją kolekcję do kopii zapasowej, migracji lub przenośności. Twoje dane są bezpiecznie przechowywane na serwerze, ale lokalna kopia nigdy nie zaszkodzi."
+  },
+  "import": {
+    "modalTitle": "Importuj kolekcję",
+    "draggerText": "Kliknij lub przeciągnij swoją kolekcję tutaj",
+    "draggerInfo": "Zaimportowany plik zostanie scalony z Twoją kolekcją na serwerze. Istniejące elementy zostaną zachowane. Pamiętaj, aby najpierw wyeksportować kopię zapasową, jeśli to konieczne."
+  },
+  "search": {
+    "placeholder": "Szukaj w {name}..."
+  },
+  "addRecord": {
+    "button": "Dodaj nowy {thing}"
+  },
+  "avatarPicker": {
+    "modalTitle": "Dostosuj awatar",
+    "randomSeed": "Losowe ziarno",
+    "resetOptions": "Resetuj opcje",
+    "configuration": "Konfiguracja",
+    "avatarStyle": "Styl awatara",
+    "seed": "Ziarno",
+    "seedPlaceholder": "Dowolny ciąg znaków...",
+    "rotate": "Obrót ({degrees}°)",
+    "scale": "Skala ({percent}%)",
+    "flip": "Obróć w poziomie",
+    "confirm": "Potwierdź konfigurację"
+  },
+  "github": {
+    "openRepo": "Otwórz repozytorium GitHub"
+  },
+  "things": {
+    "game": "grę",
+    "tvshow": "serial",
+    "film": "film",
+    "anime": "anime",
+    "manga": "mangę",
+    "book": "książkę",
+    "music": "muzykę",
+    "item": "element"
+  },
+  "auth": {
+    "login": {
+      "title": "Zaloguj się do Listify",
+      "subtitle": "Witaj z powrotem!",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "example{'@'}email.com",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "Twoje hasło",
+      "loginButton": "Zaloguj się",
+      "tabTitle": "Logowanie",
+      "noAccount": "Nie masz konta?",
+      "registerLink": "Zarejestruj się tutaj",
+      "successMessage": "Zalogowano pomyślnie!",
+      "errorMessage": "Błąd logowania"
+    },
+    "register": {
+      "title": "Utwórz konto",
+      "subtitle": "Dołącz do Listify już dziś",
+      "confirmPasswordLabel": "Potwierdź hasło",
+      "confirmPasswordPlaceholder": "Powtórz swoje hasło",
+      "passwordPlaceholder": "Minimum 8 znaków",
+      "registerButton": "Zarejestruj się",
+      "tabTitle": "Rejestracja",
+      "haveAccount": "Masz już konto?",
+      "loginLink": "Zaloguj się tutaj",
+      "successMessage": "Konto utworzone pomyślnie!",
+      "errorMessage": "Błąd rejestracji"
+    }
+  },
+  "validation": {
+    "emailRequired": "Proszę podać e-mail",
+    "passwordRequired": "Proszę podać hasło",
+    "confirmPasswordRequired": "Proszę potwierdzić hasło",
+    "passwordMismatch": "Hasła nie są identyczne"
+  },
+  "timeline": {
+    "title": "OSTATNIA AKTYWNOŚĆ",
+    "empty": "Brak ostatniej aktywności",
+    "actions": {
+      "record_created": "Dodano {entity} do {category}",
+      "record_status_updated": "{status} {entity}",
+      "record_score_updated": "Oceniono {entity}",
+      "record_liked": "Polubiono {entity}",
+      "record_unliked": "Cofnięto polubienie {entity}",
+      "record_deleted": "Usunięto {entity} z {category}",
+      "custom_list_created": "Utworzono nową listę {entity}",
+      "custom_list_created_empty": "Utworzono nową własną listę",
+      "custom_list_renamed": "Zmieniono nazwę listy na {entity}",
+      "custom_list_deleted": "Usunięto listę {entity}",
+      "custom_list_record_added": "Dodano {entity} do {listName}",
+      "custom_list_record_deleted": "Usunięto {entity} z {listName}",
+      "collection_imported": "Zaimportowano kolekcję z {count} elementami",
+      "default_action": "{action}"
+    },
+    "sentences": {
+      "playing_now": "Zaczął grać",
+      "completed": "Ukończył",
+      "dropped": "Porzucił",
+      "on_hold": "Wstrzymał",
+      "plan_to_play": "Dodano do Planuję zagrać",
+      "watching_now": "Zaczął oglądać",
+      "watched_all": "Obejrzał całość",
+      "plan_to_watch": "Dodano do Planuję obejrzeć",
+      "watching_ongoing": "Zaczął oglądać na bieżąco",
+      "watched": "Obejrzał",
+      "read_now": "Zaczął czytać",
+      "read": "Przeczytał",
+      "plan_to_read": "Dodano do Planuję przeczytać",
+      "read_ongoing": "Zaczął czytać na bieżąco",
+      "listening_now": "Zaczął słuchać",
+      "listened_all": "Wysłuchał całości",
+      "on_repeat": "Słucha w pętli",
+      "plan_to_listen": "Dodano do Planuję posłuchać"
+    }
+  }
+}
