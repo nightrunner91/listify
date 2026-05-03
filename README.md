@@ -26,32 +26,23 @@ Built from the ground up as the successor to Nightlist, it leverages **Vue 3**, 
 
 ## Key Features
 
-**Personalized Accounts**
-Secure sign-up and synchronization across all your devices.
+- **Personalized Accounts**: Secure sign-up and synchronization across all your devices.
 
-**Build-in Categories**
-Built-in support for Games, TV Shows, Films, Manga, Books, and Music.
+- **Build-in Categories**: Built-in support for Games, TV Shows, Films, Manga, Books, and Music.
 
-**Custom Lists**
-Create and manage bespoke lists for specialized collections.
+- **Custom Lists**: Create and manage bespoke lists for specialized collections.
 
-**Multi-Language Support**
-Fully localized in 8 languages (EN, DE, ES, FR, PL, RO, RU, UK).
+- **Multi-Language Support**: Fully localized in 8 languages (EN, DE, ES, FR, PL, RO, RU, UK).
 
-**Intuitive UI**
-Lightweight design powered by Naive UI with support for Light, Dark, and System themes.
+- **Intuitive UI**: Lightweight design powered by Naive UI with support for Light, Dark, and System themes.
 
-**Data Sovereignty**
-Import and export your entire collection as JSON or CSV at any time.
+- **Data Sovereignty**: Import and export your entire collection as JSON or CSV at any time.
 
-**Privacy Focused**
-No tracking, no ads, and no third-party data sharing.
+- **Privacy Focused**: No tracking, no ads, and no third-party data sharing.
 
-**High Performance**
-Optimized with virtual scrolling and a lightweight Fastify backend.
+- **High Performance**: Optimized with virtual scrolling and a lightweight Fastify backend.
 
-**Open-source**
-Listify is an actively developed open-source project. Inspect, fork, or self-host the entire project.
+- **Open-source**: Listify is an actively developed open-source project. Inspect, fork, or self-host the entire project.
 
 ---
 
