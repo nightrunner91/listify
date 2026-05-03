@@ -1,6 +1,9 @@
 import { useAuthStore } from '@/stores/auth.store'
 
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : '')
+let API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : '')
+if (API_BASE && !API_BASE.startsWith('http')) {
+  API_BASE = `https://${API_BASE}`
+}
 
 export class ApiError extends Error {
   constructor(status, message, code) {
