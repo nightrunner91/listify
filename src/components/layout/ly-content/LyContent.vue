@@ -95,7 +95,7 @@ function confirmDeleteList() {
       :x-gap="12"
       :y-gap="8"
       :cols="6"
-      class="pt-2 pt-s-10"
+      class="pt-2 pt-s-10 px-4"
     >
       <n-grid-item
         span="6 s:4 l:4"

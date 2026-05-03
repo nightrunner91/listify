@@ -83,7 +83,7 @@ watch(record, (newVal) => {
 <template>
   <n-list-item
     class="px-4 px-sm-5"
-    :style="gridStore.screenLargerThen('l') ? '' : 'border-radius: 0;'"
+    :class="gridStore.screenLargerThen('l') ? '' : 'record-mobile'"
     @mouseover="showCheckbox = true"
     @mouseleave="showCheckbox = false"
   >
@@ -208,5 +208,10 @@ watch(record, (newVal) => {
   .n-input__input-el {
     font-weight: 500;
   }
+}
+
+.record-mobile {
+  border-top: 1px solid var(--n-merged-color-hover) !important;
+  border-radius: 0 !important;
 }
 </style>

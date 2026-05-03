@@ -94,7 +94,7 @@ watch(getTranslatedTitle, (newTitle) => {
 </script>
 
 <template>
-  <n-h1 class="position-relative mb-0 h-80">
+  <n-h1 class="position-relative mb-0 h-lg-80">
     <template v-if="isCustomList">
       <n-input
         v-model:value="listName"
