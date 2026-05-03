@@ -59,9 +59,9 @@ export default async function importRoutes(app) {
     const body = request.body
 
     // ── Fetch existing data ─────────────────────────────────────────────────
-    const existingRecords = await db.select().from(records).where(eq(records.userId, userId))
-    const existingCustomLists = await db.select().from(customLists).where(eq(customLists.userId, userId))
-    const existingCustomListRecords = await db.select().from(customListRecords).where(eq(customListRecords.userId, userId))
+    const existingRecords = await db.select({ id: records.id, category: records.category, title: records.title }).from(records).where(eq(records.userId, userId))
+    const existingCustomLists = await db.select({ id: customLists.id, name: customLists.name }).from(customLists).where(eq(customLists.userId, userId))
+    const existingCustomListRecords = await db.select({ id: customListRecords.id, listId: customListRecords.listId, title: customListRecords.title }).from(customListRecords).where(eq(customListRecords.userId, userId))
 
     // ── Import standard records ─────────────────────────────────────────────
     const recordsToInsert = []

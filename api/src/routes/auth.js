@@ -70,7 +70,8 @@ export default async function authRoutes(app) {
     reply.setCookie('listify_uid', String(user.id), {
       path: '/',
       secure: true,
-      sameSite: 'none' 
+      sameSite: 'none',
+      httpOnly: true
     })
     return reply.status(201).send({
       user,
@@ -117,7 +118,8 @@ export default async function authRoutes(app) {
     reply.setCookie('listify_uid', String(user.id), {
       path: '/',
       secure: true,
-      sameSite: 'none' 
+      sameSite: 'none',
+      httpOnly: true
     })
     return reply.send({
       user,
@@ -127,7 +129,14 @@ export default async function authRoutes(app) {
 
   // ─── POST /api/auth/refresh ───────────────────────────────────────────────
 
-  app.post('/refresh', async (request, reply) => {
+  app.post('/refresh', {
+    config: {
+      rateLimit: {
+        max: 30,
+        timeWindow: '1 minute' 
+      },
+    },
+  }, async (request, reply) => {
     const rawToken = request.cookies[COOKIE_NAME]
     if (!rawToken) {
       return reply.status(401).send({

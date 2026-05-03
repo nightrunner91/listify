@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/stores/auth.store'
 
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : 'https://listify-production-f7fd.up.railway.app/api')
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : '')
 
 export class ApiError extends Error {
   constructor(status, message, code) {
