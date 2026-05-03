@@ -114,7 +114,8 @@ function openAvatarPicker() {
     v-if="user"
     :wrap-item="false"
     align="center"
-    class="ml-2">
+    class="ml-2"
+  >
     <!-- begin::Avatar Trigger -->
     <n-popover
       v-model:show="showPopover"
@@ -134,9 +135,7 @@ function openAvatarPicker() {
       </template>
 
       <!-- begin::Dropdown Panel -->
-      <div
-        class="w-200 no-overflow rounded-small"
-      >
+      <div class="w-200 no-overflow rounded-small">
         <!-- begin::Cover Block -->
         <n-color-picker
           v-model:value="user.backgroundColor"

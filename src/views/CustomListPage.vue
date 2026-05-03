@@ -188,7 +188,9 @@ onBeforeRouteLeave(async () => {
                   :disabled="hasEmptyRecord"
                   @scroll-bottom="gridStore.handleScrollBottom"
                 />
-                <n-text depth="3">or</n-text>
+                <n-text depth="3">
+                  or
+                </n-text>
                 <ly-import />
               </n-space>
             </template>
@@ -257,9 +259,7 @@ onBeforeRouteLeave(async () => {
             </div>
 
             <!-- Floating button: only visible when bottom button is off-screen -->
-            <transition
-              name="fade-up-down"
-            >
+            <transition name="fade-up-down">
               <ly-add-record 
                 v-if="!recordsStore.isSearching && !isBottomButtonVisible"
                 variant="floating"

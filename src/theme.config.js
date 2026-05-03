@@ -28,7 +28,10 @@ const globalOverrides = {
   },
   Card: { borderRadius: '6px', },
   Upload: { borderRadius: '6px', },
-  Menu: { borderRadius: '6px', itemHeight: '48px' },
+  Menu: {
+    borderRadius: '6px',
+    itemHeight: '48px' 
+  },
   List: { borderRadius: '6px', },
   Button: {
     borderRadiusSmall: '4px',

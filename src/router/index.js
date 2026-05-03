@@ -8,6 +8,12 @@ import StartingPage from '@/views/StartingPage.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
+  scrollBehavior() {
+    return {
+      top: 0,
+      left: 0 
+    }
+  },
   routes: [
     {
       path: '/login',
@@ -148,6 +154,17 @@ const router = createRouter({
 
 import { useAuthStore } from '@/stores/auth.store'
 import { useRecordsStore } from '@/stores/records.store'
+
+let scrollContentToTopFn = null
+
+export function setScrollContentToTop(fn) {
+  scrollContentToTopFn = fn
+}
+
+router.afterEach(() => {
+  window.scrollTo(0, 0)
+  scrollContentToTopFn?.()
+})
 
 router.beforeEach((to, from, next) => {
   let title = 'Listify'

@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import {
+  ref,
+  onMounted
+} from 'vue'
 import {
   RouterView,
   useRoute,
@@ -23,6 +26,7 @@ import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
 import { useI18n } from 'vue-i18n'
+import { setScrollContentToTop } from '@/router'
 
 const { t } = useI18n()
 const menuStore = useMenuStore()
@@ -33,6 +37,17 @@ const router = useRouter()
 const dialog = useDialog()
 
 const contentRef = ref(null)
+
+function scrollContentToTop() {
+  contentRef.value?.scrollTo({
+    top: 0,
+    behavior: 'auto' 
+  })
+}
+
+onMounted(() => {
+  setScrollContentToTop(scrollContentToTop)
+})
 
 /**
  * @function updateScroll

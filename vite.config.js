@@ -10,19 +10,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   base: '/listify/',
-  server: {
-    port: 5173,
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: '@use "@/assets/styles/@core/globals.scss";'
-      }
-    }
-  },
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+  server: {port: 5173,},
+  css: {preprocessorOptions: {scss: {additionalData: '@use "@/assets/styles/@core/globals.scss";'}}},
+  resolve: {alias: {'@': fileURLToPath(new URL('./src', import.meta.url))}}
 })
