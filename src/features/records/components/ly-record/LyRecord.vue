@@ -145,7 +145,7 @@ watch(record, (newVal) => {
         <n-rate
           v-model:value="record.score"
           clearable
-          class="mr-0 mr-s-4 mr-l-7"
+          class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-7"
         />
           
         <n-button
@@ -154,7 +154,7 @@ watch(record, (newVal) => {
           circle
           type="error"
           size="small"
-          class="ml-4 ml-s-6 ml-l-10"
+          class="ml-3 ml-s-6 ml-l-10"
           @click="record.liked = !record.liked"
         >
           <template #icon>
