@@ -212,7 +212,11 @@ async function handleMenuUpdate(key) {
 }
 
 watch(route, () => {
-  activeKey.value = route.meta.tag
+  if (route.meta.isCustom && route.params.id) {
+    activeKey.value = `custom-${route.params.id}`
+  } else {
+    activeKey.value = route.meta.tag
+  }
 }, {
   flush: 'pre',
   immediate: true,
