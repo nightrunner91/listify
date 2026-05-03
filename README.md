@@ -1,118 +1,170 @@
-# Listify  
+# <p align="center">Listify</p>
 
-**Listify** is a personal media tracker built around one idea: your collection should be simple to maintain, always accessible, and entirely yours. Whether you're logging games you've finished, films on your watchlist, books you're reading, or anything in between — Listify keeps it organized without getting in the way.
+<p align="center">
+  <strong>Your personal media collection. Always accessible, entirely yours.</strong>
+</p>
 
-🚀 Listify is the next evolution of [Nightlist](https://github.com/nightrunner91/nightlist), rebuilt from the ground up with **Vue 3**, **Fastify**, **PostgreSQL**, and a refined, user-friendly interface powered by **Naive UI**.  
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-0.2.5--beta-blue?style=for-the-badge" alt="Version">
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/Node.js-%3E%3D20.0.0-6da55f?style=for-the-badge&logo=node.js" alt="Node Version">
+  <img src="https://img.shields.io/badge/Vue-3.2.47-4fc08d?style=for-the-badge&logo=vue.js" alt="Vue Version">
+  <img src="https://img.shields.io/badge/Fastify-5.3.3-000000?style=for-the-badge&logo=fastify" alt="Fastify">
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169e1?style=for-the-badge&logo=postgresql" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Drizzle--ORM-0.43.1-c5f74f?style=for-the-badge&logo=drizzle" alt="Drizzle ORM">
+</p>
 
-## ✨ Features
+---
 
-- 👤 Personal accounts — sign up and access your collection from any device
-- 📚 Use built-in categories or create custom lists for anything that doesn't fit the defaults
-- 🔄 Export your entire collection as JSON at any time — for backups, migration, or local copies
-- 🔒 No tracking, no ads, no third-party data sharing
-- 🌐 Open-source — inspect, fork, or self-host the entire project
+## Overview
 
-## 🛠️ Tech Stack / Plugins / Assets
+**Listify** is a sleek, modern media tracker designed for those who want to keep their collections organized without the clutter of social features or ads. Whether you're logging games, movies, books, or anything in between, Listify provides a premium, responsive interface to manage your personal library.
 
-- [Vue 3 (Composition API)](https://vuejs.org/)
-- [Fastify](https://fastify.dev/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Vite](https://vitejs.dev/)
-- [ESLint](https://eslint.org/)
-- [Naive UI](https://www.naiveui.com/en-US/)
-- [Onest Font](https://fonts.google.com/specimen/Onest)
-- [Phosphor Icons](https://phosphoricons.com/)
+Built from the ground up as the successor to Nightlist, it leverages **Vue 3**, **Fastify**, and **PostgreSQL** to deliver a fast, secure, and highly customizable experience.
 
-## 🖥️ Development Setup
+---
 
-### Recommended IDE
-- [Visual Studio Code](https://code.visualstudio.com/)  
-  - Install [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)  
-  - Disable **Vetur** to avoid conflicts  
+## Key Features
 
-### Frontend
+**Personalized Accounts**
+Secure sign-up and synchronization across all your devices.
 
-Install dependencies:
+**Build-in Categories**
+Built-in support for Games, TV Shows, Films, Manga, Books, and Music.
 
-```sh
+**Custom Lists**
+Create and manage bespoke lists for specialized collections.
+
+**Multi-Language Support**
+Fully localized in 8 languages (EN, DE, ES, FR, PL, RO, RU, UK).
+
+**Intuitive UI**
+Lightweight design powered by Naive UI with support for Light, Dark, and System themes.
+
+**Data Sovereignty**
+Import and export your entire collection as JSON or CSV at any time.
+
+**Privacy Focused**
+No tracking, no ads, and no third-party data sharing.
+
+**High Performance**
+Optimized with virtual scrolling and a lightweight Fastify backend.
+
+**Open-source**
+Listify is an actively developed open-source project. Inspect, fork, or self-host the entire project.
+
+---
+
+## Tech Stack
+
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Frontend** | [Vue 3](https://vuejs.org/) | Composition API & Script Setup |
+| **Backend** | [Fastify](https://fastify.dev/) | High-performance Node.js framework |
+| **Database** | [PostgreSQL](https://www.postgresql.org/) | Relational database via [Drizzle ORM](https://orm.drizzle.team/) |
+| **Styling** | [Naive UI](https://www.naiveui.com/) | Curated component library & design system |
+| **State** | [Pinia](https://pinia.vuejs.org/) | Modern Vue store management |
+| **Build** | [Vite](https://vitejs.dev/) | Next-generation frontend tooling |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js** >= 20.0.0
+- **npm** >= 9.0.0
+- **PostgreSQL** (running locally or via Docker)
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/nightrunner91/listify.git
+cd listify
 npm install
+cd api && npm install && cd ..
 ```
 
-Start development server:
+### 2. Environment Setup
 
-```sh
-npm run dev
+Create a `.env` file in the `api/` directory:
+
+```bash
+cp api/.env.example api/.env
 ```
 
-Build for production:
+Edit `api/.env` with your database credentials and secret keys.
 
-```sh
-npm run build
-```
+### 3. Database Migration
 
-Preview production build:
-
-```sh
-npm run preview
-```
-
-Lint code:
-
-```sh
-npm run lint
-```
-
-### Backend (API)
-
-```sh
+```bash
 cd api
-```
-
-Install dependencies:
-
-```sh
-npm install
-```
-
-Start development server (with file watching):
-
-```sh
-npm run dev
-```
-
-Start production server:
-
-```sh
-npm run start
-```
-
-Generate database migration:
-
-```sh
 npm run db:generate
-```
-
-Run database migration:
-
-```sh
 npm run db:migrate
 ```
 
-Open Drizzle Studio:
+### 4. Run Development Servers
 
-```sh
-npm run db:studio
+**Frontend:**
+```bash
+npm run dev
 ```
 
-## 📦 Configuration
+**Backend:**
+```bash
+cd api
+npm run dev
+```
 
-For customization and advanced configuration, see the [Vite Documentation](https://vitejs.dev/config/).  
+---
 
-## 🤝 Contributing
+## Project Structure
 
-Contributions, issues, and feature requests are welcome!  
-Feel free to check the [issues page](../../issues).
+```text
+.
+├── api/                    # Backend (Node.js + Fastify)
+│   ├── src/
+│   │   ├── db/             # Database connection & Drizzle schemas
+│   │   ├── routes/         # API endpoints (Auth, Records, Lists)
+│   │   ├── plugins/        # Fastify plugins (i18n, Rate limit, etc.)
+│   │   ├── middleware/     # Custom Fastify hooks
+│   │   ├── services/       # Business logic layer
+│   │   └── app.js          # Fastify application setup
+│   └── drizzle/            # SQL migration files
+│
+├── src/                    # Frontend (Vue 3 + Vite)
+│   ├── api/                # API client configuration
+│   ├── components/         # Reusable UI components
+│   ├── features/           # Feature-based components & logic
+│   ├── i18n/               # Localization files
+│   ├── router/             # Vue Router configuration
+│   ├── stores/             # Pinia state management
+│   ├── views/              # Main application pages
+│   └── theme.config.js     # Naive UI theme overrides
+├── public/                 # Static assets & favicon
+└── package.json            # Root scripts & dependencies
+```
 
-## 📜 License
+---
 
-This project is released under the [MIT License](./LICENSE).  
+## Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<p align="center">
+  Built with ❤️ by <a href="https://t.me/nightrunner91">nightrunner91</a>
+</p>
