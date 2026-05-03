@@ -46,9 +46,12 @@ const isBottomButtonVisible = ref(false)
 
 // Computed properties
 const sortedRecords = computed(() => {
+  const tag = route.meta.tag
+  const searchQuery = recordsStore.searchQuery
+
   // If searching, return filtered results
   if (recordsStore.isSearching) {
-    return recordsStore.searchRecords(route.meta.tag)
+    return recordsStore.searchRecords(tag)
   }
   
   // Otherwise, return sorted records as before
@@ -79,6 +82,12 @@ watch(() => recordsStore.isSearching, (isSearching) => {
     // Reinitialize display order with current sort when exiting search
     recordsStore.syncDisplayOrderWithSort(route.meta.tag)
     scrollerKey.value++ // Force scroller to re-render
+  }
+})
+
+watch(() => recordsStore.searchQuery, () => {
+  if (recordsStore.isSearching) {
+    scrollerKey.value++ // Force scroller to re-render when search query changes
   }
 })
 
