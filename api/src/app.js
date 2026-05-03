@@ -12,6 +12,7 @@ import settingsRoutes from './routes/settings.js'
 import importRoutes from './routes/import.js'
 import activitiesRoutes from './routes/activities.js'
 import userRoutes from './routes/users.js'
+import externalRoutes from './routes/external.js'
 import i18nPlugin from './plugins/i18n.js'
 
 export async function buildApp() {
@@ -71,6 +72,7 @@ export async function buildApp() {
   await app.register(activitiesRoutes,  { prefix: '/api/activities' })
   await app.register(userRoutes,        { prefix: '/api/users' })
   await app.register(importRoutes,      { prefix: '/api' })
+  await app.register(externalRoutes,    { prefix: '/api/external' })
 
   // ─── Health check ──────────────────────────────────────────────────────────
 

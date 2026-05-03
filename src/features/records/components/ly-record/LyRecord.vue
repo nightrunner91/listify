@@ -8,7 +8,7 @@ import {
 import {
   NListItem,
   NSpace,
-  NInput,
+  NAutoComplete,
   NDropdown,
   NButton,
   NIcon,
@@ -19,11 +19,13 @@ import {
 import { useRoute } from 'vue-router'
 import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
+import { useExternalSearch } from '@/composables/useExternalSearch'
 import { PhHeart as LikeIcon } from 'phosphor-vue'
 import { lyStorage } from '@/main'
 
 const recordsStore = useRecordsStore()
 const gridStore = useGridStore()
+const { suggestions, isLoading, search: triggerSearch } = useExternalSearch()
 const route = useRoute()
 const props = defineProps(['id', 'index'])
 const tag = route.meta.tag
@@ -78,6 +80,15 @@ watch(record, (newVal) => {
     }, 500)
   }
 }, { deep: true })
+
+/**
+ * @function handleSearch
+ * @description Triggers external search when input changes
+ * @param {string} value 
+ */
+const handleSearch = (value) => {
+  triggerSearch(value, tag)
+}
 </script>
 
 <template>
@@ -123,13 +134,15 @@ watch(record, (newVal) => {
           </n-text>
         </n-space>
 
-        <n-input
+        <n-auto-complete
           :id="`input-${record.id}`"
           v-model:value="record.title"
-          type="text"
+          :options="suggestions"
+          :loading="isLoading"
           :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
           :placeholder="$t('records.titlePlaceholder')"
           class="w-100 w-l-75 record-input"
+          @input="handleSearch"
         />
       </n-space>
       <!-- end::Record Identity & Title -->
@@ -201,7 +214,9 @@ watch(record, (newVal) => {
 .record-input {
   background-color: transparent !important;
 
+  .n-input,
   .n-input__border {
+    background-color: transparent !important;
     border: none !important;
   }
 
