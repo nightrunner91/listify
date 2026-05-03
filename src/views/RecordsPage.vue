@@ -143,7 +143,19 @@ function setupObserver() {
 }
 
 // Lifecycle hooks
-onMounted(setDefaultSortLabel)
+onMounted(async () => {
+  setDefaultSortLabel()
+
+  const list = recordsStore.records[route.meta.tag] || []
+  const emptyRecord = list.find(r => !r.title || !r.title.trim())
+  if (emptyRecord) {
+    try {
+      await recordsStore.deleteRecordById(emptyRecord.id, route.meta.tag)
+    } catch {
+      // Silently ignore — do not block
+    }
+  }
+})
 
 onUnmounted(() => {
   if (observer) observer.disconnect()

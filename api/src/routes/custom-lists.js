@@ -430,13 +430,15 @@ export default async function customListsRoutes(app) {
       .set({ updatedAt: new Date() })
       .where(eq(customLists.id, listId))
 
-    // Log activity
-    await logActivity(userId, {
-      action: 'custom_list_record_deleted',
-      category: 'custom',
-      entityName: deleted.title,
-      metadata: { listName: list.name }
-    })
+    // Log activity only if record had a title
+    if (deleted.title?.trim()) {
+      await logActivity(userId, {
+        action: 'custom_list_record_deleted',
+        category: 'custom',
+        entityName: deleted.title,
+        metadata: { listName: list.name }
+      })
+    }
 
     return reply.status(204).send()
   })

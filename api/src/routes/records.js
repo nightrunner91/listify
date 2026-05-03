@@ -248,12 +248,14 @@ export default async function recordsRoutes(app) {
       })
     }
 
-    // Log activity
-    await logActivity(userId, {
-      action: 'record_deleted',
-      category: deleted.category,
-      entityName: deleted.title,
-    })
+    // Log activity only if record had a title
+    if (deleted.title?.trim()) {
+      await logActivity(userId, {
+        action: 'record_deleted',
+        category: deleted.category,
+        entityName: deleted.title,
+      })
+    }
 
     return reply.status(204).send()
   })

@@ -134,6 +134,20 @@ onUnmounted(() => {
   if (observer) observer.disconnect()
 })
 
+// ── Cleanup empty record on page load ────────────────────────────────────────
+
+onMounted(async () => {
+  if (!customList.value) return
+  const emptyRecord = customList.value.records.find(r => !r.title || !r.title.trim())
+  if (emptyRecord) {
+    try {
+      await recordsStore.removeCustomRecord(customListId.value, emptyRecord.id)
+    } catch {
+      // Silently ignore — do not block
+    }
+  }
+})
+
 // ── Cleanup dangling empty record on route leave ──────────────────────────────
 
 onBeforeRouteLeave(async () => {
