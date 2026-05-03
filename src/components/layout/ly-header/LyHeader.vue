@@ -12,7 +12,7 @@ import LyHeaderProfile from '@/components/layout/ly-header/LyHeaderProfile.vue'
 <template>
   <n-layout-header
     embedded
-    class="w-100 d-flex justify-content-between align-items-center h-56 px-0"
+    class="w-100 d-flex justify-content-between align-items-center h-56 pl-2"
     bordered
   >
     <n-space
