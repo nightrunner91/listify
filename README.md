@@ -22,8 +22,6 @@
 
 Built from the ground up as the successor to Nightlist, it leverages **Vue 3**, **Fastify**, and **PostgreSQL** to deliver a fast, secure, and highly customizable experience.
 
----
-
 ## Key Features
 
 - **Personalized Accounts**: Secure sign-up and synchronization across all your devices.
@@ -44,8 +42,6 @@ Built from the ground up as the successor to Nightlist, it leverages **Vue 3**, 
 
 - **Open-source**: Listify is an actively developed open-source project. Inspect, fork, or self-host the entire project.
 
----
-
 ## Tech Stack
 
 | Component | Technology | Description |
@@ -56,8 +52,6 @@ Built from the ground up as the successor to Nightlist, it leverages **Vue 3**, 
 | **Styling** | [Naive UI](https://www.naiveui.com/) | Curated component library & design system |
 | **State** | [Pinia](https://pinia.vuejs.org/) | Modern Vue store management |
 | **Build** | [Vite](https://vitejs.dev/) | Next-generation frontend tooling |
-
----
 
 ## Getting Started
 
@@ -107,8 +101,6 @@ cd api
 npm run dev
 ```
 
----
-
 ## Project Structure
 
 ```text
@@ -136,8 +128,6 @@ npm run dev
 └── package.json            # Root scripts & dependencies
 ```
 
----
-
 ## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -147,8 +137,6 @@ Contributions are what make the open-source community such an amazing place to l
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
----
 
 ## License
 
