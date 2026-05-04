@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { api } from '@/api/client'
+import { isExternalSearchEnabled } from '@/utils/external-search.config'
 
 /**
  * @function useExternalSearch
@@ -17,6 +18,11 @@ export function useExternalSearch() {
    * @param {string} category 
    */
   const search = (query, category) => {
+    // If external search is not enabled for this category, do nothing
+    if (!isExternalSearchEnabled(category)) {
+      return
+    }
+
     if (!query || query.trim().length < 2) {
       suggestions.value = []
       return
@@ -41,6 +47,7 @@ export function useExternalSearch() {
   return {
     suggestions,
     isLoading,
-    search
+    search,
+    isSearchEnabled: isExternalSearchEnabled
   }
 }

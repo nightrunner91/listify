@@ -48,7 +48,16 @@
     "emptyDescription": "Wygląda na to, że Twoja lista jest pusta.",
     "searchEmptyDescription": "Nie znaleziono rekordów pasujących do Twojego wyszukiwania.",
     "or": "lub",
-    "titlePlaceholder": "Nazwa rekordu"
+    "titlePlaceholder": "Nazwa rekordu",
+    "searchPlaceholder": {
+      "games": "Dodaj grę...",
+      "tvshows": "Dodaj serial...",
+      "films": "Dodaj film...",
+      "anime": "Dodaj anime...",
+      "manga": "Dodaj mangę...",
+      "books": "Dodaj książkę...",
+      "music": "Dodaj utwór lub album..."
+    }
   },
   "about": {
     "description": "Listify to osobisty śledzik mediów zbudowany wokół jednej idei: Twoja kolekcja powinna być prosta w utrzymaniu, zawsze dostępna i w całości Twoja. Niezależnie od tego, czy logujesz gry, które skończyłeś, filmy na liście do obejrzenia, książki, które czytasz, czy cokolwiek innego — Listify utrzymuje to w porządku, nie wchodząc Ci w drogę.",

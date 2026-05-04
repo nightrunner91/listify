@@ -48,7 +48,16 @@
     "emptyDescription": "Looks like your list is empty.",
     "searchEmptyDescription": "No records found matching your search.",
     "or": "or",
-    "titlePlaceholder": "Name of record"
+    "titlePlaceholder": "Name of record",
+    "searchPlaceholder": {
+      "games": "Add a game...",
+      "tvshows": "Add a TV show...",
+      "films": "Add a film...",
+      "anime": "Add an anime...",
+      "manga": "Add a manga...",
+      "books": "Add a book...",
+      "music": "Add a track or album..."
+    }
   },
   "about": {
     "description": "Listify is a personal media tracker built around one idea: your collection should be simple to maintain, always accessible, and entirely yours. Whether you're logging games you've finished, films on your watchlist, books you're reading, or anything in between — Listify keeps it organized without getting in the way.",

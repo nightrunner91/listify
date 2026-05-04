@@ -17,19 +17,36 @@ import {
   NCheckbox
 } from 'naive-ui'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
 import { useExternalSearch } from '@/composables/useExternalSearch'
 import { PhHeart as LikeIcon } from 'phosphor-vue'
 import { lyStorage } from '@/main'
 
+const { t } = useI18n()
 const recordsStore = useRecordsStore()
 const gridStore = useGridStore()
-const { suggestions, isLoading, search: triggerSearch } = useExternalSearch()
+const { suggestions, isLoading, search: triggerSearch, isSearchEnabled } = useExternalSearch()
 const route = useRoute()
 const props = defineProps(['id', 'index'])
 const tag = route.meta.tag
 const showCheckbox = ref(false)
+
+/**
+ * @description Configuration for external search for the current category
+ */
+const searchConfig = computed(() => isSearchEnabled(tag) ? { enabled: true, placeholder: searchPlaceholder.value } : { enabled: false, placeholder: t('records.titlePlaceholder') })
+
+/**
+ * @description Dynamic placeholder based on whether search is enabled for the category
+ */
+const searchPlaceholder = computed(() => {
+  const config = isSearchEnabled(tag)
+  // We use a mapping or just fallback to generic titlePlaceholder
+  const categoryPlaceholder = `records.searchPlaceholder.${tag}`
+  return isSearchEnabled(tag) ? t(categoryPlaceholder) : t('records.titlePlaceholder')
+})
 
 const record = computed(() => {
   return recordsStore.getRecord(props.id, tag) || {}
@@ -87,7 +104,9 @@ watch(record, (newVal) => {
  * @param {string} value 
  */
 const handleSearch = (value) => {
-  triggerSearch(value, tag)
+  if (isSearchEnabled(tag)) {
+    triggerSearch(value, tag)
+  }
 }
 </script>
 
@@ -137,10 +156,10 @@ const handleSearch = (value) => {
         <n-auto-complete
           :id="`input-${record.id}`"
           v-model:value="record.title"
-          :options="suggestions"
-          :loading="isLoading"
+          :options="isSearchEnabled(tag) ? suggestions : []"
+          :loading="isSearchEnabled(tag) && isLoading"
           :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
-          :placeholder="$t('records.titlePlaceholder')"
+          :placeholder="searchPlaceholder"
           class="w-100 w-l-75 record-input"
           @input="handleSearch"
         />

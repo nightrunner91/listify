@@ -48,7 +48,16 @@
     "emptyDescription": "Parece que tu lista está vacía.",
     "searchEmptyDescription": "No se encontraron registros que coincidan con tu búsqueda.",
     "or": "o",
-    "titlePlaceholder": "Nombre del registro"
+    "titlePlaceholder": "Nombre del registro",
+    "searchPlaceholder": {
+      "games": "Añadir un juego...",
+      "tvshows": "Añadir una serie...",
+      "films": "Añadir una película...",
+      "anime": "Añadir un anime...",
+      "manga": "Añadir un manga...",
+      "books": "Añadir un libro...",
+      "music": "Añadir una pista o álbum..."
+    }
   },
   "about": {
     "description": "Listify es un rastreador personal de medios construido en torno a una idea: tu colección debe ser sencilla de mantener, siempre accesible y enteramente tuya. Ya sea que estés registrando juegos que has terminado, películas en tu lista de seguimiento, libros que estás leyendo o cualquier cosa intermedia — Listify lo mantiene organizado sin estorbar.",

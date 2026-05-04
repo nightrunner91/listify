@@ -48,7 +48,16 @@
     "emptyDescription": "Deine Liste scheint leer zu sein.",
     "searchEmptyDescription": "Keine Einträge für deine Suche gefunden.",
     "or": "oder",
-    "titlePlaceholder": "Name des Eintrags"
+    "titlePlaceholder": "Name des Eintrags",
+    "searchPlaceholder": {
+      "games": "Spiel hinzufügen...",
+      "tvshows": "Serie hinzufügen...",
+      "films": "Film hinzufügen...",
+      "anime": "Anime hinzufügen...",
+      "manga": "Manga hinzufügen...",
+      "books": "Buch hinzufügen...",
+      "music": "Titel oder Album hinzufügen..."
+    }
   },
   "about": {
     "description": "Listify ist ein persönlicher Medien-Tracker, der um eine Idee herum entwickelt wurde: Deine Sammlung sollte einfach zu pflegen, immer zugänglich und ganz dein Eigen sein. Egal ob du Spiele loggst, die du beendet hast, Filme auf deiner Merkliste, Bücher, die du gerade liest, oder alles dazwischen — Listify hält alles organisiert, ohne im Weg zu stehen.",
