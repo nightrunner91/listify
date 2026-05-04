@@ -36,6 +36,46 @@ export async function searchGames(query) {
 }
 
 /**
+ * @function searchTMDB
+ * @description Searches for media using the TMDB API
+ * @param {string} query - The search query
+ * @param {string} type - 'tv', 'movie', or 'multi'
+ * @returns {Promise<Array>} - List of suggestions in { id, label, value } format
+ */
+export async function searchTMDB(query, type) {
+  const apiKey = process.env.TMDB_API_KEY
+  if (!apiKey) {
+    throw new Error('TMDB_API_KEY is not configured')
+  }
+
+  const url = `https://api.themoviedb.org/3/search/${type}?api_key=${apiKey}&query=${encodeURIComponent(query)}&page=1`
+  
+  const response = await fetch(url)
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}))
+    throw new Error(error.status_message || `TMDB API error: ${response.statusText}`)
+  }
+
+  const data = await response.json()
+  
+  return (data.results || [])
+    .filter(item => item.media_type !== 'person')
+    .slice(0, 5)
+    .map(item => {
+      const title = item.title || item.name || 'Unknown'
+      const date = item.release_date || item.first_air_date
+      const year = date ? ` (${date.split('-')[0]})` : ''
+      const label = `${title}${year}`
+
+      return {
+        id: item.id,
+        label: label,
+        value: title // We only put the title into the input, without the year
+      }
+    })
+}
+
+/**
  * @function externalSearch
  * @description Unified search method for different categories
  * @param {string} query
@@ -47,10 +87,14 @@ export async function externalSearch(query, category) {
   switch (category) {
     case 'games':
       return await searchGames(query)
-    // Future categories can be added here
-    // case 'tvshows':
-    // case 'films':
-    //   return await searchMovies(query)
+    case 'tvshows':
+      return await searchTMDB(query, 'tv')
+    case 'films':
+      return await searchTMDB(query, 'movie')
+    case 'anime':
+      // TMDB includes anime mostly as TV shows, but some as movies.
+      // Using multi search to get both.
+      return await searchTMDB(query, 'multi')
     default:
       return []
   }

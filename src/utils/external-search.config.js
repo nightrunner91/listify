@@ -10,20 +10,20 @@ export const EXTERNAL_SEARCH_CONFIG = {
     placeholderKey: 'records.searchPlaceholder.games'
   },
   tvshows: {
-    enabled: false,
+    enabled: true,
     provider: 'TMDB',
     minLength: 2,
     placeholderKey: 'records.searchPlaceholder.tvshows'
   },
   films: {
-    enabled: false,
+    enabled: true,
     provider: 'TMDB',
     minLength: 2,
     placeholderKey: 'records.searchPlaceholder.films'
   },
   anime: {
-    enabled: false,
-    provider: 'MyAnimeList',
+    enabled: true,
+    provider: 'TMDB',
     minLength: 2,
     placeholderKey: 'records.searchPlaceholder.anime'
   },
