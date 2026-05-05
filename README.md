@@ -24,7 +24,7 @@ Built from the ground up as the successor to [Nightlist](https://github.com/nigh
 
 ## Key Features
 
-👤 **Personalized Accounts**
+- 👤 **Personalized Accounts**
 
 Secure sign-up and synchronization across all your devices.
 
