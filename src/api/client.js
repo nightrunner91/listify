@@ -4,6 +4,10 @@ let API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://lo
 if (API_BASE && !API_BASE.startsWith('http')) {
   API_BASE = `https://${API_BASE}`
 }
+// Remove trailing slash if present
+if (API_BASE.endsWith('/')) {
+  API_BASE = API_BASE.slice(0, -1)
+}
 
 export class ApiError extends Error {
   constructor(status, message, code) {
