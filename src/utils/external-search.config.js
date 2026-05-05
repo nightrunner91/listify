@@ -23,7 +23,7 @@ export const EXTERNAL_SEARCH_CONFIG = {
   },
   anime: {
     enabled: true,
-    provider: 'TMDB',
+    provider: 'Jikan',
     minLength: 2,
     placeholderKey: 'records.searchPlaceholder.anime'
   },
@@ -35,13 +35,13 @@ export const EXTERNAL_SEARCH_CONFIG = {
   },
   books: {
     enabled: true,
-    provider: 'GoogleBooks',
+    provider: 'iTunes',
     minLength: 2,
     placeholderKey: 'records.searchPlaceholder.books'
   },
   music: {
-    enabled: false,
-    provider: 'Spotify',
+    enabled: true,
+    provider: 'iTunes',
     minLength: 2,
     placeholderKey: 'records.searchPlaceholder.music'
   }
