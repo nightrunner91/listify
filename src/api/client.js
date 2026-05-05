@@ -8,6 +8,10 @@ if (API_BASE && !API_BASE.startsWith('http')) {
 if (API_BASE.endsWith('/')) {
   API_BASE = API_BASE.slice(0, -1)
 }
+// Ensure /api suffix exists
+if (API_BASE && !API_BASE.endsWith('/api')) {
+  API_BASE = `${API_BASE}/api`
+}
 
 export class ApiError extends Error {
   constructor(status, message, code) {
