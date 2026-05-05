@@ -160,6 +160,7 @@ const handleSearch = (value) => {
           :loading="isSearchEnabled(tag) && isLoading"
           :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
           :placeholder="searchPlaceholder"
+          :auto-select="false"
           class="w-100 w-l-75 record-input"
           @input="handleSearch"
         />

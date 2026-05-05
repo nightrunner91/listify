@@ -27,14 +27,17 @@ export async function searchGames(query) {
 
     const data = await response.json()
     
-    // Map RAWG results to a unified format for Naive UI AutoComplete
     // label: what is shown in the dropdown
     // value: what is put into the input on selection
-    return (data.results || []).map(game => ({
-      id: game.id,
-      label: game.name,
-      value: game.name
-    }))
+    return (data.results || []).map(game => {
+      const year = game.released ? ` (${game.released.split('-')[0]})` : ''
+      const label = `${game.name}${year}`
+      return {
+        id: game.id,
+        label: label,
+        value: label
+      }
+    })
   } catch (error) {
     console.error('Error in searchGames:', error)
     return []
@@ -78,7 +81,7 @@ export async function searchTMDB(query, type) {
         return {
           id: item.id,
           label: label,
-          value: title // We only put the title into the input, without the year
+          value: label
         }
       })
   } catch (error) {
@@ -116,7 +119,7 @@ export async function searchITunes(query, entity = 'ebook') {
       return {
         id: item.trackId ? item.trackId.toString() : (item.collectionId ? item.collectionId.toString() : Math.random().toString()),
         label: label,
-        value: title
+        value: label
       }
     })
   } catch (error) {
@@ -162,7 +165,7 @@ export async function searchJikan(query, type = 'manga') {
       return {
         id: item.mal_id.toString(),
         label: label,
-        value: title
+        value: label
       }
     })
   } catch (error) {
