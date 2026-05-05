@@ -20,27 +20,36 @@
 
 **Listify** is a sleek, modern media tracker designed for those who want to keep their collections organized without the clutter of social features or ads. Whether you're logging games, movies, books, or anything in between, Listify provides a premium, responsive interface to manage your personal library.
 
-Built from the ground up as the successor to Nightlist, it leverages **Vue 3**, **Fastify**, and **PostgreSQL** to deliver a fast, secure, and highly customizable experience.
+Built from the ground up as the successor to [Nightlist](https://github.com/nightrunner91/nightlist), it leverages **Vue 3**, **Fastify**, and **PostgreSQL** to deliver a fast, secure, and highly customizable experience.
 
 ## Key Features
 
-- **Personalized Accounts**: Secure sign-up and synchronization across all your devices.
+👤 **Personalized Accounts**
+Secure sign-up and synchronization across all your devices.
 
-- **Build-in Categories**: Built-in support for Games, TV Shows, Films, Manga, Books, and Music.
+📦 **Build-in Categories**
+Built-in support for Games, TV Shows, Films, Manga, Books, and Music.
 
-- **Custom Lists**: Create and manage bespoke lists for specialized collections.
+📋 **Custom Lists**
+Create and manage bespoke lists for specialized collections.
 
-- **Multi-Language Support**: Fully localized in 8 languages (EN, DE, ES, FR, PL, RO, RU, UK).
+🌍 **Multi-Language Support**
+Fully localized in 8 languages (EN, DE, ES, FR, PL, RO, RU, UK).
 
-- **Intuitive UI**: Lightweight design powered by Naive UI with support for Light, Dark, and System themes.
+✨ **Intuitive UI**
+Lightweight design powered by Naive UI with support for light and dark themes.
 
-- **Data Sovereignty**: Import and export your entire collection as JSON or CSV at any time.
+💾 **Data Sovereignty**
+Import and export your entire collection as JSON or CSV at any time.
 
-- **Privacy Focused**: No tracking, no ads, and no third-party data sharing.
+🛡️ **Privacy Focused**
+No tracking, no ads, and no third-party data sharing.
 
-- **High Performance**: Optimized with virtual scrolling and a lightweight Fastify backend.
+⚡ **High Performance**
+Optimized with virtual scrolling and a lightweight Fastify backend.
 
-- **Open-source**: Listify is an actively developed open-source project. Inspect, fork, or self-host the entire project.
+🏗️ **Open-source**
+Listify is an actively developed open-source project. Inspect, fork, or self-host the entire project.
 
 ## Tech Stack
 
@@ -52,6 +61,18 @@ Built from the ground up as the successor to Nightlist, it leverages **Vue 3**, 
 | **Styling** | [Naive UI](https://www.naiveui.com/) | Curated component library & design system |
 | **State** | [Pinia](https://pinia.vuejs.org/) | Modern Vue store management |
 | **Build** | [Vite](https://vitejs.dev/) | Next-generation frontend tooling |
+
+## External Data Sources
+
+Listify integrates with several high-quality external APIs to provide instant autocompletion and rich metadata for your collections:
+
+- 🎮 **[RAWG API](https://rawg.io/apidocs)**: The primary source for the **Games** category.
+- 🎬 **[TMDB API](https://www.themoviedb.org/documentation/api)**: Powers discovery for **Films** and **TV Shows**.
+- 📖 **[Jikan API](https://jikan.moe/)**: A free, open-source API for the MyAnimeList database, used for **Anime** and **Manga**.
+- 🎵 **[iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html)**: Provides a reliable catalog for **Books** and **Music**.
+
+> [!IMPORTANT]
+> Some providers (RAWG, TMDB) require an API key. If you're hosting your own application ensure these are correctly configured in your `api/.env` file to enable autocompletion features.
 
 ## Getting Started
 
@@ -99,6 +120,7 @@ npm run dev
 ```bash
 cd api
 npm run dev
+npm run db:studio
 ```
 
 ## Project Structure
