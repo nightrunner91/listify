@@ -1,6 +1,6 @@
 {
   "name": "listify",
-  "version": "0.2.5-beta",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
