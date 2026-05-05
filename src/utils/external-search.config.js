@@ -28,13 +28,13 @@ export const EXTERNAL_SEARCH_CONFIG = {
     placeholderKey: 'records.searchPlaceholder.anime'
   },
   manga: {
-    enabled: false,
-    provider: 'MyAnimeList',
+    enabled: true,
+    provider: 'Jikan',
     minLength: 2,
     placeholderKey: 'records.searchPlaceholder.manga'
   },
   books: {
-    enabled: false,
+    enabled: true,
     provider: 'GoogleBooks',
     minLength: 2,
     placeholderKey: 'records.searchPlaceholder.books'
