@@ -2,7 +2,6 @@ import {
   createRouter,
   createWebHashHistory
 } from 'vue-router'
-import i18n from '@/i18n'
 import RecordsPage from '@/views/RecordsPage.vue'
 import StartingPage from '@/views/StartingPage.vue'
 
@@ -161,29 +160,7 @@ export function setScrollContentToTop(fn) {
   scrollContentToTopFn = fn
 }
 
-router.afterEach(() => {
-  window.scrollTo(0, 0)
-  scrollContentToTopFn?.()
-})
-
 router.beforeEach((to, from, next) => {
-  let title = 'Listify'
-  if (to.meta.title) {
-    const translatedTitle = i18n.global.t(to.meta.title)
-    if (to.meta.tag !== 'start') {
-      title = `${translatedTitle} - Listify`
-    } else {
-      title = translatedTitle
-    }
-  }
-  // Handle dynamic tag for custom lists
-  if (to.meta.isCustom && to.params.id) {
-    const recordsStore = useRecordsStore()
-    const list = recordsStore.getCustomList(to.params.id)
-    title = list ? `${list.name} - Listify` : `${i18n.global.t('store.customListName')} - Listify`
-  }
-  document.title = title
-
   // Auth Guard
   const authStore = useAuthStore()
   if (to.meta.requiresAuth !== false && !authStore.user) {
@@ -193,6 +170,11 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+})
+
+router.afterEach((to) => {
+  window.scrollTo(0, 0)
+  scrollContentToTopFn?.()
 })
 
 export default router

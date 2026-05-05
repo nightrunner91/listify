@@ -39,12 +39,22 @@ const getTranslatedTitle = computed(() => {
       return translation
     }
   }
+  
+  if (route.meta.title) {
+    const translation = t(route.meta.title)
+    if (translation !== route.meta.title) {
+      return translation
+    }
+  }
+  
   return route.meta.title
 })
 
 watch(
   [route, themeStore],
   async () => {
+    if (route.meta.requiresAuth === false) return
+    
     barWidth.value = barSize
     await new Promise((resolve) => setTimeout(resolve, barSpeed * 1.5))
     barWidth.value = '70px'

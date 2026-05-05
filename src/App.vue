@@ -1,8 +1,10 @@
 <script setup>
 import {
   onBeforeMount,
-  ref
+  ref,
+  watch
 } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { NLayout } from 'naive-ui'
 import { useThemeStore } from '@/stores/theme.store'
 import { useGridStore } from '@/stores/grid.store'
@@ -22,6 +24,7 @@ const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const authStore = useAuthStore()
 const route = useRoute()
+const { t, locale } = useI18n()
 
 const isReady = ref(false)
 
@@ -34,6 +37,24 @@ onBeforeMount(async () => {
   }
   isReady.value = true
 })
+
+// Global Title Management
+watch(
+  [() => route.path, locale],
+  () => {
+    let title = 'Listify'
+    if (route.meta.title) {
+      const translatedTitle = t(route.meta.title)
+      if (route.meta.tag !== 'start') {
+        title = `${translatedTitle} - Listify`
+      } else {
+        title = translatedTitle
+      }
+    }
+    document.title = title
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
