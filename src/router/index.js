@@ -4,6 +4,7 @@ import {
 } from 'vue-router'
 import RecordsPage from '@/views/RecordsPage.vue'
 import StartingPage from '@/views/StartingPage.vue'
+import PublicProfilePage from '@/views/PublicProfilePage.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,16 @@ const router = createRouter({
       meta: {
         requiresAuth: false,
         title: 'auth.register.tabTitle' 
+      }
+    },
+    {
+      path: '/user/:id',
+      name: 'PublicProfile',
+      component: PublicProfilePage,
+      meta: {
+        requiresAuth: false,
+        isPublic: true,
+        title: 'Listify'
       }
     },
     {

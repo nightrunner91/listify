@@ -22,6 +22,7 @@ import LyTitle from '@/components/base/ly-title/LyTitle.vue'
 import LySort from '@/features/records/components/ly-sort/LySort.vue'
 import LyScroller from '@/components/base/ly-scroller/LyScroller.vue'
 import LyFooter from '@/components/layout/ly-footer/LyFooter.vue'
+import LyShareProfile from '@/features/public/components/LyShareProfile.vue'
 import { useMenuStore } from '@/stores/menu.store'
 import { useGridStore } from '@/stores/grid.store'
 import { useRecordsStore } from '@/stores/records.store'
@@ -37,6 +38,7 @@ const router = useRouter()
 const dialog = useDialog()
 
 const contentRef = ref(null)
+const showShareModal = ref(false)
 
 function scrollContentToTop() {
   contentRef.value?.scrollTo({
@@ -112,6 +114,13 @@ function confirmDeleteList() {
           <ly-title />
           <ly-sort v-if="!route.meta.isCustom && route.meta.tag !== 'about' && route.meta.tag !== 'start'" />
           <n-button
+            v-else-if="route.meta.tag === 'start'"
+            secondary
+            @click="showShareModal = true"
+          >
+            {{ t('publicProfile.shareButton') }}
+          </n-button>
+          <n-button
             v-else-if="route.meta.isCustom"
             secondary
             type="error"
@@ -127,7 +136,6 @@ function confirmDeleteList() {
         <router-view />
         <!-- end::Main View -->
 
-
         <ly-footer />
       </n-grid-item>
     </n-grid>
@@ -137,6 +145,10 @@ function confirmDeleteList() {
       @scrollTop="contentRef?.scrollTo({ top: 0, behavior: 'smooth' })"
       @scrollBottom="contentRef?.scrollTo({ top: 999999999, behavior: 'smooth' })"
     />
+
+    <!-- begin::Share Profile Modal -->
+    <ly-share-profile v-model:show="showShareModal" />
+    <!-- end::Share Profile Modal -->
   </n-layout-content>
 </template>
 

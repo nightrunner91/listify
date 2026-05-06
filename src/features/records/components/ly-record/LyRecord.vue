@@ -14,7 +14,8 @@ import {
   NIcon,
   NText,
   NRate,
-  NCheckbox
+  NCheckbox,
+  NTag
 } from 'naive-ui'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -29,8 +30,8 @@ const recordsStore = useRecordsStore()
 const gridStore = useGridStore()
 const { suggestions, isLoading, search: triggerSearch, isSearchEnabled } = useExternalSearch()
 const route = useRoute()
-const props = defineProps(['id', 'index'])
-const tag = route.meta.tag
+const props = defineProps(['id', 'index', 'readonly', 'record'])
+const tag = props.readonly ? props.record?.category : route.meta.tag
 const showCheckbox = ref(false)
 
 /**
@@ -49,6 +50,8 @@ const searchPlaceholder = computed(() => {
 })
 
 const record = computed(() => {
+  // In readonly mode, use the passed-in record prop directly (no store)
+  if (props.readonly) return props.record || {}
   return recordsStore.getRecord(props.id, tag) || {}
 })
 
@@ -77,8 +80,10 @@ const getComparableString = (r) => r && r.id ? JSON.stringify({
 let updateTimeout = null
 let lastSavedString = getComparableString(record.value)
 
-// Watch for record changes to trigger auto-save
+// Watch for record changes to trigger auto-save (only in edit mode)
 watch(record, (newVal) => {
+  // Skip in readonly mode
+  if (props.readonly) return
   if (newVal && newVal.id) {
     const currentString = getComparableString(newVal)
     if (currentString === lastSavedString) return
@@ -113,9 +118,12 @@ const handleSearch = (value) => {
 <template>
   <n-list-item
     class="px-4 px-sm-5"
-    :class="gridStore.screenLargerThen('l') ? '' : 'record-mobile'"
-    @mouseover="showCheckbox = true"
-    @mouseleave="showCheckbox = false"
+    :class="[
+      gridStore.screenLargerThen('l') ? '' : 'record-mobile',
+      props.readonly ? 'record--readonly' : ''
+    ]"
+    @mouseover="!props.readonly && (showCheckbox = true)"
+    @mouseleave="!props.readonly && (showCheckbox = false)"
   >
     <n-space
       :wrap-item="false"
@@ -132,7 +140,9 @@ const handleSearch = (value) => {
         size="small"
         class="w-100 w-l-50"
       >
+        <!-- Index number (readonly) or checkbox (editable) -->
         <n-space
+          v-if="!props.readonly"
           :wrap-item="false"
           align="center"
           justify="center"
@@ -153,7 +163,19 @@ const handleSearch = (value) => {
           </n-text>
         </n-space>
 
+        <!-- Readonly index -->
+        <n-text
+          v-else
+          align="center"
+          class="w-16 fz-12 lh-1"
+          depth="3"
+        >
+          {{ index + 1 }}
+        </n-text>
+
+        <!-- Editable autocomplete title -->
         <n-auto-complete
+          v-if="!props.readonly"
           :id="`input-${record.id}`"
           v-model:value="record.title"
           :options="isSearchEnabled(tag) ? suggestions : []"
@@ -164,6 +186,14 @@ const handleSearch = (value) => {
           class="w-100 w-l-75 record-input"
           @input="handleSearch"
         />
+        <!-- Readonly static title -->
+        <n-text
+          v-else
+          class="w-100 record-readonly-title"
+          :depth="record.title ? 1 : 3"
+        >
+          {{ record.title || '—' }}
+        </n-text>
       </n-space>
       <!-- end::Record Identity & Title -->
 
@@ -175,13 +205,25 @@ const handleSearch = (value) => {
         size="small"
         class="w-100 w-l-50"
       >
+        <!-- Editable Rate -->
         <n-rate
+          v-if="!props.readonly"
           v-model:value="record.score"
           clearable
           class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-7"
         />
+        <!-- Readonly Rate -->
+        <n-rate
+          v-else-if="record.score > 0"
+          :value="record.score"
+          readonly
+          size="small"
+          class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-7"
+        />
           
+        <!-- Like button (editable) -->
         <n-button
+          v-if="!props.readonly"
           quaternary
           round
           circle
@@ -197,8 +239,24 @@ const handleSearch = (value) => {
             />
           </template>
         </n-button>
+        <!-- Like icon (readonly, only shown if liked) -->
+        <n-button
+          v-else-if="record.liked"
+          quaternary
+          round
+          circle
+          type="error"
+          size="small"
+          class="ml-3 ml-s-6 ml-l-10 no-events cursor-default"
+        >
+          <template #icon>
+            <like-icon weight="fill" />
+          </template>
+        </n-button>
 
+        <!-- Label dropdown (editable) -->
         <n-dropdown
+          v-if="!props.readonly"
           size="small"
           trigger="click"
           placement="bottom-end"
@@ -220,6 +278,21 @@ const handleSearch = (value) => {
             {{ recordsStore.getLabelName(tag, record.label) }}
           </n-button>
         </n-dropdown>
+        <!-- Label tag (readonly) -->
+        <n-tag
+          v-else-if="record.label"
+          size="small"
+          :bordered="false"
+          class="ml-auto"
+        >
+          <template #icon>
+            <n-icon
+              depth="2"
+              :component="recordsStore.getLabelIcon(tag, record.label)"
+            />
+          </template>
+          {{ recordsStore.getLabelName(tag, record.label) }}
+        </n-tag>
       </n-space>
       <!-- end::Record Attributes (Score, Liked, Status) -->
     </n-space>
@@ -248,5 +321,13 @@ const handleSearch = (value) => {
 .record-mobile {
   border-top: 1px solid var(--n-merged-color-hover) !important;
   border-radius: 0 !important;
+}
+
+.record-readonly-title {
+  font-weight: 500;
+  padding: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

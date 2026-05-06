@@ -255,5 +255,21 @@
       "on_repeat": "Ascultă pe repetare",
       "plan_to_listen": "A adăugat în Plan de ascultat"
     }
+  },
+  "publicProfile": {
+    "shareButton": "Partajează profilul",
+    "modalTitle": "Profil public",
+    "visibilityLabel": "Vizibilitate publică",
+    "visibilityOn": "Profilul tău este vizibil public",
+    "visibilityOff": "Profilul tău este privat",
+    "copyLink": "Copiază link",
+    "copied": "Link copiat!",
+    "profilePrivate": "Acest profil este privat",
+    "profileNotFound": "Profil negăsit",
+    "viewPublicProfile": "Vezi profilul public",
+    "latestActivity": "ACTIVITATE RECENTĂ",
+    "noActivity": "Nicio activitate încă",
+    "records": "{count} înregistrări",
+    "loading": "Se încarcă profilul..."
   }
 }

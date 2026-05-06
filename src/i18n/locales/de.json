@@ -255,5 +255,21 @@
       "on_repeat": "Hört in Dauerschleife",
       "plan_to_listen": "Zu Geplant hinzugefügt"
     }
+  },
+  "publicProfile": {
+    "shareButton": "Profil teilen",
+    "modalTitle": "Öffentliches Profil",
+    "visibilityLabel": "Öffentliche Sichtbarkeit",
+    "visibilityOn": "Ihr Profil ist öffentlich sichtbar",
+    "visibilityOff": "Ihr Profil ist privat",
+    "copyLink": "Link kopieren",
+    "copied": "Link kopiert!",
+    "profilePrivate": "Dieses Profil ist privat",
+    "profileNotFound": "Profil nicht gefunden",
+    "viewPublicProfile": "Öffentliches Profil anzeigen",
+    "latestActivity": "NEUESTE AKTIVITÄT",
+    "noActivity": "Noch keine Aktivität",
+    "records": "{count} Einträge",
+    "loading": "Profil wird geladen..."
   }
 }

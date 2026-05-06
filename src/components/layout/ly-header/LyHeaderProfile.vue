@@ -20,7 +20,9 @@ import {
   PhSignOut as LogoutIcon,
   PhExport as ExportIcon,
   PhDownloadSimple as ImportIcon,
-  PhPencilSimple as EditIcon
+  PhPencilSimple as EditIcon,
+  PhShareNetwork as ShareIcon,
+  PhArrowSquareOut as OpenIcon
 } from 'phosphor-vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { useRouter } from 'vue-router'
@@ -28,6 +30,7 @@ import { useI18n } from 'vue-i18n'
 import LyAvatarPicker from './LyAvatarPicker.vue'
 import LyImport from '@/features/records/components/ly-import/LyImport.vue'
 import LyExport from '@/features/records/components/ly-export/LyExport.vue'
+import LyShareProfile from '@/features/public/components/LyShareProfile.vue'
 
 const { t } = useI18n()
 const authStore = useAuthStore()
@@ -38,9 +41,26 @@ const importRef = ref(null)
 const exportRef = ref(null)
 const showAvatarPicker = ref(false)
 const showPopover = ref(false)
+const showShareModal = ref(false)
 
 const user = computed(() => authStore.user)
 const editableUsername = ref(user.value?.username || '')
+const isPublic = computed(() => user.value?.isPublic ?? false)
+
+const profileUrl = computed(() => {
+  if (!user.value?.id) return ''
+  const base = window.location.origin + window.location.pathname
+  return `${base}#/user/${user.value.id}`
+})
+
+function openShareModal() {
+  showPopover.value = false
+  showShareModal.value = true
+}
+
+function openPublicProfile() {
+  window.open(profileUrl.value, '_blank', 'noopener,noreferrer')
+}
 
 watch(() => user.value?.username, (newVal) => {
   if (newVal) editableUsername.value = newVal
@@ -199,6 +219,33 @@ function openAvatarPicker() {
           :wrap-item="false"
           class="px-2 py-2"
         >
+          <n-divider class="my-0" />
+          <!-- begin::Public Profile Section -->
+          <n-button
+            quaternary
+            size="small"
+            class="justify-content-start"
+            @click="openShareModal"
+          >
+            <template #icon>
+              <n-icon :component="ShareIcon" />
+            </template>
+            {{ t('publicProfile.shareButton') }}
+          </n-button>
+          <n-button
+            v-if="isPublic"
+            quaternary
+            size="small"
+            class="justify-content-start"
+            @click="openPublicProfile"
+          >
+            <template #icon>
+              <n-icon :component="OpenIcon" />
+            </template>
+            {{ t('publicProfile.viewPublicProfile') }}
+          </n-button>
+          <!-- end::Public Profile Section -->
+          <n-divider class="my-0" />
           <n-button
             quaternary
             size="small"
@@ -257,6 +304,7 @@ function openAvatarPicker() {
     ref="exportRef"
     variant="hidden"
   />
+  <ly-share-profile v-model:show="showShareModal" />
   <!-- end::Hidden Modals -->
 </template>
 

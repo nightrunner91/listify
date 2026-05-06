@@ -255,5 +255,21 @@
       "on_repeat": "Слухає на повторі",
       "plan_to_listen": "Додав до планів"
     }
+  },
+  "publicProfile": {
+    "shareButton": "Поділитися профілем",
+    "modalTitle": "Публічний профіль",
+    "visibilityLabel": "Публічна видимість",
+    "visibilityOn": "Ваш профіль видно публічно",
+    "visibilityOff": "Ваш профіль приватний",
+    "copyLink": "Скопіювати посилання",
+    "copied": "Посилання скопійовано!",
+    "profilePrivate": "Цей профіль приватний",
+    "profileNotFound": "Профіль не знайдено",
+    "viewPublicProfile": "Переглянути публічний профіль",
+    "latestActivity": "ОСТАННЯ АКТИВНІСТЬ",
+    "noActivity": "Ще немає активності",
+    "records": "{count} записів",
+    "loading": "Завантаження профілю..."
   }
 }

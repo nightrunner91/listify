@@ -35,6 +35,7 @@ export default async function userRoutes(app) {
             minLength: 1,
             maxLength: 50 
           },
+          isPublic: { type: 'boolean' },
         },
         additionalProperties: false,
       },

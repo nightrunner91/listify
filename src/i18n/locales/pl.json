@@ -255,5 +255,21 @@
       "on_repeat": "Słucha w pętli",
       "plan_to_listen": "Dodano do Planuję posłuchać"
     }
+  },
+  "publicProfile": {
+    "shareButton": "Udostępnij profil",
+    "modalTitle": "Publiczny profil",
+    "visibilityLabel": "Widoczność publiczna",
+    "visibilityOn": "Twój profil jest widoczny publicznie",
+    "visibilityOff": "Twój profil jest prywatny",
+    "copyLink": "Kopiuj link",
+    "copied": "Link skopiowany!",
+    "profilePrivate": "Ten profil jest prywatny",
+    "profileNotFound": "Profil nie znaleziony",
+    "viewPublicProfile": "Wyświetl profil publiczny",
+    "latestActivity": "OSTATNIA AKTYWNOŚĆ",
+    "noActivity": "Brak aktywności",
+    "records": "{count} rekordów",
+    "loading": "Ładowanie profilu..."
   }
 }

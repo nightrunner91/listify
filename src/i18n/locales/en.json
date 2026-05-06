@@ -255,5 +255,21 @@
       "on_repeat": "Listening on repeat",
       "plan_to_listen": "Added to Plan to Listen"
     }
+  },
+  "publicProfile": {
+    "shareButton": "Share Profile",
+    "modalTitle": "Public Profile",
+    "visibilityLabel": "Public Visibility",
+    "visibilityOn": "Your profile is publicly visible",
+    "visibilityOff": "Your profile is private",
+    "copyLink": "Copy Link",
+    "copied": "Link copied!",
+    "profilePrivate": "This profile is private",
+    "profileNotFound": "Profile not found",
+    "viewPublicProfile": "View Public Profile",
+    "latestActivity": "RECENT ACTIVITY",
+    "noActivity": "No activity yet",
+    "records": "{count} records",
+    "loading": "Loading profile..."
   }
 }

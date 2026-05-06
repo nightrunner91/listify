@@ -10,6 +10,13 @@ import {
   jsonb
 } from 'drizzle-orm/pg-core'
 
+// ─── Constants ───────────────────────────────────────────────────────────────
+
+export const VALID_CATEGORIES = /** @type {const} */ ([
+  'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music',
+])
+
+
 // ─── Users ───────────────────────────────────────────────────────────────────
 
 export const users = pgTable('users', {
@@ -21,6 +28,7 @@ export const users = pgTable('users', {
   avatarSeed: varchar('avatar_seed', { length: 255 }),
   avatarOptions: jsonb('avatar_options').notNull().default({}),
   backgroundColor: varchar('background_color', { length: 50 }).notNull().default('#0AC0C0'),
+  isPublic: boolean('is_public').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 })
@@ -37,9 +45,6 @@ export const refreshTokens = pgTable('refresh_tokens', {
 
 // ─── Records ─────────────────────────────────────────────────────────────────
 
-export const VALID_CATEGORIES = /** @type {const} */ ([
-  'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music',
-])
 
 export const records = pgTable('records', {
   id: uuid('id').primaryKey().defaultRandom(),

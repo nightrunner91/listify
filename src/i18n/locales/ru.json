@@ -255,5 +255,21 @@
       "on_repeat": "На повторе",
       "plan_to_listen": "Добавлено в В планах"
     }
+  },
+  "publicProfile": {
+    "shareButton": "Поделиться профилем",
+    "modalTitle": "Публичный профиль",
+    "visibilityLabel": "Публичная видимость",
+    "visibilityOn": "Ваш профиль виден публично",
+    "visibilityOff": "Ваш профиль приватный",
+    "copyLink": "Скопировать ссылку",
+    "copied": "Ссылка скопирована!",
+    "profilePrivate": "Этот профиль приватный",
+    "profileNotFound": "Профиль не найден",
+    "viewPublicProfile": "Открыть публичный профиль",
+    "latestActivity": "НЕДАВНЯЯ АКТИВНОСТЬ",
+    "noActivity": "Активности пока нет",
+    "records": "{count} записей",
+    "loading": "Загрузка профиля..."
   }
 }
