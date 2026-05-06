@@ -28,7 +28,14 @@ import {
   PhTextAa as AlphabeticalIcon,
   PhStar as RatingIcon,
   PhHeart as FavouriteIcon,
-  PhList as StatusIcon
+  PhList as StatusIcon,
+  PhGameController as GamesIcon,
+  PhTelevision as TvShowsIcon,
+  PhSmileyWink as AnimeIcon,
+  PhFilmStrip as FilmsIcon,
+  PhImageSquare as MangaIcon,
+  PhBooks as BooksIcon,
+  PhMusicNotes as MusicCategoryIcon
 } from 'phosphor-vue'
 import jsesc from 'jsesc'
 import moment from 'moment'
@@ -36,6 +43,71 @@ import Papa from 'papaparse'
 import i18n from '@/i18n'
 
 const RECORDS_KEY = 'rec_'
+
+export const CATEGORIES = ['games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music']
+
+export const CATEGORY_ICONS = {
+  games: GamesIcon,
+  tvshows: TvShowsIcon,
+  films: FilmsIcon,
+  anime: AnimeIcon,
+  manga: MangaIcon,
+  books: BooksIcon,
+  music: MusicCategoryIcon
+}
+
+export const LABEL_PRIORITY = {
+  // 1. Ongoing
+  'watching_ongoing': 1,
+  'read_ongoing': 1,
+  'playing_now': 1,
+  'listening_now': 1,
+
+  // 2. Currently
+  'watching_now': 2,
+  'read_now': 2,
+
+  // 3. Plan to...
+  'plan_to_watch': 3,
+  'plan_to_read': 3,
+  'plan_to_play': 3,
+  'plan_to_listen': 3,
+
+  // 4. On hold
+  'on_hold': 4,
+
+  // 5. Completed / Consumed
+  'completed': 5,
+  'watched_all': 5,
+  'read': 5,
+  'watched': 5,
+  'listened_all': 5,
+
+  // 6. Dropped
+  'dropped': 6,
+}
+
+export const sortRecords = (recordsList, sortKey = 'label') => {
+  return [...recordsList].sort((a, b) => {
+    if (sortKey === 'label') {
+      const orderA = LABEL_PRIORITY[a.label] ?? 999
+      const orderB = LABEL_PRIORITY[b.label] ?? 999
+      if (orderA !== orderB) return orderA - orderB
+      return (a.title || '').localeCompare(b.title || '')
+    }
+
+    if (sortKey === 'liked' || sortKey === 'score') {
+      if (b[sortKey] !== a[sortKey]) return (b[sortKey] || 0) - (a[sortKey] || 0)
+      return (a.title || '').localeCompare(b.title || '')
+    }
+
+    if (sortKey === 'title') {
+      return (a.title || '').localeCompare(b.title || '')
+    }
+
+    return 0
+  })
+}
 
 export const useRecordsStore = defineStore('records', () => {
 
@@ -130,42 +202,6 @@ export const useRecordsStore = defineStore('records', () => {
   }
 
   /**
-   * @constant labelPriority [declarable]
-   * @type {Object<string, number>}
-   * @description Sorting priority for different record status labels
-   */
-  const labelPriority = {
-    // 1. Ongoing
-    'watching_ongoing': 1,
-    'read_ongoing': 1,
-    'playing_now': 1,
-    'listening_now': 1,
-
-    // 2. Currently
-    'watching_now': 2,
-    'read_now': 2,
-
-    // 3. Plan to...
-    'plan_to_watch': 3,
-    'plan_to_read': 3,
-    'plan_to_play': 3,
-    'plan_to_listen': 3,
-
-    // 4. On hold
-    'on_hold': 4,
-
-    // 5. Completed / Consumed
-    'completed': 5,
-    'watched_all': 5,
-    'read': 5,
-    'watched': 5,
-    'listened_all': 5,
-
-    // 6. Dropped
-    'dropped': 6,
-  }
-
-  /**
    * @function syncDisplayOrderWithSort
    * @description Synchronizes the stable display order with the currently selected sorting method
    * @param {string} listType - Category tag
@@ -174,27 +210,8 @@ export const useRecordsStore = defineStore('records', () => {
     const list = records.value[listType] || []
     const key = selectedSort.value
 
-    const sortedIds = [...list].sort((a, b) => {
-      if (key === 'label') {
-        const orderA = labelPriority[a.label] ?? 999
-        const orderB = labelPriority[b.label] ?? 999
-        if (orderA !== orderB) return orderA - orderB
-        return a.title.localeCompare(b.title)
-      }
-
-      if (key === 'liked' || key === 'score') {
-        if (b[key] !== a[key]) return b[key] - a[key]
-        return a.title.localeCompare(b.title)
-      }
-
-      if (key === 'title') {
-        return a.title.localeCompare(b.title)
-      }
-
-      return 0
-    }).map(record => record.id)
-
-    displayOrder.value[listType] = sortedIds
+    const sortedRecordsList = sortRecords(list, key)
+    displayOrder.value[listType] = sortedRecordsList.map(record => record.id)
   }
 
   /**
@@ -631,9 +648,8 @@ export const useRecordsStore = defineStore('records', () => {
       const data = await api.get('/records')
 
       // Merge with default shape and add selected property
-      const defaultCategories = ['games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music']
       const newRecords = {}
-      defaultCategories.forEach(cat => {
+      CATEGORIES.forEach(cat => {
         newRecords[cat] = (data[cat] || []).map(r => ({
           ...r,
           selected: false
@@ -749,7 +765,7 @@ export const useRecordsStore = defineStore('records', () => {
         label: i18n.global.t('store.labels.dropped'),
         icon: DroppedIcon
       },
-    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+    ].sort((a, b) => LABEL_PRIORITY[a.key] - LABEL_PRIORITY[b.key]),
 
     tvshows: [
       {
@@ -783,7 +799,7 @@ export const useRecordsStore = defineStore('records', () => {
         label: i18n.global.t('store.labels.dropped'),
         icon: DroppedIcon
       },
-    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+    ].sort((a, b) => LABEL_PRIORITY[a.key] - LABEL_PRIORITY[b.key]),
 
     films: [
       {
@@ -802,7 +818,7 @@ export const useRecordsStore = defineStore('records', () => {
         label: i18n.global.t('store.labels.dropped'),
         icon: DroppedIcon
       },
-    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+    ].sort((a, b) => LABEL_PRIORITY[a.key] - LABEL_PRIORITY[b.key]),
 
     anime: [
       {
@@ -836,7 +852,7 @@ export const useRecordsStore = defineStore('records', () => {
         label: i18n.global.t('store.labels.dropped'),
         icon: DroppedIcon
       },
-    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+    ].sort((a, b) => LABEL_PRIORITY[a.key] - LABEL_PRIORITY[b.key]),
 
     manga: [
       {
@@ -870,7 +886,7 @@ export const useRecordsStore = defineStore('records', () => {
         label: i18n.global.t('store.labels.dropped'),
         icon: DroppedIcon
       },
-    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+    ].sort((a, b) => LABEL_PRIORITY[a.key] - LABEL_PRIORITY[b.key]),
 
     books: [
       {
@@ -899,7 +915,7 @@ export const useRecordsStore = defineStore('records', () => {
         label: i18n.global.t('store.labels.dropped'),
         icon: DroppedIcon
       },
-    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+    ].sort((a, b) => LABEL_PRIORITY[a.key] - LABEL_PRIORITY[b.key]),
 
     music: [
       {
@@ -928,7 +944,7 @@ export const useRecordsStore = defineStore('records', () => {
         label: i18n.global.t('store.labels.dropped'),
         icon: DroppedIcon
       },
-    ].sort((a, b) => labelPriority[a.key] - labelPriority[b.key]),
+    ].sort((a, b) => LABEL_PRIORITY[a.key] - LABEL_PRIORITY[b.key]),
   }))
 
   /**
@@ -1402,5 +1418,11 @@ export const useRecordsStore = defineStore('records', () => {
     sortCustomRecords,
     getCustomList,
     getCustomRecord,
+
+    // Expose constants for template convenience if needed
+    CATEGORIES,
+    CATEGORY_ICONS,
+    LABEL_PRIORITY,
+    sortRecords
   }
 })

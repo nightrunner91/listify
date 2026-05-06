@@ -4,7 +4,9 @@ import {
   computed,
   onMounted
 } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import {
+  useRoute, useRouter 
+} from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import {
   NAvatar,
@@ -17,93 +19,41 @@ import {
   NList,
   NTimeline,
   NTimelineItem,
-  NCard,
   NRate,
   NButton,
-  NIcon
+  NIcon,
+  NLayoutHeader
 } from 'naive-ui'
-import { 
-  PhHeart as LikeIcon,
-  PhGameController as GamesIcon,
-  PhTelevision as TvShowsIcon,
-  PhSmileyWink as AnimeIcon,
-  PhFilmStrip as FilmsIcon,
-  PhImageSquare as MangaIcon,
-  PhBooks as BooksIcon,
-  PhMusicNotes as MusicIcon
-} from 'phosphor-vue'
+import {PhHeart as LikeIcon} from 'phosphor-vue'
 import moment from 'moment'
 import 'moment/locale/ru'
 import 'moment/locale/ro'
 import LyRecord from '@/features/records/components/ly-record/LyRecord.vue'
 import { darkThemeOverrides } from '@/theme.config.js'
-import { useRecordsStore } from '@/stores/records.store'
+import {
+  CATEGORIES, CATEGORY_ICONS, sortRecords 
+} from '@/stores/records.store'
 
-const { t, te, locale } = useI18n()
+const {
+  t, te, locale 
+} = useI18n()
 const route = useRoute()
 const router = useRouter()
-const recordsStore = useRecordsStore()
+
+const logoColor = darkThemeOverrides.Categories.startColor
 
 const profileData = ref(null)
 const loading = ref(true)
 const error = ref(null)
-
-const VALID_CATEGORIES = ['games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music']
-
-const categoryIcons = {
-  games: GamesIcon,
-  tvshows: TvShowsIcon,
-  films: FilmsIcon,
-  anime: AnimeIcon,
-  manga: MangaIcon,
-  books: BooksIcon,
-  music: MusicIcon
-}
-
-const labelPriority = {
-  // 1. Ongoing
-  'watching_ongoing': 1,
-  'read_ongoing': 1,
-  'playing_now': 1,
-  'listening_now': 1,
-
-  // 2. Currently
-  'watching_now': 2,
-  'read_now': 2,
-
-  // 3. Plan to...
-  'plan_to_watch': 3,
-  'plan_to_read': 3,
-  'plan_to_play': 3,
-  'plan_to_listen': 3,
-
-  // 4. On hold
-  'on_hold': 4,
-
-  // 5. Completed / Consumed
-  'completed': 5,
-  'watched_all': 5,
-  'read': 5,
-  'watched': 5,
-  'listened_all': 5,
-
-  // 6. Dropped
-  'dropped': 6,
-}
 
 /** @description Records sorted by status (label) and title */
 const sortedRecords = computed(() => {
   if (!profileData.value?.records) return {}
 
   const sorted = {}
-  for (const cat of VALID_CATEGORIES) {
+  for (const cat of CATEGORIES) {
     const list = profileData.value.records[cat] || []
-    sorted[cat] = [...list].sort((a, b) => {
-      const orderA = labelPriority[a.label] ?? 999
-      const orderB = labelPriority[b.label] ?? 999
-      if (orderA !== orderB) return orderA - orderB
-      return (a.title || '').localeCompare(b.title || '')
-    })
+    sorted[cat] = sortRecords(list, 'label')
   }
   return sorted
 })
@@ -163,7 +113,7 @@ const avatarUrl = computed(() => {
 /** @description Categories that have at least one record */
 const nonEmptyCategories = computed(() => {
   if (!profileData.value?.records) return []
-  return VALID_CATEGORIES.filter(cat => {
+  return CATEGORIES.filter(cat => {
     const recs = sortedRecords.value[cat]
     return recs && recs.length > 0
   })
@@ -181,35 +131,76 @@ function getCategoryColor(category) {
  * @description Formats a raw activity into i18n parameters
  */
 function formatActivity(activity) {
-  const { action, entityName, category, metadata } = activity
+  const {
+    action, entityName, category, metadata 
+  } = activity
   const categoryLabel = category && te(`categories.${category}`) ? t(`categories.${category}`) : category
 
   switch (action) {
     case 'record_created':
-      return { keypath: 'timeline.actions.record_created', entity: entityName, category: categoryLabel }
+      return {
+        keypath: 'timeline.actions.record_created',
+        entity: entityName,
+        category: categoryLabel 
+      }
     case 'record_status_updated': {
       const statusKey = `timeline.sentences.${metadata?.label}`
       const statusVerb = te(statusKey) ? t(statusKey) : metadata?.label
-      return { keypath: 'timeline.actions.record_status_updated', status: statusVerb, entity: entityName }
+      return {
+        keypath: 'timeline.actions.record_status_updated',
+        status: statusVerb,
+        entity: entityName 
+      }
     }
     case 'record_score_updated':
-      return { keypath: 'timeline.actions.record_score_updated', entity: entityName, type: 'rate', value: Number(metadata?.score) }
+      return {
+        keypath: 'timeline.actions.record_score_updated',
+        entity: entityName,
+        type: 'rate',
+        value: Number(metadata?.score) 
+      }
     case 'record_liked':
-      return { keypath: 'timeline.actions.record_liked', entity: entityName, type: 'like' }
+      return {
+        keypath: 'timeline.actions.record_liked',
+        entity: entityName,
+        type: 'like' 
+      }
     case 'record_unliked':
-      return { keypath: 'timeline.actions.record_unliked', entity: entityName }
+      return {
+        keypath: 'timeline.actions.record_unliked',
+        entity: entityName 
+      }
     case 'record_deleted':
-      return { keypath: 'timeline.actions.record_deleted', entity: entityName, category: categoryLabel }
+      return {
+        keypath: 'timeline.actions.record_deleted',
+        entity: entityName,
+        category: categoryLabel 
+      }
     case 'custom_list_created':
-      return { keypath: entityName ? 'timeline.actions.custom_list_created' : 'timeline.actions.custom_list_created_empty', entity: entityName }
+      return {
+        keypath: entityName ? 'timeline.actions.custom_list_created' : 'timeline.actions.custom_list_created_empty',
+        entity: entityName 
+      }
     case 'custom_list_renamed':
-      return { keypath: 'timeline.actions.custom_list_renamed', entity: entityName }
+      return {
+        keypath: 'timeline.actions.custom_list_renamed',
+        entity: entityName 
+      }
     case 'custom_list_deleted':
-      return { keypath: 'timeline.actions.custom_list_deleted', entity: entityName }
+      return {
+        keypath: 'timeline.actions.custom_list_deleted',
+        entity: entityName 
+      }
     case 'collection_imported':
-      return { keypath: 'timeline.actions.collection_imported', count: metadata?.count }
+      return {
+        keypath: 'timeline.actions.collection_imported',
+        count: metadata?.count 
+      }
     default:
-      return { keypath: 'timeline.actions.default_action', action }
+      return {
+        keypath: 'timeline.actions.default_action',
+        action 
+      }
   }
 }
 
@@ -226,6 +217,21 @@ const formattedActivities = computed(() => {
 
 <template>
   <div class="min-vh-100">
+    <!-- begin::Branding Navbar -->
+    <n-layout-header
+      bordered
+      class="public-profile__navbar w-100 d-flex justify-content-center align-items-center h-56"
+      @click="router.push('/')"
+    >
+      <div class="d-flex fz-20 font-weight-500 no-select">
+        <span :style="{ color: logoColor }">Li</span>
+        <n-text depth="2">
+          stify
+        </n-text>
+      </div>
+    </n-layout-header>
+    <!-- end::Branding Navbar -->
+
     <!-- begin::Loading State -->
     <n-space
       v-if="loading"
@@ -242,9 +248,7 @@ const formattedActivities = computed(() => {
       justify="center"
       class="py-16"
     >
-      <n-empty
-        :description="error === 'private' ? t('publicProfile.profilePrivate') : t('publicProfile.profileNotFound')"
-      />
+      <n-empty :description="error === 'private' ? t('publicProfile.profilePrivate') : t('publicProfile.profileNotFound')" />
     </n-space>
     <!-- end::Error State -->
 
@@ -295,7 +299,7 @@ const formattedActivities = computed(() => {
                 :size="6"
               >
                 <n-icon
-                  :component="categoryIcons[cat]"
+                  :component="CATEGORY_ICONS[cat]"
                   size="18"
                 />
                 <span>{{ t(`categories.${cat}`) }}</span>
@@ -309,7 +313,7 @@ const formattedActivities = computed(() => {
             </template>
 
             <n-list class="mt-4">
-                <ly-record
+              <ly-record
                 v-for="(record, index) in sortedRecords[cat]"
                 :key="record.id"
                 :index="index"
@@ -415,6 +419,15 @@ const formattedActivities = computed(() => {
 
 <style lang="scss" scoped>
 .public-profile {
+  &__navbar {
+    cursor: pointer;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(128, 128, 128, 0.05);
+    }
+  }
+
   &__avatar-border {
     border-color: rgba(255, 255, 255, 0.3) !important;
   }

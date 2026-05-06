@@ -24,7 +24,9 @@ const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const authStore = useAuthStore()
 const route = useRoute()
-const { t, locale } = useI18n()
+const {
+  t, locale 
+} = useI18n()
 
 const isReady = ref(false)
 

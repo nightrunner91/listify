@@ -18,7 +18,10 @@ async function searchAniList(query) {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: queryStr, variables: { search: query } })
+    body: JSON.stringify({
+      query: queryStr,
+      variables: { search: query } 
+    })
   });
   const data = await res.json();
   return (data.data.Page.media || []).map(m => ({

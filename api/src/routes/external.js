@@ -20,13 +20,18 @@ export default async function externalRoutes(app) {
         type: 'object',
         required: ['q', 'category'],
         properties: {
-          q: { type: 'string', minLength: 1 },
+          q: {
+            type: 'string',
+            minLength: 1 
+          },
           category: { type: 'string' }
         }
       }
     }
   }, async (request) => {
-    const { q, category } = request.query
+    const {
+      q, category 
+    } = request.query
     return await externalSearch(q, category)
   })
 }

@@ -28,7 +28,9 @@ import { lyStorage } from '@/main'
 const { t } = useI18n()
 const recordsStore = useRecordsStore()
 const gridStore = useGridStore()
-const { suggestions, isLoading, search: triggerSearch, isSearchEnabled } = useExternalSearch()
+const {
+  suggestions, isLoading, search: triggerSearch, isSearchEnabled 
+} = useExternalSearch()
 const route = useRoute()
 const props = defineProps(['id', 'index', 'readonly', 'record'])
 const tag = props.readonly ? props.record?.category : route.meta.tag
@@ -37,7 +39,13 @@ const showCheckbox = ref(false)
 /**
  * @description Configuration for external search for the current category
  */
-const searchConfig = computed(() => isSearchEnabled(tag) ? { enabled: true, placeholder: searchPlaceholder.value } : { enabled: false, placeholder: t('records.titlePlaceholder') })
+const searchConfig = computed(() => isSearchEnabled(tag) ? {
+  enabled: true,
+  placeholder: searchPlaceholder.value 
+} : {
+  enabled: false,
+  placeholder: t('records.titlePlaceholder') 
+})
 
 /**
  * @description Dynamic placeholder based on whether search is enabled for the category

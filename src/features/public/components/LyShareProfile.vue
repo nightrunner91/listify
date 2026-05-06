@@ -15,7 +15,9 @@ import {
   NDivider,
   useMessage
 } from 'naive-ui'
-import { PhCopySimple as CopyIcon, PhArrowSquareOut as OpenIcon } from 'phosphor-vue'
+import {
+  PhCopySimple as CopyIcon, PhArrowSquareOut as OpenIcon 
+} from 'phosphor-vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { useI18n } from 'vue-i18n'
 
