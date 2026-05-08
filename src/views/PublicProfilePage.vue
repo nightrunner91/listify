@@ -332,12 +332,16 @@ const formattedActivities = computed(() => {
           class="py-16"
         />
         <!-- end::Empty State -->
+      </div>
 
-        <!-- begin::Activity Timeline -->
+      <!-- begin::Activity Timeline -->
+      <div
+        v-if="formattedActivities.length > 0"
+        class="activity-section pt-12 pb-12 px-4">
         <n-space
-          v-if="formattedActivities.length > 0"
           vertical
           :size="12"
+          class="max-w-1024 mx-auto"
         >
           <n-text
             depth="3"
@@ -410,8 +414,8 @@ const formattedActivities = computed(() => {
             </n-timeline-item>
           </n-timeline>
         </n-space>
-        <!-- end::Activity Timeline -->
       </div>
+      <!-- end::Activity Timeline -->
     </template>
     <!-- end::Profile Content -->
   </div>
@@ -435,5 +439,9 @@ const formattedActivities = computed(() => {
   &__username-shadow {
     text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
   }
+}
+
+.activity-section {
+  background-color: rgba(255,255,255, 0.06);
 }
 </style>
