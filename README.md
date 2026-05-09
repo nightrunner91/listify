@@ -5,6 +5,10 @@
 </p>
 
 <p align="center">
+  <strong>English</strong> | <a href="README.ru.md">Russian</a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Version-1.1.0-blue?style=for-the-badge" alt="Version">
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
   <img src="https://img.shields.io/badge/Node.js-%3E%3D20.0.0-6da55f?style=for-the-badge&logo=node.js" alt="Node Version">
@@ -18,7 +22,7 @@
 
 ## 🎯 What is it?
 
-**Listify** is a sleek, modern media tracker designed for those who want to keep their collections organized without the clutter of social features or ads. Whether you're logging games, movies, books, or anything in between, Listify provides a premium, responsive interface to manage your personal library.
+**Listify** is a sleek, modern media tracker designed for those who want to keep their collections organized without the clutter of social features or ads. Whether you're logging games, movies, books, or anything in between, Listify provides an intuitive and fast UI to manage your personal library.
 
 Built from the ground up as the successor to [Nightlist](https://github.com/nightrunner91/nightlist), it leverages **Vue 3**, **Fastify**, and **PostgreSQL** to deliver a fast, secure, and highly customizable experience.
 
