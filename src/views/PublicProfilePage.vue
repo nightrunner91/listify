@@ -25,7 +25,8 @@ import {
   NRate,
   NButton,
   NIcon,
-  NLayoutHeader
+  NLayoutHeader,
+  useThemeVars
 } from 'naive-ui'
 import {PhHeart as LikeIcon} from 'phosphor-vue'
 import moment from 'moment'
@@ -47,6 +48,7 @@ const {
 const route = useRoute()
 const router = useRouter()
 const gridStore = useGridStore()
+const themeVars = useThemeVars()
 
 const logoColor = darkThemeOverrides.Categories.startColor
 
@@ -147,11 +149,17 @@ function handleTabChange() {
 }
 
 function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' 
+  })
 }
 
 function scrollToBottom() {
-  window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+  window.scrollTo({
+    top: document.documentElement.scrollHeight,
+    behavior: 'smooth' 
+  })
 }
 
 /** @description Avatar URL derived from user profile settings */
@@ -345,8 +353,8 @@ const formattedActivities = computed(() => {
       <div class="mx-auto pt-6 pb-12 px-4 max-w-1024">
         <!-- begin::Category Tabs -->
         <n-tabs
-          ref="tabsRef"
           v-if="nonEmptyCategories.length > 0"
+          ref="tabsRef"
           type="segment"
           animated
           class="mb-8 public-profile__tabs"
@@ -403,7 +411,8 @@ const formattedActivities = computed(() => {
       <!-- begin::Activity Timeline -->
       <n-card
         v-if="formattedActivities.length > 0"
-        class="pt-8 pb-12 px-4 rounded-none">
+        class="pt-8 pb-12 px-4 rounded-none"
+      >
         <n-space
           vertical
           :size="12"
@@ -522,9 +531,10 @@ const formattedActivities = computed(() => {
       position: sticky;
       top: 0;
       z-index: 10;
-      background-color: #101014;
+      background-color: color-mix(in srgb, v-bind('themeVars.bodyColor') 80%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       padding-top: 8px;
-      padding-bottom: 8px;
       margin-top: -8px;
       margin-bottom: 8px;
     }

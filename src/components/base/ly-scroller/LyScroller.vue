@@ -11,6 +11,8 @@ import {
 import { useGridStore } from '@/stores/grid.store'
 
 const gridStore = useGridStore()
+
+defineEmits(['scrollTop', 'scrollBottom'])
 </script>
 
 <template>
@@ -20,8 +22,8 @@ const gridStore = useGridStore()
       vertical
       align="center"
       justify="center"
-      class="position-absolute right-10 top-0 bottom-0 m-auto w-40"
-      style="height: fit-content;"
+      class="position-fixed right-10 top-0 bottom-0 m-auto w-40"
+      style="height: fit-content; z-index: 100;"
     >
       <n-button
         secondary

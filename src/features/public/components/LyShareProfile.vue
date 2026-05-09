@@ -147,9 +147,7 @@ function closeModal() {
               readonly
               class="flex-1"
             />
-            <n-button
-              @click="copyLink"
-            >
+            <n-button @click="copyLink">
               <template #icon>
                 <copy-icon />
               </template>
