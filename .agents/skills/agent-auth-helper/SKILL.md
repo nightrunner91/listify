@@ -23,7 +23,7 @@ This skill provides instructions for the AI agent (you) to automatically log int
    - Observe if you are redirected to `http://localhost:5173/u/1#/login` (or similar auth path) or if the UI shows guest-only elements.
 
 2. **Retrieve Credentials**:
-   - Read the file `file:///e:/Projects/listify/.agents/test_credentials.json`.
+   - Read the file `file:///e:/Projects/listify/.agents/ai_agent_credentials.json`.
    - Extract the `email` and `password`.
 
 3. **Perform Login**:
@@ -35,7 +35,7 @@ This skill provides instructions for the AI agent (you) to automatically log int
    - Wait for the navigation to complete and verify you are on the dashboard/home page.
 
 4. **Handle Errors**:
-   - If the login fails (e.g., "Invalid credentials"), inform the USER and ask them to verify the contents of `test_credentials.json`.
+   - If the login fails (e.g., "Invalid credentials"), inform the USER and ask them to verify the contents of `ai_agent_credentials.json`.
    - Do NOT try to register a new account unless explicitly instructed by the USER.
 
 ## Purpose

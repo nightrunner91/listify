@@ -27,3 +27,4 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+.agents/ai_agent_credentials.json
