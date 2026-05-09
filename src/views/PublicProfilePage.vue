@@ -58,6 +58,20 @@ const sortedRecords = computed(() => {
   return sorted
 })
 
+/** @description Dynamic text color for header to maintain contrast */
+const headerTextColor = computed(() => {
+  const bg = profileData.value?.user?.backgroundColor
+  if (!bg) return '#ffffff'
+  
+  const hex = bg.replace('#', '')
+  const r = parseInt(hex.substr(0, 2), 16)
+  const g = parseInt(hex.substr(2, 2), 16)
+  const b = parseInt(hex.substr(4, 2), 16)
+  
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+  return luminance > 0.5 ? '#000000' : '#ffffff'
+})
+
 /**
  * @function fetchPublicProfile
  * @description Fetches the public profile data from the API (no auth required)
@@ -258,7 +272,7 @@ const formattedActivities = computed(() => {
       <n-space
         align="center"
         justify="center"
-        class="pt-8 pb-12 px-6"
+        class="py-12 px-6"
         :style="{ backgroundColor: profileData.user.backgroundColor }"
       >
         <n-space
@@ -271,9 +285,11 @@ const formattedActivities = computed(() => {
             round
             :size="72"
             :src="avatarUrl"
-            class="shadow-level-3 border-3 public-profile__avatar-border"
           />
-          <n-text class="fz-24 font-weight-600 text-white public-profile__username-shadow">
+          <n-text
+            class="fz-24 font-weight-600"
+            :style="{ color: headerTextColor }"
+          >
             {{ profileData.user.username || 'Listify User' }}
           </n-text>
         </n-space>
@@ -428,16 +444,8 @@ const formattedActivities = computed(() => {
     transition: opacity 0.2s ease, background-color 0.2s ease;
     
     &:hover {
-      background-color: rgba(128, 128, 128, 0.05);
+      background-color: rgba(128, 128, 128, 0.1);
     }
-  }
-
-  &__avatar-border {
-    border-color: rgba(255, 255, 255, 0.3) !important;
-  }
-
-  &__username-shadow {
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
   }
 }
 
