@@ -30,6 +30,8 @@ import moment from 'moment'
 import 'moment/locale/ru'
 import 'moment/locale/ro'
 import LyRecord from '@/features/records/components/ly-record/LyRecord.vue'
+import LyGithub from '@/components/base/ly-github/LyGithub.vue'
+import LyVersion from '@/components/base/ly-version/LyVersion.vue'
 import { darkThemeOverrides } from '@/theme.config.js'
 import {
   CATEGORIES, CATEGORY_ICONS, sortRecords 
@@ -251,7 +253,7 @@ const formattedActivities = computed(() => {
     <n-space
       v-if="loading"
       justify="center"
-      class="py-16"
+      class="py-16 min-vh-100"
     >
       <n-spin size="large" />
     </n-space>
@@ -354,7 +356,6 @@ const formattedActivities = computed(() => {
       <!-- begin::Activity Timeline -->
       <n-card
         v-if="formattedActivities.length > 0"
-        :bordered="false"
         class="pt-8 pb-12 px-4 rounded-none">
         <n-space
           vertical
@@ -436,6 +437,20 @@ const formattedActivities = computed(() => {
       <!-- end::Activity Timeline -->
     </template>
     <!-- end::Profile Content -->
+
+    <n-layout-footer>
+      <div class="mx-auto py-4 px-4 max-w-1024">
+        <n-space
+          :wrap-item="false"
+          align="center"
+          justify="space-between"
+          class="h-100 w-100"
+        >
+          <ly-version />
+          <ly-github />
+        </n-space>
+      </div>
+    </n-layout-footer>
   </div>
 </template>
 

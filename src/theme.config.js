@@ -30,7 +30,7 @@ const globalOverrides = {
   Upload: { borderRadius: '6px', },
   Menu: {
     borderRadius: '6px',
-    itemHeight: '48px' 
+    itemHeight: '48px'
   },
   List: { borderRadius: '6px', },
   Button: {
@@ -73,6 +73,10 @@ export const lightThemeOverrides = {
     siderColor: 'rgb(250, 250, 252)',
     siderColorInverted: 'rgb(252, 252, 254)',
     siderBorderColorInverted: 'rgb(239, 239, 245)',
+  },
+  Card: {
+    borderRadius: '6px',
+    color: 'rgb(252, 252, 254)',
   },
   Badge: { color: 'rgb(255, 89, 122)', },
   Drawer: { headerBorderBottom: 'rgb(239, 239, 245)', },
