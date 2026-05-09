@@ -29,6 +29,7 @@ Follow these steps to generate, version, and publish a new release for Listify.
     - 🛠️ Technical Improvements
     - 🐞 Bug Fixes
 - [ ] **Update package.json**: Change the `"version"` field in `package.json` to the new version.
+- [ ] **Update README.md*: Change the version badge from shields.io to the new version.
 
 ### 4. Execution Phase
 - [ ] **Local Commit**: Run `git commit -am "chore(release): vX.Y.Z"`.
