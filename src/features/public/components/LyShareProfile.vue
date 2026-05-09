@@ -148,14 +148,11 @@ function closeModal() {
               class="flex-1"
             />
             <n-button
-              secondary
-              type="primary"
               @click="copyLink"
             >
               <template #icon>
                 <copy-icon />
               </template>
-              {{ t('publicProfile.copyLink') }}
             </n-button>
           </n-input-group>
           <n-button

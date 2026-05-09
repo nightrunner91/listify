@@ -1,0 +1,1 @@
+ALTER TABLE "users" ALTER COLUMN "avatar_style" SET DEFAULT 'adventurer-neutral';

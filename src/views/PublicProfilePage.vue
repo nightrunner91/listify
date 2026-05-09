@@ -14,6 +14,7 @@ import {
   NText,
   NEmpty,
   NSpin,
+  NCard,
   NTabs,
   NTabPane,
   NList,
@@ -351,9 +352,10 @@ const formattedActivities = computed(() => {
       </div>
 
       <!-- begin::Activity Timeline -->
-      <div
+      <n-card
         v-if="formattedActivities.length > 0"
-        class="activity-section pt-12 pb-12 px-4">
+        :bordered="false"
+        class="pt-8 pb-12 px-4 rounded-none">
         <n-space
           vertical
           :size="12"
@@ -430,7 +432,7 @@ const formattedActivities = computed(() => {
             </n-timeline-item>
           </n-timeline>
         </n-space>
-      </div>
+      </n-card>
       <!-- end::Activity Timeline -->
     </template>
     <!-- end::Profile Content -->
@@ -447,9 +449,5 @@ const formattedActivities = computed(() => {
       background-color: rgba(128, 128, 128, 0.1);
     }
   }
-}
-
-.activity-section {
-  background-color: rgba(255,255,255, 0.06);
 }
 </style>

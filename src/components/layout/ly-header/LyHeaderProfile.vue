@@ -155,7 +155,7 @@ function openAvatarPicker() {
       </template>
 
       <!-- begin::Dropdown Panel -->
-      <div class="w-200 no-overflow rounded-small">
+      <div class="w-300 no-overflow rounded-small">
         <!-- begin::Cover Block -->
         <n-color-picker
           v-model:value="user.backgroundColor"
@@ -190,7 +190,7 @@ function openAvatarPicker() {
           vertical
           :size="0"
           :wrap-item="false"
-          class="px-4 pb-3"
+          class="px-4 pb-1"
         >
           <n-input
             v-model:value="editableUsername"
@@ -209,8 +209,6 @@ function openAvatarPicker() {
           </n-text>
         </n-space>
         <!-- end::User Info -->
-
-        <n-divider class="my-0" />
 
         <!-- begin::Actions -->
         <n-space
@@ -268,6 +266,7 @@ function openAvatarPicker() {
             </template>
             {{ t('userProfile.exportCollection') }}
           </n-button>
+          <n-divider class="my-0" />
           <n-button
             quaternary
             type="error"

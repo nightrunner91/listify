@@ -24,7 +24,7 @@ export const users = pgTable('users', {
   email: varchar('email', { length: 255 }).unique().notNull(),
   password: varchar('password', { length: 255 }),   // null for OAuth-only accounts
   username: varchar('username', { length: 255 }),
-  avatarStyle: varchar('avatar_style', { length: 50 }).notNull().default('adventurer'),
+  avatarStyle: varchar('avatar_style', { length: 50 }).notNull().default('adventurer-neutral'),
   avatarSeed: varchar('avatar_seed', { length: 255 }),
   avatarOptions: jsonb('avatar_options').notNull().default({}),
   backgroundColor: varchar('background_color', { length: 50 }).notNull().default('#0AC0C0'),
