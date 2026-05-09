@@ -2,7 +2,8 @@
 import {
   ref,
   computed,
-  onMounted
+  onMounted,
+  onUnmounted
 } from 'vue'
 import {
   useRoute, useRouter 
@@ -16,6 +17,7 @@ import {
   NSpin,
   NCard,
   NTabs,
+  NBadge,
   NTabPane,
   NList,
   NTimeline,
@@ -32,16 +34,19 @@ import 'moment/locale/ro'
 import LyRecord from '@/features/records/components/ly-record/LyRecord.vue'
 import LyGithub from '@/components/base/ly-github/LyGithub.vue'
 import LyVersion from '@/components/base/ly-version/LyVersion.vue'
+import LyScroller from '@/components/base/ly-scroller/LyScroller.vue'
 import { darkThemeOverrides } from '@/theme.config.js'
 import {
   CATEGORIES, CATEGORY_ICONS, sortRecords 
 } from '@/stores/records.store'
+import { useGridStore } from '@/stores/grid.store'
 
 const {
   t, te, locale 
 } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const gridStore = useGridStore()
 
 const logoColor = darkThemeOverrides.Categories.startColor
 
@@ -107,9 +112,47 @@ async function fetchPublicProfile() {
   }
 }
 
+function handleScroll() {
+  gridStore.scrollPosition = window.scrollY
+}
+
 onMounted(() => {
   fetchPublicProfile()
+  window.addEventListener('scroll', handleScroll, { passive: true })
 })
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+const tabsRef = ref(null)
+
+/**
+ * @function handleTabChange
+ * @description Smart scroll logic to align the viewport with the top of the tab container if the user scrolls past it.
+ */
+function handleTabChange() {
+  if (tabsRef.value) {
+    const tabsEl = tabsRef.value.$el
+    if (tabsEl) {
+      const rect = tabsEl.getBoundingClientRect()
+      if (rect.top < 0) {
+        window.scrollTo({
+          top: window.scrollY + rect.top,
+          behavior: 'smooth'
+        })
+      }
+    }
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+function scrollToBottom() {
+  window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+}
 
 /** @description Avatar URL derived from user profile settings */
 const avatarUrl = computed(() => {
@@ -302,10 +345,12 @@ const formattedActivities = computed(() => {
       <div class="mx-auto pt-6 pb-12 px-4 max-w-1024">
         <!-- begin::Category Tabs -->
         <n-tabs
+          ref="tabsRef"
           v-if="nonEmptyCategories.length > 0"
           type="segment"
           animated
-          class="mb-8"
+          class="mb-8 public-profile__tabs"
+          @update:value="handleTabChange"
         >
           <n-tab-pane
             v-for="cat in nonEmptyCategories"
@@ -316,15 +361,17 @@ const formattedActivities = computed(() => {
               <n-space
                 align="center"
                 :size="6"
+                :wrap-item="false"
+                class="py-1"
               >
                 <n-icon
                   :component="CATEGORY_ICONS[cat]"
                   size="18"
                 />
-                <span>{{ t(`categories.${cat}`) }}</span>
+                <span class="lh-1">{{ t(`categories.${cat}`) }}</span>
                 <n-text
                   depth="3"
-                  class="fz-12 font-weight-400"
+                  class="fz-12 font-weight-400 lh-1"
                 >
                   {{ sortedRecords[cat].length }}
                 </n-text>
@@ -438,6 +485,11 @@ const formattedActivities = computed(() => {
     </template>
     <!-- end::Profile Content -->
 
+    <ly-scroller
+      @scrollTop="scrollToTop"
+      @scrollBottom="scrollToBottom"
+    />
+
     <n-layout-footer>
       <div class="mx-auto py-4 px-4 max-w-1024">
         <n-space
@@ -462,6 +514,19 @@ const formattedActivities = computed(() => {
     
     &:hover {
       background-color: rgba(128, 128, 128, 0.1);
+    }
+  }
+
+  &__tabs {
+    :deep(.n-tabs-nav) {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background-color: #101014;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      margin-top: -8px;
+      margin-bottom: 8px;
     }
   }
 }
