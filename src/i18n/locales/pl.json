@@ -258,10 +258,12 @@
   },
   "publicProfile": {
     "shareButton": "Udostępnij profil",
+    "shareModalTitle": "Udostępnij profil",
     "modalTitle": "Publiczny profil",
     "visibilityLabel": "Widoczność publiczna",
     "visibilityOn": "Twój profil jest widoczny publicznie",
     "visibilityOff": "Twój profil jest prywatny",
+    "publicUrlLabel": "Publiczny URL",
     "copyLink": "Kopiuj link",
     "copied": "Link skopiowany!",
     "profilePrivate": "Ten profil jest prywatny",
@@ -270,6 +272,15 @@
     "latestActivity": "OSTATNIA AKTYWNOŚĆ",
     "noActivity": "Brak aktywności",
     "records": "{count} rekordów",
-    "loading": "Ładowanie profilu..."
+    "loading": "Ładowanie profilu...",
+    "handlePlaceholder": "twoja-nazwa",
+    "save": "Zapisz",
+    "handleLength": "Nazwa musi mieć od 3 do 30 znaków.",
+    "handleInvalidChars": "Dozwolone są tylko litery, cyfry, myślniki i podkreślenia.",
+    "handleAvailable": "Ta nazwa jest dostępna!",
+    "handleTaken": "Ta nazwa jest już zajęta.",
+    "handleCheckError": "Nie udało się sprawdzić dostępności nazwy.",
+    "handleSaved": "Nazwa została pomyślnie zaktualizowana!",
+    "handleSaveError": "Nie udało się zapisać nazwy."
   }
 }

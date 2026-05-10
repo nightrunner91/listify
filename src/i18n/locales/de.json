@@ -258,10 +258,12 @@
   },
   "publicProfile": {
     "shareButton": "Profil teilen",
+    "shareModalTitle": "Profil teilen",
     "modalTitle": "Öffentliches Profil",
     "visibilityLabel": "Öffentliche Sichtbarkeit",
     "visibilityOn": "Ihr Profil ist öffentlich sichtbar",
     "visibilityOff": "Ihr Profil ist privat",
+    "publicUrlLabel": "Öffentliche URL",
     "copyLink": "Link kopieren",
     "copied": "Link kopiert!",
     "profilePrivate": "Dieses Profil ist privat",
@@ -270,6 +272,15 @@
     "latestActivity": "NEUESTE AKTIVITÄT",
     "noActivity": "Noch keine Aktivität",
     "records": "{count} Einträge",
-    "loading": "Profil wird geladen..."
+    "loading": "Profil wird geladen...",
+    "handlePlaceholder": "dein-name",
+    "save": "Speichern",
+    "handleLength": "Name muss 3–30 Zeichen lang sein.",
+    "handleInvalidChars": "Nur Buchstaben, Ziffern, Bindestriche und Unterstriche erlaubt.",
+    "handleAvailable": "Dieser Name ist verfügbar!",
+    "handleTaken": "Dieser Name ist bereits vergeben.",
+    "handleCheckError": "Verfügbarkeit konnte nicht geprüft werden.",
+    "handleSaved": "Name erfolgreich aktualisiert!",
+    "handleSaveError": "Name konnte nicht gespeichert werden."
   }
 }

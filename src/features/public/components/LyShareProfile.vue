@@ -14,17 +14,20 @@ import {
   NButton,
   NInputGroup,
   NInputGroupLabel,
-  NDivider,
   useMessage
 } from 'naive-ui'
 import {
-  PhCopySimple as CopyIcon, PhArrowSquareOut as OpenIcon 
+  PhCopySimple as CopyIcon,
+  PhArrowSquareOut as OpenIcon,
+  PhFloppyDisk as SaveIcon
 } from 'phosphor-vue'
 import { api } from '@/api/client'
 import { useAuthStore } from '@/stores/auth.store'
+import { useGridStore } from '@/stores/grid.store'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+const gridStore = useGridStore()
 const authStore = useAuthStore()
 const message = useMessage()
 
@@ -43,13 +46,18 @@ const user = computed(() => authStore.user)
 const isPublic = computed(() => user.value?.isPublic ?? false)
 
 /**
- * @description Generates the shareable public profile URL using the user's UUID or handle
+ * @description The base URL prefix shown in the input (read-only portion)
+ */
+const BASE_PREFIX = 'listify-me.up.railway.app/#/u/'
+
+/**
+ * @description Generates the shareable public profile URL using the user's handle or short UUID
  */
 const profileUrl = computed(() => {
   if (!user.value?.id) return ''
   const base = window.location.origin + window.location.pathname
-  const identifier = user.value.handle || user.value.id
-  return `${base}#/profile/${identifier}`
+  const identifier = user.value.handle || user.value.id.substring(0, 8)
+  return `${base}#/u/${identifier}`
 })
 
 const localHandle = ref('')
@@ -59,29 +67,30 @@ let debounceTimer = null
 
 watch(() => props.show, (newVal) => {
   if (newVal) {
-    localHandle.value = user.value?.handle || ''
+    localHandle.value = user.value?.handle || user.value?.id?.substring(0, 8) || ''
     handleStatus.value = 'idle'
     handleMessage.value = ''
   }
 })
 
 const handleRegex = /^[a-zA-Z0-9_-]+$/
+
 function onHandleInput(value) {
   localHandle.value = value.toLowerCase().trim()
   handleStatus.value = 'checking'
   handleMessage.value = ''
-  
+
   if (!localHandle.value) {
     handleStatus.value = 'idle'
     return
   }
-  
+
   if (localHandle.value.length < 3 || localHandle.value.length > 30) {
     handleStatus.value = 'invalid'
     handleMessage.value = t('publicProfile.handleLength')
     return
   }
-  
+
   if (!handleRegex.test(localHandle.value)) {
     handleStatus.value = 'invalid'
     handleMessage.value = t('publicProfile.handleInvalidChars')
@@ -113,10 +122,19 @@ async function checkHandle() {
   }
 }
 
+const isSaveable = computed(() => {
+  const currentIdentifier = user.value?.handle || user.value?.id?.substring(0, 8) || ''
+  return (
+    localHandle.value !== currentIdentifier &&
+    handleStatus.value !== 'checking' &&
+    handleStatus.value !== 'invalid' &&
+    handleStatus.value !== 'taken'
+  )
+})
+
 async function saveHandle() {
-  if (handleStatus.value === 'checking' || handleStatus.value === 'invalid' || handleStatus.value === 'taken') return
-  if (localHandle.value === (user.value?.handle || '')) return
-  
+  if (!isSaveable.value) return
+
   isUpdating.value = true
   try {
     await authStore.updateProfile({ handle: localHandle.value || null })
@@ -131,7 +149,7 @@ async function saveHandle() {
 }
 
 const inputStatus = computed(() => {
-  if (handleStatus.value === 'error' || handleStatus.value === 'invalid' || handleStatus.value === 'taken') return 'error'
+  if (['error', 'invalid', 'taken'].includes(handleStatus.value)) return 'error'
   if (handleStatus.value === 'available') return 'success'
   return undefined
 })
@@ -154,7 +172,7 @@ async function toggleVisibility(newValue) {
 
 /**
  * @function copyLink
- * @description Copies the profile URL to the clipboard
+ * @description Copies the full profile URL to the clipboard
  */
 async function copyLink() {
   try {
@@ -182,25 +200,30 @@ function closeModal() {
   <n-modal
     :show="show"
     preset="card"
-    :title="t('publicProfile.modalTitle')"
-    style="max-width: 520px"
+    transform-origin="center"
+    to="body"
+    :style="{ width: gridStore.currentBreakpoint === 'xs' ? '300px' : '530px' }"
+    :title="t('publicProfile.shareModalTitle')"
+    :size="gridStore.currentBreakpoint === 'xs' ? 'medium' : 'huge'"
     @update:show="closeModal"
   >
     <n-space
       vertical
-      :size="20"
+      :size="24"
     >
       <!-- begin::Visibility Toggle -->
       <n-space
         align="center"
         justify="space-between"
-        :wrap-item="false"
       >
         <n-space
           vertical
-          :size="4"
+          :size="0"
+          class="lh-1"
         >
-          <n-text>{{ t('publicProfile.visibilityLabel') }}</n-text>
+          <n-text class="font-weight-500">
+            {{ t('publicProfile.visibilityLabel') }}
+          </n-text>
           <n-text
             depth="3"
             class="fz-12"
@@ -216,68 +239,44 @@ function closeModal() {
       </n-space>
       <!-- end::Visibility Toggle -->
 
-      <!-- begin::Profile Handle -->
-      <n-space vertical :size="4">
-        <n-text class="font-weight-600">{{ t('publicProfile.profileHandle') }}</n-text>
-        <n-text depth="3" class="fz-12">{{ t('publicProfile.profileHandleDesc') }}</n-text>
-        <n-input-group class="mt-2">
-          <n-input-group-label>@</n-input-group-label>
-          <n-input 
-            :value="localHandle" 
+      <!-- begin::Unified URL Input Group -->
+      <n-space
+        vertical
+        :size="6"
+      >
+        <n-input-group>
+          <n-input-group-label class="fz-12">
+            {{ BASE_PREFIX }}
+          </n-input-group-label>
+          <n-input
+            :value="localHandle"
             :status="inputStatus"
             :loading="handleStatus === 'checking'"
             @update:value="onHandleInput"
             @keyup.enter="saveHandle"
             :placeholder="t('publicProfile.handlePlaceholder')"
+            :disabled="!isPublic"
           />
-          <n-button 
-            type="primary" 
-            :disabled="localHandle === (user?.handle || '') || handleStatus === 'invalid' || handleStatus === 'taken' || handleStatus === 'checking'"
-            :loading="isUpdating"
+          <n-button
+            type="primary"
+            :disabled="!isSaveable || !isPublic"
             @click="saveHandle"
           >
             {{ t('publicProfile.save') }}
           </n-button>
         </n-input-group>
-        <n-text 
-          v-if="handleMessage" 
-          :type="inputStatus === 'error' ? 'error' : (inputStatus === 'success' ? 'success' : 'default')" 
-          class="fz-12"
-        >
-          {{ handleMessage }}
-        </n-text>
-      </n-space>
-      <!-- end::Profile Handle -->
 
-      <!-- begin::Share Link (only shown when public) -->
-      <template v-if="isPublic">
-        <n-divider class="my-0" />
+        <!-- Action row -->
         <n-space
-          vertical
+          align="center"
+          justify="space-between"
           :size="8"
         >
-          <n-text
-            depth="3"
-            class="fz-12 font-weight-600 letter-spacing-1"
-          >
-            {{ t('publicProfile.copyLink').toUpperCase() }}
-          </n-text>
-          <n-input-group>
-            <n-input
-              :value="profileUrl"
-              readonly
-              class="flex-1"
-            />
-            <n-button @click="copyLink">
-              <template #icon>
-                <copy-icon />
-              </template>
-            </n-button>
-          </n-input-group>
           <n-button
             text
             type="primary"
             size="small"
+            :disabled="!isPublic"
             @click="openProfile"
           >
             <template #icon>
@@ -286,8 +285,14 @@ function closeModal() {
             {{ t('publicProfile.viewPublicProfile') }}
           </n-button>
         </n-space>
-      </template>
-      <!-- end::Share Link -->
+      </n-space>
+      <!-- end::Unified URL Input Group -->
     </n-space>
+
   </n-modal>
 </template>
+
+<style scoped>
+/* No custom CSS needed here. Using NaiveUI and Nightpack utility system. */
+</style>
+

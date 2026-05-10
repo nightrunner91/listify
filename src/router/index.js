@@ -34,7 +34,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/profile/:identifier',
+      path: '/u/:identifier',
       name: 'PublicProfile',
       component: PublicProfilePage,
       meta: {
@@ -44,10 +44,14 @@ const router = createRouter({
       }
     },
     {
+      // Legacy redirect — keep old /profile/ links working
+      path: '/profile/:identifier',
+      redirect: to => ({ path: `/u/${to.params.identifier}` })
+    },
+    {
+      // Legacy redirect
       path: '/user/:id',
-      redirect: to => {
-        return { path: `/profile/${to.params.id}` }
-      }
+      redirect: to => ({ path: `/u/${to.params.id}` })
     },
     {
       path: '/',

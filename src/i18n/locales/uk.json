@@ -258,10 +258,12 @@
   },
   "publicProfile": {
     "shareButton": "Поділитися профілем",
+    "shareModalTitle": "Поділитися профілем",
     "modalTitle": "Публічний профіль",
     "visibilityLabel": "Публічна видимість",
     "visibilityOn": "Ваш профіль видно публічно",
     "visibilityOff": "Ваш профіль приватний",
+    "publicUrlLabel": "Публічне посилання",
     "copyLink": "Скопіювати посилання",
     "copied": "Посилання скопійовано!",
     "profilePrivate": "Цей профіль приватний",
@@ -270,6 +272,15 @@
     "latestActivity": "ОСТАННЯ АКТИВНІСТЬ",
     "noActivity": "Ще немає активності",
     "records": "{count} записів",
-    "loading": "Завантаження профілю..."
+    "loading": "Завантаження профілю...",
+    "handlePlaceholder": "ваш-нік",
+    "save": "Зберегти",
+    "handleLength": "Ім'я має містити від 3 до 30 символів.",
+    "handleInvalidChars": "Дозволені лише літери, цифри, дефіс та підкреслення.",
+    "handleAvailable": "Це ім'я вільне!",
+    "handleTaken": "Це ім'я вже зайняте.",
+    "handleCheckError": "Не вдалося перевірити доступність імені.",
+    "handleSaved": "Ім'я успішно оновлено!",
+    "handleSaveError": "Не вдалося зберегти ім'я."
   }
 }

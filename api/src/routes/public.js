@@ -68,9 +68,30 @@ export default async function publicRoutes(app) {
     },
   }, async (request, reply) => {
     const { identifier } = request.params
-    const isUuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(identifier)
+    const isFullUuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(identifier)
+    const isShortUuid = !isFullUuid && /^[0-9a-fA-F]{8,}$/.test(identifier)
     
-    const condition = isUuid ? eq(users.id, identifier) : eq(users.handle, identifier.toLowerCase())
+    let condition
+    if (isFullUuid) {
+      condition = eq(users.id, identifier)
+    } else {
+      // Try handle first, then fall back to short UUID prefix (cast uuid → text, then ILIKE)
+      const [byHandle] = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(eq(users.handle, identifier.toLowerCase()))
+        .limit(1)
+      
+      if (byHandle) {
+        condition = eq(users.id, byHandle.id)
+      } else if (isShortUuid) {
+        // Resolve by UUID prefix: CAST(id AS TEXT) ILIKE 'abc12345%'
+        const { sql } = await import('drizzle-orm')
+        condition = sql`CAST(${users.id} AS TEXT) ILIKE ${identifier.toLowerCase() + '%'}`
+      } else {
+        return reply.status(404).send({ error: 'NOT_FOUND', message: 'User not found' })
+      }
+    }
 
     // Fetch user — only serve if they opted in to public visibility
     const [user] = await db

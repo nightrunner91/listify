@@ -104,6 +104,7 @@ export async function createUser(email, password) {
       password: passwordHash,
       username: `User-${nanoid(5)}`,
       avatarSeed: nanoid(10),
+      handle: nanoid(8),
     })
     .returning({ 
       id: users.id, 
