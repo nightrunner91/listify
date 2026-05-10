@@ -12,6 +12,7 @@ import {
   and,
   desc
 } from 'drizzle-orm'
+import { RESERVED_HANDLES } from './users.js'
 
 /**
  * Public routes — no authentication required.
@@ -19,29 +20,64 @@ import {
  */
 export default async function publicRoutes(app) {
 
-  // ─── GET /api/public/user/:id ─────────────────────────────────────────────
+  // ─── GET /api/public/check-handle/:handle ───────────────────────────────
 
-  app.get('/user/:id', {
+  app.get('/check-handle/:handle', {
     schema: {
       params: {
         type: 'object',
-        required: ['id'],
+        required: ['handle'],
         properties: {
-          id: {
+          handle: {
             type: 'string',
-            format: 'uuid'
+            minLength: 3,
+            maxLength: 30,
+            pattern: '^[a-zA-Z0-9_-]+$'
           }
         },
       },
     },
   }, async (request, reply) => {
-    const { id } = request.params
+    const handle = request.params.handle.toLowerCase()
+    
+    if (RESERVED_HANDLES.includes(handle)) {
+      return { available: false, reason: 'reserved' }
+    }
+    
+    const existing = await db.select({ id: users.id }).from(users).where(eq(users.handle, handle)).limit(1)
+    if (existing.length > 0) {
+      return { available: false, reason: 'taken' }
+    }
+    
+    return { available: true }
+  })
+
+  // ─── GET /api/public/user/:identifier ─────────────────────────────────────
+
+  app.get('/user/:identifier', {
+    schema: {
+      params: {
+        type: 'object',
+        required: ['identifier'],
+        properties: {
+          identifier: {
+            type: 'string',
+          }
+        },
+      },
+    },
+  }, async (request, reply) => {
+    const { identifier } = request.params
+    const isUuid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(identifier)
+    
+    const condition = isUuid ? eq(users.id, identifier) : eq(users.handle, identifier.toLowerCase())
 
     // Fetch user — only serve if they opted in to public visibility
     const [user] = await db
       .select({
         id: users.id,
         username: users.username,
+        handle: users.handle,
         avatarStyle: users.avatarStyle,
         avatarSeed: users.avatarSeed,
         avatarOptions: users.avatarOptions,
@@ -50,7 +86,7 @@ export default async function publicRoutes(app) {
         createdAt: users.createdAt,
       })
       .from(users)
-      .where(eq(users.id, id))
+      .where(condition)
       .limit(1)
 
     if (!user) {
@@ -71,7 +107,7 @@ export default async function publicRoutes(app) {
     const recordRows = await db
       .select()
       .from(records)
-      .where(eq(records.userId, id))
+      .where(eq(records.userId, user.id))
 
     const groupedRecords = Object.fromEntries(VALID_CATEGORIES.map(c => [c, []]))
     for (const row of recordRows) {
@@ -92,7 +128,7 @@ export default async function publicRoutes(app) {
     const lists = await db
       .select()
       .from(customLists)
-      .where(eq(customLists.userId, id))
+      .where(eq(customLists.userId, user.id))
 
     const listIds = lists.map(l => l.id)
     let customListRecordRows = []
@@ -100,7 +136,7 @@ export default async function publicRoutes(app) {
       customListRecordRows = await db
         .select()
         .from(customListRecords)
-        .where(eq(customListRecords.userId, id))
+        .where(eq(customListRecords.userId, user.id))
     }
 
     const recordsByList = {}
@@ -125,7 +161,7 @@ export default async function publicRoutes(app) {
     const recentActivities = await db
       .select()
       .from(activities)
-      .where(eq(activities.userId, id))
+      .where(eq(activities.userId, user.id))
       .orderBy(desc(activities.createdAt))
       .limit(10)
 
@@ -133,6 +169,7 @@ export default async function publicRoutes(app) {
       user: {
         id: user.id,
         username: user.username,
+        handle: user.handle,
         avatarStyle: user.avatarStyle,
         avatarSeed: user.avatarSeed,
         avatarOptions: user.avatarOptions,

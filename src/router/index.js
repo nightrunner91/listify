@@ -34,13 +34,19 @@ const router = createRouter({
       }
     },
     {
-      path: '/user/:id',
+      path: '/profile/:identifier',
       name: 'PublicProfile',
       component: PublicProfilePage,
       meta: {
         requiresAuth: false,
         isPublic: true,
         title: 'Listify'
+      }
+    },
+    {
+      path: '/user/:id',
+      redirect: to => {
+        return { path: `/profile/${to.params.id}` }
       }
     },
     {

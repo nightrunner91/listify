@@ -270,6 +270,17 @@
     "latestActivity": "ACTIVITATE RECENTĂ",
     "noActivity": "Nicio activitate încă",
     "records": "{count} înregistrări",
-    "loading": "Se încarcă profilul..."
+    "loading": "Se încarcă profilul...",
+    "profileHandle": "Nume utilizator (handle)",
+    "profileHandleDesc": "Alege un nume de utilizator unic pentru linkul profilului tău public.",
+    "handlePlaceholder": "username",
+    "save": "Salvează",
+    "handleLength": "Numele trebuie să aibă între 3 și 30 de caractere.",
+    "handleInvalidChars": "Sunt permise doar litere, cifre, cratime și liniuțe de jos.",
+    "handleAvailable": "Acest nume este disponibil!",
+    "handleTaken": "Acest nume este deja folosit.",
+    "handleCheckError": "Eroare la verificarea disponibilității numelui.",
+    "handleSaved": "Numele de utilizator a fost actualizat!",
+    "handleSaveError": "Eroare la salvarea numelui de utilizator."
   }
 }

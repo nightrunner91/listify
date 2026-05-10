@@ -24,6 +24,7 @@ export const users = pgTable('users', {
   email: varchar('email', { length: 255 }).unique().notNull(),
   password: varchar('password', { length: 255 }),   // null for OAuth-only accounts
   username: varchar('username', { length: 255 }),
+  handle: varchar('handle', { length: 30 }).unique(),
   avatarStyle: varchar('avatar_style', { length: 50 }).notNull().default('adventurer-neutral'),
   avatarSeed: varchar('avatar_seed', { length: 255 }),
   avatarOptions: jsonb('avatar_options').notNull().default({}),
@@ -31,7 +32,9 @@ export const users = pgTable('users', {
   isPublic: boolean('is_public').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
-})
+}, (table) => [
+  index('users_handle_idx').on(table.handle),
+])
 
 // ─── Refresh Tokens ──────────────────────────────────────────────────────────
 

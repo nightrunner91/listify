@@ -270,6 +270,17 @@
     "latestActivity": "RECENT ACTIVITY",
     "noActivity": "No activity yet",
     "records": "{count} records",
-    "loading": "Loading profile..."
+    "loading": "Loading profile...",
+    "profileHandle": "Profile Handle",
+    "profileHandleDesc": "Choose a unique handle for your public profile link.",
+    "handlePlaceholder": "username",
+    "save": "Save",
+    "handleLength": "Handle must be 3-30 characters.",
+    "handleInvalidChars": "Only letters, numbers, hyphens and underscores allowed.",
+    "handleAvailable": "This handle is available!",
+    "handleTaken": "This handle is already taken.",
+    "handleCheckError": "Failed to check handle availability.",
+    "handleSaved": "Handle updated successfully!",
+    "handleSaveError": "Failed to save handle."
   }
 }

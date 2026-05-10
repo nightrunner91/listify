@@ -95,7 +95,7 @@ async function fetchPublicProfile() {
     if (apiBase.endsWith('/')) apiBase = apiBase.slice(0, -1)
     if (apiBase && !apiBase.endsWith('/api')) apiBase = `${apiBase}/api`
 
-    const response = await fetch(`${apiBase}/public/user/${route.params.id}`)
+    const response = await fetch(`${apiBase}/public/user/${route.params.identifier}`)
     if (!response.ok) {
       const data = await response.json().catch(() => ({}))
       if (response.status === 404) {

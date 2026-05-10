@@ -57,6 +57,13 @@
       "when": 1778337986318,
       "tag": "0007_next_human_fly",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1778436904642,
+      "tag": "0008_small_roulette",
+      "breakpoints": true
     }
   ]
 }
