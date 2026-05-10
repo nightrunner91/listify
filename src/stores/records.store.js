@@ -301,6 +301,17 @@ export const useRecordsStore = defineStore('records', () => {
     music: [],
   })
 
+  /** @type {import('vue').Ref<Object>} */
+  const pending = ref({
+    games: false,
+    tvshows: false,
+    films: false,
+    anime: false,
+    manga: false,
+    books: false,
+    music: false,
+  })
+
   /** @type {import('vue').Ref<Array>} */
   const customLists = ref([])
 
@@ -668,6 +679,29 @@ export const useRecordsStore = defineStore('records', () => {
       selectedCustomLists.value = customLists.value.map(l => l.id)
     } catch (err) {
       console.error('Failed to restore records:', err)
+    }
+  }
+
+  /**
+   * @function fetchCategoryRecords
+   * @async
+   * @description Fetches records for a specific category from the server
+   * @param {string} category
+   */
+  async function fetchCategoryRecords(category) {
+    if (!CATEGORIES.includes(category)) return
+
+    pending.value[category] = true
+    try {
+      const data = await api.get(`/records/${category}`)
+      records.value[category] = data.map(r => ({ ...r, selected: false }))
+      
+      // Sync display order with sorting
+      initializeDisplayOrder(category)
+    } catch (err) {
+      console.error(`Failed to fetch records for ${category}:`, err)
+    } finally {
+      pending.value[category] = false
     }
   }
 
@@ -1363,6 +1397,7 @@ export const useRecordsStore = defineStore('records', () => {
 
   return {
     records,
+    pending,
     recordsLength,
     allRecordsLength,
     someRecordsSelected,
@@ -1375,8 +1410,9 @@ export const useRecordsStore = defineStore('records', () => {
     getRecord,
     addRecord,
     restoreRecords,
-    deleteSelectedRecords,
+    fetchCategoryRecords,
     deleteAllRecords,
+    deleteSelectedRecords,
     deleteRecordById,
 
     labels,

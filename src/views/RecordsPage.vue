@@ -39,7 +39,6 @@ const route = useRoute()
 let observer = null
 
 // Reactive state
-const routeLoading = ref(true)
 const scrollerKey = ref(0)
 const bottomButtonRef = ref(null)
 const isBottomButtonVisible = ref(false)
@@ -94,14 +93,13 @@ watch(() => recordsStore.searchQuery, () => {
 watch(
   route,
   async () => {
-    routeLoading.value = true
-    await nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    routeLoading.value = false
-
     // Clear search when changing routes
     recordsStore.clearSearch()
     setDefaultSortLabel()
+
+    if (route.meta.tag) {
+      await recordsStore.fetchCategoryRecords(route.meta.tag)
+    }
   },
   {
     flush: 'pre',
@@ -190,7 +188,7 @@ onBeforeRouteLeave(async () => {
     size="large"
   >
     <!-- begin::Loading State -->
-    <template v-if="routeLoading || recordsStore.processingImport">
+    <template v-if="recordsStore.pending[route.meta.tag] || recordsStore.processingImport">
       <n-space
         class="w-100 h-250"
         justify="center"
