@@ -5,7 +5,11 @@
 </p>
 
 <p align="center">
-  <strong>English</strong> | <a href="README.ru.md">Russian</a>
+  <img src="public/listify-preview.png" alt="Listify Preview">
+</p>
+
+<p align="center">
+  <strong><img src="https://flagcdn.com/w20/us.png" width="20"> English</strong> | <a href="README.ru.md"><img src="https://flagcdn.com/w20/ru.png" width="20"> Russian</a>
 </p>
 
 <p align="center">
@@ -34,17 +38,17 @@ Built from the ground up as the successor to [Nightlist](https://github.com/nigh
 
 ## 🚀 Key Features
 
-- 🌍 **Multi-Language Support** — EN, DE, ES, FR, PL, RO, RU, UK.
-
 - ✨ **Intuitive UI** — Lightweight design powered by Naive UI.
 
 - 💾 **Data Sovereignty** — Import and export your collection at any time.
 
-- 🛡️ **Privacy Focused** — No tracking, no ads, and no third-party data sharing.
+- 🛡️ **Privacy Focused** — No ads and no third-party data sharing.
 
 - ⚡ **High Performance** — Optimized Vue 3 / Vite and a lightweight Fastify backend.
 
 - 🏗️ **Open-source** — Inspect, fork, or self-host the entire project.
+
+- 🌍 **Multi-Language Support** — EN, DE, ES, FR, PL, RO, RU, UK.
 
 ## 🛠️ Tech Stack
 
@@ -64,7 +68,7 @@ Listify integrates with several high-quality external APIs to provide instant au
 - 🎮 **[RAWG API](https://rawg.io/apidocs)**: The primary source for the **Games** category.
 - 🎬 **[TMDB API](https://www.themoviedb.org/documentation/api)**: Powers discovery for **Films** and **TV Shows**.
 - 📖 **[Jikan API](https://jikan.moe/)**: A free, open-source API for the MyAnimeList database, used for **Anime** and **Manga**.
-- 🎵 **[iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html)**: Provides a reliable catalog for **Books** and **Music**.
+- 🎵 **[iTunes API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html)**: Provides a reliable catalog for **Books** and **Music**.
 
 > [!IMPORTANT]
 > Some providers (RAWG, TMDB) require an API key. If you're hosting your own application ensure these are correctly configured in your `api/.env` file to enable autocompletion features.
