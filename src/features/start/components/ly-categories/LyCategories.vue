@@ -166,8 +166,9 @@ function getIconColor(key) {
             @click="router.push({ name: cat.route })"
           >
             <n-space
-              align="center"
+              align="start"
               :wrap="false"
+              :wrap-items="false"
               justify="space-between"
             >
               <n-statistic :label="cat.label">
@@ -177,7 +178,7 @@ function getIconColor(key) {
                 />
               </n-statistic>
               <n-icon
-                :size="28"
+                :size="24"
                 :color="getIconColor(cat.key)"
                 class="opacity-8"
               >
@@ -197,6 +198,6 @@ function getIconColor(key) {
 
 <style scoped>
 .category-card:hover {
-  background-color: var(--n-action-color);
+  border-color: var(--n-color-target);
 }
 </style>

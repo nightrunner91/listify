@@ -122,14 +122,14 @@ function formatRelativeTime(dateString) {
       <!-- begin::Lists Content -->
       <n-list
         v-else
-        hoverable
         clickable
-        class="bg-transparent"
+        hoverable
+        class=""
       >
         <n-list-item
           v-for="list in customLists"
           :key="list.id"
-          class="hover-bg-action no-select"
+          class="no-select px-6"
           @click="handleListClick(list.id)"
         >
           <n-thing :title="list.name">
@@ -182,6 +182,10 @@ function formatRelativeTime(dateString) {
     &:last-child {
       border-top-left-radius: 0 !important;
       border-top-right-radius: 0 !important;
+    }
+
+    &:hover {
+      border-color: var(--n-color-target);
     }
   }
 }
