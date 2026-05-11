@@ -44,6 +44,11 @@ onBeforeMount(async () => {
 watch(
   [() => route.path, locale],
   () => {
+    if (route.name === 'PublicProfile') {
+      document.title = 'Listify'
+      return
+    }
+
     let title = 'Listify'
     if (route.meta.title) {
       const translatedTitle = t(route.meta.title)

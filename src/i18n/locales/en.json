@@ -273,6 +273,7 @@
     "noActivity": "No activity yet",
     "records": "{count} records",
     "loading": "Loading profile...",
+    "defaultUsername": "Listify User",
     "handlePlaceholder": "your-handle",
     "save": "Save",
     "handleLength": "Handle must be 3-30 characters.",

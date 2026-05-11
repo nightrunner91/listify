@@ -273,6 +273,7 @@
     "noActivity": "Активности пока нет",
     "records": "{count} записей",
     "loading": "Загрузка профиля...",
+    "defaultUsername": "Пользователь Listify",
     "handlePlaceholder": "ваш-ник",
     "save": "Сохранить",
     "handleLength": "Имя должно содержать от 3 до 30 символов.",

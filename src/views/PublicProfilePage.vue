@@ -2,6 +2,7 @@
 import {
   ref,
   computed,
+  watch,
   onMounted,
   onUnmounted
 } from 'vue'
@@ -122,6 +123,14 @@ onMounted(() => {
   fetchPublicProfile()
   window.addEventListener('scroll', handleScroll, { passive: true })
 })
+
+// Refetch if the identifier changes (e.g. navigating between profiles)
+watch(
+  () => route.params.identifier,
+  () => {
+    fetchPublicProfile()
+  }
+)
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
@@ -281,6 +290,18 @@ const formattedActivities = computed(() => {
     formatted: formatActivity(activity)
   }))
 })
+
+// Update page title
+watch(
+  [() => profileData.value?.user?.username, locale],
+  ([username]) => {
+    if (profileData.value?.user) {
+      const name = username || t('publicProfile.defaultUsername') || 'Listify User'
+      document.title = `${name} - Listify`
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -444,21 +465,20 @@ const formattedActivities = computed(() => {
                   >
                     <template #entity>
                       <span
-                        v-if="activity.formatted.entity"
                         class="font-weight-500"
                       >{{ activity.formatted.entity }}</span>
                     </template>
                     <template #category>
-                      <span v-if="activity.formatted.category">{{ activity.formatted.category }}</span>
+                      <span>{{ activity.formatted.category }}</span>
                     </template>
                     <template #status>
-                      <span v-if="activity.formatted.status">{{ activity.formatted.status }}</span>
+                      <span>{{ activity.formatted.status }}</span>
                     </template>
                     <template #count>
-                      <span v-if="activity.formatted.count">{{ activity.formatted.count }}</span>
+                      <span>{{ activity.formatted.count }}</span>
                     </template>
                     <template #action>
-                      <span v-if="activity.formatted.action">{{ activity.formatted.action }}</span>
+                      <span>{{ activity.formatted.action }}</span>
                     </template>
                   </i18n-t>
                   <n-rate

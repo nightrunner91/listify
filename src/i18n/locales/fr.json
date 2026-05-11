@@ -273,6 +273,7 @@
     "noActivity": "Pas encore d'activité",
     "records": "{count} enregistrements",
     "loading": "Chargement du profil...",
+    "defaultUsername": "Utilisateur Listify",
     "handlePlaceholder": "votre-nom",
     "save": "Enregistrer",
     "handleLength": "Le nom doit comporter entre 3 et 30 caractères.",

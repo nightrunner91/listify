@@ -273,6 +273,7 @@
     "noActivity": "Noch keine Aktivität",
     "records": "{count} Einträge",
     "loading": "Profil wird geladen...",
+    "defaultUsername": "Listify-Benutzer",
     "handlePlaceholder": "dein-name",
     "save": "Speichern",
     "handleLength": "Name muss 3–30 Zeichen lang sein.",

@@ -273,6 +273,7 @@
     "noActivity": "Ще немає активності",
     "records": "{count} записів",
     "loading": "Завантаження профілю...",
+    "defaultUsername": "Користувач Listify",
     "handlePlaceholder": "ваш-нік",
     "save": "Зберегти",
     "handleLength": "Ім'я має містити від 3 до 30 символів.",

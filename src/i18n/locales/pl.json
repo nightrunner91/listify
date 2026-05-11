@@ -273,6 +273,7 @@
     "noActivity": "Brak aktywności",
     "records": "{count} rekordów",
     "loading": "Ładowanie profilu...",
+    "defaultUsername": "Użytkownik Listify",
     "handlePlaceholder": "twoja-nazwa",
     "save": "Zapisz",
     "handleLength": "Nazwa musi mieć od 3 do 30 znaków.",

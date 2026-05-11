@@ -273,6 +273,7 @@
     "noActivity": "Nicio activitate încă",
     "records": "{count} înregistrări",
     "loading": "Se încarcă profilul...",
+    "defaultUsername": "Utilizator Listify",
     "handlePlaceholder": "numele-tau",
     "save": "Salvează",
     "handleLength": "Numele trebuie să aibă între 3 și 30 de caractere.",
