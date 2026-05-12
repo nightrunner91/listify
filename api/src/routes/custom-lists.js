@@ -257,16 +257,13 @@ export default async function customListsRoutes(app) {
       .set({ updatedAt: new Date() })
       .where(eq(customLists.id, listId))
 
-    // Log activity only if title is not empty
-    if (title && title.trim()) {
-      await logActivity(userId, {
-        action: 'custom_list_record_added',
-        category: 'custom',
-        entityId: record.id,
-        entityName: title,
-        metadata: { listName: list.name }
-      })
-    }
+    await logActivity(userId, {
+      action: 'custom_list_record_added',
+      category: 'custom',
+      entityId: record.id,
+      entityName: title,
+      metadata: { listName: list.name }
+    })
 
     return reply.status(201).send(record)
   })
@@ -344,16 +341,13 @@ export default async function customListsRoutes(app) {
       })
     }
 
-    // Log activity if title becomes non-empty or changes
-    if (title && title.trim()) {
-      await logActivity(userId, {
-        action: 'custom_list_record_added', // Use same action for first meaningful title
-        category: 'custom',
-        entityId: recordId,
-        entityName: title,
-        metadata: { listName: list.name }
-      })
-    }
+    await logActivity(userId, {
+      action: 'custom_list_record_added', // Use same action for first meaningful title
+      category: 'custom',
+      entityId: recordId,
+      entityName: title,
+      metadata: { listName: list.name }
+    })
 
     // Touch the list updatedAt
     await db
@@ -430,15 +424,12 @@ export default async function customListsRoutes(app) {
       .set({ updatedAt: new Date() })
       .where(eq(customLists.id, listId))
 
-    // Log activity only if record had a title
-    if (deleted.title?.trim()) {
-      await logActivity(userId, {
-        action: 'custom_list_record_deleted',
-        category: 'custom',
-        entityName: deleted.title,
-        metadata: { listName: list.name }
-      })
-    }
+    await logActivity(userId, {
+      action: 'custom_list_record_deleted',
+      category: 'custom',
+      entityName: deleted.title,
+      metadata: { listName: list.name }
+    })
 
     return reply.status(204).send()
   })

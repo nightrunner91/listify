@@ -24,6 +24,14 @@ const MAX_ACTIVITIES_PER_USER = 100
 export async function logActivity(userId, {
   action, category, entityId, entityName, metadata 
 }) {
+  // Guard clause: skip logging for item actions if title is null, undefined, or an empty string.
+  // We specifically target actions that are supposed to have an entity name (title).
+  const isItemAction = action.startsWith('record_') || action.startsWith('custom_list_record_')
+  const isNameEmpty = !entityName || (typeof entityName === 'string' && entityName.trim() === '')
+
+  if (isItemAction && isNameEmpty) {
+    return
+  }
   try {
     const now = new Date()
     const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000)
@@ -93,7 +101,15 @@ export async function logBatchActivities(userId, items) {
   if (!items || items.length === 0) return
 
   try {
-    const values = items.map(item => ({
+    const filteredItems = items.filter(item => {
+      const isItemAction = item.action.startsWith('record_') || item.action.startsWith('custom_list_record_')
+      const isNameEmpty = !item.entityName || (typeof item.entityName === 'string' && item.entityName.trim() === '')
+      return !(isItemAction && isNameEmpty)
+    })
+
+    if (filteredItems.length === 0) return
+
+    const values = filteredItems.map(item => ({
       userId,
       action: item.action,
       category: item.category,

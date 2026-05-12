@@ -112,15 +112,12 @@ export default async function recordsRoutes(app) {
       })
       .returning()
 
-    // Log activity only if title is not empty
-    if (title && title.trim()) {
-      await logActivity(userId, {
-        action: 'record_created',
-        category,
-        entityId: record.id,
-        entityName: title,
-      })
-    }
+    await logActivity(userId, {
+      action: 'record_created',
+      category,
+      entityId: record.id,
+      entityName: title,
+    })
 
     return reply.status(201).send(record)
   })
@@ -176,16 +173,12 @@ export default async function recordsRoutes(app) {
       .where(and(eq(records.id, id), eq(records.userId, userId)))
       .returning()
 
-    // Log activities based on changes
-    // If title was empty and is now non-empty, or if title changed and is non-empty
-    if (updates.title && updates.title.trim() && (updates.title !== old.title)) {
-      await logActivity(userId, {
-        action: 'record_created', // We still call it record_created for the first meaningful title
-        category: old.category,
-        entityId: id,
-        entityName: updates.title,
-      })
-    }
+    await logActivity(userId, {
+      action: 'record_created', // We still call it record_created for the first meaningful title
+      category: old.category,
+      entityId: id,
+      entityName: updates.title,
+    })
 
     if (updates.score !== undefined && updates.score !== old.score) {
       await logActivity(userId, {
@@ -248,14 +241,11 @@ export default async function recordsRoutes(app) {
       })
     }
 
-    // Log activity only if record had a title
-    if (deleted.title?.trim()) {
-      await logActivity(userId, {
-        action: 'record_deleted',
-        category: deleted.category,
-        entityName: deleted.title,
-      })
-    }
+    await logActivity(userId, {
+      action: 'record_deleted',
+      category: deleted.category,
+      entityName: deleted.title,
+    })
 
     return reply.status(204).send()
   })
