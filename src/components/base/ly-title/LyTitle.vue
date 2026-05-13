@@ -162,9 +162,10 @@ watch(getTranslatedTitle, (newTitle) => {
     color: inherit;
     padding-left: 0;
     padding-bottom: 4px;
+    transition: opacity 0.3s ease;
 
     &:hover, &:focus {
-      opacity: 0.85;
+      opacity: 0.7;
     }
   }
 

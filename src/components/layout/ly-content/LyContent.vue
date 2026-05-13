@@ -153,24 +153,26 @@ function confirmDeleteList() {
 </template>
 
 <style lang="scss" scoped>
-.ly-content {
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    transition: transition(background-color);
-    z-index: -1;
-  }
-
-  &--dimmed {
+@media screen and (min-width: 1280px) {
+  .ly-content {
     &::before {
-      z-index: 1;
-      background-color: rgba(0, 0, 0, 0.4);
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      transition: transition(background-color);
+      z-index: -1;
+    }
+
+    &--dimmed {
+      &::before {
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
     }
   }
 }

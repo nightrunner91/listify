@@ -197,7 +197,7 @@ function openAvatarPicker() {
             size="large"
             :placeholder="t('userProfile.usernamePlaceholder')"
             :bordered="false"
-            class="w-100 font-weight-500 mb-0"
+            class="profile-username w-100 font-weight-500 mb-0"
             @blur="toggleEditUsername"
             @keyup.enter="toggleEditUsername"
           />
@@ -327,7 +327,7 @@ function openAvatarPicker() {
   }
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.7;
   }
 }
 
@@ -346,6 +346,40 @@ function openAvatarPicker() {
 .n-button {
   :deep(.n-button__content) {
     gap: 8px;
+  }
+}
+
+.profile-avatar {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--n-color);
+    border-radius: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 0.3;
+    }
+  }
+}
+
+.profile-username {
+  :deep(.n-input__input-el) {
+    transition: opacity 0.3s ease;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7 !important;
+    }
   }
 }
 </style>

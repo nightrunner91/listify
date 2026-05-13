@@ -22,8 +22,9 @@ defineEmits(['scrollTop', 'scrollBottom'])
       vertical
       align="center"
       justify="center"
+      :wrap-items="false"
       class="position-fixed right-10 top-0 bottom-0 m-auto w-40"
-      style="height: fit-content; z-index: 100;"
+      style="z-index: 100;"
     >
       <n-button
         secondary
