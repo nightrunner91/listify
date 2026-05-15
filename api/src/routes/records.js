@@ -173,12 +173,15 @@ export default async function recordsRoutes(app) {
       .where(and(eq(records.id, id), eq(records.userId, userId)))
       .returning()
 
-    await logActivity(userId, {
-      action: 'record_created', // We still call it record_created for the first meaningful title
-      category: old.category,
-      entityId: id,
-      entityName: updates.title,
-    })
+    // Only log 'record_created' if the record didn't have a title before and now it does
+    if (updates.title && (!old.title || old.title.trim() === '')) {
+      await logActivity(userId, {
+        action: 'record_created',
+        category: old.category,
+        entityId: id,
+        entityName: updates.title,
+      })
+    }
 
     if (updates.score !== undefined && updates.score !== old.score) {
       await logActivity(userId, {
