@@ -222,7 +222,7 @@ const handleSearch = (value) => {
         />
         <!-- Readonly Rate -->
         <n-rate
-          v-else-if="record.score > 0"
+          v-else
           :value="record.score"
           readonly
           size="small"
