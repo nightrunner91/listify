@@ -262,7 +262,7 @@ onBeforeRouteLeave(async () => {
             <div
               v-if="!recordsStore.isSearching"
               ref="bottomButtonRef"
-              class="pb-6 pl-10"
+              class="pb-6 pl-lg-10"
             >
               <n-divider class="mt-2 mb-4" />
               <ly-add-record

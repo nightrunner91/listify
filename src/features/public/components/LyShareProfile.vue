@@ -60,6 +60,13 @@ const profileUrl = computed(() => {
   return `${base}#/u/${identifier}`
 })
 
+/**
+ * @description The prefix shown in the input, dynamic based on resolution
+ */
+const displayPrefix = computed(() => {
+  return gridStore.screenLargerThen('xl') ? BASE_PREFIX : '@'
+})
+
 const localHandle = ref('')
 const handleStatus = ref('idle') // 'idle', 'checking', 'available', 'taken', 'error', 'invalid'
 const handleMessage = ref('')
@@ -246,7 +253,7 @@ function closeModal() {
       >
         <n-input-group>
           <n-input-group-label class="fz-12">
-            {{ BASE_PREFIX }}
+            {{ displayPrefix }}
           </n-input-group-label>
           <n-input
             :value="localHandle"

@@ -305,7 +305,7 @@ watch(
 </script>
 
 <template>
-  <div class="min-vh-100">
+  <div class="min-vh-100 d-flex flex-column">
     <!-- begin::Branding Navbar -->
     <n-layout-header
       bordered
@@ -325,9 +325,9 @@ watch(
     <n-space
       v-if="loading"
       justify="center"
-      class="py-16 min-vh-100"
+      class="public-content"
     >
-      <n-spin size="large" />
+      <n-spin size="large" class="mt-16" />
     </n-space>
     <!-- end::Loading State -->
 
@@ -335,9 +335,11 @@ watch(
     <n-space
       v-else-if="error"
       justify="center"
-      class="py-16"
+      class="public-content"
     >
-      <n-empty :description="error === 'private' ? t('publicProfile.profilePrivate') : t('publicProfile.profileNotFound')" />
+      <n-empty
+        :description="error === 'private' ? t('publicProfile.profilePrivate') : t('publicProfile.profileNotFound')"
+        class="mt-16" />
     </n-space>
     <!-- end::Error State -->
 
@@ -347,14 +349,13 @@ watch(
       <n-space
         align="center"
         justify="center"
-        class="py-12 px-6"
+        class="py-6 py-lg-12 px-6"
         :style="{ backgroundColor: profileData.user.backgroundColor }"
       >
         <n-space
           vertical
           align="center"
-          :size="12"
-          class="max-w-530"
+          size="small"
         >
           <n-avatar
             round
@@ -371,7 +372,7 @@ watch(
       </n-space>
       <!-- end::Hero Section -->
 
-      <div class="mx-auto pt-6 pb-12 px-4 max-w-1024">
+      <div class="mx-auto pt-6 pb-12 px-4 w-100 max-w-1024">
         <!-- begin::Category Tabs -->
         <n-tabs
           v-if="nonEmptyCategories.length > 0"
@@ -391,7 +392,8 @@ watch(
                 align="center"
                 :size="6"
                 :wrap-item="false"
-                class="py-1"
+                :wrap="false"
+                class="py-1 px-4"
               >
                 <n-icon
                   :component="CATEGORY_ICONS[cat]"
@@ -424,15 +426,16 @@ watch(
         <n-empty
           v-else
           :description="t('publicProfile.noActivity')"
-          class="py-16"
+          class="mt-16"
         />
         <!-- end::Empty State -->
       </div>
 
+      
       <!-- begin::Activity Timeline -->
       <n-card
         v-if="formattedActivities.length > 0"
-        class="pt-8 pb-12 px-4 rounded-none"
+        class="pt-lg-8 pb-lg-12 px-lg-4 rounded-none"
       >
         <n-space
           vertical
@@ -519,7 +522,7 @@ watch(
       @scrollBottom="scrollToBottom"
     />
 
-    <n-layout-footer>
+    <n-layout-footer class="mt-auto">
       <div class="mx-auto py-4 px-4 max-w-1024">
         <n-space
           :wrap-item="false"
@@ -536,6 +539,10 @@ watch(
 </template>
 
 <style lang="scss" scoped>
+.public-content {
+  min-height: calc(100vh - 56px - 60px);
+}
+
 .public-profile {
   &__navbar {
     cursor: pointer;
@@ -557,6 +564,27 @@ watch(
       padding-top: 8px;
       margin-top: -8px;
       margin-bottom: 8px;
+
+      // begin::Mobile Scroll Support
+      @media (max-width: 768px) {
+        .n-tabs-rail {
+          overflow-x: auto !important;
+          
+          /* Hide scrollbar for Chrome, Safari and Opera */
+          &::-webkit-scrollbar {
+            display: none;
+          }
+
+          /* Hide scrollbar for IE, Edge and Firefox */
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+        }
+
+        .n-tabs-tab {
+          flex-shrink: 0 !important;
+        }
+      }
+      // end::Mobile Scroll Support
     }
   }
 }
