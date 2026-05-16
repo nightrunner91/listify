@@ -136,13 +136,14 @@ const handleSearch = (value) => {
     @mouseleave="!props.readonly && (showCheckbox = false)"
   >
     <n-grid
-      cols="1 l:2"
+      :cols="12"
+      item-responsive
       responsive="screen"
       :x-gap="gridStore.screenLargerThen('l') ? 12 : 0"
       :y-gap="gridStore.screenLargerThen('l') ? 0 : 8"
       class="py-2 py-m-0 align-items-center"
     >
-      <n-gi>
+      <n-gi span="12 l:7">
         <!-- begin::Record Identity & Title -->
         <n-space
           :wrap-item="false"
@@ -209,7 +210,7 @@ const handleSearch = (value) => {
         <!-- end::Record Identity & Title -->
       </n-gi>
 
-      <n-gi>
+      <n-gi span="12 l:5">
         <!-- begin::Record Attributes (Score, Liked, Status) -->
         <n-space
           :wrap-item="false"
