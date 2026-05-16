@@ -49,6 +49,8 @@
     "searchEmptyDescription": "No se encontraron registros que coincidan con tu búsqueda.",
     "or": "o",
     "titlePlaceholder": "Nombre del registro",
+    "season": "T",
+    "episode": "E",
     "searchPlaceholder": {
       "games": "Añadir un juego...",
       "tvshows": "Añadir una serie...",

@@ -49,6 +49,8 @@
     "searchEmptyDescription": "Keine Einträge für deine Suche gefunden.",
     "or": "oder",
     "titlePlaceholder": "Name des Eintrags",
+    "season": "S",
+    "episode": "E",
     "searchPlaceholder": {
       "games": "Spiel hinzufügen...",
       "tvshows": "Serie hinzufügen...",

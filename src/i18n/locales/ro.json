@@ -49,6 +49,8 @@
     "searchEmptyDescription": "Nu am găsit înregistrări care să corespundă căutării tale.",
     "or": "sau",
     "titlePlaceholder": "Numele înregistrării",
+    "season": "S",
+    "episode": "E",
     "searchPlaceholder": {
       "games": "Adaugă un joc...",
       "tvshows": "Adaugă un serial...",

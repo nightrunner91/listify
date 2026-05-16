@@ -49,6 +49,8 @@
     "searchEmptyDescription": "Aucun enregistrement trouvé correspondant à votre recherche.",
     "or": "ou",
     "titlePlaceholder": "Nom de l'enregistrement",
+    "season": "S",
+    "episode": "E",
     "searchPlaceholder": {
       "games": "Ajouter un jeu...",
       "tvshows": "Ajouter une série TV...",

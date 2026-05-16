@@ -49,6 +49,8 @@
     "searchEmptyDescription": "No records found matching your search.",
     "or": "or",
     "titlePlaceholder": "Name of record",
+    "season": "S",
+    "episode": "E",
     "searchPlaceholder": {
       "games": "Add a game...",
       "tvshows": "Add a TV show...",

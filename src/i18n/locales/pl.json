@@ -49,6 +49,8 @@
     "searchEmptyDescription": "Nie znaleziono rekordów pasujących do Twojego wyszukiwania.",
     "or": "lub",
     "titlePlaceholder": "Nazwa rekordu",
+    "season": "S",
+    "episode": "E",
     "searchPlaceholder": {
       "games": "Dodaj grę...",
       "tvshows": "Dodaj serial...",

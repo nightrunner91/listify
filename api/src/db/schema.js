@@ -57,6 +57,8 @@ export const records = pgTable('records', {
   score: smallint('score').notNull().default(0),
   liked: boolean('liked').notNull().default(false),
   label: varchar('label', { length: 100 }).notNull(),
+  season: smallint('season'),
+  episode: smallint('episode'),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 })

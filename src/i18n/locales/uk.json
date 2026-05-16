@@ -49,6 +49,8 @@
     "searchEmptyDescription": "За вашим запитом нічого не знайдено.",
     "or": "або",
     "titlePlaceholder": "Назва запису",
+    "season": "С",
+    "episode": "Е",
     "searchPlaceholder": {
       "games": "Додати гру...",
       "tvshows": "Додати серіал...",

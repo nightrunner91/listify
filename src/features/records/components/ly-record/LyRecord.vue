@@ -11,6 +11,9 @@ import {
   NGrid,
   NGi,
   NAutoComplete,
+  NInputNumber,
+  NInputGroup,
+  NInputGroupLabel,
   NDropdown,
   NButton,
   NIcon,
@@ -84,8 +87,15 @@ const getComparableString = (r) => r && r.id ? JSON.stringify({
   title: r.title,
   score: r.score,
   label: r.label,
-  liked: r.liked
+  liked: r.liked,
+  season: r.season,
+  episode: r.episode,
 }) : null
+
+/**
+ * @description Whether to show episode tracking fields (only for tvshows and anime)
+ */
+const showEpisodeTracking = computed(() => tag === 'tvshows' || tag === 'anime')
 
 let updateTimeout = null
 let lastSavedString = getComparableString(record.value)
@@ -195,12 +205,50 @@ const handleSearch = (value) => {
           :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
           :placeholder="searchPlaceholder"
           :auto-select="false"
-          class="w-100 w-l-75 record-input"
+          class="record-input episode-title"
           @input="handleSearch"
         />
+
+        <!-- Season / Episode inputs (editable, tvshows & anime only) -->
+        <n-input-group
+          v-if="!props.readonly && showEpisodeTracking"
+          class="episode-tracker"
+        >
+          <n-input-group-label
+            :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+            class="fz-12 px-2 font-weight-bold"
+          >
+            {{ t('records.season') }}
+          </n-input-group-label>
+          <n-input-number
+            v-model:value="record.season"
+            :min="0"
+            :max="9999"
+            :show-button="false"
+            :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+            placeholder="-"
+            class="episode-input"
+          />
+          <n-input-group-label
+            :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+            class="fz-12 px-2"
+          >
+            {{ t('records.episode') }}
+          </n-input-group-label>
+          <n-input-number
+            v-model:value="record.episode"
+            :min="0"
+            :max="99999"
+            :show-button="false"
+            :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+            placeholder="-"
+            class="episode-input"
+          />
+        </n-input-group>
+
         <!-- Readonly static title -->
         <n-text
-          v-else
+          v-else-if="props.readonly"
           class="w-100 record-readonly-title"
           :depth="record.title ? 1 : 3"
         >
@@ -214,6 +262,7 @@ const handleSearch = (value) => {
         <!-- begin::Record Attributes (Score, Liked, Status) -->
         <n-space
           :wrap-item="false"
+          :wrap="false"
           align="center"
           justify="center"
           size="small"
@@ -224,7 +273,7 @@ const handleSearch = (value) => {
           v-if="!props.readonly"
           v-model:value="record.score"
           clearable
-          class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-7"
+          class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-3"
         />
         <!-- Readonly Rate -->
         <n-rate
@@ -232,7 +281,7 @@ const handleSearch = (value) => {
           :value="record.score"
           readonly
           size="small"
-          class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-7"
+          class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-3"
         />
           
         <!-- Like button (editable) -->
@@ -344,5 +393,42 @@ const handleSearch = (value) => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+// Episode tracking group
+.episode-title {
+  flex: 1 1 0;
+  min-width: 0;
+
+  .n-input,
+  .n-input__border {
+    background-color: transparent !important;
+    border: none !important;
+  }
+
+  .n-input__input-el {
+    font-weight: 500;
+  }
+}
+
+.episode-tracker {
+  flex-shrink: 0;
+  margin-left: 6px;
+  width: auto;
+}
+
+.episode-input {
+  width: 48px;
+
+  .n-input {
+    background-color: transparent !important;
+  }
+
+  .n-input__input-el {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0 4px;
+  }
 }
 </style>

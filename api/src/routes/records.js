@@ -33,6 +33,16 @@ const RECORD_BODY_SCHEMA = {
       type: 'string',
       maxLength: 100 
     },
+    season: {
+      type: ['integer', 'null'],
+      minimum: 0,
+      maximum: 9999
+    },
+    episode: {
+      type: ['integer', 'null'],
+      minimum: 0,
+      maximum: 99999
+    },
   },
   additionalProperties: false,
 }
@@ -96,7 +106,7 @@ export default async function recordsRoutes(app) {
   }, async (request, reply) => {
     const { category } = request.params
     const {
-      title, score = 0, liked = false, label 
+      title, score = 0, liked = false, label, season = null, episode = null
     } = request.body
     const userId = request.user.id
 
@@ -108,7 +118,9 @@ export default async function recordsRoutes(app) {
         title,
         score,
         liked,
-        label 
+        label,
+        season,
+        episode
       })
       .returning()
 

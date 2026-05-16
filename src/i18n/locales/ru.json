@@ -49,6 +49,8 @@
     "searchEmptyDescription": "Записей по вашему запросу не найдено.",
     "or": "или",
     "titlePlaceholder": "Название записи",
+    "season": "С",
+    "episode": "Э",
     "searchPlaceholder": {
       "games": "Добавить игру...",
       "tvshows": "Добавить сериал...",
