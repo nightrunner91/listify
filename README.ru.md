@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Версия-1.1.0-blue?style=for-the-badge" alt="Версия">
+  <img src="https://img.shields.io/badge/Версия-1.2.0-blue?style=for-the-badge" alt="Версия">
   <img src="https://img.shields.io/badge/Лицензия-MIT-green?style=for-the-badge" alt="Лицензия">
   <img src="https://img.shields.io/badge/Node.js-%3E%3D20.0.0-6da55f?style=for-the-badge&logo=node.js" alt="Версия Node">
   <img src="https://img.shields.io/badge/Vue-3.2.47-4fc08d?style=for-the-badge&logo=vue.js" alt="Версия Vue">
