@@ -8,6 +8,8 @@ import {
 import {
   NListItem,
   NSpace,
+  NGrid,
+  NGi,
   NAutoComplete,
   NDropdown,
   NButton,
@@ -133,21 +135,22 @@ const handleSearch = (value) => {
     @mouseover="!props.readonly && (showCheckbox = true)"
     @mouseleave="!props.readonly && (showCheckbox = false)"
   >
-    <n-space
-      :wrap-item="false"
-      align="center"
-      :wrap="!gridStore.screenLargerThen('l')"
-      :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
-      class="py-2 py-m-0"
+    <n-grid
+      cols="1 l:2"
+      responsive="screen"
+      :x-gap="gridStore.screenLargerThen('l') ? 12 : 0"
+      :y-gap="gridStore.screenLargerThen('l') ? 0 : 8"
+      class="py-2 py-m-0 align-items-center"
     >
-      <!-- begin::Record Identity & Title -->
-      <n-space
-        :wrap-item="false"
-        :wrap="false"
-        align="center"
-        size="small"
-        class="w-100 w-l-50"
-      >
+      <n-gi>
+        <!-- begin::Record Identity & Title -->
+        <n-space
+          :wrap-item="false"
+          :wrap="false"
+          align="center"
+          size="small"
+          class="w-100"
+        >
         <!-- Index number (readonly) or checkbox (editable) -->
         <n-space
           v-if="!props.readonly"
@@ -202,17 +205,19 @@ const handleSearch = (value) => {
         >
           {{ record.title || '—' }}
         </n-text>
-      </n-space>
-      <!-- end::Record Identity & Title -->
+        </n-space>
+        <!-- end::Record Identity & Title -->
+      </n-gi>
 
-      <!-- begin::Record Attributes (Score, Liked, Status) -->
-      <n-space
-        :wrap-item="false"
-        align="center"
-        justify="center"
-        size="small"
-        class="w-100 w-l-50"
-      >
+      <n-gi>
+        <!-- begin::Record Attributes (Score, Liked, Status) -->
+        <n-space
+          :wrap-item="false"
+          align="center"
+          justify="center"
+          size="small"
+          class="w-100"
+        >
         <!-- Editable Rate -->
         <n-rate
           v-if="!props.readonly"
@@ -301,9 +306,10 @@ const handleSearch = (value) => {
           </template>
           {{ recordsStore.getLabelName(tag, record.label) }}
         </n-tag>
-      </n-space>
-      <!-- end::Record Attributes (Score, Liked, Status) -->
-    </n-space>
+        </n-space>
+        <!-- end::Record Attributes (Score, Liked, Status) -->
+      </n-gi>
+    </n-grid>
   </n-list-item>
 </template>
 
