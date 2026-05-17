@@ -24,33 +24,24 @@
 
 ---
 
-## 🎯 What is it?
+## What is it?
 
 **Listify** is a sleek, modern media tracker designed for those who want to keep their collections organized without the clutter of social features or ads. Whether you're logging games, movies, books, or anything in between, Listify provides an intuitive and fast UI to manage your personal library.
 
 Built from the ground up as the successor to [Nightlist](https://github.com/nightrunner91/nightlist), it leverages **Vue 3**, **Fastify**, and **PostgreSQL** to deliver a fast, secure, and highly customizable experience.
 
-- 📝 **Create & Manage Lists** — Organize games, movies, books, and more.
-- 🔗 **Share Your Collections** — Personalized public profiles for your library.
-- 💾 **Own Your Data** — Full export/import capabilities, no lock-in.
-- 🚀 **Lightning Fast** — Optimized for performance with a modern tech stack.
-- 🔒 **Privacy First** — No ads, no trackers, entirely yours.
+## Key Features
 
-## 🚀 Key Features
+- **Create & Manage Lists** — Organize games, films, TV shows, anime, manga, books, and music.
+- **Share Your Collections** — Personalized public profiles for your library.
+- **Intuitive UI** — Lightweight design powered by Naive UI.
+- **Data Sovereignty** — Full export/import capabilities, no lock-in.
+- **Privacy Focused** — No ads, no trackers, and no third-party data sharing.
+- **High Performance** — Lightning fast, optimized Vue 3 / Vite and a lightweight Fastify backend.
+- **Open-source** — Inspect, fork, or self-host the entire project.
+- **Multi-Language Support** — EN, DE, ES, FR, PL, RO, RU, UK.
 
-- ✨ **Intuitive UI** — Lightweight design powered by Naive UI.
-
-- 💾 **Data Sovereignty** — Import and export your collection at any time.
-
-- 🛡️ **Privacy Focused** — No ads and no third-party data sharing.
-
-- ⚡ **High Performance** — Optimized Vue 3 / Vite and a lightweight Fastify backend.
-
-- 🏗️ **Open-source** — Inspect, fork, or self-host the entire project.
-
-- 🌍 **Multi-Language Support** — EN, DE, ES, FR, PL, RO, RU, UK.
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology | Description |
 | :--- | :--- | :--- |
@@ -61,19 +52,19 @@ Built from the ground up as the successor to [Nightlist](https://github.com/nigh
 | **State** | [Pinia](https://pinia.vuejs.org/) | Modern Vue store management |
 | **Build** | [Vite](https://vitejs.dev/) | Next-generation frontend tooling |
 
-## 📡 External Data Sources
+## External Data Sources
 
 Listify integrates with several high-quality external APIs to provide instant autocompletion and rich metadata for your collections:
 
-- 🎮 **[RAWG API](https://rawg.io/apidocs)**: The primary source for the **Games** category.
-- 🎬 **[TMDB API](https://www.themoviedb.org/documentation/api)**: Powers discovery for **Films** and **TV Shows**.
-- 📖 **[Jikan API](https://jikan.moe/)**: A free, open-source API for the MyAnimeList database, used for **Anime** and **Manga**.
-- 🎵 **[iTunes API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html)**: Provides a reliable catalog for **Books** and **Music**.
+- **[RAWG API](https://rawg.io/apidocs)**: The primary source for the **Games** category.
+- **[TMDB API](https://www.themoviedb.org/documentation/api)**: Powers discovery for **Films** and **TV Shows**.
+- **[Jikan API](https://jikan.moe/)**: A free, open-source API for the MyAnimeList database, used for **Anime** and **Manga**.
+- **[iTunes API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html)**: Provides a reliable catalog for **Books** and **Music**.
 
 > [!IMPORTANT]
 > Some providers (RAWG, TMDB) require an API key. If you're hosting your own application ensure these are correctly configured in your `api/.env` file to enable autocompletion features.
 
-## 🏁 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -122,7 +113,7 @@ npm run dev
 npm run db:studio
 ```
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```text
 .
@@ -149,7 +140,7 @@ npm run db:studio
 └── package.json            # Root scripts & dependencies
 ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -159,12 +150,12 @@ Contributions are what make the open-source community such an amazing place to l
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
 <p align="center">
-  Built with ❤️ by <a href="https://t.me/nightrunner91">nightrunner91</a>
+  Built by <a href="https://t.me/nightrunner91">nightrunner91</a>
 </p>
