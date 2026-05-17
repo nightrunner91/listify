@@ -17,6 +17,7 @@ import {
   NDropdown,
   NButton,
   NIcon,
+  NDivider,
   NText,
   NRate,
   NCheckbox,
@@ -216,7 +217,7 @@ const handleSearch = (value) => {
         >
           <n-input-group-label
             :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
-            class="fz-12 px-2 font-weight-bold"
+            class="w-32 fz-12"
           >
             {{ t('records.season') }}
           </n-input-group-label>
@@ -227,11 +228,12 @@ const handleSearch = (value) => {
             :show-button="false"
             :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
             placeholder="-"
-            class="episode-input"
+            class="episode-input w-32 px-0"
           />
+          <n-divider vertical class="episode-separator h-100 mx-1" />
           <n-input-group-label
             :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
-            class="fz-12 px-2"
+            class="w-32 fz-12"
           >
             {{ t('records.episode') }}
           </n-input-group-label>
@@ -242,7 +244,7 @@ const handleSearch = (value) => {
             :show-button="false"
             :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
             placeholder="-"
-            class="episode-input"
+            class="episode-input w-32 px-0"
           />
         </n-input-group>
 
@@ -418,17 +420,12 @@ const handleSearch = (value) => {
 }
 
 .episode-input {
-  width: 48px;
-
-  .n-input {
-    background-color: transparent !important;
-  }
-
+  .n-input-wrapper,
   .n-input__input-el {
+    padding: 0;
     text-align: center;
     font-size: 12px;
     font-weight: 500;
-    padding: 0 4px;
   }
 }
 </style>
