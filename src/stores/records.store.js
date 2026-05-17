@@ -694,7 +694,10 @@ export const useRecordsStore = defineStore('records', () => {
     pending.value[category] = true
     try {
       const data = await api.get(`/records/${category}`)
-      records.value[category] = data.map(r => ({ ...r, selected: false }))
+      records.value[category] = data.map(r => ({
+        ...r,
+        selected: false 
+      }))
       
       // Sync display order with sorting
       initializeDisplayOrder(category)

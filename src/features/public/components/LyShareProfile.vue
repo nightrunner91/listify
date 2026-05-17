@@ -259,10 +259,10 @@ function closeModal() {
             :value="localHandle"
             :status="inputStatus"
             :loading="handleStatus === 'checking'"
-            @update:value="onHandleInput"
-            @keyup.enter="saveHandle"
             :placeholder="t('publicProfile.handlePlaceholder')"
             :disabled="!isPublic"
+            @update:value="onHandleInput"
+            @keyup.enter="saveHandle"
           />
           <n-button
             type="primary"
@@ -295,7 +295,6 @@ function closeModal() {
       </n-space>
       <!-- end::Unified URL Input Group -->
     </n-space>
-
   </n-modal>
 </template>
 

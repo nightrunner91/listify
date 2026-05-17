@@ -339,7 +339,8 @@ watch(
     >
       <n-empty
         :description="error === 'private' ? t('publicProfile.profilePrivate') : t('publicProfile.profileNotFound')"
-        class="mt-16" />
+        class="mt-16"
+      />
     </n-space>
     <!-- end::Error State -->
 
@@ -467,9 +468,7 @@ watch(
                     class="mr-1"
                   >
                     <template #entity>
-                      <span
-                        class="font-weight-500"
-                      >{{ activity.formatted.entity }}</span>
+                      <span class="font-weight-500">{{ activity.formatted.entity }}</span>
                     </template>
                     <template #category>
                       <span>{{ activity.formatted.category }}</span>

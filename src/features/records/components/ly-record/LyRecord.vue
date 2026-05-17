@@ -134,6 +134,31 @@ const handleSearch = (value) => {
     triggerSearch(value, tag)
   }
 }
+
+/**
+ * @function handleEpisodeUpdate
+ * @description Fixes initial increment bug on empty episode input
+ * @param {number|null} val
+ */
+const handleEpisodeUpdate = (val) => {
+  if ((record.value.episode === null || record.value.episode === undefined) && val === 0) {
+    record.value.episode = 1
+  } else {
+    record.value.episode = val
+  }
+}
+
+/**
+ * @function handlePaste
+ * @description Prevents pasting invalid non-positive integers
+ * @param {ClipboardEvent} event
+ */
+const handlePaste = (event) => {
+  const pasteData = (event.clipboardData || window.clipboardData).getData('text')
+  if (!/^[1-9]\d*$/.test(pasteData)) {
+    event.preventDefault()
+  }
+}
 </script>
 
 <template>
@@ -163,99 +188,102 @@ const handleSearch = (value) => {
           size="small"
           class="w-100"
         >
-        <!-- Index number (readonly) or checkbox (editable) -->
-        <n-space
-          v-if="!props.readonly"
-          :wrap-item="false"
-          align="center"
-          justify="center"
-          :size="0"
-        >
-          <n-checkbox
-            v-show="showCheckbox || record.selected"
-            v-model:checked="record.selected"
-          />
+          <!-- Index number (readonly) or checkbox (editable) -->
+          <n-space
+            v-if="!props.readonly"
+            :wrap-item="false"
+            align="center"
+            justify="center"
+            :size="0"
+          >
+            <n-checkbox
+              v-show="showCheckbox || record.selected"
+              v-model:checked="record.selected"
+            />
 
+            <n-text
+              v-show="!showCheckbox && !record.selected"
+              align="center"
+              class="w-16 fz-12 lh-1"
+              depth="3"
+            >
+              {{ index + 1 }}
+            </n-text>
+          </n-space>
+
+          <!-- Readonly index -->
           <n-text
-            v-show="!showCheckbox && !record.selected"
+            v-else
             align="center"
             class="w-16 fz-12 lh-1"
             depth="3"
           >
             {{ index + 1 }}
           </n-text>
-        </n-space>
 
-        <!-- Readonly index -->
-        <n-text
-          v-else
-          align="center"
-          class="w-16 fz-12 lh-1"
-          depth="3"
-        >
-          {{ index + 1 }}
-        </n-text>
-
-        <!-- Editable autocomplete title -->
-        <n-auto-complete
-          v-if="!props.readonly"
-          :id="`input-${record.id}`"
-          v-model:value="record.title"
-          :options="isSearchEnabled(tag) ? suggestions : []"
-          :loading="isSearchEnabled(tag) && isLoading"
-          :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
-          :placeholder="searchPlaceholder"
-          :auto-select="false"
-          class="record-input episode-title"
-          @input="handleSearch"
-        />
-
-        <!-- Season / Episode inputs (editable, tvshows & anime only) -->
-        <n-input-group
-          v-if="!props.readonly && showEpisodeTracking"
-          class="episode-tracker"
-        >
-          <n-input-group-label
-            :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
-            class="w-32 fz-12"
-          >
-            {{ t('records.season') }}
-          </n-input-group-label>
-          <n-input-number
-            v-model:value="record.season"
-            :min="0"
-            :max="9999"
-            :show-button="false"
-            :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
-            placeholder="-"
-            class="episode-input w-32 px-0"
+          <!-- Editable autocomplete title -->
+          <n-auto-complete
+            v-if="!props.readonly"
+            :id="`input-${record.id}`"
+            v-model:value="record.title"
+            :options="isSearchEnabled(tag) ? suggestions : []"
+            :loading="isSearchEnabled(tag) && isLoading"
+            :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
+            :placeholder="searchPlaceholder"
+            :auto-select="false"
+            class="record-input episode-title"
+            @input="handleSearch"
           />
-          <n-divider vertical class="episode-separator h-100 mx-1" />
-          <n-input-group-label
-            :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
-            class="w-32 fz-12"
-          >
-            {{ t('records.episode') }}
-          </n-input-group-label>
-          <n-input-number
-            v-model:value="record.episode"
-            :min="0"
-            :max="99999"
-            :show-button="false"
-            :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
-            placeholder="-"
-            class="episode-input w-32 px-0"
-          />
-        </n-input-group>
 
-        <!-- Readonly static title -->
-        <n-text
-          v-else-if="props.readonly"
-          class="w-100 record-readonly-title"
-          :depth="record.title ? 1 : 3"
-        >
-          {{ record.title || '—' }}
-        </n-text>
+          <!-- Season / Episode inputs (editable, tvshows & anime only) -->
+          <n-input-group
+            v-if="!props.readonly && showEpisodeTracking"
+            class="episode-tracker"
+          >
+            <n-input-group-label
+              :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+              class="w-32 fz-12 font-weight-500"
+            >
+              {{ t('records.season') }}
+            </n-input-group-label>
+            <n-input-number
+              v-model:value="record.season"
+              :min="0"
+              :max="9999"
+              :show-button="false"
+              :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+              placeholder="0"
+              class="episode-input w-32 px-0"
+              @paste="handlePaste"
+            />
+            <n-divider vertical class="episode-separator h-100 mx-2" />
+            <n-input-group-label
+              :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+              class="w-32 fz-12 font-weight-500"
+            >
+              {{ t('records.episode') }}
+            </n-input-group-label>
+            <n-input-number
+              :value="record.episode"
+              @update:value="handleEpisodeUpdate"
+              :min="0"
+              :max="99999"
+              :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+              placeholder="0"
+              class="episode-input w-64"
+              button-placement="both"
+              @paste="handlePaste"
+            />
+          </n-input-group>
+
+          <!-- Readonly static title -->
+          <n-text
+            v-else-if="props.readonly"
+            class="w-100 record-readonly-title"
+            :depth="record.title ? 1 : 3"
+          >
+            {{ record.title || '—' }}
+          </n-text>
         </n-space>
         <!-- end::Record Identity & Title -->
       </n-gi>
@@ -422,10 +450,16 @@ const handleSearch = (value) => {
 .episode-input {
   .n-input-wrapper,
   .n-input__input-el {
-    padding: 0;
     text-align: center;
     font-size: 12px;
     font-weight: 500;
+  }
+
+  /* Hide the minus button in button-placement="both" */
+  .n-input__prefix {
+    display: none !important;
+  }
+  .n-input__suffix {
   }
 }
 </style>

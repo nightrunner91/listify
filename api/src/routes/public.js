@@ -41,12 +41,18 @@ export default async function publicRoutes(app) {
     const handle = request.params.handle.toLowerCase()
     
     if (RESERVED_HANDLES.includes(handle)) {
-      return { available: false, reason: 'reserved' }
+      return {
+        available: false,
+        reason: 'reserved' 
+      }
     }
     
     const existing = await db.select({ id: users.id }).from(users).where(eq(users.handle, handle)).limit(1)
     if (existing.length > 0) {
-      return { available: false, reason: 'taken' }
+      return {
+        available: false,
+        reason: 'taken' 
+      }
     }
     
     return { available: true }
@@ -59,11 +65,7 @@ export default async function publicRoutes(app) {
       params: {
         type: 'object',
         required: ['identifier'],
-        properties: {
-          identifier: {
-            type: 'string',
-          }
-        },
+        properties: {identifier: {type: 'string',}},
       },
     },
   }, async (request, reply) => {
@@ -89,7 +91,10 @@ export default async function publicRoutes(app) {
         const { sql } = await import('drizzle-orm')
         condition = sql`CAST(${users.id} AS TEXT) ILIKE ${identifier.toLowerCase() + '%'}`
       } else {
-        return reply.status(404).send({ error: 'NOT_FOUND', message: 'User not found' })
+        return reply.status(404).send({
+          error: 'NOT_FOUND',
+          message: 'User not found' 
+        })
       }
     }
 

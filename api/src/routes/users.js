@@ -59,11 +59,17 @@ export default async function userRoutes(app) {
     if (request.body.handle) {
       const handle = request.body.handle.toLowerCase()
       if (RESERVED_HANDLES.includes(handle)) {
-        return reply.status(400).send({ error: 'HANDLE_RESERVED', message: 'This handle is reserved' })
+        return reply.status(400).send({
+          error: 'HANDLE_RESERVED',
+          message: 'This handle is reserved' 
+        })
       }
       const existing = await db.select({ id: users.id }).from(users).where(eq(users.handle, handle)).limit(1)
       if (existing.length > 0 && existing[0].id !== request.user.id) {
-        return reply.status(400).send({ error: 'HANDLE_TAKEN', message: 'This handle is already taken' })
+        return reply.status(400).send({
+          error: 'HANDLE_TAKEN',
+          message: 'This handle is already taken' 
+        })
       }
       request.body.handle = handle
     }

@@ -32,9 +32,7 @@ const globalOverrides = {
     borderRadius: '6px',
     itemHeight: '48px'
   },
-  List: {
-    borderRadius: '6px'
-  },
+  List: {borderRadius: '6px'},
   Button: {
     borderRadiusSmall: '4px',
     borderRadiusMedium: '5px',
