@@ -137,14 +137,19 @@ const handleSearch = (value) => {
 
 /**
  * @function handleEpisodeUpdate
- * @description Fixes initial increment bug on empty episode input
+ * @description Fixes initial increment bug on empty episode input and auto-increments season
  * @param {number|null} val
  */
 const handleEpisodeUpdate = (val) => {
-  if ((record.value.episode === null || record.value.episode === undefined) && val === 0) {
+  const isInitialFromEmpty = (record.value.episode === null || record.value.episode === undefined) && val === 0
+  const isInitialFromZero = record.value.episode === 0 && val === 1
+
+  if (isInitialFromEmpty) {
     record.value.episode = 1
+    if (!record.value.season) record.value.season = 1
   } else {
     record.value.episode = val
+    if (isInitialFromZero && !record.value.season) record.value.season = 1
   }
 }
 
@@ -303,7 +308,7 @@ const handlePaste = (event) => {
           v-if="!props.readonly"
           v-model:value="record.score"
           clearable
-          class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-3"
+          class="mr-0 ml-0 ml-l-15 mr-s-3 mr-l-3"
         />
         <!-- Readonly Rate -->
         <n-rate
@@ -311,7 +316,7 @@ const handlePaste = (event) => {
           :value="record.score"
           readonly
           size="small"
-          class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-3"
+          class="mr-0 ml-0 ml-l-15 mr-s-3 mr-l-3"
         />
           
         <!-- Like button (editable) -->
@@ -322,7 +327,7 @@ const handlePaste = (event) => {
           circle
           type="error"
           size="small"
-          class="ml-3 ml-s-6 ml-l-10"
+          class="ml-3 ml-s-6 ml-l-16"
           @click="record.liked = !record.liked"
         >
           <template #icon>
@@ -340,7 +345,7 @@ const handlePaste = (event) => {
           circle
           type="error"
           size="small"
-          class="ml-3 ml-s-6 ml-l-10 no-events cursor-default"
+          class="ml-3 ml-s-6 ml-l-16 no-events cursor-default"
         >
           <template #icon>
             <like-icon weight="fill" />
