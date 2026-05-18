@@ -249,7 +249,7 @@ const handlePaste = (event) => {
               :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
               class="w-32 fz-12 font-weight-500"
             >
-              {{ t('records.season') }}
+              S
             </n-input-group-label>
             <n-input-number
               v-model:value="record.season"
@@ -261,12 +261,11 @@ const handlePaste = (event) => {
               class="episode-input w-32 px-0"
               @paste="handlePaste"
             />
-            <n-divider vertical class="episode-separator h-100 mx-2" />
             <n-input-group-label
               :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
               class="w-32 fz-12 font-weight-500"
             >
-              {{ t('records.episode') }}
+              E
             </n-input-group-label>
             <n-input-number
               :value="record.episode"
@@ -458,6 +457,11 @@ const handlePaste = (event) => {
     text-align: center;
     font-size: 12px;
     font-weight: 500;
+  }
+
+  .n-input-wrapper {
+    padding-left: var(--n-padding-left);
+    padding-right: var(--n-padding-left);
   }
 
   /* Hide the minus button in button-placement="both" */
