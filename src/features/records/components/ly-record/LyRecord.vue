@@ -261,6 +261,7 @@ const handlePaste = (event) => {
               class="episode-input w-32 px-0"
               @paste="handlePaste"
             />
+            <n-divider vertical class="episode-separator" />
             <n-input-group-label
               :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
               class="w-32 fz-12 font-weight-500"
@@ -449,14 +450,29 @@ const handlePaste = (event) => {
   flex-shrink: 0;
   margin-left: 6px;
   width: auto;
+  align-items: stretch !important;
+
+  .n-input-group-label,
+  .n-input__input-el {
+    min-height: 28px !important;
+    line-height: 28px !important;
+  }
+}
+
+.episode-separator {
+  height: 28px !important;
+  width: 1px;
+  margin: 0 !important;
 }
 
 .episode-input {
   .n-input-wrapper,
-  .n-input__input-el {
+  .n-input__input-el,
+  .n-input-group-label {
     text-align: center;
     font-size: 12px;
     font-weight: 500;
+    
   }
 
   .n-input-wrapper {
