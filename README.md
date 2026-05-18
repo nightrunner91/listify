@@ -58,7 +58,7 @@ Listify integrates with several high-quality external APIs to provide instant au
 
 - **[RAWG API](https://rawg.io/apidocs)**: The primary source for the **Games** category.
 - **[TMDB API](https://www.themoviedb.org/documentation/api)**: Powers discovery for **Films** and **TV Shows**.
-- **[Jikan API](https://jikan.moe/)**: A free, open-source API for the MyAnimeList database, used for **Anime** and **Manga**.
+- **[Jikan API](https://jikan.moe/)**: A free, open-source API for the MyAnimeList DB, used for **Anime** and **Manga**.
 - **[iTunes API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html)**: Provides a reliable catalog for **Books** and **Music**.
 
 > [!IMPORTANT]
@@ -157,5 +157,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 <p align="center">
-  Built by <a href="https://t.me/nightrunner91">nightrunner91</a>
+  Built with ❤ by <a href="https://t.me/nightrunner91">nightrunner91</a>
 </p>
