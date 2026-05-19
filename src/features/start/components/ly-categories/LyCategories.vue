@@ -58,16 +58,16 @@ const categories = computed(() => [
     icon: TvShowsIcon 
   },
   {
-    key: 'films',
-    label: t('categories.films'),
-    route: 'Films',
-    icon: FilmsIcon 
-  },
-  {
     key: 'anime',
     label: t('categories.anime'),
     route: 'Anime',
     icon: AnimeIcon 
+  },
+  {
+    key: 'films',
+    label: t('categories.films'),
+    route: 'Films',
+    icon: FilmsIcon 
   },
   {
     key: 'manga',

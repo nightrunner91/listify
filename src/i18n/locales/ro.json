@@ -23,8 +23,8 @@
     "start": "Colecția mea",
     "games": "Jocuri",
     "tvshows": "Seriale",
-    "films": "Filme",
     "anime": "Anime",
+    "films": "Filme",
     "manga": "Manga",
     "books": "Cărți",
     "music": "Muzică",
@@ -54,8 +54,8 @@
     "searchPlaceholder": {
       "games": "Adaugă un joc...",
       "tvshows": "Adaugă un serial...",
-      "films": "Adaugă un film...",
       "anime": "Adaugă un anime...",
+      "films": "Adaugă un film...",
       "manga": "Adaugă o manga...",
       "books": "Adaugă o carte...",
       "music": "Adaugă o piesă sau un album..."
@@ -176,8 +176,8 @@
   "things": {
     "game": "un joc",
     "tvshow": "un serial",
-    "film": "un film",
     "anime": "un anime",
+    "film": "un film",
     "manga": "o manga",
     "book": "o carte",
     "music": "muzică",

@@ -44,8 +44,8 @@ const addLabel = computed(() => {
   
   if (tag === 'games') thingKey = 'game'
   else if (tag === 'tvshows') thingKey = 'tvshow'
-  else if (tag === 'films') thingKey = 'film'
   else if (tag === 'anime') thingKey = 'anime'
+  else if (tag === 'films') thingKey = 'film'
   else if (tag === 'manga') thingKey = 'manga'
   else if (tag === 'books') thingKey = 'book'
   else if (tag === 'music') thingKey = 'music'

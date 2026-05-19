@@ -23,8 +23,8 @@
     "start": "Ma Collection",
     "games": "Jeux",
     "tvshows": "Séries TV",
-    "films": "Films",
     "anime": "Animes",
+    "films": "Films",
     "manga": "Mangas",
     "books": "Livres",
     "music": "Musique",
@@ -54,8 +54,8 @@
     "searchPlaceholder": {
       "games": "Ajouter un jeu...",
       "tvshows": "Ajouter une série TV...",
-      "films": "Ajouter un film...",
       "anime": "Ajouter un anime...",
+      "films": "Ajouter un film...",
       "manga": "Ajouter un manga...",
       "books": "Ajouter un livre...",
       "music": "Ajouter une piste ou un album..."
@@ -176,8 +176,8 @@
   "things": {
     "game": "un jeu",
     "tvshow": "une série TV",
-    "film": "un film",
     "anime": "un anime",
+    "film": "un film",
     "manga": "un manga",
     "book": "un livre",
     "music": "de la musique",

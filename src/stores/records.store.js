@@ -44,7 +44,7 @@ import i18n from '@/i18n'
 
 const RECORDS_KEY = 'rec_'
 
-export const CATEGORIES = ['games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music']
+export const CATEGORIES = ['games', 'tvshows', 'anime', 'films', 'manga', 'books', 'music']
 
 export const CATEGORY_ICONS = {
   games: GamesIcon,
@@ -1035,7 +1035,7 @@ export const useRecordsStore = defineStore('records', () => {
 
   /** @type {import('vue').Ref<Array>} */
   const selectedCategories = ref([
-    'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music'
+    'games', 'tvshows', 'anime', 'films', 'manga', 'books', 'music'
   ])
 
   /** @type {import('vue').Ref<Array>} */

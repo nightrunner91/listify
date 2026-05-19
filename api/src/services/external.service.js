@@ -189,16 +189,16 @@ export async function externalSearch(query, category) {
         return await searchGames(query)
       case 'tvshows':
         return await searchTMDB(query, 'tv')
-      case 'films':
-        return await searchTMDB(query, 'movie')
       case 'anime':
         return await searchJikan(query, 'anime')
+      case 'films':
+        return await searchTMDB(query, 'movie')
+      case 'manga':
+        return await searchJikan(query, 'manga')
       case 'books':
         return await searchITunes(query, 'ebook')
       case 'music':
         return await searchITunes(query, 'musicTrack')
-      case 'manga':
-        return await searchJikan(query, 'manga')
       default:
         return []
     }

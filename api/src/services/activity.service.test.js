@@ -1,6 +1,10 @@
-import { describe, test } from 'node:test'
+import {
+  describe, test 
+} from 'node:test'
 import assert from 'node:assert'
-import { checkEpisodeProgress, shouldCoalesce } from './activity.service.js'
+import {
+  checkEpisodeProgress, shouldCoalesce 
+} from './activity.service.js'
 
 describe('checkEpisodeProgress', () => {
   test('returns null if oldRecord is missing', () => {
@@ -9,25 +13,49 @@ describe('checkEpisodeProgress', () => {
   })
 
   test('returns null for non-episode tracking categories', () => {
-    const oldRecord = { id: 'uuid-1', category: 'games', season: 1, episode: 1, title: 'Game' }
+    const oldRecord = {
+      id: 'uuid-1',
+      category: 'games',
+      season: 1,
+      episode: 1,
+      title: 'Game' 
+    }
     const result = checkEpisodeProgress(oldRecord, { episode: 2 })
     assert.strictEqual(result, null)
   })
 
   test('returns null if progress is decremented', () => {
-    const oldRecord = { id: 'uuid-1', category: 'tvshows', season: 1, episode: 3, title: 'Show' }
+    const oldRecord = {
+      id: 'uuid-1',
+      category: 'tvshows',
+      season: 1,
+      episode: 3,
+      title: 'Show' 
+    }
     const result = checkEpisodeProgress(oldRecord, { episode: 2 })
     assert.strictEqual(result, null)
   })
 
   test('returns null if progress is unchanged', () => {
-    const oldRecord = { id: 'uuid-1', category: 'tvshows', season: 1, episode: 3, title: 'Show' }
+    const oldRecord = {
+      id: 'uuid-1',
+      category: 'tvshows',
+      season: 1,
+      episode: 3,
+      title: 'Show' 
+    }
     const result = checkEpisodeProgress(oldRecord, { episode: 3 })
     assert.strictEqual(result, null)
   })
 
   test('logs activity details for same-season episode increment', () => {
-    const oldRecord = { id: 'uuid-1', category: 'tvshows', season: 1, episode: 3, title: 'Show' }
+    const oldRecord = {
+      id: 'uuid-1',
+      category: 'tvshows',
+      season: 1,
+      episode: 3,
+      title: 'Show' 
+    }
     const result = checkEpisodeProgress(oldRecord, { episode: 4 })
     
     assert.ok(result)
@@ -43,8 +71,17 @@ describe('checkEpisodeProgress', () => {
   })
 
   test('logs activity details and detects season increment', () => {
-    const oldRecord = { id: 'uuid-1', category: 'tvshows', season: 1, episode: 10, title: 'Show' }
-    const result = checkEpisodeProgress(oldRecord, { season: 2, episode: 1 })
+    const oldRecord = {
+      id: 'uuid-1',
+      category: 'tvshows',
+      season: 1,
+      episode: 10,
+      title: 'Show' 
+    }
+    const result = checkEpisodeProgress(oldRecord, {
+      season: 2,
+      episode: 1 
+    })
     
     assert.ok(result)
     assert.strictEqual(result.action, 'record_episode_incremented')
@@ -56,14 +93,32 @@ describe('checkEpisodeProgress', () => {
   })
 
   test('prevents logging season decrement', () => {
-    const oldRecord = { id: 'uuid-1', category: 'tvshows', season: 2, episode: 1, title: 'Show' }
-    const result = checkEpisodeProgress(oldRecord, { season: 1, episode: 10 })
+    const oldRecord = {
+      id: 'uuid-1',
+      category: 'tvshows',
+      season: 2,
+      episode: 1,
+      title: 'Show' 
+    }
+    const result = checkEpisodeProgress(oldRecord, {
+      season: 1,
+      episode: 10 
+    })
     assert.strictEqual(result, null)
   })
 
   test('handles null/undefined/0 initial values correctly', () => {
-    const oldRecord = { id: 'uuid-1', category: 'anime', season: null, episode: null, title: 'Anime' }
-    const result = checkEpisodeProgress(oldRecord, { season: 1, episode: 1 })
+    const oldRecord = {
+      id: 'uuid-1',
+      category: 'anime',
+      season: null,
+      episode: null,
+      title: 'Anime' 
+    }
+    const result = checkEpisodeProgress(oldRecord, {
+      season: 1,
+      episode: 1 
+    })
     
     assert.ok(result)
     assert.deepStrictEqual(result.metadata, {
@@ -76,7 +131,11 @@ describe('checkEpisodeProgress', () => {
 
 describe('shouldCoalesce', () => {
   test('returns false if actions do not match', () => {
-    const existing = { action: 'record_created', createdAt: new Date(), metadata: {} }
+    const existing = {
+      action: 'record_created',
+      createdAt: new Date(),
+      metadata: {} 
+    }
     const result = shouldCoalesce(existing, 'record_episode_incremented', {}, new Date())
     assert.strictEqual(result, false)
   })
@@ -84,7 +143,10 @@ describe('shouldCoalesce', () => {
   test('coalesces general activity if within 10 minutes', () => {
     const now = new Date()
     const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000)
-    const existing = { action: 'record_created', createdAt: fiveMinutesAgo }
+    const existing = {
+      action: 'record_created',
+      createdAt: fiveMinutesAgo 
+    }
     
     const result = shouldCoalesce(existing, 'record_created', {}, now)
     assert.strictEqual(result, true)
@@ -93,7 +155,10 @@ describe('shouldCoalesce', () => {
   test('does not coalesce general activity if older than 10 minutes', () => {
     const now = new Date()
     const elevenMinutesAgo = new Date(now.getTime() - 11 * 60 * 1000)
-    const existing = { action: 'record_created', createdAt: elevenMinutesAgo }
+    const existing = {
+      action: 'record_created',
+      createdAt: elevenMinutesAgo 
+    }
     
     const result = shouldCoalesce(existing, 'record_created', {}, now)
     assert.strictEqual(result, false)
@@ -105,9 +170,16 @@ describe('shouldCoalesce', () => {
     const existing = {
       action: 'record_episode_incremented',
       createdAt: thirtySecondsAgo,
-      metadata: { season: 1, episode: 2 }
+      metadata: {
+        season: 1,
+        episode: 2 
+      }
     }
-    const newMetadata = { season: 1, episode: 3, isSeasonTransition: false }
+    const newMetadata = {
+      season: 1,
+      episode: 3,
+      isSeasonTransition: false 
+    }
 
     const result = shouldCoalesce(existing, 'record_episode_incremented', newMetadata, now)
     assert.strictEqual(result, true)
@@ -119,9 +191,16 @@ describe('shouldCoalesce', () => {
     const existing = {
       action: 'record_episode_incremented',
       createdAt: seventySecondsAgo,
-      metadata: { season: 1, episode: 2 }
+      metadata: {
+        season: 1,
+        episode: 2 
+      }
     }
-    const newMetadata = { season: 1, episode: 3, isSeasonTransition: false }
+    const newMetadata = {
+      season: 1,
+      episode: 3,
+      isSeasonTransition: false 
+    }
 
     const result = shouldCoalesce(existing, 'record_episode_incremented', newMetadata, now)
     assert.strictEqual(result, false)
@@ -133,9 +212,16 @@ describe('shouldCoalesce', () => {
     const existing = {
       action: 'record_episode_incremented',
       createdAt: thirtySecondsAgo,
-      metadata: { season: 1, episode: 10 }
+      metadata: {
+        season: 1,
+        episode: 10 
+      }
     }
-    const newMetadata = { season: 2, episode: 1, isSeasonTransition: true }
+    const newMetadata = {
+      season: 2,
+      episode: 1,
+      isSeasonTransition: true 
+    }
 
     const result = shouldCoalesce(existing, 'record_episode_incremented', newMetadata, now)
     assert.strictEqual(result, false)
@@ -147,9 +233,16 @@ describe('shouldCoalesce', () => {
     const existing = {
       action: 'record_episode_incremented',
       createdAt: thirtySecondsAgo,
-      metadata: { season: 2, episode: 0 }
+      metadata: {
+        season: 2,
+        episode: 0 
+      }
     }
-    const newMetadata = { season: 2, episode: 1, isSeasonTransition: true }
+    const newMetadata = {
+      season: 2,
+      episode: 1,
+      isSeasonTransition: true 
+    }
 
     const result = shouldCoalesce(existing, 'record_episode_incremented', newMetadata, now)
     assert.strictEqual(result, false)

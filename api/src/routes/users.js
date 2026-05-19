@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm'
 
 export const RESERVED_HANDLES = [
   'admin', 'api', 'settings', 'profile', 'user', 'users', 'start', 'games', 'tvshows', 
-  'films', 'anime', 'manga', 'books', 'music', 'about', 'login', 'register', 
+  'anime', 'films', 'manga', 'books', 'music', 'about', 'login', 'register', 
   'auth', 'public', 'listify', 'custom', 'check-handle'
 ]
 

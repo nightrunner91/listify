@@ -94,23 +94,23 @@ const menuOptions = computed(() => {
       label: () =>
         h(
           RouterLink,
-          { to: { name: 'Films' } },
-          { default: () => t('categories.films') }
-        ),
-      key: 'films',
-      extra: renderExtra(recordsStore.recordsLength('films').value),
-      icon: renderIcon(FilmsIcon, { weight: iconsStyle })
-    },
-    {
-      label: () =>
-        h(
-          RouterLink,
           { to: { name: 'Anime' } },
           { default: () => t('categories.anime') }
         ),
       key: 'anime',
       extra: renderExtra(recordsStore.recordsLength('anime').value),
       icon: renderIcon(AnimeIcon, { weight: iconsStyle })
+    },
+    {
+      label: () =>
+        h(
+          RouterLink,
+          { to: { name: 'Films' } },
+          { default: () => t('categories.films') }
+        ),
+      key: 'films',
+      extra: renderExtra(recordsStore.recordsLength('films').value),
+      icon: renderIcon(FilmsIcon, { weight: iconsStyle })
     },
     {
       label: () =>

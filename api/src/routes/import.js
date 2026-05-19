@@ -20,8 +20,8 @@ import { logActivity } from '../services/activity.service.js'
  * {
  *   games: [...],
  *   tvshows: [...],
- *   films: [...],
  *   anime: [...],
+ *   films: [...],
  *   manga: [...],
  *   books: [...],
  *   music: [...],
@@ -44,8 +44,8 @@ export default async function importRoutes(app) {
         properties: {
           games:       { type: 'array' },
           tvshows:     { type: 'array' },
-          films:       { type: 'array' },
           anime:       { type: 'array' },
+          films:       { type: 'array' },
           manga:       { type: 'array' },
           books:       { type: 'array' },
           music:       { type: 'array' },

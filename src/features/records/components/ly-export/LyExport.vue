@@ -124,14 +124,14 @@ defineExpose({showModal})
         </n-grid-item>
         <n-grid-item span="2 s:1">
           <n-checkbox
-            value="films"
-            :label="t('categories.films')"
+            value="anime"
+            :label="t('categories.anime')"
           />
         </n-grid-item>
         <n-grid-item span="2 s:1">
           <n-checkbox
-            value="anime"
-            :label="t('categories.anime')"
+            value="films"
+            :label="t('categories.films')"
           />
         </n-grid-item>
         <n-grid-item span="2 s:1">

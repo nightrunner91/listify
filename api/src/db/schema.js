@@ -13,7 +13,7 @@ import {
 // ─── Constants ───────────────────────────────────────────────────────────────
 
 export const VALID_CATEGORIES = /** @type {const} */ ([
-  'games', 'tvshows', 'films', 'anime', 'manga', 'books', 'music',
+  'games', 'tvshows', 'anime', 'films', 'manga', 'books', 'music',
 ])
 
 

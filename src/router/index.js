@@ -91,17 +91,6 @@ const router = createRouter({
           }
         },
         {
-          path: '/films',
-          name: 'Films',
-          component: RecordsPage,
-          meta: {
-            requiresAuth: true,
-            tag: 'films',
-            title: 'categories.films',
-            thing: 'Film',
-          }
-        },
-        {
           path: '/anime',
           name: 'Anime',
           component: RecordsPage,
@@ -110,6 +99,17 @@ const router = createRouter({
             tag: 'anime',
             title: 'categories.anime',
             thing: 'Anime'
+          }
+        },
+        {
+          path: '/films',
+          name: 'Films',
+          component: RecordsPage,
+          meta: {
+            requiresAuth: true,
+            tag: 'films',
+            title: 'categories.films',
+            thing: 'Film',
           }
         },
         {
