@@ -227,6 +227,7 @@
       "record_score_updated": "Calificó {entity}",
       "record_liked": "Le gustó {entity}",
       "record_unliked": "Ya no le gusta {entity}",
+      "record_episode_incremented": "Vio S{season}E{episode} de {entity}",
       "record_deleted": "Eliminó {entity} de {category}",
       "custom_list_created": "Creó una nueva lista {entity}",
       "custom_list_created_empty": "Creó una nueva lista personalizada",

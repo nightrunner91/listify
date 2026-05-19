@@ -227,6 +227,7 @@
       "record_score_updated": "Оцінено {entity}",
       "record_liked": "Сподобалося {entity}",
       "record_unliked": "Більше не подобається {entity}",
+      "record_episode_incremented": "Переглянув S{season}E{episode} з {entity}",
       "record_deleted": "Видалено {entity} з {category}",
       "custom_list_created": "Створено новий список {entity}",
       "custom_list_created_empty": "Створено новий власний список",

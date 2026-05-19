@@ -227,6 +227,7 @@
       "record_score_updated": "Оценено {entity}",
       "record_liked": "Понравилось {entity}",
       "record_unliked": "Больше не нравится {entity}",
+      "record_episode_incremented": "Просмотрено S{season}E{episode} из {entity}",
       "record_deleted": "Удалено {entity} из {category}",
       "custom_list_created": "Создан новый список {entity}",
       "custom_list_created_empty": "Создан новый список",

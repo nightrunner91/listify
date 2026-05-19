@@ -11,7 +11,8 @@ import {
 import { authenticate } from '../middleware/authenticate.js'
 import {
   logActivity,
-  logBatchActivities
+  logBatchActivities,
+  checkEpisodeProgress
 } from '../services/activity.service.js'
 
 const CATEGORY_ENUM = { enum: VALID_CATEGORIES }
@@ -184,6 +185,18 @@ export default async function recordsRoutes(app) {
       .set(updates)
       .where(and(eq(records.id, id), eq(records.userId, userId)))
       .returning()
+
+    // Log episode progress updates for tvshows and anime
+    const progressActivity = checkEpisodeProgress(old, updates)
+    if (progressActivity) {
+      await logActivity(userId, {
+        action: progressActivity.action,
+        category: progressActivity.category,
+        entityId: progressActivity.entityId,
+        entityName: updated.title,
+        metadata: progressActivity.metadata
+      })
+    }
 
     // Only log 'record_created' if the record didn't have a title before and now it does
     if (updates.title && (!old.title || old.title.trim() === '')) {

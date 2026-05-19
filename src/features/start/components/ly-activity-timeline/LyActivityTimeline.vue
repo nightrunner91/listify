@@ -107,6 +107,13 @@ const formatActivity = (activity) => {
         keypath: 'timeline.actions.record_unliked',
         entity: entityName
       }
+    case 'record_episode_incremented':
+      return {
+        keypath: 'timeline.actions.record_episode_incremented',
+        entity: entityName,
+        season: metadata?.season !== undefined ? String(metadata.season).padStart(2, '0') : '00',
+        episode: metadata?.episode !== undefined ? String(metadata.episode).padStart(2, '0') : '00'
+      }
     case 'record_deleted':
       return {
         keypath: 'timeline.actions.record_deleted',
@@ -233,6 +240,12 @@ const formattedActivities = computed(() => {
                     v-if="activity.formatted.entity"
                     class="font-weight-500"
                   >{{ activity.formatted.entity }}</span>
+                </template>
+                <template #season>
+                  <span>{{ activity.formatted.season }}</span>
+                </template>
+                <template #episode>
+                  <span>{{ activity.formatted.episode }}</span>
                 </template>
                 <template #category>
                   <span v-if="activity.formatted.category">{{ activity.formatted.category }}</span>

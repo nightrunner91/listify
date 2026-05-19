@@ -11,6 +11,78 @@ import {
 const MAX_ACTIVITIES_PER_USER = 100
 
 /**
+ * Helper to check if the update is an episode/season increment for TV shows or Anime.
+ * 
+ * @param {Object} oldRecord - The current record in the database
+ * @param {Object} updates - The updates being applied
+ * @returns {Object|null} Activity logging details, or null if not an increment
+ */
+export function checkEpisodeProgress(oldRecord, updates) {
+  if (!oldRecord) return null
+  const isEpisodeTrackingCategory = oldRecord.category === 'tvshows' || oldRecord.category === 'anime'
+  if (!isEpisodeTrackingCategory) return null
+
+  const oldSeason = oldRecord.season || 0
+  const oldEpisode = oldRecord.episode || 0
+  
+  const newSeason = updates.season !== undefined ? (updates.season || 0) : oldSeason
+  const newEpisode = updates.episode !== undefined ? (updates.episode || 0) : oldEpisode
+
+  const isSeasonIncrement = newSeason > oldSeason
+  const isEpisodeIncrement = newSeason === oldSeason && newEpisode > oldEpisode
+
+  if (isSeasonIncrement || isEpisodeIncrement) {
+    return {
+      action: 'record_episode_incremented',
+      category: oldRecord.category,
+      entityId: oldRecord.id,
+      entityName: updates.title || oldRecord.title,
+      metadata: {
+        season: newSeason,
+        episode: newEpisode,
+        isSeasonTransition: isSeasonIncrement
+      }
+    }
+  }
+
+  return null
+}
+
+/**
+ * Helper to determine if a new activity should coalesce with an existing one.
+ * 
+ * @param {Object} existing - The existing activity from the DB
+ * @param {string} newAction - The new action name
+ * @param {Object} newMetadata - The new metadata
+ * @param {Date} now - The current time
+ * @returns {boolean} True if they should coalesce, false otherwise
+ */
+export function shouldCoalesce(existing, newAction, newMetadata, now = new Date()) {
+  if (!existing || existing.action !== newAction) return false
+
+  const elapsed = now.getTime() - new Date(existing.createdAt).getTime()
+  
+  if (newAction === 'record_episode_incremented') {
+    // 1-minute debounce for episode increments
+    if (elapsed > 1 * 60 * 1000) return false
+
+    // Season transitions should never coalesce/debounce (must create a new log)
+    const existingSeason = existing.metadata?.season
+    const newSeason = newMetadata?.season
+    const isSeasonTransition = newMetadata?.isSeasonTransition
+
+    if (isSeasonTransition || existingSeason !== newSeason) {
+      return false
+    }
+
+    return true
+  }
+
+  // Default 10-minute coalesce for other activities
+  return elapsed <= 10 * 60 * 1000
+}
+
+/**
  * Log a user activity to the database.
  * 
  * @param {string} userId - UUID of the user
@@ -34,10 +106,10 @@ export async function logActivity(userId, {
   }
   try {
     const now = new Date()
-    const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000)
 
     // Coalescing logic: if there's a recent activity for the same entity and action, update it
     if (entityId) {
+      const tenMinutesAgo = new Date(now.getTime() - 10 * 60 * 1000)
       const [existing] = await db
         .select()
         .from(activities)
@@ -52,7 +124,7 @@ export async function logActivity(userId, {
         .orderBy(desc(activities.createdAt))
         .limit(1)
 
-      if (existing) {
+      if (existing && shouldCoalesce(existing, action, metadata, now)) {
         const [updated] = await db
           .update(activities)
           .set({

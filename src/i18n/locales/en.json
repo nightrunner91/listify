@@ -227,6 +227,7 @@
       "record_score_updated": "Rated {entity}",
       "record_liked": "Liked {entity}",
       "record_unliked": "Unliked {entity}",
+      "record_episode_incremented": "Watched S{season}E{episode} of {entity}",
       "record_deleted": "Deleted {entity} from {category}",
       "custom_list_created": "Created a new list {entity}",
       "custom_list_created_empty": "Created a new custom list",

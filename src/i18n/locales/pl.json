@@ -227,6 +227,7 @@
       "record_score_updated": "Oceniono {entity}",
       "record_liked": "Polubiono {entity}",
       "record_unliked": "Cofnięto polubienie {entity}",
+      "record_episode_incremented": "Obejrzał S{season}E{episode} {entity}",
       "record_deleted": "Usunięto {entity} z {category}",
       "custom_list_created": "Utworzono nową listę {entity}",
       "custom_list_created_empty": "Utworzono nową własną listę",

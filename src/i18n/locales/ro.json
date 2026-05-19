@@ -227,6 +227,7 @@
       "record_score_updated": "A evaluat {entity}",
       "record_liked": "A apreciat {entity}",
       "record_unliked": "Nu a mai apreciat {entity}",
+      "record_episode_incremented": "A vizionat S{season}E{episode} din {entity}",
       "record_deleted": "A șters {entity} din {category}",
       "custom_list_created": "A creat o listă nouă {entity}",
       "custom_list_created_empty": "A creat o listă personalizată nouă",
