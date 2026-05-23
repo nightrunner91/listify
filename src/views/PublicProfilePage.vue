@@ -332,6 +332,7 @@ watch(
     <n-space
       v-if="loading"
       justify="center"
+      :wrap-item="false"
       class="public-content"
     >
       <n-spin size="large" class="mt-16" />
@@ -341,6 +342,7 @@ watch(
     <!-- begin::Error State -->
     <n-space
       v-else-if="error"
+      :wrap-item="false"
       justify="center"
       class="public-content"
     >
@@ -355,12 +357,14 @@ watch(
     <template v-else-if="profileData">
       <!-- begin::Hero Section -->
       <n-space
+        :wrap-item="false"
         align="center"
         justify="center"
         class="py-6 py-lg-12 px-6"
         :style="{ backgroundColor: profileData.user.backgroundColor }"
       >
         <n-space
+          :wrap-item="false"
           vertical
           align="center"
           size="small"
@@ -380,7 +384,7 @@ watch(
       </n-space>
       <!-- end::Hero Section -->
 
-      <div class="mx-auto pt-6 pb-12 px-4 w-100 max-w-1024">
+      <div class="mx-auto pt-2 pb-12 w-100 max-w-1024">
         <!-- begin::Category Tabs -->
         <n-tabs
           v-if="nonEmptyCategories.length > 0"
@@ -417,7 +421,7 @@ watch(
               </n-space>
             </template>
 
-            <n-list class="mt-4">
+            <n-list class="mt-4 px-2">
               <ly-record
                 v-for="(record, index) in sortedRecords[cat]"
                 :key="record.id"
@@ -443,11 +447,12 @@ watch(
       <!-- begin::Activity Timeline -->
       <n-card
         v-if="formattedActivities.length > 0"
-        class="pt-lg-8 pb-lg-12 px-lg-4 rounded-none"
+        class="py-8 py-md-16 rounded-none"
       >
         <n-space
           vertical
           :size="12"
+          :wrap-item="false"
           class="max-w-1024 mx-auto"
         >
           <n-text
@@ -456,7 +461,7 @@ watch(
           >
             {{ t('publicProfile.latestActivity') }}
           </n-text>
-          <n-timeline class="pt-5">
+          <n-timeline class="pt-5 w-100">
             <n-timeline-item
               v-for="activity in formattedActivities"
               :key="activity.id"
@@ -466,6 +471,7 @@ watch(
               <template #default>
                 <n-space
                   align="center"
+                  :wrap-item="false"
                   :size="8"
                   class="line-height-1"
                 >
@@ -534,8 +540,8 @@ watch(
       @scrollBottom="scrollToBottom"
     />
 
-    <n-layout-footer class="mt-auto">
-      <div class="mx-auto py-4 px-4 max-w-1024">
+    <n-layout-footer class="mt-auto px-4">
+      <div class="mx-auto py-4 max-w-1024">
         <n-space
           :wrap-item="false"
           align="center"
@@ -576,6 +582,8 @@ watch(
       padding-top: 8px;
       margin-top: -8px;
       margin-bottom: 8px;
+      padding-left: 8px;
+      padding-right: 8px;
 
       // begin::Mobile Scroll Support
       @media (max-width: 768px) {

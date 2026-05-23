@@ -181,8 +181,8 @@ const handlePaste = (event) => {
   <n-list-item
     class="px-4 px-sm-5"
     :class="[
-      gridStore.screenLargerThen('xl') ? '' : 'record-mobile',
-      props.readonly ? 'record--readonly' : ''
+      gridStore.screenLargerThen('xl') ? '' : 'rounded-0',
+      props.readonly ? '' : ''
     ]"
     @mouseover="!props.readonly && (showCheckbox = true)"
     @mouseleave="!props.readonly && (showCheckbox = false)"
@@ -254,7 +254,7 @@ const handlePaste = (event) => {
           <!-- Season / Episode inputs (editable, tvshows & anime only) -->
           <n-input-group
             v-if="!props.readonly && showEpisodeTracking"
-            class="episode-tracker"
+            class="episode-tracker ml-2 w-auto"
           >
             <n-input-group-label
               :size="gridStore.screenLargerThen('xl') ? 'small' : 'tiny'"
@@ -295,7 +295,7 @@ const handlePaste = (event) => {
           <!-- Readonly static title -->
           <n-text
             v-else-if="props.readonly"
-            class="record-readonly-title"
+            class="font-weight-500 px-2 text-truncate max-w-180"
             :depth="record.title ? 1 : 3"
           >
             {{ record.title || '—' }}
@@ -448,19 +448,6 @@ const handlePaste = (event) => {
   }
 }
 
-.record-mobile {
-  border-top: 1px solid var(--n-merged-color-hover) !important;
-  border-radius: 0 !important;
-}
-
-.record-readonly-title {
-  font-weight: 500;
-  padding: 0 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 // Episode tracking group
 .episode-title {
   flex: 1 1 0;
@@ -479,8 +466,6 @@ const handlePaste = (event) => {
 
 .episode-tracker {
   flex-shrink: 0;
-  margin-left: 6px;
-  width: auto;
   align-items: stretch !important;
 
   .n-input-group-label,
@@ -514,8 +499,6 @@ const handlePaste = (event) => {
   /* Hide the minus button in button-placement="both" */
   .n-input__prefix {
     display: none !important;
-  }
-  .n-input__suffix {
   }
 }
 </style>
