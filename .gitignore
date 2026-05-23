@@ -28,3 +28,4 @@ coverage
 *.sln
 *.sw?
 .agents/ai_agent_credentials.json
+/.playwright-mcp
