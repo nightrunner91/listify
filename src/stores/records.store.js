@@ -1096,6 +1096,8 @@ export const useRecordsStore = defineStore('records', () => {
             Score: item.score,
             Status: item.label,
             Liked: item.liked,
+            Season: item.season ?? '',
+            Episode: item.episode ?? '',
             CreatedAt: item.createdAt
           })
         })
@@ -1110,6 +1112,8 @@ export const useRecordsStore = defineStore('records', () => {
             Score: '',
             Status: '',
             Liked: '',
+            Season: '',
+            Episode: '',
             CreatedAt: item.createdAt
           })
         })
@@ -1247,6 +1251,8 @@ export const useRecordsStore = defineStore('records', () => {
           score: parseInt(row.Score) || 0,
           label: row.Status || getDefaultLabel(type).key,
           liked: row.Liked === 'true' || row.Liked === true,
+          season: row.Season !== '' ? parseInt(row.Season) || null : null,
+          episode: row.Episode !== '' ? parseInt(row.Episode) || null : null,
           createdAt: row.CreatedAt || new Date().toISOString()
         })
       }

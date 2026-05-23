@@ -96,6 +96,8 @@ export default async function importRoutes(app) {
           score:  Number.isInteger(item.score) ? Math.min(10, Math.max(0, item.score)) : 0,
           liked:  typeof item.liked === 'boolean' ? item.liked : false,
           label:  String(item.label).slice(0, 100),
+          season: item.season != null ? Math.min(9999, Math.max(0, Number(item.season))) : null,
+          episode: item.episode != null ? Math.min(99999, Math.max(0, Number(item.episode))) : null,
         })
       }
     }
