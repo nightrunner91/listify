@@ -29,3 +29,4 @@ coverage
 *.sw?
 .agents/ai_agent_credentials.json
 /.playwright-mcp
+package-lock.json
