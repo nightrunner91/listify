@@ -145,6 +145,8 @@ export default async function publicRoutes(app) {
           liked: row.liked,
           label: row.label,
           category: row.category,
+          season: row.season,
+          episode: row.episode,
           createdAt: row.createdAt,
         })
       }

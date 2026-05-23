@@ -98,6 +98,17 @@ const getComparableString = (r) => r && r.id ? JSON.stringify({
  */
 const showEpisodeTracking = computed(() => tag === 'tvshows' || tag === 'anime')
 
+/**
+ * @description Formatted episode display for readonly mode (e.g., S03E06, S03, E06)
+ */
+const episodeDisplay = computed(() => {
+  if (!props.readonly || !showEpisodeTracking.value) return null
+  const season = record.value.season
+  const episode = record.value.episode
+  if (!season || !episode) return null
+  return `S${String(season).padStart(2, '0')}E${String(episode).padStart(2, '0')}`
+})
+
 let updateTimeout = null
 let lastSavedString = getComparableString(record.value)
 
@@ -284,10 +295,19 @@ const handlePaste = (event) => {
           <!-- Readonly static title -->
           <n-text
             v-else-if="props.readonly"
-            class="w-100 record-readonly-title"
+            class="record-readonly-title"
             :depth="record.title ? 1 : 3"
           >
             {{ record.title || '—' }}
+          </n-text>
+
+          <!-- Readonly episode display (tvshows & anime only) -->
+          <n-text
+            v-if="episodeDisplay"
+            class="ml-auto fz-12"
+            depth="3"
+          >
+            {{ episodeDisplay }}
           </n-text>
         </n-space>
         <!-- end::Record Identity & Title -->
@@ -308,7 +328,7 @@ const handlePaste = (event) => {
             v-if="!props.readonly"
             v-model:value="record.score"
             clearable
-            class="mr-0 ml-0 ml-l-15 mr-s-3 mr-l-3"
+            class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-2"
           />
           <!-- Readonly Rate -->
           <n-rate
@@ -316,7 +336,7 @@ const handlePaste = (event) => {
             :value="record.score"
             readonly
             size="small"
-            class="mr-0 ml-0 ml-l-15 mr-s-3 mr-l-3"
+            class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-2"
           />
           
           <!-- Like button (editable) -->
@@ -327,7 +347,7 @@ const handlePaste = (event) => {
             circle
             type="error"
             size="small"
-            class="ml-3 ml-s-6 ml-l-16"
+            class="ml-3 ml-s-6 ml-l-12"
             @click="record.liked = !record.liked"
           >
             <template #icon>
@@ -339,32 +359,58 @@ const handlePaste = (event) => {
           </n-button>
           <!-- Like icon (readonly, only shown if liked) -->
           <n-button
-            v-else-if="record.liked"
+            v-else
             quaternary
             round
             circle
             type="error"
             size="small"
-            class="ml-3 ml-s-6 ml-l-16 no-events cursor-default"
+            class="ml-3 ml-s-6 ml-l-12 no-events cursor-default"
           >
             <template #icon>
-              <like-icon weight="fill" />
+              <like-icon
+                :weight="record.liked ? 'fill' : 'regular'"
+                :class="{ 'opacity-4' : !record.liked }"
+              />
             </template>
           </n-button>
 
-          <!-- Label dropdown (editable) -->
-          <n-dropdown
-            v-if="!props.readonly"
-            size="small"
-            trigger="click"
-            placement="bottom-end"
-            :options="recordsStore.labels[tag]"
-            :render-icon="renderDropdownIcon"
-            @select="key => record.label = key"
+          <n-space
+            :wrap="false"
+            :wrap-item="false"
+            justify="end"
+            align="center"
+            class="min-w-180 ml-auto"
           >
-            <n-button
-              quaternary
+            <!-- Label dropdown (editable) -->
+            <n-dropdown
+              v-if="!props.readonly"
               size="small"
+              trigger="click"
+              placement="bottom-end"
+              :options="recordsStore.labels[tag]"
+              :render-icon="renderDropdownIcon"
+              @select="key => record.label = key"
+            >
+              <n-button
+                quaternary
+                size="small"
+                class="ml-auto"
+              >
+                <template #icon>
+                  <n-icon
+                    depth="2"
+                    :component="recordsStore.getLabelIcon(tag, record.label)"
+                  />
+                </template>
+                {{ recordsStore.getLabelName(tag, record.label) }}
+              </n-button>
+            </n-dropdown>
+            <!-- Label tag (readonly) -->
+            <n-tag
+              v-else-if="record.label"
+              size="small"
+              :bordered="false"
               class="ml-auto"
             >
               <template #icon>
@@ -374,23 +420,8 @@ const handlePaste = (event) => {
                 />
               </template>
               {{ recordsStore.getLabelName(tag, record.label) }}
-            </n-button>
-          </n-dropdown>
-          <!-- Label tag (readonly) -->
-          <n-tag
-            v-else-if="record.label"
-            size="small"
-            :bordered="false"
-            class="ml-auto"
-          >
-            <template #icon>
-              <n-icon
-                depth="2"
-                :component="recordsStore.getLabelIcon(tag, record.label)"
-              />
-            </template>
-            {{ recordsStore.getLabelName(tag, record.label) }}
-          </n-tag>
+            </n-tag>
+          </n-space>
         </n-space>
         <!-- end::Record Attributes (Score, Liked, Status) -->
       </n-gi>
