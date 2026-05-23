@@ -181,7 +181,7 @@ const handlePaste = (event) => {
   <n-list-item
     class="px-4 px-sm-5"
     :class="[
-      gridStore.screenLargerThen('l') ? '' : 'record-mobile',
+      gridStore.screenLargerThen('xl') ? '' : 'record-mobile',
       props.readonly ? 'record--readonly' : ''
     ]"
     @mouseover="!props.readonly && (showCheckbox = true)"
@@ -191,11 +191,11 @@ const handlePaste = (event) => {
       :cols="12"
       item-responsive
       responsive="screen"
-      :x-gap="gridStore.screenLargerThen('l') ? 12 : 0"
-      :y-gap="gridStore.screenLargerThen('l') ? 0 : 8"
+      :x-gap="gridStore.screenLargerThen('xl') ? 12 : 0"
+      :y-gap="gridStore.screenLargerThen('xl') ? 0 : 8"
       class="py-2 py-m-0 align-items-center"
     >
-      <n-gi span="12 l:7">
+      <n-gi span="12 xl:7">
         <!-- begin::Record Identity & Title -->
         <n-space
           :wrap-item="false"
@@ -244,7 +244,7 @@ const handlePaste = (event) => {
             v-model:value="record.title"
             :options="isSearchEnabled(tag) ? suggestions : []"
             :loading="isSearchEnabled(tag) && isLoading"
-            :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
+            :size="gridStore.screenLargerThen('xl') ? 'medium' : 'small'"
             :placeholder="searchPlaceholder"
             :auto-select="false"
             class="record-input episode-title"
@@ -257,7 +257,7 @@ const handlePaste = (event) => {
             class="episode-tracker"
           >
             <n-input-group-label
-              :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+              :size="gridStore.screenLargerThen('xl') ? 'small' : 'tiny'"
               class="w-32 fz-12 font-weight-500"
             >
               S
@@ -267,14 +267,14 @@ const handlePaste = (event) => {
               :min="0"
               :max="9999"
               :show-button="false"
-              :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+              :size="gridStore.screenLargerThen('xl') ? 'small' : 'tiny'"
               placeholder="0"
               class="episode-input w-32 px-0"
               @paste="handlePaste"
             />
             <n-divider vertical class="episode-separator" />
             <n-input-group-label
-              :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+              :size="gridStore.screenLargerThen('xl') ? 'small' : 'tiny'"
               class="w-32 fz-12 font-weight-500"
             >
               E
@@ -283,7 +283,7 @@ const handlePaste = (event) => {
               :value="record.episode"
               :min="0"
               :max="99999"
-              :size="gridStore.screenLargerThen('l') ? 'small' : 'tiny'"
+              :size="gridStore.screenLargerThen('xl') ? 'small' : 'tiny'"
               placeholder="0"
               class="episode-input w-64"
               button-placement="both"
@@ -313,7 +313,7 @@ const handlePaste = (event) => {
         <!-- end::Record Identity & Title -->
       </n-gi>
 
-      <n-gi span="12 l:5">
+      <n-gi span="12 xl:5">
         <!-- begin::Record Attributes (Score, Liked, Status) -->
         <n-space
           :wrap-item="false"
@@ -328,7 +328,7 @@ const handlePaste = (event) => {
             v-if="!props.readonly"
             v-model:value="record.score"
             clearable
-            class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-2"
+            class="mr-0 ml-0 ml-xl-10 mr-s-3 mr-xl-2"
           />
           <!-- Readonly Rate -->
           <n-rate
@@ -336,7 +336,7 @@ const handlePaste = (event) => {
             :value="record.score"
             readonly
             size="small"
-            class="mr-0 ml-0 ml-l-10 mr-s-3 mr-l-2"
+            class="mr-0 ml-0 ml-xl-10 mr-s-3 mr-xl-2"
           />
           
           <!-- Like button (editable) -->
@@ -347,7 +347,7 @@ const handlePaste = (event) => {
             circle
             type="error"
             size="small"
-            class="ml-3 ml-s-6 ml-l-12"
+            class="ml-3 ml-s-6 ml-xl-12"
             @click="record.liked = !record.liked"
           >
             <template #icon>
@@ -365,7 +365,7 @@ const handlePaste = (event) => {
             circle
             type="error"
             size="small"
-            class="ml-3 ml-s-6 ml-l-12 no-events cursor-default"
+            class="ml-3 ml-s-6 ml-xl-12 no-events cursor-default"
           >
             <template #icon>
               <like-icon
