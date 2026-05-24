@@ -106,7 +106,11 @@ watch(
             <!-- end::Toggle All -->
 
             <!-- begin::Bulk Actions -->
-            <n-popconfirm @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag)">
+            <n-popconfirm
+              :negative-text="t('controls.cancel')"
+              :positive-text="t('controls.confirm')"
+              @positive-click="recordsStore.deleteSelectedRecords(route.meta.tag)"
+            >
               <template #trigger>
                 <n-button
                   type="error"

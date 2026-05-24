@@ -117,7 +117,9 @@
   },
   "controls": {
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer {count} {record} ?",
-    "record": "enregistrement | enregistrements"
+    "record": "enregistrement | enregistrements",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
   },
   "menu": {
     "home": "Accueil",

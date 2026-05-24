@@ -117,7 +117,9 @@
   },
   "controls": {
     "deleteConfirm": "Möchtest du {count} {record} wirklich löschen?",
-    "record": "Eintrag | Einträge"
+    "record": "Eintrag | Einträge",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen"
   },
   "menu": {
     "home": "Startseite",

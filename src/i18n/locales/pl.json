@@ -117,7 +117,9 @@
   },
   "controls": {
     "deleteConfirm": "Czy na pewno chcesz usunąć {count} {record}?",
-    "record": "rekord | rekordy | rekordów"
+    "record": "rekord | rekordy | rekordów",
+    "cancel": "Anuluj",
+    "confirm": "Potwierdź"
   },
   "menu": {
     "home": "Strona główna",

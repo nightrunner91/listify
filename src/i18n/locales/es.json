@@ -117,7 +117,9 @@
   },
   "controls": {
     "deleteConfirm": "¿Estás seguro de que quieres eliminar {count} {record}?",
-    "record": "registro | registros"
+    "record": "registro | registros",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
   },
   "menu": {
     "home": "Inicio",

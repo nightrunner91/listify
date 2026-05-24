@@ -18,24 +18,7 @@
       }
     }
   },
-  "permission": {
-    "*": "allow",
-    "bash": {
-      "*": "ask",
-      "git status*": "allow",
-      "git diff*": "allow",
-      "git log*": "allow",
-      "npm*": "allow",
-      "node*": "allow",
-      "ls*": "allow",
-      "cat*": "allow",
-      "grep*": "allow",
-      "find*": "allow",
-      "echo*": "allow"
-    },
-    "external_directory": "ask",
-    "doom_loop": "ask"
-  },
+  "permission": "allow",
   "compaction": {
     "auto": true,
     "tail_turns": 20

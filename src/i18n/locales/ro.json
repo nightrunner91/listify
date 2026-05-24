@@ -117,7 +117,9 @@
   },
   "controls": {
     "deleteConfirm": "Ești sigur că vrei să ștergi {count} {record}?",
-    "record": "înregistrare | înregistrări"
+    "record": "înregistrare | înregistrări",
+    "cancel": "Anulează",
+    "confirm": "Confirmă"
   },
   "menu": {
     "home": "Acasă",

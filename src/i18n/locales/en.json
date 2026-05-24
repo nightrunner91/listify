@@ -117,7 +117,9 @@
   },
   "controls": {
     "deleteConfirm": "You sure want to delete {count} {record}?",
-    "record": "record | records"
+    "record": "record | records",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "menu": {
     "home": "Home",
