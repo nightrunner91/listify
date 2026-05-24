@@ -221,6 +221,8 @@
   "timeline": {
     "title": "НЕДАВНЯЯ АКТИВНОСТЬ",
     "empty": "Пока нет недавней активности",
+    "loadMore": "Загрузить ещё",
+    "clearDeleted": "Удалить {count} удалённых",
     "actions": {
       "record_created": "Добавлено {entity} в {category}",
       "record_status_updated": "{status} {entity}",

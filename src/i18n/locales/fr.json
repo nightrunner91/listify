@@ -221,6 +221,8 @@
   "timeline": {
     "title": "ACTIVITÉ RÉCENTE",
     "empty": "Pas encore d'activité récente",
+    "loadMore": "Charger plus",
+    "clearDeleted": "Supprimer {count} supprimés",
     "actions": {
       "record_created": "Ajout de {entity} à {category}",
       "record_status_updated": "{status} {entity}",

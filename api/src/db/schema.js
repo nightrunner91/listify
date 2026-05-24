@@ -101,6 +101,7 @@ export const activities = pgTable('activities', {
   entityId: uuid('entity_id'),
   entityName: varchar('entity_name', { length: 500 }),
   metadata: jsonb('metadata'),
+  isDeleted: boolean('is_deleted').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => [
   index('activities_user_id_idx').on(table.userId),

@@ -5,10 +5,14 @@ import {
   desc,
   and,
   gte,
-  sql
+  lt,
+  sql,
+  inArray
 } from 'drizzle-orm'
 
 const MAX_ACTIVITIES_PER_USER = 100
+const DEFAULT_LIMIT = 20
+const MAX_LIMIT = 100
 
 /**
  * Helper to check if the update is an episode/season increment for TV shows or Anime.
@@ -231,16 +235,116 @@ async function pruneActivities(userId) {
 }
 
 /**
- * Get the most recent activities for a user.
- * 
+ * Get the most recent activities for a user with cursor-based pagination.
+ *
  * @param {string} userId - UUID of the user
- * @param {number} limit - Number of activities to return
+ * @param {number} limit - Number of activities to return (default 20, max 100)
+ * @param {string|null} cursor - ISO timestamp cursor for pagination (activities older than this)
+ * @returns {Promise<{activities: Array, hasMore: boolean}>}
  */
-export async function getRecentActivities(userId, limit = 10) {
-  return db
+export async function getRecentActivities(userId, limit = DEFAULT_LIMIT, cursor = null) {
+  const effectiveLimit = Math.min(limit, MAX_LIMIT)
+
+  const conditions = [eq(activities.userId, userId), eq(activities.isDeleted, false)]
+
+  if (cursor) {
+    const cursorDate = new Date(cursor)
+    conditions.push(lt(activities.createdAt, cursorDate))
+  }
+
+  const results = await db
     .select()
     .from(activities)
-    .where(eq(activities.userId, userId))
+    .where(and(...conditions))
     .orderBy(desc(activities.createdAt))
-    .limit(limit)
+    .limit(effectiveLimit + 1)
+
+  const hasMore = results.length > effectiveLimit
+  const activityList = hasMore ? results.slice(0, effectiveLimit) : results
+
+  return {
+    activities: activityList,
+    hasMore,
+    nextCursor: hasMore && activityList.length > 0
+      ? activityList[activityList.length - 1].createdAt.toISOString()
+      : null
+  }
+}
+
+/**
+ * Mark an activity as soft-deleted.
+ *
+ * @param {string} userId - UUID of the user
+ * @param {string} activityId - UUID of the activity
+ */
+export async function softDeleteActivity(userId, activityId) {
+  await db
+    .update(activities)
+    .set({ isDeleted: true })
+    .where(and(eq(activities.id, activityId), eq(activities.userId, userId)))
+}
+
+/**
+ * Restore a soft-deleted activity.
+ *
+ * @param {string} userId - UUID of the user
+ * @param {string} activityId - UUID of the activity
+ */
+export async function restoreActivity(userId, activityId) {
+  await db
+    .update(activities)
+    .set({ isDeleted: false })
+    .where(and(eq(activities.id, activityId), eq(activities.userId, userId)))
+}
+
+/**
+ * Batch restore multiple soft-deleted activities.
+ * If activityIds is null, restores ALL soft-deleted activities for the user.
+ *
+ * @param {string} userId - UUID of the user
+ * @param {Array<string>|null} activityIds - Array of activity UUIDs, or null to restore all
+ */
+export async function restoreActivities(userId, activityIds) {
+  if (activityIds === null) {
+    await db
+      .update(activities)
+      .set({ isDeleted: false })
+      .where(and(eq(activities.userId, userId), eq(activities.isDeleted, true)))
+    return
+  }
+
+  if (!activityIds || activityIds.length === 0) return
+
+  await db
+    .update(activities)
+    .set({ isDeleted: false })
+    .where(and(inArray(activities.id, activityIds), eq(activities.userId, userId)))
+}
+
+/**
+ * Actually delete activities that are marked as soft-deleted.
+ * Called when user navigates away or refreshes the page.
+ *
+ * @param {string} userId - UUID of the user
+ */
+export async function purgeSoftDeletedActivities(userId) {
+  await db
+    .delete(activities)
+    .where(and(eq(activities.userId, userId), eq(activities.isDeleted, true)))
+}
+
+/**
+ * Get activities that are marked as soft-deleted for a user.
+ *
+ * @param {string} userId - UUID of the user
+ * @returns {Promise<Array>}
+ */
+export async function getSoftDeletedActivities(userId) {
+  return db
+    .select({
+      id: activities.id,
+      createdAt: activities.createdAt 
+    })
+    .from(activities)
+    .where(and(eq(activities.userId, userId), eq(activities.isDeleted, true)))
 }

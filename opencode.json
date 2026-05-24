@@ -19,20 +19,28 @@
     }
   },
   "permission": {
-    "edit": "ask",
+    "*": "allow",
     "bash": {
-      "npm run dev": "allow",
-      "npm run build": "allow",
-      "npm run lint": "allow",
-      "npm run preview": "allow",
-      "npx vite": "allow",
-      "npx playwright": "allow",
-      "git *": "allow",
-      "*": "ask"
-    }
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "npm*": "allow",
+      "node*": "allow",
+      "ls*": "allow",
+      "cat*": "allow",
+      "grep*": "allow",
+      "find*": "allow",
+      "echo*": "allow"
+    },
+    "external_directory": "ask",
+    "doom_loop": "ask"
   },
   "compaction": {
     "auto": true,
     "tail_turns": 20
+  },
+  "experimental": {
+    "disable_paste_summary": true
   }
 }

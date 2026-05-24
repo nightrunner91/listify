@@ -221,6 +221,8 @@
   "timeline": {
     "title": "LETZTE AKTIVITÄT",
     "empty": "Noch keine Aktivitäten",
+    "loadMore": "Mehr laden",
+    "clearDeleted": "{count} gelöschte löschen",
     "actions": {
       "record_created": "{entity} zu {category} hinzugefügt",
       "record_status_updated": "{status} {entity}",

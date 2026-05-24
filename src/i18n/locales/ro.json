@@ -221,6 +221,8 @@
   "timeline": {
     "title": "ACTIVITATE RECENTĂ",
     "empty": "Nicio activitate recentă",
+    "loadMore": "Încarcă mai mult",
+    "clearDeleted": "Șterge {count} șterse",
     "actions": {
       "record_created": "A adăugat {entity} în {category}",
       "record_status_updated": "{status} {entity}",

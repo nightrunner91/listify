@@ -221,6 +221,8 @@
   "timeline": {
     "title": "ОСТАННЯ АКТИВНІСТЬ",
     "empty": "Поки що немає активності",
+    "loadMore": "Завантажити ще",
+    "clearDeleted": "Очистити {count} видалених",
     "actions": {
       "record_created": "Додано {entity} до {category}",
       "record_status_updated": "{status} {entity}",
