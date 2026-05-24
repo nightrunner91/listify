@@ -161,7 +161,6 @@ function openAvatarPicker() {
           v-model:value="user.backgroundColor"
           :show-alpha="false"
           placement="bottom-end"
-          :teleported="false"
           class="h-56 profile-cover-trigger"
           @update:value="updateBackgroundColor"
         >
@@ -313,18 +312,18 @@ function openAvatarPicker() {
   transition: 0.3s ease;
 
   :deep(.n-color-picker-trigger) {
-    border: none;
-    height: 100%;
-    padding: 0;
-    border-radius: 0;
+    border: none !important;
+    height: 100% !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
   }
 
   :deep(.n-color-picker-trigger__fill) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
   }
 
   &:hover {
