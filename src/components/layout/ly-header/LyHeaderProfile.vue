@@ -161,6 +161,7 @@ function openAvatarPicker() {
           v-model:value="user.backgroundColor"
           :show-alpha="false"
           placement="bottom-end"
+          :teleported="false"
           class="h-56 profile-cover-trigger"
           @update:value="updateBackgroundColor"
         >
