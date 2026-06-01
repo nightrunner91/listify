@@ -1,35 +1,34 @@
 <script setup>
+import { useExternalSearch } from '@/composables/useExternalSearch'
+import { useGridStore } from '@/stores/grid.store'
+import { useRecordsStore } from '@/stores/records.store'
 import {
-  h,
-  ref,
-  computed,
-  watch
-} from 'vue'
-import {
-  NListItem,
-  NSpace,
-  NGrid,
-  NGi,
   NAutoComplete,
-  NInputNumber,
+  NButton,
+  NCheckbox,
+  NDivider,
+  NDropdown,
+  NGi,
+  NGrid,
+  NIcon,
   NInputGroup,
   NInputGroupLabel,
-  NDropdown,
-  NButton,
-  NIcon,
-  NDivider,
-  NText,
+  NInputNumber,
+  NListItem,
   NRate,
-  NCheckbox,
-  NTag
+  NSpace,
+  NTag,
+  NText
 } from 'naive-ui'
-import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { useRecordsStore } from '@/stores/records.store'
-import { useGridStore } from '@/stores/grid.store'
-import { useExternalSearch } from '@/composables/useExternalSearch'
 import { PhHeart as LikeIcon } from 'phosphor-vue'
-import { lyStorage } from '@/main'
+import {
+  computed,
+  h,
+  ref,
+  watch
+} from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n()
 const recordsStore = useRecordsStore()
@@ -295,7 +294,7 @@ const handlePaste = (event) => {
           <!-- Readonly static title -->
           <n-text
             v-else-if="props.readonly"
-            class="font-weight-500 px-2 text-truncate max-w-180"
+            class="font-weight-500 px-2 text-truncate max-w-250"
             :depth="record.title ? 1 : 3"
           >
             {{ record.title || '—' }}
