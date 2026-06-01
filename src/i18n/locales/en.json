@@ -32,6 +32,7 @@
   },
   "customLists": {
     "title": "CUSTOM LISTS",
+    "tooltip": "Custom lists are private and will not be displayed in your public profile.",
     "emptyDescription": "You haven't created any custom lists yet.",
     "createList": "Create new list",
     "items": "items",

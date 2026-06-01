@@ -32,6 +32,7 @@
   },
   "customLists": {
     "title": "LISTE PERSONALIZATE",
+    "tooltip": "Listele personalizate sunt private și nu vor fi afișate în profilul tău public.",
     "emptyDescription": "Nu ați creat nicio listă personalizată încă.",
     "createList": "Creează listă nouă",
     "items": "elemente",

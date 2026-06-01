@@ -1,24 +1,25 @@
 <script setup>
-import { computed } from 'vue'
-import { useRouter } from 'vue-router'
-import {
-  NSpace,
-  NText,
-  NButton,
-  NIcon,
-  NEmpty,
-  NList,
-  NListItem,
-  NThing,
-  NCard
-} from 'naive-ui'
-import {
-  PhArrowRight,
-  PhPlus
-} from 'phosphor-vue'
 import { useRecordsStore } from '@/stores/records.store'
 import moment from 'moment'
+import {
+  NButton,
+  NCard,
+  NEmpty,
+  NIcon,
+  NList,
+  NListItem,
+  NSpace,
+  NText,
+  NThing,
+  NTooltip
+} from 'naive-ui'
+import {
+  PhPlus,
+  PhQuestion
+} from 'phosphor-vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 
@@ -71,18 +72,32 @@ function formatRelativeTime(dateString) {
 <template>
   <n-space
     vertical
-    :size="16"
+    :size="10"
   >
     <n-space
       justify="space-between"
       align="center"
     >
-      <n-text
-        depth="3"
-        class="fz-12 font-weight-600 letter-spacing-1"
+      <n-space
+        align="center"
+        :wrap-item="false"
+        :size="8"
       >
-        {{ t('customLists.title') }}
-      </n-text>
+        <n-text
+          depth="3"
+          class="fz-12 font-weight-600 letter-spacing-1 m-0"
+        >
+          {{ t('customLists.title') }}
+        </n-text>
+        <n-tooltip trigger="hover" placement="right">
+          <template #trigger>
+            <n-icon class="cursor-help">
+              <ph-question />
+            </n-icon>
+          </template>
+          {{ t('customLists.tooltip') }}
+        </n-tooltip>
+      </n-space>
       <n-button
         v-if="customLists.length > 0"
         tertiary

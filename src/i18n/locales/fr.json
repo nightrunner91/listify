@@ -32,6 +32,7 @@
   },
   "customLists": {
     "title": "LISTES PERSONNALISÉES",
+    "tooltip": "Les listes personnalisées sont privées et ne seront pas affichées dans votre profil public.",
     "emptyDescription": "Vous n'avez pas encore créé de listes personnalisées.",
     "createList": "Créer une nouvelle liste",
     "items": "éléments",
