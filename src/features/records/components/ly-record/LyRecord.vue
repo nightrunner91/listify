@@ -294,7 +294,7 @@ const handlePaste = (event) => {
           <!-- Readonly static title -->
           <n-text
             v-else-if="props.readonly"
-            class="font-weight-500 px-2 text-truncate max-w-250"
+            class="font-weight-500 px-2"
             :depth="record.title ? 1 : 3"
           >
             {{ record.title || '—' }}
