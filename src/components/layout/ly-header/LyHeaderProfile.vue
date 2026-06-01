@@ -50,7 +50,8 @@ const isPublic = computed(() => user.value?.isPublic ?? false)
 const profileUrl = computed(() => {
   if (!user.value?.id) return ''
   const base = window.location.origin + window.location.pathname
-  return `${base}#/user/${user.value.id}`
+  const identifier = user.value.handle || user.value.id.substring(0, 8)
+  return `${base}#/u/${identifier}`
 })
 
 function openShareModal() {
