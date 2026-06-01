@@ -21,6 +21,14 @@ const COOKIE_OPTS = {
   maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
 }
 
+const UID_COOKIE_OPTS = {
+  path: '/',
+  secure: true,
+  sameSite: 'none',
+  httpOnly: true,
+  maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
+}
+
 function setRefreshCookie(reply, token) {
   reply.setCookie(COOKIE_NAME, token, COOKIE_OPTS)
 }
@@ -67,12 +75,7 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), {
-      path: '/',
-      secure: true,
-      sameSite: 'none',
-      httpOnly: true
-    })
+    reply.setCookie('listify_uid', String(user.id), UID_COOKIE_OPTS)
     return reply.status(201).send({
       user,
       accessToken 
@@ -115,12 +118,7 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), {
-      path: '/',
-      secure: true,
-      sameSite: 'none',
-      httpOnly: true
-    })
+    reply.setCookie('listify_uid', String(user.id), UID_COOKIE_OPTS)
     return reply.send({
       user,
       accessToken 
@@ -160,6 +158,7 @@ export default async function authRoutes(app) {
       accessToken, refreshToken 
     } = await rotateRefreshToken(rawToken, userId)
     setRefreshCookie(reply, refreshToken)
+    reply.setCookie('listify_uid', userId, UID_COOKIE_OPTS)
     return reply.send({ accessToken })
   })
 
