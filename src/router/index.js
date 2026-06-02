@@ -181,9 +181,20 @@ export function setScrollContentToTop(fn) {
   scrollContentToTopFn = fn
 }
 
-router.beforeEach((to, from, next) => {
-  // Auth Guard
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+
+  if (!authStore.isInitialized) {
+    await new Promise(resolve => {
+      const unwatch = authStore.$subscribe((_, state) => {
+        if (state.isInitialized) {
+          unwatch()
+          resolve()
+        }
+      })
+    })
+  }
+
   if (to.meta.requiresAuth !== false && !authStore.user) {
     next('/login')
   } else if ((to.path === '/login' || to.path === '/register') && authStore.user) {

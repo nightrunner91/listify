@@ -12,6 +12,8 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   /** @type {import('vue').Ref<string|null>} */
   const accessToken = ref(null)
+  /** @type {import('vue').Ref<boolean>} */
+  const isInitialized = ref(false)
 
   /**
    * @function setUser
@@ -90,15 +92,14 @@ export const useAuthStore = defineStore('auth', () => {
    */
   async function fetchMe() {
     try {
-      // The API client will automatically try to refresh the token if it's expired
-      // But if we don't have a token at all, we should still try to hit /me to let the
-      // API client attempt a refresh using the HttpOnly cookie.
       const userData = await api.get('/auth/me')
       user.value = userData
       return true
     } catch (e) {
       logoutLocally()
       return false
+    } finally {
+      isInitialized.value = true
     }
   }
 
@@ -140,6 +141,7 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     user,
     accessToken,
+    isInitialized,
     login,
     register,
     logout,

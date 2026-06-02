@@ -21,7 +21,7 @@ export const lyStorage = useStorage('ly_')
 
 const authStore = useAuthStore()
 
-authStore.fetchMe().then(() => {
+authStore.fetchMe().finally(() => {
   app.use(router)
   app.mount('#app')
 })
