@@ -46,22 +46,26 @@ const getComparableTitle = (r) => (r && r.id ? r.title : null)
 let renameTimeout = null
 let lastSavedTitle = getComparableTitle(record.value)
 
-// Watch for title changes to trigger auto-save (debounced)
-watch(record, (newVal) => {
-  if (!newVal || !newVal.id) return
-  const currentTitle = getComparableTitle(newVal)
-  if (currentTitle === lastSavedTitle) return
+// PERF: Replaced deep:true watch with a shallow watcher that only compares the title.
+// Deep watching 500+ custom record objects creates hundreds of recursive watchers
+// that fire on every reactive tick, causing severe scroll lag.
+watch(
+  () => getComparableTitle(record.value),
+  (currentTitle) => {
+    if (!record.value || !record.value.id) return
+    if (currentTitle === lastSavedTitle) return
 
-  clearTimeout(renameTimeout)
-  renameTimeout = setTimeout(() => {
-    lastSavedTitle = currentTitle
-    recordsStore.renameCustomRecord(props.listId, newVal.id, newVal.title)
-      .catch(err => {
-        console.error('Failed to rename custom record:', err)
-        lastSavedTitle = null
-      })
-  }, 500)
-}, { deep: true })
+    clearTimeout(renameTimeout)
+    renameTimeout = setTimeout(() => {
+      lastSavedTitle = currentTitle
+      recordsStore.renameCustomRecord(props.listId, record.value.id, record.value.title)
+        .catch(err => {
+          console.error('Failed to rename custom record:', err)
+          lastSavedTitle = null
+        })
+    }, 500)
+  }
+)
 
 /**
  * @function handleDelete

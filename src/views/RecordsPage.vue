@@ -44,6 +44,9 @@ const bottomButtonRef = ref(null)
 const isBottomButtonVisible = ref(false)
 
 // Computed properties
+// PERF: Removed side-effect (initializeDisplayOrder) from computed — computed must be pure.
+// Display order is already initialized in setDefaultSortLabel() and fetchCategoryRecords().
+// Using a plain for-loop instead of Map().map().filter() reduces allocation overhead for large lists.
 const sortedRecords = computed(() => {
   const tag = route.meta.tag
   const searchQuery = recordsStore.searchQuery
@@ -53,21 +56,19 @@ const sortedRecords = computed(() => {
     return recordsStore.searchRecords(tag)
   }
   
-  // Otherwise, return sorted records as before
-  const list = recordsStore.records[route.meta.tag] || []
-  const displayOrder = recordsStore.displayOrder[route.meta.tag] || []
+  const list = recordsStore.records[tag] || []
+  const displayOrder = recordsStore.displayOrder[tag] || []
   
-  // If display order is empty, initialize it
-  if (displayOrder.length === 0 && list.length > 0) {
-    recordsStore.initializeDisplayOrder(route.meta.tag)
-    return list
-  }
-  
-  // Return records in display order (O(n) using index map)
+  // Return records in display order using index map (O(n))
   const indexById = new Map(list.map(r => [r.id, r]))
-  return displayOrder
-    .map(id => indexById.get(id))
-    .filter(record => record !== undefined)
+  const result = []
+  for (let i = 0; i < displayOrder.length; i++) {
+    const record = indexById.get(displayOrder[i])
+    if (record !== undefined) {
+      result.push(record)
+    }
+  }
+  return result
 })
 
 const hasEmptyRecord = computed(() => {
@@ -76,22 +77,26 @@ const hasEmptyRecord = computed(() => {
 })
 
 // Watchers
+// PERF: Removed scrollerKey++ — the virtual scroller updates reactively when sortedRecords
+// changes. Destroying/recreating the entire DOM tree on every search toggle is O(n) and
+// causes visible freezes with large lists.
 watch(() => recordsStore.isSearching, (isSearching) => {
   if (!isSearching) {
     // Reinitialize display order with current sort when exiting search
     recordsStore.syncDisplayOrderWithSort(route.meta.tag)
-    scrollerKey.value++ // Force scroller to re-render
   }
 })
 
+// PERF: Removed scrollerKey++ — sortedRecords computed already reacts to searchQuery changes,
+// the scroller updates naturally without needing full DOM reconstruction.
 watch(() => recordsStore.searchQuery, () => {
-  if (recordsStore.isSearching) {
-    scrollerKey.value++ // Force scroller to re-render when search query changes
-  }
+  // Scroller updates reactively via sortedRecords, no manual key bump needed
 })
 
+// PERF: Removed deep:true — watching route deeply caused excessive re-fires on every
+// reactive property change. We only need to react to actual navigation (path/params).
 watch(
-  route,
+  () => route.path,
   async () => {
     // Clear search when changing routes
     recordsStore.clearSearch()
@@ -103,8 +108,7 @@ watch(
   },
   {
     flush: 'pre',
-    immediate: true,
-    deep: true 
+    immediate: true
   }
 )
 
@@ -122,11 +126,17 @@ watch(bottomButtonRef, (el) => {
  * @function setDefaultSortLabel
  * @description Sets the default sorting method to 'label' (status) and initializes the display order
  */
+let lastInitializedTag = null
 function setDefaultSortLabel() {
   recordsStore.selectedSort = 'label'
   // Initialize display order for the current category
   recordsStore.initializeDisplayOrder(route.meta.tag)
-  scrollerKey.value++ // Force scroller to re-render
+  // PERF: Only increment scrollerKey when the tag actually changes (initial mount or route change).
+  // Avoids destroying the entire virtual scroller DOM tree on redundant calls.
+  if (route.meta.tag !== lastInitializedTag) {
+    scrollerKey.value++
+    lastInitializedTag = route.meta.tag
+  }
 }
 
 function setupObserver() {
@@ -256,7 +266,6 @@ onBeforeRouteLeave(async () => {
                 :items="sortedRecords"
                 key-field="id"
                 :min-item-size="58"
-                watch-data
               >
                 <template #default="{ item, index, active }">
                   <dynamic-scroller-item

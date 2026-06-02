@@ -55,11 +55,12 @@ const hasEmptyRecord = computed(() => {
 })
 
 // Watch for search state changes to reinitialize display order when exiting search
+// PERF: Removed scrollerKey++ — the virtual scroller updates reactively when sortedRecords
+// changes. Destroying/recreating the entire DOM tree on every search toggle is O(n).
 watch(() => recordsStore.isSearching, (isSearching) => {
   if (!isSearching) {
     // Reinitialize display order with current sort when exiting search
     recordsStore.syncDisplayOrderWithSort(route.meta.tag)
-    scrollerKey.value++ // Force scroller to re-render
   }
 })
 
@@ -67,19 +68,27 @@ watch(() => recordsStore.isSearching, (isSearching) => {
  * @function setDefaultSortLabel
  * @description Sets the default sorting method to 'label' (status) and initializes the display order
  */
+// PERF: Only increment scrollerKey when the custom list actually changes to avoid
+// destroying the entire virtual scroller DOM tree on redundant calls.
+let lastInitializedListId = null
 function setDefaultSortLabel() {
   recordsStore.selectedSort = 'label'
   // Initialize display order for the current category
   recordsStore.initializeDisplayOrder(route.meta.tag)
-  scrollerKey.value++ // Force scroller to re-render
+  if (customListId.value !== lastInitializedListId) {
+    scrollerKey.value++
+    lastInitializedListId = customListId.value
+  }
 }
 
+// PERF: Removed deep:true — watching route deeply caused excessive re-fires.
+// PERF: Removed artificial 500ms setTimeout delay — this was causing slow navigation
+// between custom list pages. Route changes should be instant.
 watch(
-  route,
+  () => route.path,
   async () => {
     routeLoading.value = true
     await nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 500))
     routeLoading.value = false
 
     // Clear search when changing routes
@@ -88,8 +97,7 @@ watch(
   },
   {
     flush: 'pre',
-    immediate: true,
-    deep: true 
+    immediate: true
   }
 )
 
@@ -237,7 +245,6 @@ onBeforeRouteLeave(async () => {
                 :items="sortedRecords"
                 key-field="id"
                 :min-item-size="58"
-                watch-data
               >
                 <template #default="{ item, index, active }">
                   <dynamic-scroller-item

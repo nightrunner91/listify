@@ -220,9 +220,12 @@ export const useRecordsStore = defineStore('records', () => {
    * @param {string} recordId
    * @param {string} listType
    */
+  // PERF: For very large lists, includes() is O(n). Using indexOf() avoids creating
+  // an iterator and is marginally faster. The real bottleneck is elsewhere (scroller rebuild).
   function addToDisplayOrder(recordId, listType) {
-    if (!displayOrder.value[listType].includes(recordId)) {
-      displayOrder.value[listType].push(recordId)
+    const order = displayOrder.value[listType]
+    if (order.indexOf(recordId) === -1) {
+      order.push(recordId)
     }
   }
 

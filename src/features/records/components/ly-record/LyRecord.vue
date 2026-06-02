@@ -111,20 +111,24 @@ const episodeDisplay = computed(() => {
 let updateTimeout = null
 let lastSavedString = getComparableString(record.value)
 
-// Watch for record changes to trigger auto-save (only in edit mode)
-watch(record, (newVal) => {
-  // Skip in readonly mode
-  if (props.readonly) return
-  if (newVal && newVal.id) {
-    const currentString = getComparableString(newVal)
+// PERF: Replaced deep:true watch with a shallow watcher that only compares serialized
+// property values. Deep watching 500+ record objects creates hundreds of recursive watchers
+// that fire on every reactive tick, causing severe scroll lag. This shallow comparison
+// detects the same changes with a fraction of the overhead.
+watch(
+  () => getComparableString(record.value),
+  (currentString) => {
+    // Skip in readonly mode
+    if (props.readonly) return
+    if (!record.value || !record.value.id) return
     if (currentString === lastSavedString) return
 
     clearTimeout(updateTimeout)
     updateTimeout = setTimeout(() => {
       lastSavedString = currentString
       recordsStore.addRecord({
-        record: { ...newVal },
-        listType: tag 
+        record: { ...record.value },
+        listType: tag
       })
         .catch(err => {
           console.error('Failed to update record:', err)
@@ -132,7 +136,7 @@ watch(record, (newVal) => {
         })
     }, 500)
   }
-}, { deep: true })
+)
 
 /**
  * @function handleSearch

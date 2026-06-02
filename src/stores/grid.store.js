@@ -116,9 +116,13 @@ export const useGridStore = defineStore('grid', () => {
    * @async
    * @description Smoothly scrolls the window to the bottom after a short delay
    */
+  // PERF: Reduced setTimeout from 300ms to 100ms and use requestAnimationFrame for
+  // smoother timing. The original 300ms delay caused a noticeable UI freeze when adding
+  // records. 100ms is enough for the DOM to update while keeping the interaction snappy.
   async function handleScrollBottom() {
-    await new Promise(resolve => setTimeout(resolve, 300))
-    nextTick(() => {
+    await new Promise(resolve => setTimeout(resolve, 100))
+    await nextTick()
+    requestAnimationFrame(() => {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth'
