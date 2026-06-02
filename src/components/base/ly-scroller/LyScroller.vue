@@ -1,14 +1,14 @@
 <script setup>
+import { useGridStore } from '@/stores/grid.store'
 import {
-  NSpace,
   NButton,
-  NIcon
+  NIcon,
+  NSpace
 } from 'naive-ui'
 import {
-  PhArrowLineUp as ToTopIcon,
-  PhArrowLineDown as ToBottomIcon
+  PhArrowLineDown as ToBottomIcon,
+  PhArrowLineUp as ToTopIcon
 } from 'phosphor-vue'
-import { useGridStore } from '@/stores/grid.store'
 
 const gridStore = useGridStore()
 
@@ -23,8 +23,7 @@ defineEmits(['scrollTop', 'scrollBottom'])
       align="center"
       justify="center"
       :wrap-items="false"
-      class="position-fixed right-10 top-0 bottom-0 m-auto w-40"
-      style="z-index: 100;"
+      class="position-fixed right-10 top-0 bottom-0 m-auto w-40 h-80"
     >
       <n-button
         secondary
