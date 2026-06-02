@@ -7,7 +7,9 @@ import {
   gte,
   lt,
   sql,
-  inArray
+  inArray,
+  not,
+  like
 } from 'drizzle-orm'
 
 const MAX_ACTIVITIES_PER_USER = 100
@@ -245,7 +247,7 @@ async function pruneActivities(userId) {
 export async function getRecentActivities(userId, limit = DEFAULT_LIMIT, cursor = null) {
   const effectiveLimit = Math.min(limit, MAX_LIMIT)
 
-  const conditions = [eq(activities.userId, userId), eq(activities.isDeleted, false)]
+  const conditions = [eq(activities.userId, userId), eq(activities.isDeleted, false), not(like(activities.action, 'custom_list_%'))]
 
   if (cursor) {
     const cursorDate = new Date(cursor)

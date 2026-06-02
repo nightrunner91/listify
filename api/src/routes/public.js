@@ -10,7 +10,9 @@ import {
 import {
   eq,
   and,
-  desc
+  desc,
+  not,
+  like
 } from 'drizzle-orm'
 import { RESERVED_HANDLES } from './users.js'
 
@@ -185,11 +187,14 @@ export default async function publicRoutes(app) {
       records: recordsByList[list.id] ?? [],
     }))
 
-    // Fetch latest activities (most recent 10)
+    // Fetch latest activities (most recent 10), excluding custom list activities
     const recentActivities = await db
       .select()
       .from(activities)
-      .where(eq(activities.userId, user.id))
+      .where(and(
+        eq(activities.userId, user.id),
+        not(like(activities.action, 'custom_list_%'))
+      ))
       .orderBy(desc(activities.createdAt))
       .limit(10)
 

@@ -8,7 +8,6 @@ import {
   and
 } from 'drizzle-orm'
 import { authenticate } from '../middleware/authenticate.js'
-import { logActivity } from '../services/activity.service.js'
 
 export default async function customListsRoutes(app) {
 
@@ -78,14 +77,6 @@ export default async function customListsRoutes(app) {
       })
       .returning()
 
-    // Log generic creation activity
-    await logActivity(userId, {
-      action: 'custom_list_created',
-      category: 'custom',
-      entityId: list.id,
-      entityName: null, // Triggers "Created a new custom list" in frontend
-    })
-
     return reply.status(201).send({
       ...list,
       records: [] 
@@ -140,16 +131,6 @@ export default async function customListsRoutes(app) {
       })
     }
 
-    // Log activity when list is renamed
-    if (name && name.trim()) {
-      await logActivity(userId, {
-        action: 'custom_list_renamed',
-        category: 'custom',
-        entityId: id,
-        entityName: name,
-      })
-    }
-
     return reply.send(updated)
   })
 
@@ -183,13 +164,6 @@ export default async function customListsRoutes(app) {
         message: 'Custom list not found' 
       })
     }
-
-    // Log activity
-    await logActivity(userId, {
-      action: 'custom_list_deleted',
-      category: 'custom',
-      entityName: deleted.name,
-    })
 
     return reply.status(204).send()
   })
@@ -256,14 +230,6 @@ export default async function customListsRoutes(app) {
       .update(customLists)
       .set({ updatedAt: new Date() })
       .where(eq(customLists.id, listId))
-
-    await logActivity(userId, {
-      action: 'custom_list_record_added',
-      category: 'custom',
-      entityId: record.id,
-      entityName: title,
-      metadata: { listName: list.name }
-    })
 
     return reply.status(201).send(record)
   })
@@ -341,14 +307,6 @@ export default async function customListsRoutes(app) {
       })
     }
 
-    await logActivity(userId, {
-      action: 'custom_list_record_added', // Use same action for first meaningful title
-      category: 'custom',
-      entityId: recordId,
-      entityName: title,
-      metadata: { listName: list.name }
-    })
-
     // Touch the list updatedAt
     await db
       .update(customLists)
@@ -423,13 +381,6 @@ export default async function customListsRoutes(app) {
       .update(customLists)
       .set({ updatedAt: new Date() })
       .where(eq(customLists.id, listId))
-
-    await logActivity(userId, {
-      action: 'custom_list_record_deleted',
-      category: 'custom',
-      entityName: deleted.title,
-      metadata: { listName: list.name }
-    })
 
     return reply.status(204).send()
   })
