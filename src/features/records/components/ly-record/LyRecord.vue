@@ -115,6 +115,7 @@ let lastSavedString = getComparableString(record.value)
 // property values. Deep watching 500+ record objects creates hundreds of recursive watchers
 // that fire on every reactive tick, causing severe scroll lag. This shallow comparison
 // detects the same changes with a fraction of the overhead.
+// Note: Title changes are handled via @blur/@select to avoid logging on every keystroke.
 watch(
   () => getComparableString(record.value),
   (currentString) => {
@@ -122,6 +123,19 @@ watch(
     if (props.readonly) return
     if (!record.value || !record.value.id) return
     if (currentString === lastSavedString) return
+
+    // Skip if only title changed (handled by blur/select)
+    const oldRecord = JSON.parse(lastSavedString || '{}')
+    const newRecord = JSON.parse(currentString || '{}')
+    const titleOnlyChanged = (
+      oldRecord.title !== newRecord.title &&
+      oldRecord.score === newRecord.score &&
+      oldRecord.label === newRecord.label &&
+      oldRecord.liked === newRecord.liked &&
+      oldRecord.season === newRecord.season &&
+      oldRecord.episode === newRecord.episode
+    )
+    if (titleOnlyChanged) return
 
     clearTimeout(updateTimeout)
     updateTimeout = setTimeout(() => {
@@ -147,6 +161,47 @@ const handleSearch = (value) => {
   if (isSearchEnabled(tag)) {
     triggerSearch(value, tag)
   }
+}
+
+/**
+ * @function handleSelect
+ * @description Handles selection from autocomplete dropdown
+ * @param {string} value 
+ */
+const handleSelect = (value) => {
+  record.value.title = value
+  saveRecord()
+}
+
+/**
+ * @function handleBlur
+ * @description Saves record when user leaves the input field
+ */
+const handleBlur = () => {
+  saveRecord()
+}
+
+/**
+ * @function saveRecord
+ * @description Saves the current record state
+ */
+const saveRecord = () => {
+  if (!record.value || !record.value.id) return
+  if (props.readonly) return
+
+  const currentString = getComparableString(record.value)
+  if (currentString === lastSavedString) return
+
+  clearTimeout(updateTimeout)
+  lastSavedString = currentString
+  recordsStore.addRecord({
+    record: { ...record.value },
+    listType: tag
+  })
+    .catch(err => {
+      console.error('Failed to update record:', err)
+      lastSavedString = null
+    })
 }
 
 /**
@@ -252,6 +307,8 @@ const handlePaste = (event) => {
             :auto-select="false"
             class="record-input episode-title"
             @input="handleSearch"
+            @select="handleSelect"
+            @blur="handleBlur"
           />
 
           <!-- Season / Episode inputs (editable, tvshows & anime only) -->
