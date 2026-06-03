@@ -187,6 +187,11 @@ const nonEmptyCategories = computed(() => {
   })
 })
 
+/** @description Whether the user has any activities */
+const hasActivities = computed(() => {
+  return profileData.value?.activities && profileData.value.activities.length > 0
+})
+
 // Update page title
 watch(
   [() => profileData.value?.user?.username, locale],
@@ -334,7 +339,7 @@ watch(
 
       
       <!-- begin::Activity Timeline -->
-      <n-card class="py-8 py-md-16 rounded-none">
+      <n-card v-if="hasActivities" class="py-8 py-md-16 rounded-none">
         <n-space
           vertical
           :size="12"
