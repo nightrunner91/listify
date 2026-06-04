@@ -642,7 +642,8 @@ export const useRecordsStore = defineStore('records', () => {
         // Re-attach UI-only fields
         savedRecord.selected = income.selected
         const index = records.value[listType].findIndex((i) => i.id === income.id)
-        records.value[listType].splice(index, 1, savedRecord)
+        // Update in place to preserve object identity and prevent input blur
+        Object.assign(records.value[listType][index], savedRecord)
       }
 
       return savedRecord
