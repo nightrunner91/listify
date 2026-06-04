@@ -110,12 +110,16 @@ const episodeDisplay = computed(() => {
 
 let updateTimeout = null
 let lastSavedString = getComparableString(record.value)
+let pendingSaveString = null
 
 // PERF: Replaced deep:true watch with a shallow watcher that only compares serialized
 // property values. Deep watching 500+ record objects creates hundreds of recursive watchers
 // that fire on every reactive tick, causing severe scroll lag. This shallow comparison
 // detects the same changes with a fraction of the overhead.
 // Note: Title changes are handled via @blur/@select to avoid logging on every keystroke.
+// FIX: Track pendingSaveString to prevent race conditions where API responses overwrite
+// user input. When the watcher fires with the same state as a pending save, we skip
+// scheduling a new API call. lastSavedString is only updated after save completes.
 watch(
   () => getComparableString(record.value),
   (currentString) => {
@@ -123,6 +127,9 @@ watch(
     if (props.readonly) return
     if (!record.value || !record.value.id) return
     if (currentString === lastSavedString) return
+
+    // Skip if this is the same state we're already saving (API response triggered watcher)
+    if (currentString === pendingSaveString) return
 
     // Skip if only title changed (handled by blur/select)
     const oldRecord = JSON.parse(lastSavedString || '{}')
@@ -139,13 +146,18 @@ watch(
 
     clearTimeout(updateTimeout)
     updateTimeout = setTimeout(() => {
-      lastSavedString = currentString
+      pendingSaveString = currentString
       recordsStore.addRecord({
         record: { ...record.value },
         listType: tag
       })
+        .then(() => {
+          pendingSaveString = null
+          lastSavedString = currentString
+        })
         .catch(err => {
           console.error('Failed to update record:', err)
+          pendingSaveString = null
           lastSavedString = null
         })
     }, 500)
@@ -193,13 +205,18 @@ const saveRecord = () => {
   if (currentString === lastSavedString) return
 
   clearTimeout(updateTimeout)
-  lastSavedString = currentString
+  pendingSaveString = currentString
   recordsStore.addRecord({
     record: { ...record.value },
     listType: tag
   })
+    .then(() => {
+      pendingSaveString = null
+      lastSavedString = currentString
+    })
     .catch(err => {
       console.error('Failed to update record:', err)
+      pendingSaveString = null
       lastSavedString = null
     })
 }
