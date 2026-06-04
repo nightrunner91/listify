@@ -25,7 +25,8 @@ import {
   computed,
   h,
   ref,
-  watch
+  watch,
+  onBeforeUnmount
 } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -57,13 +58,11 @@ const searchConfig = computed(() => isSearchEnabled(tag) ? {
  */
 const searchPlaceholder = computed(() => {
   const config = isSearchEnabled(tag)
-  // We use a mapping or just fallback to generic titlePlaceholder
   const categoryPlaceholder = `records.searchPlaceholder.${tag}`
   return isSearchEnabled(tag) ? t(categoryPlaceholder) : t('records.titlePlaceholder')
 })
 
 const record = computed(() => {
-  // In readonly mode, use the passed-in record prop directly (no store)
   if (props.readonly) return props.record || {}
   return recordsStore.getRecord(props.id, tag) || {}
 })
@@ -108,6 +107,41 @@ const episodeDisplay = computed(() => {
   return `S${String(season).padStart(2, '0')}E${String(episode).padStart(2, '0')}`
 })
 
+/**
+ * @description Local state for season/episode inputs to prevent UI lag during typing
+ */
+const localSeason = ref(null)
+const localEpisode = ref(null)
+const isEditingSeason = ref(false)
+const isEditingEpisode = ref(false)
+
+/**
+ * @description Sync local state from store when not actively editing
+ */
+watch(
+  () => record.value.season,
+  (newVal) => {
+    if (!isEditingSeason.value) {
+      localSeason.value = newVal
+    }
+  },
+  { immediate: true }
+)
+
+watch(
+  () => record.value.episode,
+  (newVal) => {
+    if (!isEditingEpisode.value) {
+      localEpisode.value = newVal
+    }
+  },
+  { immediate: true }
+)
+
+/**
+ * @description AbortController for cancelling pending API requests
+ */
+let saveAbortController = null
 let updateTimeout = null
 let lastSavedString = getComparableString(record.value)
 let pendingSaveString = null
@@ -120,18 +154,16 @@ let pendingSaveString = null
 // FIX: Track pendingSaveString to prevent race conditions where API responses overwrite
 // user input. When the watcher fires with the same state as a pending save, we skip
 // scheduling a new API call. lastSavedString is only updated after save completes.
+// FIX: Excludes season/episode changes from this watcher - they are handled separately
+// via debounced local state to prevent input lag.
 watch(
   () => getComparableString(record.value),
   (currentString) => {
-    // Skip in readonly mode
     if (props.readonly) return
     if (!record.value || !record.value.id) return
     if (currentString === lastSavedString) return
-
-    // Skip if this is the same state we're already saving (API response triggered watcher)
     if (currentString === pendingSaveString) return
 
-    // Skip if only title changed (handled by blur/select)
     const oldRecord = JSON.parse(lastSavedString || '{}')
     const newRecord = JSON.parse(currentString || '{}')
     const titleOnlyChanged = (
@@ -143,6 +175,16 @@ watch(
       oldRecord.episode === newRecord.episode
     )
     if (titleOnlyChanged) return
+
+    // Skip if only season/episode changed (handled by debounced local state)
+    const seasonEpisodeOnlyChanged = (
+      oldRecord.title === newRecord.title &&
+      oldRecord.score === newRecord.score &&
+      oldRecord.label === newRecord.label &&
+      oldRecord.liked === newRecord.liked &&
+      (oldRecord.season !== newRecord.season || oldRecord.episode !== newRecord.episode)
+    )
+    if (seasonEpisodeOnlyChanged) return
 
     clearTimeout(updateTimeout)
     updateTimeout = setTimeout(() => {
@@ -163,6 +205,95 @@ watch(
     }, 500)
   }
 )
+
+/**
+ * @function handleSeasonEpisodeChange
+ * @description Debounced API save for season/episode changes with abort cancellation
+ * @param {'season' | 'episode'} field
+ * @param {number|null} value
+ */
+const handleSeasonEpisodeChange = (field, value) => {
+  if (props.readonly || !record.value || !record.value.id) return
+
+  // Update local state immediately for responsive UI
+  if (field === 'season') {
+    localSeason.value = value
+  } else {
+    localEpisode.value = value
+  }
+
+  // Update the store record immediately (for UI consistency)
+  record.value[field] = value
+
+  // Cancel any pending save
+  if (saveAbortController) {
+    saveAbortController.abort()
+  }
+
+  // Clear existing timeout
+  clearTimeout(updateTimeout)
+
+  // Set new debounce timeout
+  updateTimeout = setTimeout(async () => {
+    const controller = new AbortController()
+    saveAbortController = controller
+
+    const currentString = getComparableString(record.value)
+    pendingSaveString = currentString
+
+    try {
+      await recordsStore.addRecord({
+        record: { ...record.value },
+        listType: tag
+      })
+      
+      if (!controller.signal.aborted) {
+        lastSavedString = currentString
+        pendingSaveString = null
+      }
+    } catch (err) {
+      if (!controller.signal.aborted) {
+        console.error(`Failed to update ${field}:`, err)
+        pendingSaveString = null
+        lastSavedString = null
+      }
+    }
+  }, 1500)
+}
+
+/**
+ * @function handleSeasonFocus
+ * @description Marks season field as being edited
+ */
+const handleSeasonFocus = () => {
+  isEditingSeason.value = true
+}
+
+/**
+ * @function handleSeasonBlur
+ * @description Marks season field as no longer editing and triggers immediate save
+ */
+const handleSeasonBlur = () => {
+  isEditingSeason.value = false
+  saveRecord()
+}
+
+/**
+ * @function handleEpisodeFocus
+ * @description Marks episode field as being edited
+ */
+const handleEpisodeFocus = () => {
+  isEditingEpisode.value = true
+}
+
+/**
+ * @function handleEpisodeBlur
+ * @description Marks episode field as no longer editing and triggers immediate save
+ */
+const handleEpisodeBlur = () => {
+  isEditingEpisode.value = false
+  saveRecord()
+}
 
 /**
  * @function handleSearch
@@ -204,6 +335,11 @@ const saveRecord = () => {
   const currentString = getComparableString(record.value)
   if (currentString === lastSavedString) return
 
+  // Cancel any pending save
+  if (saveAbortController) {
+    saveAbortController.abort()
+  }
+
   clearTimeout(updateTimeout)
   pendingSaveString = currentString
   recordsStore.addRecord({
@@ -230,13 +366,24 @@ const handleEpisodeUpdate = (val) => {
   const isInitialFromEmpty = (record.value.episode === null || record.value.episode === undefined) && val === 0
   const isInitialFromZero = record.value.episode === 0 && val === 1
 
-  if (isInitialFromEmpty) {
-    record.value.episode = 1
-    if (!record.value.season) record.value.season = 1
-  } else {
-    record.value.episode = val
-    if (isInitialFromZero && !record.value.season) record.value.season = 1
+  const newValue = isInitialFromEmpty ? 1 : val
+  record.value.episode = newValue
+  if ((isInitialFromEmpty || isInitialFromZero) && !record.value.season) {
+    record.value.season = 1
+    localSeason.value = 1
   }
+
+  handleSeasonEpisodeChange('episode', newValue)
+}
+
+/**
+ * @function handleSeasonUpdate
+ * @description Handles season input changes
+ * @param {number|null} val
+ */
+const handleSeasonUpdate = (val) => {
+  record.value.season = val
+  handleSeasonEpisodeChange('season', val)
 }
 
 /**
@@ -250,6 +397,16 @@ const handlePaste = (event) => {
     event.preventDefault()
   }
 }
+
+/**
+ * @description Cleanup abort controller on unmount
+ */
+onBeforeUnmount(() => {
+  if (saveAbortController) {
+    saveAbortController.abort()
+  }
+  clearTimeout(updateTimeout)
+})
 </script>
 
 <template>
@@ -340,7 +497,7 @@ const handlePaste = (event) => {
               S
             </n-input-group-label>
             <n-input-number
-              v-model:value="record.season"
+              v-model:value="localSeason"
               :min="0"
               :max="9999"
               :show-button="false"
@@ -348,6 +505,9 @@ const handlePaste = (event) => {
               placeholder="0"
               class="episode-input w-32 px-0"
               @paste="handlePaste"
+              @focus="handleSeasonFocus"
+              @blur="handleSeasonBlur"
+              @update:value="handleSeasonUpdate"
             />
             <n-divider vertical class="episode-separator" />
             <n-input-group-label
@@ -357,7 +517,7 @@ const handlePaste = (event) => {
               E
             </n-input-group-label>
             <n-input-number
-              :value="record.episode"
+              v-model:value="localEpisode"
               :min="0"
               :max="99999"
               :size="gridStore.screenLargerThen('xl') ? 'small' : 'tiny'"
@@ -366,6 +526,8 @@ const handlePaste = (event) => {
               button-placement="both"
               @update:value="handleEpisodeUpdate"
               @paste="handlePaste"
+              @focus="handleEpisodeFocus"
+              @blur="handleEpisodeBlur"
             />
           </n-input-group>
 
