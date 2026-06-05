@@ -14,7 +14,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-1.2.0-blue?style=for-the-badge" alt="Version">
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/License-AGPL--3.0-green?style=for-the-badge" alt="License">
   <img src="https://img.shields.io/badge/Node.js-%3E%3D20.0.0-6da55f?style=for-the-badge&logo=node.js" alt="Node Version">
   <img src="https://img.shields.io/badge/Vue-3.2.47-4fc08d?style=for-the-badge&logo=vue.js" alt="Vue Version">
   <img src="https://img.shields.io/badge/Fastify-5.3.3-000000?style=for-the-badge&logo=fastify" alt="Fastify">
@@ -152,7 +152,7 @@ Contributions are what make the open-source community such an amazing place to l
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the GNU Affero General Public License v3.0. See `LICENSE` for more information.
 
 ---
 

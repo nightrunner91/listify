@@ -14,7 +14,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Версия-1.2.0-blue?style=for-the-badge" alt="Версия">
-  <img src="https://img.shields.io/badge/Лицензия-MIT-green?style=for-the-badge" alt="Лицензия">
+  <img src="https://img.shields.io/badge/Лицензия-AGPL--3.0-green?style=for-the-badge" alt="Лицензия">
   <img src="https://img.shields.io/badge/Node.js-%3E%3D20.0.0-6da55f?style=for-the-badge&logo=node.js" alt="Версия Node">
   <img src="https://img.shields.io/badge/Vue-3.2.47-4fc08d?style=for-the-badge&logo=vue.js" alt="Версия Vue">
   <img src="https://img.shields.io/badge/Fastify-5.3.3-000000?style=for-the-badge&logo=fastify" alt="Fastify">
@@ -152,7 +152,7 @@ npm run db:studio
 
 ## Лицензия
 
-Распространяется под лицензией MIT. Смотрите `LICENSE` для получения дополнительной информации.
+Распространяется под лицензией GNU Affero General Public License v3.0. Смотрите `LICENSE` для получения дополнительной информации.
 
 ---
 
