@@ -1,18 +1,22 @@
+# v1.3.2
+
 ## Summary
 
-This release focuses on authentication stability and UI performance improvements. Session persistence has been extended to one year, and the records title input has been optimized to prevent UI lag during typing.
+This release stabilizes the authentication system with a dual-token strategy, JWT-based refresh tokens, and multiple fixes for session management and cookie handling.
+
+## What's New
+
+- Authentication now uses a dual-token strategy with localStorage fallback for cross-origin reliability
+- Refresh tokens migrated to JWT format for improved security and scalability
+- Added uid cookie support with backward-compatible token rotation
 
 ## Bug Fixes
 
-- Fixed authentication session persistence by extending refresh token expiration to 1 year
-- Resolved cookie path issues for consistent refresh token delivery
-- Added session invalidation on login to prevent stale session data
-
-## Performance
-
-- Decoupled title input from store to eliminate UI lag when typing in the records view
+- Fixed signed cookies not being properly cleared on logout
+- Fixed session invalidation on login with localStorage persistence
+- Fixed parseInt issue on UUID user IDs during refresh token rotation
 
 ## Technical Notes
 
-- Removed RELEASE_NOTES.md as release documentation is now managed through GitHub Releases
-- Updated environment configuration to reflect new JWT refresh token expiration settings
+- Breaking change: Refresh tokens are now JWT-formatted. Existing sessions may require re-authentication.
+- Performance improvement: Decoupled title input from store to prevent UI lag in records
