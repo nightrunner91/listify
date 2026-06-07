@@ -27,7 +27,7 @@ import LyRecord from '@/features/records/components/ly-record/LyRecord.vue'
 import LyGithub from '@/components/base/ly-github/LyGithub.vue'
 import LyVersion from '@/components/base/ly-version/LyVersion.vue'
 import LyScroller from '@/components/base/ly-scroller/LyScroller.vue'
-import LyActivityTimeline from '@/features/start/components/ly-activity-timeline/LyActivityTimeline.vue'
+import LyPublicActivity from '@/components/base/ly-public-activity/LyPublicActivity.vue'
 import { darkThemeOverrides } from '@/theme.config.js'
 import {
   CATEGORIES, CATEGORY_ICONS, sortRecords
@@ -346,7 +346,7 @@ watch(
           :wrap-item="false"
           class="max-w-1024 mx-auto"
         >
-          <ly-activity-timeline :edit-mode="false" />
+          <ly-public-activity :activities="profileData.activities" />
         </n-space>
       </n-card>
       <!-- end::Activity Timeline -->
