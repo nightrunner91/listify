@@ -91,8 +91,9 @@ export const useAuthStore = defineStore('auth', () => {
       saveToStorage(accessToken.value, userData)
       return true
     } catch (error) {
-      // Only logout on actual auth failures, not transient errors
       if (isAuthError(error)) {
+        // The apiClient interceptor already tried to refresh.
+        // If we're here, the refresh also failed — session is truly invalid.
         logoutLocally()
         return false
       }

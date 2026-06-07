@@ -22,6 +22,7 @@ function getCookieOpts() {
     path: '/',
     maxAge: ONE_YEAR_MS / 1000,
     expires: new Date(Date.now() + ONE_YEAR_MS),
+    signed: true,
   }
 }
 
@@ -34,6 +35,7 @@ function getUidCookieOpts() {
     httpOnly: true,
     maxAge: ONE_YEAR_MS / 1000,
     expires: new Date(Date.now() + ONE_YEAR_MS),
+    signed: true,
   }
 }
 
@@ -42,7 +44,7 @@ function setRefreshCookie(reply, token) {
 }
 
 function clearRefreshCookie(reply) {
-  reply.clearCookie(COOKIE_NAME, { path: '/' })
+  reply.clearCookie(COOKIE_NAME, getCookieOpts())
 }
 
 export default async function authRoutes(app) {
@@ -165,7 +167,13 @@ export default async function authRoutes(app) {
   app.post('/logout', {preHandler: authenticate,}, async (request, reply) => {
     await deleteUserRefreshTokens(request.user.id)
     clearRefreshCookie(reply)
-    reply.clearCookie(UID_COOKIE_NAME, getUidCookieOpts())
+    reply.clearCookie(UID_COOKIE_NAME, {
+      path: '/',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      httpOnly: true,
+      signed: true,
+    })
     return reply.status(204).send()
   })
 
