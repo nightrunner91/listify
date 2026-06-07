@@ -108,6 +108,24 @@ const episodeDisplay = computed(() => {
 })
 
 /**
+ * @description Local state for title input to prevent UI lag during typing
+ */
+const localTitle = ref(record.value.title || '')
+
+/**
+ * @description Sync local title from store when record changes externally
+ */
+watch(
+  () => record.value.title,
+  (newVal) => {
+    if (localTitle.value !== newVal) {
+      localTitle.value = newVal || ''
+    }
+  },
+  { immediate: true }
+)
+
+/**
  * @description Local state for season/episode inputs to prevent UI lag during typing
  */
 const localSeason = ref(null)
@@ -156,6 +174,7 @@ let pendingSaveString = null
 // scheduling a new API call. lastSavedString is only updated after save completes.
 // FIX: Excludes season/episode changes from this watcher - they are handled separately
 // via debounced local state to prevent input lag.
+// FIX: Excludes title changes - title is handled via localTitle watcher with blur/select.
 watch(
   () => getComparableString(record.value),
   (currentString) => {
@@ -301,6 +320,7 @@ const handleEpisodeBlur = () => {
  * @param {string} value 
  */
 const handleSearch = (value) => {
+  localTitle.value = value
   if (isSearchEnabled(tag)) {
     triggerSearch(value, tag)
   }
@@ -312,6 +332,7 @@ const handleSearch = (value) => {
  * @param {string} value 
  */
 const handleSelect = (value) => {
+  localTitle.value = value
   record.value.title = value
   saveRecord()
 }
@@ -321,6 +342,7 @@ const handleSelect = (value) => {
  * @description Saves record when user leaves the input field
  */
 const handleBlur = () => {
+  record.value.title = localTitle.value
   saveRecord()
 }
 
@@ -473,7 +495,7 @@ onBeforeUnmount(() => {
           <n-auto-complete
             v-if="!props.readonly"
             :id="`input-${record.id}`"
-            v-model:value="record.title"
+            v-model:value="localTitle"
             :options="isSearchEnabled(tag) ? suggestions : []"
             :loading="isSearchEnabled(tag) && isLoading"
             :size="gridStore.screenLargerThen('xl') ? 'medium' : 'small'"

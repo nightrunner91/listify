@@ -2,7 +2,8 @@
 import {
   ref,
   computed,
-  watch
+  watch,
+  onBeforeUnmount
 } from 'vue'
 import {
   NListItem,
@@ -36,36 +37,38 @@ const gridStore = useGridStore()
 
 const record = computed(() => recordsStore.getCustomRecord(props.listId, props.id) || {})
 
-/**
- * @function getComparableTitle
- * @description Returns the record's title for comparison to detect changes
- * @param {Object} r - Record object
- * @returns {string|null}
- */
-const getComparableTitle = (r) => (r && r.id ? r.title : null)
-let renameTimeout = null
-let lastSavedTitle = getComparableTitle(record.value)
+// Local state for input to prevent UI lag during typing
+const localTitle = ref(record.value.title || '')
 
-// PERF: Replaced deep:true watch with a shallow watcher that only compares the title.
-// Deep watching 500+ custom record objects creates hundreds of recursive watchers
-// that fire on every reactive tick, causing severe scroll lag.
+// Sync local state from store when record changes externally
 watch(
-  () => getComparableTitle(record.value),
-  (currentTitle) => {
-    if (!record.value || !record.value.id) return
-    if (currentTitle === lastSavedTitle) return
-
-    clearTimeout(renameTimeout)
-    renameTimeout = setTimeout(() => {
-      lastSavedTitle = currentTitle
-      recordsStore.renameCustomRecord(props.listId, record.value.id, record.value.title)
-        .catch(err => {
-          console.error('Failed to rename custom record:', err)
-          lastSavedTitle = null
-        })
-    }, 500)
-  }
+  () => record.value.title,
+  (newVal) => {
+    if (localTitle.value !== newVal) {
+      localTitle.value = newVal || ''
+    }
+  },
+  { immediate: true }
 )
+
+let saveTimeout = null
+let lastSavedTitle = localTitle.value || ''
+
+// Debounced API save - fires in background without blocking UI
+watch(localTitle, (newTitle) => {
+  if (!record.value || !record.value.id) return
+  if (newTitle === lastSavedTitle) return
+
+  clearTimeout(saveTimeout)
+  saveTimeout = setTimeout(() => {
+    const titleToSave = newTitle
+    lastSavedTitle = titleToSave
+    recordsStore.renameCustomRecord(props.listId, record.value.id, titleToSave)
+      .catch(err => {
+        console.error('Failed to rename custom record:', err)
+      })
+  }, 800)
+})
 
 /**
  * @function handleDelete
@@ -74,6 +77,10 @@ watch(
 function handleDelete() {
   recordsStore.removeCustomRecord(props.listId, props.id)
 }
+
+onBeforeUnmount(() => {
+  clearTimeout(saveTimeout)
+})
 </script>
 
 <template>
@@ -101,7 +108,7 @@ function handleDelete() {
       <!-- begin::Record Title -->
       <n-input
         :id="`input-${record.id}`"
-        v-model:value="record.title"
+        v-model:value="localTitle"
         type="text"
         :size="gridStore.screenLargerThen('l') ? 'medium' : 'small'"
         :placeholder="$t('records.titlePlaceholder')"
