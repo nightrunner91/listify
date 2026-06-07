@@ -13,28 +13,36 @@ import { refreshTokens } from '../db/schema.js'
 import { eq } from 'drizzle-orm'
 
 const COOKIE_NAME = 'listify_refresh'
-const COOKIE_OPTS = {
-  httpOnly: true,
-  secure: true, // Required for SameSite=None; Railway always serves over HTTPS
-  sameSite: 'none', // Required for cross-origin requests (e.g. GitHub Pages → Railway)
-  path: '/api/auth',
-  maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
+const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000
+
+function getCookieOpts() {
+  return {
+    httpOnly: true,
+    secure: true, // Required for SameSite=None; Railway always serves over HTTPS
+    sameSite: 'none', // Required for cross-origin requests (e.g. GitHub Pages → Railway)
+    path: '/',
+    maxAge: ONE_YEAR_MS / 1000, // 1 year in seconds
+    expires: new Date(Date.now() + ONE_YEAR_MS), // Explicit expires date for better browser compatibility
+  }
 }
 
-const UID_COOKIE_OPTS = {
-  path: '/',
-  secure: true,
-  sameSite: 'none',
-  httpOnly: true,
-  maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
+function getUidCookieOpts() {
+  return {
+    path: '/',
+    secure: true,
+    sameSite: 'none',
+    httpOnly: true,
+    maxAge: ONE_YEAR_MS / 1000, // 1 year in seconds
+    expires: new Date(Date.now() + ONE_YEAR_MS), // Explicit expires date for better browser compatibility
+  }
 }
 
 function setRefreshCookie(reply, token) {
-  reply.setCookie(COOKIE_NAME, token, COOKIE_OPTS)
+  reply.setCookie(COOKIE_NAME, token, getCookieOpts())
 }
 
 function clearRefreshCookie(reply) {
-  reply.clearCookie(COOKIE_NAME, { path: '/api/auth' })
+  reply.clearCookie(COOKIE_NAME, { path: '/' })
 }
 
 export default async function authRoutes(app) {
@@ -75,7 +83,7 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), UID_COOKIE_OPTS)
+    reply.setCookie('listify_uid', String(user.id), getUidCookieOpts())
     return reply.status(201).send({
       user,
       accessToken 
@@ -118,7 +126,7 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), UID_COOKIE_OPTS)
+    reply.setCookie('listify_uid', String(user.id), getUidCookieOpts())
     return reply.send({
       user,
       accessToken 
@@ -158,7 +166,7 @@ export default async function authRoutes(app) {
       accessToken, refreshToken 
     } = await rotateRefreshToken(rawToken, userId)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', userId, UID_COOKIE_OPTS)
+    reply.setCookie('listify_uid', userId, getUidCookieOpts())
     return reply.send({ accessToken })
   })
 
@@ -167,7 +175,7 @@ export default async function authRoutes(app) {
   app.post('/logout', {preHandler: authenticate,}, async (request, reply) => {
     await deleteUserRefreshTokens(request.user.id)
     clearRefreshCookie(reply)
-    reply.clearCookie('listify_uid', { path: '/' })
+    reply.clearCookie('listify_uid', getUidCookieOpts())
     return reply.status(204).send()
   })
 

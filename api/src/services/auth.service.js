@@ -40,7 +40,7 @@ export async function signRefreshToken(userId) {
   const token = nanoid(64)
   const hash = await bcrypt.hash(token, 10) // lighter hash for tokens, not passwords
   const expiresAt = new Date()
-  expiresAt.setDate(expiresAt.getDate() + 30) // 30 days
+  expiresAt.setFullYear(expiresAt.getFullYear() + 1) // 1 year
 
   await db.insert(refreshTokens).values({
     userId,
