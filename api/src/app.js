@@ -36,8 +36,7 @@ export async function buildApp() {
 
   await app.register(i18nPlugin)
 
-  await app.register(helmet, {
-    contentSecurityPolicy: false, // frontend handles its own CSP
+  await app.register(helmet, {contentSecurityPolicy: false, // frontend handles its own CSP
   })
 
   await app.register(cookie, {

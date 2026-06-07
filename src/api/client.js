@@ -70,12 +70,10 @@ export async function apiClient(endpoint, options = {}) {
           headers,
         })
       } else {
-        authStore.logoutLocally()
         throw new ApiError(401, 'Session expired. Please log in again.', 'UNAUTHORIZED')
       }
     } catch (error) {
       if (error instanceof ApiError) throw error
-      authStore.logoutLocally()
       throw new ApiError(401, 'Session expired. Please log in again.', 'UNAUTHORIZED')
     }
   }
@@ -84,12 +82,30 @@ export async function apiClient(endpoint, options = {}) {
 }
 
 export const api = {
-  get: (endpoint, options) => apiClient(endpoint, { ...options, method: 'GET' }),
-  post: (endpoint, data, options) => apiClient(endpoint, { ...options, method: 'POST', body: JSON.stringify(data) }),
-  put: (endpoint, data, options) => apiClient(endpoint, { ...options, method: 'PUT', body: JSON.stringify(data) }),
-  patch: (endpoint, data, options) => apiClient(endpoint, { ...options, method: 'PATCH', body: JSON.stringify(data) }),
+  get: (endpoint, options) => apiClient(endpoint, {
+    ...options,
+    method: 'GET' 
+  }),
+  post: (endpoint, data, options) => apiClient(endpoint, {
+    ...options,
+    method: 'POST',
+    body: JSON.stringify(data) 
+  }),
+  put: (endpoint, data, options) => apiClient(endpoint, {
+    ...options,
+    method: 'PUT',
+    body: JSON.stringify(data) 
+  }),
+  patch: (endpoint, data, options) => apiClient(endpoint, {
+    ...options,
+    method: 'PATCH',
+    body: JSON.stringify(data) 
+  }),
   delete: (endpoint, data, options) => {
-    const opts = { ...options, method: 'DELETE' }
+    const opts = {
+      ...options,
+      method: 'DELETE' 
+    }
     if (data) opts.body = JSON.stringify(data)
     return apiClient(endpoint, opts)
   },

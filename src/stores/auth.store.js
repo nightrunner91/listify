@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { api } from '@/api/client'
+import {
+  api, ApiError 
+} from '@/api/client'
 
 const STORAGE_KEY_ACCESS_TOKEN = 'listify_access_token'
 const STORAGE_KEY_USER = 'listify_user'
@@ -14,7 +16,10 @@ function loadFromStorage() {
       user: user ? JSON.parse(user) : null,
     }
   } catch {
-    return { accessToken: null, user: null }
+    return {
+      accessToken: null,
+      user: null 
+    }
   }
 }
 
@@ -23,6 +28,10 @@ function saveToStorage(accessToken, user) {
   else localStorage.removeItem(STORAGE_KEY_ACCESS_TOKEN)
   if (user) localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(user))
   else localStorage.removeItem(STORAGE_KEY_USER)
+}
+
+function isAuthError(error) {
+  return error instanceof ApiError && error.status === 401
 }
 
 export const useAuthStore = defineStore('auth', () => {
@@ -48,13 +57,19 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function login(email, password) {
-    const data = await api.post('/auth/login', { email, password })
+    const data = await api.post('/auth/login', {
+      email,
+      password 
+    })
     setUser(data.user, data.accessToken)
     return data
   }
 
   async function register(email, password) {
-    const data = await api.post('/auth/register', { email, password })
+    const data = await api.post('/auth/register', {
+      email,
+      password 
+    })
     setUser(data.user, data.accessToken)
     return data
   }
@@ -75,8 +90,14 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = userData
       saveToStorage(accessToken.value, userData)
       return true
-    } catch {
-      logoutLocally()
+    } catch (error) {
+      // Only logout on actual auth failures, not transient errors
+      if (isAuthError(error)) {
+        logoutLocally()
+        return false
+      }
+      // For network errors or server errors, keep the user logged in
+      // The user data from localStorage is still valid
       return false
     } finally {
       isInitialized.value = true
@@ -93,8 +114,11 @@ export const useAuthStore = defineStore('auth', () => {
         accessToken.value = data.accessToken
         saveToStorage(data.accessToken, user.value)
         return true
-      } catch {
-        logoutLocally()
+      } catch (error) {
+        // Only logout on actual auth failures, not transient errors
+        if (isAuthError(error)) {
+          logoutLocally()
+        }
         return false
       } finally {
         refreshPromise = null

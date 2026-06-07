@@ -8,9 +8,6 @@ import {
   deleteUserRefreshTokens
 } from '../services/auth.service.js'
 import { authenticate } from '../middleware/authenticate.js'
-import { db } from '../db/index.js'
-import { refreshTokens } from '../db/schema.js'
-import { eq } from 'drizzle-orm'
 
 const COOKIE_NAME = 'listify_refresh'
 const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000
@@ -22,18 +19,6 @@ function getCookieOpts() {
     secure: !isDev,
     sameSite: isDev ? 'lax' : 'none',
     path: '/',
-    maxAge: ONE_YEAR_MS / 1000,
-    expires: new Date(Date.now() + ONE_YEAR_MS),
-  }
-}
-
-function getUidCookieOpts() {
-  const isDev = process.env.NODE_ENV !== 'production'
-  return {
-    path: '/',
-    secure: !isDev,
-    sameSite: isDev ? 'lax' : 'none',
-    httpOnly: true,
     maxAge: ONE_YEAR_MS / 1000,
     expires: new Date(Date.now() + ONE_YEAR_MS),
   }
@@ -85,7 +70,6 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), getUidCookieOpts())
     return reply.status(201).send({
       user,
       accessToken 
@@ -130,7 +114,6 @@ export default async function authRoutes(app) {
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', String(user.id), getUidCookieOpts())
     return reply.send({
       user,
       accessToken 
@@ -155,22 +138,10 @@ export default async function authRoutes(app) {
       })
     }
 
-    // We need the userId — decode without verify first to get sub, then verify signature in rotateRefreshToken
-    // Safer: require userId in the body, or store userId in a separate non-httpOnly cookie
-    // We store userId in a plain cookie for this purpose:
-    const userId = request.cookies['listify_uid']
-    if (!userId) {
-      return reply.status(401).send({
-        error: 'UNAUTHORIZED',
-        message: 'Session information missing' 
-      })
-    }
-
     const {
-      accessToken, refreshToken 
-    } = await rotateRefreshToken(rawToken, userId)
+      accessToken, refreshToken
+    } = await rotateRefreshToken(rawToken)
     setRefreshCookie(reply, refreshToken)
-    reply.setCookie('listify_uid', userId, getUidCookieOpts())
     return reply.send({ accessToken })
   })
 
@@ -179,7 +150,6 @@ export default async function authRoutes(app) {
   app.post('/logout', {preHandler: authenticate,}, async (request, reply) => {
     await deleteUserRefreshTokens(request.user.id)
     clearRefreshCookie(reply)
-    reply.clearCookie('listify_uid', getUidCookieOpts())
     return reply.status(204).send()
   })
 

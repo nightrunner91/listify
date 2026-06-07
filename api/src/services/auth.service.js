@@ -37,10 +37,10 @@ export async function signAccessToken(userId) {
 }
 
 export async function signRefreshToken(userId) {
-  const token = nanoid(64)
-  const hash = await bcrypt.hash(token, 10) // lighter hash for tokens, not passwords
-  const expiresAt = new Date()
-  expiresAt.setFullYear(expiresAt.getFullYear() + 1) // 1 year
+  const jti = nanoid(64)
+  const hash = await bcrypt.hash(jti, 10)
+  const expiresInSeconds = parseExpiresInSeconds(process.env.JWT_REFRESH_EXPIRES_IN ?? '30d')
+  const expiresAt = new Date(Date.now() + expiresInSeconds * 1000)
 
   await db.insert(refreshTokens).values({
     userId,
@@ -48,7 +48,28 @@ export async function signRefreshToken(userId) {
     expiresAt,
   })
 
-  return token
+  return new SignJWT({
+    sub: userId,
+    jti 
+  })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setExpirationTime(expiresInSeconds.toString() + 's')
+    .setIssuedAt()
+    .sign(refreshSecret())
+}
+
+function parseExpiresInSeconds(str) {
+  const unit = str.slice(-1)
+  const value = parseInt(str.slice(0, -1), 10)
+  switch (unit) {
+    case 's': return value
+    case 'm': return value * 60
+    case 'h': return value * 3600
+    case 'd': return value * 86400
+    case 'w': return value * 604800
+    case 'y': return value * 31536000
+    default: return parseInt(str, 10)
+  }
 }
 
 export async function verifyAccessToken(token) {
@@ -56,31 +77,41 @@ export async function verifyAccessToken(token) {
   return payload // { sub: userId, ... }
 }
 
-export async function rotateRefreshToken(rawToken, userId) {
-  // Find all non-expired tokens for user, verify one matches
-  const stored = await db
+async function verifyRefreshTokenJWT(token) {
+  const { payload } = await jwtVerify(token, refreshSecret())
+  return {
+    userId: payload.sub,
+    jti: payload.jti 
+  }
+}
+
+export async function rotateRefreshToken(rawToken) {
+  const {
+    userId, jti 
+  } = await verifyRefreshTokenJWT(rawToken)
+
+  const allValid = await db
     .select()
     .from(refreshTokens)
     .where(and(eq(refreshTokens.userId, userId), gt(refreshTokens.expiresAt, new Date())))
 
-  for (const row of stored) {
-    const match = await bcrypt.compare(rawToken, row.tokenHash)
+  for (const row of allValid) {
+    const match = await bcrypt.compare(jti, row.tokenHash)
     if (match) {
-      // Delete the used token (rotation)
       await db.delete(refreshTokens).where(eq(refreshTokens.id, row.id))
-      // Issue new pair
       const accessToken = await signAccessToken(userId)
       const refreshToken = await signRefreshToken(userId)
       return {
         accessToken,
-        refreshToken 
+        refreshToken,
+        userId,
       }
     }
   }
 
   throw Object.assign(new Error('Invalid or expired refresh token'), {
     statusCode: 401,
-    code: 'INVALID_REFRESH_TOKEN' 
+    code: 'INVALID_REFRESH_TOKEN'
   })
 }
 
