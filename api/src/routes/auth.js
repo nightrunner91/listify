@@ -16,24 +16,26 @@ const COOKIE_NAME = 'listify_refresh'
 const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000
 
 function getCookieOpts() {
+  const isDev = process.env.NODE_ENV !== 'production'
   return {
     httpOnly: true,
-    secure: true, // Required for SameSite=None; Railway always serves over HTTPS
-    sameSite: 'none', // Required for cross-origin requests (e.g. GitHub Pages → Railway)
+    secure: !isDev,
+    sameSite: isDev ? 'lax' : 'none',
     path: '/',
-    maxAge: ONE_YEAR_MS / 1000, // 1 year in seconds
-    expires: new Date(Date.now() + ONE_YEAR_MS), // Explicit expires date for better browser compatibility
+    maxAge: ONE_YEAR_MS / 1000,
+    expires: new Date(Date.now() + ONE_YEAR_MS),
   }
 }
 
 function getUidCookieOpts() {
+  const isDev = process.env.NODE_ENV !== 'production'
   return {
     path: '/',
-    secure: true,
-    sameSite: 'none',
+    secure: !isDev,
+    sameSite: isDev ? 'lax' : 'none',
     httpOnly: true,
-    maxAge: ONE_YEAR_MS / 1000, // 1 year in seconds
-    expires: new Date(Date.now() + ONE_YEAR_MS), // Explicit expires date for better browser compatibility
+    maxAge: ONE_YEAR_MS / 1000,
+    expires: new Date(Date.now() + ONE_YEAR_MS),
   }
 }
 
@@ -123,6 +125,8 @@ export default async function authRoutes(app) {
       email, password 
     } = request.body
     const user = await verifyCredentials(email.toLowerCase().trim(), password)
+    // Invalidate all previous sessions for security
+    await deleteUserRefreshTokens(user.id)
     const accessToken = await signAccessToken(user.id)
     const refreshToken = await signRefreshToken(user.id)
     setRefreshCookie(reply, refreshToken)

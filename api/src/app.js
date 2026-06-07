@@ -1,20 +1,20 @@
-import Fastify from 'fastify'
 import cookie from '@fastify/cookie'
-import helmet from '@fastify/helmet'
 import cors from '@fastify/cors'
+import helmet from '@fastify/helmet'
 import rateLimit from '@fastify/rate-limit'
+import Fastify from 'fastify'
 
 import { checkDbConnection } from './db/index.js'
-import authRoutes from './routes/auth.js'
-import recordsRoutes from './routes/records.js'
-import customListsRoutes from './routes/custom-lists.js'
-import settingsRoutes from './routes/settings.js'
-import importRoutes from './routes/import.js'
-import activitiesRoutes from './routes/activities.js'
-import userRoutes from './routes/users.js'
-import externalRoutes from './routes/external.js'
-import publicRoutes from './routes/public.js'
 import i18nPlugin from './plugins/i18n.js'
+import activitiesRoutes from './routes/activities.js'
+import authRoutes from './routes/auth.js'
+import customListsRoutes from './routes/custom-lists.js'
+import externalRoutes from './routes/external.js'
+import importRoutes from './routes/import.js'
+import publicRoutes from './routes/public.js'
+import recordsRoutes from './routes/records.js'
+import settingsRoutes from './routes/settings.js'
+import userRoutes from './routes/users.js'
 
 export async function buildApp() {
   const app = Fastify({
@@ -25,8 +25,8 @@ export async function buildApp() {
           target: 'pino-pretty',
           options: {
             colorize: true,
-            ignore: 'pid,hostname' 
-          } 
+            ignore: 'pid,hostname'
+          }
         }
         : undefined,
     },
@@ -36,7 +36,8 @@ export async function buildApp() {
 
   await app.register(i18nPlugin)
 
-  await app.register(helmet, {contentSecurityPolicy: false, // frontend handles its own CSP
+  await app.register(helmet, {
+    contentSecurityPolicy: false, // frontend handles its own CSP
   })
 
   await app.register(cookie, {
@@ -46,7 +47,7 @@ export async function buildApp() {
 
   const allowedOrigins = process.env.FRONTEND_ORIGINS
     ? process.env.FRONTEND_ORIGINS.split(',').map(o => o.trim())
-    : ['http://localhost:5173']
+    : ['http://localhost:5173', 'https://listify-me.up.railway.app']
 
   await app.register(cors, {
     origin: allowedOrigins,
@@ -66,15 +67,15 @@ export async function buildApp() {
 
   // ─── Routes ────────────────────────────────────────────────────────────────
 
-  await app.register(authRoutes,        { prefix: '/api/auth' })
-  await app.register(recordsRoutes,     { prefix: '/api/records' })
+  await app.register(authRoutes, { prefix: '/api/auth' })
+  await app.register(recordsRoutes, { prefix: '/api/records' })
   await app.register(customListsRoutes, { prefix: '/api/custom-lists' })
-  await app.register(settingsRoutes,    { prefix: '/api/settings' })
-  await app.register(activitiesRoutes,  { prefix: '/api/activities' })
-  await app.register(userRoutes,        { prefix: '/api/users' })
-  await app.register(importRoutes,      { prefix: '/api' })
-  await app.register(externalRoutes,    { prefix: '/api/external' })
-  await app.register(publicRoutes,      { prefix: '/api/public' })
+  await app.register(settingsRoutes, { prefix: '/api/settings' })
+  await app.register(activitiesRoutes, { prefix: '/api/activities' })
+  await app.register(userRoutes, { prefix: '/api/users' })
+  await app.register(importRoutes, { prefix: '/api' })
+  await app.register(externalRoutes, { prefix: '/api/external' })
+  await app.register(publicRoutes, { prefix: '/api/public' })
 
   // ─── Health check ──────────────────────────────────────────────────────────
 
@@ -82,7 +83,7 @@ export async function buildApp() {
     await checkDbConnection()
     return {
       status: 'ok',
-      timestamp: new Date().toISOString() 
+      timestamp: new Date().toISOString()
     }
   })
 
