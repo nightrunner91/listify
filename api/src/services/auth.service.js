@@ -82,22 +82,21 @@ export async function rotateRefreshToken(rawToken, fallbackUserId) {
   // Try new JWT format first
   try {
     const { userId, jti } = await verifyRefreshTokenJWT(rawToken)
-    const numericUserId = parseInt(userId, 10)
     const allValid = await db
       .select()
       .from(refreshTokens)
-      .where(and(eq(refreshTokens.userId, numericUserId), gt(refreshTokens.expiresAt, new Date())))
+      .where(and(eq(refreshTokens.userId, userId), gt(refreshTokens.expiresAt, new Date())))
 
     for (const row of allValid) {
       const match = await bcrypt.compare(jti, row.tokenHash)
       if (match) {
         await db.delete(refreshTokens).where(eq(refreshTokens.id, row.id))
-        const accessToken = await signAccessToken(numericUserId)
-        const refreshToken = await signRefreshToken(numericUserId)
+        const accessToken = await signAccessToken(userId)
+        const refreshToken = await signRefreshToken(userId)
         return {
           accessToken,
           refreshToken,
-          userId: numericUserId,
+          userId,
         }
       }
     }
@@ -113,22 +112,21 @@ export async function rotateRefreshToken(rawToken, fallbackUserId) {
     })
   }
 
-  const userId = parseInt(fallbackUserId, 10)
   const allValid = await db
     .select()
     .from(refreshTokens)
-    .where(and(eq(refreshTokens.userId, userId), gt(refreshTokens.expiresAt, new Date())))
+    .where(and(eq(refreshTokens.userId, fallbackUserId), gt(refreshTokens.expiresAt, new Date())))
 
   for (const row of allValid) {
     const match = await bcrypt.compare(rawToken, row.tokenHash)
     if (match) {
       await db.delete(refreshTokens).where(eq(refreshTokens.id, row.id))
-      const accessToken = await signAccessToken(userId)
-      const refreshToken = await signRefreshToken(userId)
+      const accessToken = await signAccessToken(fallbackUserId)
+      const refreshToken = await signRefreshToken(fallbackUserId)
       return {
         accessToken,
         refreshToken,
-        userId,
+        userId: fallbackUserId,
       }
     }
   }
