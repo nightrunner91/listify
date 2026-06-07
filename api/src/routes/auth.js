@@ -22,7 +22,6 @@ function getCookieOpts() {
     path: '/',
     maxAge: ONE_YEAR_MS / 1000,
     expires: new Date(Date.now() + ONE_YEAR_MS),
-    signed: true,
   }
 }
 
@@ -35,7 +34,6 @@ function getUidCookieOpts() {
     httpOnly: true,
     maxAge: ONE_YEAR_MS / 1000,
     expires: new Date(Date.now() + ONE_YEAR_MS),
-    signed: true,
   }
 }
 
@@ -88,7 +86,8 @@ export default async function authRoutes(app) {
     reply.setCookie(UID_COOKIE_NAME, String(user.id), getUidCookieOpts())
     return reply.status(201).send({
       user,
-      accessToken 
+      accessToken,
+      refreshToken,
     })
   })
 
@@ -132,7 +131,8 @@ export default async function authRoutes(app) {
     reply.setCookie(UID_COOKIE_NAME, String(user.id), getUidCookieOpts())
     return reply.send({
       user,
-      accessToken 
+      accessToken,
+      refreshToken,
     })
   })
 
@@ -145,12 +145,39 @@ export default async function authRoutes(app) {
         timeWindow: '1 minute' 
       },
     },
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          refreshToken: { type: 'string' },
+        },
+        additionalProperties: false,
+      },
+    },
   }, async (request, reply) => {
-    const rawToken = request.cookies[COOKIE_NAME]
+    // Try cookie first (primary mechanism)
+    let rawToken = request.cookies[COOKIE_NAME]
+    const hasCookie = !!rawToken
+    const hasBodyToken = !!request.body?.refreshToken
+
+    app.log.debug({
+      msg: 'Refresh attempt',
+      hasCookie,
+      hasBodyToken,
+      cookieKeys: Object.keys(request.cookies),
+      origin: request.headers.origin,
+    })
+
+    // Fall back to body token (for cross-origin scenarios where cookies fail)
+    if (!rawToken && request.body?.refreshToken) {
+      rawToken = request.body.refreshToken
+    }
+
     if (!rawToken) {
+      app.log.warn('Refresh failed: no token found')
       return reply.status(401).send({
         error: 'UNAUTHORIZED',
-        message: 'No refresh token cookie found' 
+        message: 'No refresh token found' 
       })
     }
 
@@ -158,8 +185,17 @@ export default async function authRoutes(app) {
     const {
       accessToken, refreshToken
     } = await rotateRefreshToken(rawToken, fallbackUserId)
+
+    // Always set cookie (works when request comes from same origin or proper proxy)
     setRefreshCookie(reply, refreshToken)
-    return reply.send({ accessToken })
+
+    app.log.debug('Refresh successful')
+
+    // Always return refresh token in body (works for all scenarios)
+    return reply.send({
+      accessToken,
+      refreshToken,
+    })
   })
 
   // ─── POST /api/auth/logout ────────────────────────────────────────────────
@@ -167,13 +203,7 @@ export default async function authRoutes(app) {
   app.post('/logout', {preHandler: authenticate,}, async (request, reply) => {
     await deleteUserRefreshTokens(request.user.id)
     clearRefreshCookie(reply)
-    reply.clearCookie(UID_COOKIE_NAME, {
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      httpOnly: true,
-      signed: true,
-    })
+    reply.clearCookie(UID_COOKIE_NAME, getUidCookieOpts())
     return reply.status(204).send()
   })
 

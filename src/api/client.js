@@ -11,6 +11,9 @@ if (API_BASE && !API_BASE.endsWith('/api')) {
   API_BASE = `${API_BASE}/api`
 }
 
+// Debug: log the resolved API base URL
+console.log('[API] Base URL:', API_BASE || '(same origin)')
+
 export class ApiError extends Error {
   constructor(status, message, code) {
     super(message)
