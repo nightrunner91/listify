@@ -23,6 +23,10 @@ import {
   NLayoutHeader,
   useThemeVars
 } from 'naive-ui'
+import {
+  DynamicScroller,
+  DynamicScrollerItem
+} from 'vue-virtual-scroller'
 import LyRecord from '@/features/records/components/ly-record/LyRecord.vue'
 import LyGithub from '@/components/base/ly-github/LyGithub.vue'
 import LyVersion from '@/components/base/ly-version/LyVersion.vue'
@@ -284,7 +288,6 @@ watch(
           v-if="nonEmptyCategories.length > 0"
           ref="tabsRef"
           type="segment"
-          animated
           class="mb-8 public-profile__tabs"
           @update:value="handleTabChange"
         >
@@ -316,13 +319,28 @@ watch(
             </template>
 
             <n-list class="mt-4 px-2">
-              <ly-record
-                v-for="(record, index) in sortedRecords[cat]"
-                :key="record.id"
-                :index="index"
-                :record="record"
-                :readonly="true"
-              />
+              <dynamic-scroller
+                :items="sortedRecords[cat]"
+                key-field="id"
+                :min-item-size="gridStore.screenLargerThen('xl') ? 58 : 88"
+                :buffer="50"
+                page-mode
+              >
+                <template #default="{ item, index, active }">
+                  <dynamic-scroller-item
+                    :key="item.id"
+                    :item="item"
+                    :active="active"
+                    :data-index="index"
+                  >
+                    <ly-record
+                      :record="item"
+                      :index="index"
+                      :readonly="true"
+                    />
+                  </dynamic-scroller-item>
+                </template>
+              </dynamic-scroller>
             </n-list>
           </n-tab-pane>
         </n-tabs>
