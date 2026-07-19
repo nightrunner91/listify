@@ -64,7 +64,8 @@ const searchPlaceholder = computed(() => {
 
 const record = computed(() => {
   if (props.readonly) return props.record || {}
-  return recordsStore.getRecord(props.id, tag) || {}
+  if (props.record) return props.record
+  return recordsStore.getRecordById(props.id, tag) || {}
 })
 
 /**

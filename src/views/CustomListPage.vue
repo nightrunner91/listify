@@ -37,7 +37,6 @@ const gridStore = useGridStore()
 const recordsStore = useRecordsStore()
 const route = useRoute()
 const routeLoading = ref(true)
-const scrollerKey = ref(0)
 const customListId = computed(() => route.params.id)
 const customList = computed(() => recordsStore.getCustomList(customListId.value))
 const sortedRecords = computed(() => {
@@ -68,17 +67,10 @@ watch(() => recordsStore.isSearching, (isSearching) => {
  * @function setDefaultSortLabel
  * @description Sets the default sorting method to 'label' (status) and initializes the display order
  */
-// PERF: Only increment scrollerKey when the custom list actually changes to avoid
-// destroying the entire virtual scroller DOM tree on redundant calls.
-let lastInitializedListId = null
 function setDefaultSortLabel() {
   recordsStore.selectedSort = 'label'
   // Initialize display order for the current category
   recordsStore.initializeDisplayOrder(route.meta.tag)
-  if (customListId.value !== lastInitializedListId) {
-    scrollerKey.value++
-    lastInitializedListId = customListId.value
-  }
 }
 
 // PERF: Removed deep:true — watching route deeply caused excessive re-fires.
@@ -236,15 +228,13 @@ onBeforeRouteLeave(async () => {
           
           <template v-else>
             <!-- begin::Records List -->
-            <n-list
-              hoverable
-              :show-divider="!gridStore.screenLargerThen('m')"
-            >
+            <n-list :show-divider="!gridStore.screenLargerThen('m')">
               <dynamic-scroller
-                :key="scrollerKey"
                 :items="sortedRecords"
                 key-field="id"
-                :min-item-size="58"
+                :min-item-size="gridStore.screenLargerThen('xl') ? 58 : 88"
+                :buffer="400"
+                page-mode
               >
                 <template #default="{ item, index, active }">
                   <dynamic-scroller-item
@@ -254,7 +244,7 @@ onBeforeRouteLeave(async () => {
                     :data-index="index"
                   >
                     <ly-custom-record
-                      :id="item.id"
+                      :record="item"
                       :list-id="customListId"
                       :index="index"
                     />

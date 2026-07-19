@@ -304,6 +304,23 @@ export const useRecordsStore = defineStore('records', () => {
     music: [],
   })
 
+  /**
+   * @description Map-based index for O(1) record lookups by ID.
+   * Avoids O(n) .find() calls on every visible component render.
+   */
+  const recordsMap = computed(() => {
+    const maps = {}
+    for (const cat of CATEGORIES) {
+      const list = records.value[cat]
+      const map = new Map()
+      for (let i = 0; i < list.length; i++) {
+        map.set(list[i].id, list[i])
+      }
+      maps[cat] = map
+    }
+    return maps
+  })
+
   /** @type {import('vue').Ref<Object>} */
   const pending = ref({
     games: false,
@@ -602,6 +619,17 @@ export const useRecordsStore = defineStore('records', () => {
   function getRecord(id, listType) {
     const record = records.value[listType].find((i) => i.id === id)
     return record
+  }
+
+  /**
+   * @function getRecordById
+   * @description O(1) lookup using Map index. Use this for visible components.
+   * @param {string} id
+   * @param {string} listType
+   * @returns {Object|undefined}
+   */
+  function getRecordById(id, listType) {
+    return recordsMap.value[listType]?.get(id)
   }
 
   /**
@@ -1410,6 +1438,7 @@ export const useRecordsStore = defineStore('records', () => {
 
   return {
     records,
+    recordsMap,
     pending,
     recordsLength,
     allRecordsLength,
@@ -1421,6 +1450,7 @@ export const useRecordsStore = defineStore('records', () => {
     deselectAllRecords,
     checkRecordExist,
     getRecord,
+    getRecordById,
     addRecord,
     restoreRecords,
     fetchCategoryRecords,

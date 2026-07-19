@@ -1,35 +1,34 @@
 <script setup>
+import LyAddRecord from '@/features/records/components/ly-add-record/LyAddRecord.vue'
+import LyImport from '@/features/records/components/ly-import/LyImport.vue'
+import LyRecord from '@/features/records/components/ly-record/LyRecord.vue'
+import LySearch from '@/features/records/components/ly-search/LySearch.vue'
+import { useGridStore } from '@/stores/grid.store'
+import { useRecordsStore } from '@/stores/records.store'
 import {
-  ref,
-  watch,
-  nextTick,
+  NDivider,
+  NEmpty,
+  NList,
+  NSpace,
+  NSpin,
+  NText
+} from 'naive-ui'
+import {
+  computed,
   onMounted,
   onUnmounted,
-  computed
+  ref,
+  watch
 } from 'vue'
+import { useI18n } from 'vue-i18n'
 import {
-  NSpace,
-  NList,
-  NSpin,
-  NEmpty,
-  NText,
-  NDivider
-} from 'naive-ui'
+  onBeforeRouteLeave,
+  useRoute
+} from 'vue-router'
 import {
   DynamicScroller,
   DynamicScrollerItem
 } from 'vue-virtual-scroller'
-import { useGridStore } from '@/stores/grid.store'
-import { useRecordsStore } from '@/stores/records.store'
-import {
-  useRoute,
-  onBeforeRouteLeave
-} from 'vue-router'
-import LySearch from '@/features/records/components/ly-search/LySearch.vue'
-import LyRecord from '@/features/records/components/ly-record/LyRecord.vue'
-import LyAddRecord from '@/features/records/components/ly-add-record/LyAddRecord.vue'
-import LyImport from '@/features/records/components/ly-import/LyImport.vue'
-import { useI18n } from 'vue-i18n'
 
 // Variable declarations
 const { t } = useI18n()
@@ -39,7 +38,6 @@ const route = useRoute()
 let observer = null
 
 // Reactive state
-const scrollerKey = ref(0)
 const bottomButtonRef = ref(null)
 const isBottomButtonVisible = ref(false)
 
@@ -49,23 +47,23 @@ const isBottomButtonVisible = ref(false)
 // Using a plain for-loop instead of Map().map().filter() reduces allocation overhead for large lists.
 const sortedRecords = computed(() => {
   const tag = route.meta.tag
-  const searchQuery = recordsStore.searchQuery
 
   // If searching, return filtered results
   if (recordsStore.isSearching) {
     return recordsStore.searchRecords(tag)
   }
   
-  const list = recordsStore.records[tag] || []
   const displayOrder = recordsStore.displayOrder[tag] || []
+  const map = recordsStore.recordsMap?.[tag]
   
-  // Return records in display order using index map (O(n))
-  const indexById = new Map(list.map(r => [r.id, r]))
+  // Return records in display order using pre-built Map (O(1) per lookup)
   const result = []
-  for (let i = 0; i < displayOrder.length; i++) {
-    const record = indexById.get(displayOrder[i])
-    if (record !== undefined) {
-      result.push(record)
+  if (map) {
+    for (let i = 0; i < displayOrder.length; i++) {
+      const record = map.get(displayOrder[i])
+      if (record !== undefined) {
+        result.push(record)
+      }
     }
   }
   return result
@@ -77,9 +75,6 @@ const hasEmptyRecord = computed(() => {
 })
 
 // Watchers
-// PERF: Removed scrollerKey++ — the virtual scroller updates reactively when sortedRecords
-// changes. Destroying/recreating the entire DOM tree on every search toggle is O(n) and
-// causes visible freezes with large lists.
 watch(() => recordsStore.isSearching, (isSearching) => {
   if (!isSearching) {
     // Reinitialize display order with current sort when exiting search
@@ -87,14 +82,6 @@ watch(() => recordsStore.isSearching, (isSearching) => {
   }
 })
 
-// PERF: Removed scrollerKey++ — sortedRecords computed already reacts to searchQuery changes,
-// the scroller updates naturally without needing full DOM reconstruction.
-watch(() => recordsStore.searchQuery, () => {
-  // Scroller updates reactively via sortedRecords, no manual key bump needed
-})
-
-// PERF: Removed deep:true — watching route deeply caused excessive re-fires on every
-// reactive property change. We only need to react to actual navigation (path/params).
 watch(
   () => route.path,
   async () => {
@@ -126,17 +113,10 @@ watch(bottomButtonRef, (el) => {
  * @function setDefaultSortLabel
  * @description Sets the default sorting method to 'label' (status) and initializes the display order
  */
-let lastInitializedTag = null
 function setDefaultSortLabel() {
   recordsStore.selectedSort = 'label'
   // Initialize display order for the current category
   recordsStore.initializeDisplayOrder(route.meta.tag)
-  // PERF: Only increment scrollerKey when the tag actually changes (initial mount or route change).
-  // Avoids destroying the entire virtual scroller DOM tree on redundant calls.
-  if (route.meta.tag !== lastInitializedTag) {
-    scrollerKey.value++
-    lastInitializedTag = route.meta.tag
-  }
 }
 
 function setupObserver() {
@@ -257,15 +237,13 @@ onBeforeRouteLeave(async () => {
           
           <template v-else>
             <!-- begin::Records List -->
-            <n-list
-              hoverable
-              :show-divider="!gridStore.screenLargerThen('m')"
-            >
+            <n-list :show-divider="!gridStore.screenLargerThen('m')">
               <dynamic-scroller
-                :key="scrollerKey"
                 :items="sortedRecords"
                 key-field="id"
-                :min-item-size="58"
+                :min-item-size="gridStore.screenLargerThen('xl') ? 58 : 88"
+                :buffer="50"
+                page-mode
               >
                 <template #default="{ item, index, active }">
                   <dynamic-scroller-item
@@ -275,7 +253,7 @@ onBeforeRouteLeave(async () => {
                     :data-index="index"
                   >
                     <ly-record
-                      :id="item.id"
+                      :record="item"
                       :index="index"
                     />
                   </dynamic-scroller-item>

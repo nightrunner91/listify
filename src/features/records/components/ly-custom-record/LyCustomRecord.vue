@@ -18,9 +18,9 @@ import { useRecordsStore } from '@/stores/records.store'
 import { useGridStore } from '@/stores/grid.store'
 
 const props = defineProps({
-  id: {
-    type: String,
-    required: true 
+  record: {
+    type: Object,
+    default: null
   },
   listId: {
     type: String,
@@ -35,7 +35,7 @@ const props = defineProps({
 const recordsStore = useRecordsStore()
 const gridStore = useGridStore()
 
-const record = computed(() => recordsStore.getCustomRecord(props.listId, props.id) || {})
+const record = computed(() => props.record || {})
 
 // Local state for input to prevent UI lag during typing
 const localTitle = ref(record.value.title || '')
