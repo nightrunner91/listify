@@ -91,12 +91,24 @@ async function handleNewRecord() {
 /**
  * @function focusInput
  * @async
- * @description Programmatically focuses the title input of a specific record
+ * @description Programmatically focuses the title input of a specific record.
+ *              Uses retry logic because virtual scroller renders items asynchronously.
  * @param {Object} record - The record object to focus
  */
 async function focusInput(record) {
-  await nextTick()
-  document.querySelector(`#input-${record.id} input`).focus()
+  const maxAttempts = 10
+  const delayMs = 50
+  
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    await nextTick()
+    await new Promise(resolve => setTimeout(resolve, delayMs))
+    
+    const input = document.querySelector(`#input-${record.id} input`)
+    if (input) {
+      input.focus()
+      return
+    }
+  }
 }
 </script>
 

@@ -40,6 +40,7 @@ let observer = null
 // Reactive state
 const bottomButtonRef = ref(null)
 const isBottomButtonVisible = ref(false)
+const scrollerRef = ref(null)
 
 // Computed properties
 // PERF: Removed side-effect (initializeDisplayOrder) from computed — computed must be pure.
@@ -139,6 +140,13 @@ function setupObserver() {
   }
 }
 
+function handleScrollToBottom() {
+  if (scrollerRef.value && sortedRecords.value.length > 0) {
+    const lastIndex = sortedRecords.value.length - 1
+    scrollerRef.value.scrollToItem(lastIndex)
+  }
+}
+
 // Lifecycle hooks
 onMounted(async () => {
   setDefaultSortLabel()
@@ -209,7 +217,7 @@ onBeforeRouteLeave(async () => {
                 <ly-add-record
                   variant="inline"
                   :disabled="hasEmptyRecord"
-                  @scroll-bottom="gridStore.handleScrollBottom"
+                  @scroll-bottom="handleScrollToBottom"
                 />
                 <n-text depth="3">
                   {{ t('records.or') }}
@@ -239,6 +247,7 @@ onBeforeRouteLeave(async () => {
             <!-- begin::Records List -->
             <n-list :show-divider="!gridStore.screenLargerThen('m')">
               <dynamic-scroller
+                ref="scrollerRef"
                 :items="sortedRecords"
                 key-field="id"
                 :min-item-size="gridStore.screenLargerThen('xl') ? 58 : 88"
@@ -273,7 +282,7 @@ onBeforeRouteLeave(async () => {
               <ly-add-record
                 variant="bottom"
                 :disabled="hasEmptyRecord"
-                @scroll-bottom="gridStore.handleScrollBottom"
+                @scroll-bottom="handleScrollToBottom"
               />
             </div>
 
@@ -283,7 +292,7 @@ onBeforeRouteLeave(async () => {
                 v-if="!recordsStore.isSearching && !isBottomButtonVisible"
                 variant="floating"
                 :disabled="hasEmptyRecord"
-                @scroll-bottom="gridStore.handleScrollBottom"
+                @scroll-bottom="handleScrollToBottom"
               />
             </transition>
             <!-- end::Action Buttons -->
