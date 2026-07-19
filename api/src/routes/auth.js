@@ -148,9 +148,7 @@ export default async function authRoutes(app) {
     schema: {
       body: {
         type: 'object',
-        properties: {
-          refreshToken: { type: 'string' },
-        },
+        properties: {refreshToken: { type: 'string' },},
         additionalProperties: false,
       },
     },

@@ -1,7 +1,5 @@
 <script setup>
-import {
-  computed
-} from 'vue'
+import {computed} from 'vue'
 import {
   NTimeline,
   NTimelineItem,
@@ -15,9 +13,7 @@ import {
 import moment from 'moment'
 import 'moment/locale/ru'
 import 'moment/locale/ro'
-import {
-  PhHeart as LikeIcon
-} from 'phosphor-vue'
+import {PhHeart as LikeIcon} from 'phosphor-vue'
 import { darkThemeOverrides } from '@/theme.config.js'
 import { useI18n } from 'vue-i18n'
 

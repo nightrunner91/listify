@@ -61,7 +61,14 @@ function parseExpiresInSeconds(str) {
   if (!match) return parseInt(str, 10) || 2592000
   const value = parseInt(match[1], 10)
   const unit = match[2]
-  const multipliers = { s: 1, m: 60, h: 3600, d: 86400, w: 604800, y: 31536000 }
+  const multipliers = {
+    s: 1,
+    m: 60,
+    h: 3600,
+    d: 86400,
+    w: 604800,
+    y: 31536000 
+  }
   return value * (multipliers[unit] || 1)
 }
 
@@ -81,7 +88,9 @@ async function verifyRefreshTokenJWT(token) {
 export async function rotateRefreshToken(rawToken, fallbackUserId) {
   // Try new JWT format first
   try {
-    const { userId, jti } = await verifyRefreshTokenJWT(rawToken)
+    const {
+      userId, jti 
+    } = await verifyRefreshTokenJWT(rawToken)
     const allValid = await db
       .select()
       .from(refreshTokens)

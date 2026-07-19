@@ -15,7 +15,11 @@ function loadFromStorage() {
     const user = localStorage.getItem(STORAGE_KEY_USER)
     const hasAccess = !!accessToken
     const hasRefresh = !!refreshToken
-    console.log('[Auth] Loaded from storage:', { hasAccess, hasRefresh, hasUser: !!user })
+    console.log('[Auth] Loaded from storage:', {
+      hasAccess,
+      hasRefresh,
+      hasUser: !!user 
+    })
     return {
       accessToken: accessToken || null,
       refreshToken: refreshToken || null,
@@ -58,7 +62,11 @@ export const useAuthStore = defineStore('auth', () => {
     accessToken.value = token
     if (refreshTok) refreshToken.value = refreshTok
     saveToStorage(token, refreshTok || refreshToken.value, u)
-    console.log('[Auth] User set:', { userId: u?.id, hasToken: !!token, hasRefresh: !!refreshToken.value })
+    console.log('[Auth] User set:', {
+      userId: u?.id,
+      hasToken: !!token,
+      hasRefresh: !!refreshToken.value 
+    })
   }
 
   function logoutLocally() {
@@ -129,9 +137,7 @@ export const useAuthStore = defineStore('auth', () => {
     refreshPromise = (async () => {
       try {
         // Send refresh token in body as fallback for cross-origin scenarios
-        const data = await api.post('/auth/refresh', {
-          refreshToken: refreshToken.value,
-        })
+        const data = await api.post('/auth/refresh', {refreshToken: refreshToken.value,})
         accessToken.value = data.accessToken
         // Always update stored refresh token (rotation)
         if (data.refreshToken) {
