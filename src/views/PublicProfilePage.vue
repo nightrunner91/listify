@@ -82,7 +82,7 @@ async function fetchPublicProfile() {
   loading.value = true
   error.value = null
   try {
-    let apiBase = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : '')
+    let apiBase = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3001/api' : '')
     if (apiBase && !apiBase.startsWith('http')) apiBase = `https://${apiBase}`
     if (apiBase.endsWith('/')) apiBase = apiBase.slice(0, -1)
     if (apiBase && !apiBase.endsWith('/api')) apiBase = `${apiBase}/api`

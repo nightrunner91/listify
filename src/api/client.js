@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/stores/auth.store'
 
-let API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : '')
+let API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3001/api' : '')
 if (API_BASE && !API_BASE.startsWith('http')) {
   API_BASE = `https://${API_BASE}`
 }

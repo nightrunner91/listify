@@ -24,7 +24,7 @@ function getArg(name) {
 
 const filePath = getArg('--file')
 const token    = getArg('--token')
-const apiUrl   = getArg('--api') ?? 'http://localhost:3000'
+const apiUrl   = getArg('--api') ?? 'http://localhost:3001'
 
 if (!filePath || !token) {
   console.error('Usage: node scripts/migrate.js --file <path> --token <accessToken> [--api <url>]')
