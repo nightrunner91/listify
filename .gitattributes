@@ -1,0 +1,26 @@
+# Line endings: always store LF in the repository and in the working tree.
+# Keeps the repo identical on Windows, macOS and Linux and stops
+# "every file modified" noise after copying the project between machines.
+* text=auto eol=lf
+
+# Binary assets - never convert or diff as text
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.mp4 binary
+*.webm binary
+*.zip binary
+
+# Generated lockfiles - keep diffs and merges readable
+package-lock.json text eol=lf
+pnpm-lock.yaml text eol=lf
+yarn.lock text eol=lf
